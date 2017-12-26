@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsLiquidationOrderDao" >
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsLiquidationOrder" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="JOB_ID" property="jobId" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="VARCHAR" />
+    <result column="ACCT_DATE" property="acctDate" jdbcType="CHAR" />
+    <result column="ENDORSE_NO" property="endorseNo" jdbcType="VARCHAR" />
+    <result column="POLICY_NO" property="policyNo" jdbcType="VARCHAR" />
+    <result column="RISK_CODE" property="riskCode" jdbcType="VARCHAR" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+    <result column="PAYEE" property="payee" jdbcType="VARCHAR" />
+    <result column="PAYER" property="payer" jdbcType="VARCHAR" />
+    <result column="PAY_REMARK" property="payRemark" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_STATUS" property="accountStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- 查询 -->
+  <select id="queryAll" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsLiquidationOrder" resultMap="resultMap">
+  select 
+ 	s.ID ,s.JOB_ID ,s.BUSI_ID,s.ACCT_DATE,s.ENDORSE_NO,s.POLICY_NO,s.RISK_CODE,s.FEE_TYPE,s.AMOUNT,s.PAYEE,s.PAYER,s.PAY_REMARK,s.ACCOUNT_STATUS,
+ 	s.CREATE_TIME,s.UPDATE_TIME
+ 	from TB_CLS_LIQUIDATION_ORDER s 
+ 	where 1=1
+		 <if test="startAcctDate!=null and startAcctDate !=''">
+		 and ACCT_DATE <![CDATA[   >=  ]]> #{startAcctDate,jdbcType=CHAR}
+		 </if>
+		 <if test="endAcctDate!=null and endAcctDate !=''">
+		 and ACCT_DATE <![CDATA[   <=  ]]> #{endAcctDate,jdbcType=CHAR}
+		 </if>
+		  <if test="feeType!=null">
+		  and FEE_TYPE=#{feeType,jdbcType=CHAR}
+		  </if>
+		  <if test="accountStatus!=null">
+		  and ACCOUNT_STATUS=#{accountStatus,jdbcType=CHAR}
+		  </if>
+		  <if test="endorseNo!=null and endorseNo!=''">
+		 and instr(s.ENDORSE_NO,#{endorseNo}) > 0
+		 </if>
+		 <if test="policyNo!=null and policyNo!=''">
+		 and instr(s.POLICY_NO,#{policyNo}) > 0
+		 </if>
+		 <if test="busiId!=null and busiId!=''">
+		 and instr(s.BUSI_ID,#{busiId}) > 0
+		 </if>
+		 <if test="riskCode !=null and riskCode !=''">
+		 and instr(s.RISK_CODE,#{riskCode}) > 0
+		 </if>
+  order by s.CREATE_TIME DESC,s.BUSI_ID DESC
+  </select>
+  
+  <!-- 根据id查询指定数据 -->
+  <!-- 查询详情 -->
+<select id="queryById" parameterType="java.lang.String" resultMap="resultMap">
+select 
+ 	s.ID ,s.JOB_ID ,s.BUSI_ID,s.ACCT_DATE,s.ENDORSE_NO,s.POLICY_NO,s.RISK_CODE,s.FEE_TYPE,s.AMOUNT,s.PAYEE,s.PAYER,s.PAY_REMARK,s.ACCOUNT_STATUS,
+ 	s.CREATE_TIME,s.UPDATE_TIME
+ 	from TB_CLS_LIQUIDATION_ORDER s where s.ID = #{id,jdbcType=VARCHAR}
+</select>
+  
+  <!-- <insert id="insert" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsLiquidationOrder" >
+    insert into TB_CLS_LIQUIDATION_ORDER (ID, JOB_ID, BUSI_ID, 
+      ACCT_DATE, ENDORSE_NO, POLICY_NO, 
+      RISK_CODE, FEE_TYPE, AMOUNT, 
+      PAYEE, PAYER, ACCOUNT_STATUS, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{jobId,jdbcType=VARCHAR}, #{busiId,jdbcType=VARCHAR}, 
+      #{acctDate,jdbcType=CHAR}, #{endorseNo,jdbcType=VARCHAR}, #{policyNo,jdbcType=VARCHAR}, 
+      #{riskCode,jdbcType=VARCHAR}, #{feeType,jdbcType=CHAR}, #{amount,jdbcType=DECIMAL}, 
+      #{payee,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, #{accountStatus,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsLiquidationOrder" >
+    insert into TB_CLS_LIQUIDATION_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="jobId != null" >
+        JOB_ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="acctDate != null" >
+        ACCT_DATE,
+      </if>
+      <if test="endorseNo != null" >
+        ENDORSE_NO,
+      </if>
+      <if test="policyNo != null" >
+        POLICY_NO,
+      </if>
+      <if test="riskCode != null" >
+        RISK_CODE,
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="payee != null" >
+        PAYEE,
+      </if>
+      <if test="payer != null" >
+        PAYER,
+      </if>
+      <if test="accountStatus != null" >
+        ACCOUNT_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="jobId != null" >
+        #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=VARCHAR},
+      </if>
+      <if test="acctDate != null" >
+        #{acctDate,jdbcType=CHAR},
+      </if>
+      <if test="endorseNo != null" >
+        #{endorseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="policyNo != null" >
+        #{policyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="riskCode != null" >
+        #{riskCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="payee != null" >
+        #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="payer != null" >
+        #{payer,jdbcType=VARCHAR},
+      </if>
+      <if test="accountStatus != null" >
+        #{accountStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim> 
+  </insert> 	-->
+</mapper>

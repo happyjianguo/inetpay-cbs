@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsMerPermissionDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsMerPermissionDto" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="SERVICE_NAME" property="serviceName" jdbcType="VARCHAR" />
+    <result column="SERVICE_CODE" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsMerPermissionDto" >
+    insert into TB_MRS_MERPERMISSION (ID, CUST_ID, SERVICE_NAME, 
+      SERVICE_CODE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR}, 
+      #{serviceCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsMerPermissionDto" >
+    insert into TB_MRS_MERPERMISSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="serviceCode != null" >
+        SERVICE_CODE,
+      </if>
+      <if test="serviceName != null" >
+        SERVICE_NAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null" >
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="getServiceByCode" resultType="int">
+    select 
+    count(SERVICE_CODE)
+    from TB_MRS_MERPERMISSION
+    where SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR} and CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updateService" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsMerPermissionDto" >
+    update TB_MRS_MERPERMISSION
+    <set >
+      <if test="serviceName != null and serviceName !=''" >
+        SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null and serviceCode !=''" >
+        SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime !=''" >
+        UPDATE_DATE = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteService">
+    delete from TB_MRS_MERPERMISSION
+    where CUST_ID = #{custId,jdbcType=VARCHAR} and SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="batchSaveService" parameterType="list" >
+    insert into TB_MRS_MERPERMISSION (ID, CUST_ID, SERVICE_NAME, SERVICE_CODE, CREATE_TIME)
+	<foreach collection="dtos" index="index" item="item" separator=" union all ">
+		select #{item.id},#{item.custId},#{item.serviceName},#{item.serviceCode},#{item.createTime} from dual
+	</foreach>
+  </insert>
+</mapper>

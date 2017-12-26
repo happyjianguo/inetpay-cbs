@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisEmailAdministratorDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailAdministratorDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="MESSAGE_TYPE" property="messageType" jdbcType="CHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, MESSAGE_TYPE, USER_NAME, EMAIL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EMAIL_ADMINISTRATOR
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_EMAIL_ADMINISTRATOR
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailAdministratorDto" >
+    insert into TB_BIS_EMAIL_ADMINISTRATOR (ID, MESSAGE_TYPE, USER_NAME, 
+      EMAIL)
+    values (#{id,jdbcType=VARCHAR}, #{messageType,jdbcType=CHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailAdministratorDto" >
+    insert into TB_BIS_EMAIL_ADMINISTRATOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="messageType != null" >
+        MESSAGE_TYPE,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailAdministratorDto" >
+    update TB_BIS_EMAIL_ADMINISTRATOR
+    <set >
+      <if test="messageType != null" >
+        MESSAGE_TYPE = #{messageType,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailAdministratorDto" >
+    update TB_BIS_EMAIL_ADMINISTRATOR
+    set MESSAGE_TYPE = #{messageType,jdbcType=CHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="isExistByMessageType" resultType="long">
+    select 
+    count(ID)
+    from TB_BIS_EMAIL_ADMINISTRATOR
+    where MESSAGE_TYPE = #{messageType,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByMessageType">
+    delete from TB_BIS_EMAIL_ADMINISTRATOR
+    where MESSAGE_TYPE = #{messageType,jdbcType=CHAR}
+  </delete>
+  <insert id="batchSave" parameterType="list" >
+    insert into TB_BIS_EMAIL_ADMINISTRATOR (ID, MESSAGE_TYPE, USER_NAME,EMAIL)
+    <foreach collection="dtos" index="index" item="item" separator=" union all ">
+		select 
+		#{item.id,jdbcType=VARCHAR}, #{item.messageType,jdbcType=CHAR}, 
+	    #{item.userName,jdbcType=VARCHAR}, #{item.email,jdbcType=VARCHAR}
+		from dual
+	</foreach>
+  </insert>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailAdministratorDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EMAIL_ADMINISTRATOR
+    <where>
+    	 <if test="messageType != null and messageType !=''" >
+	        and MESSAGE_TYPE = #{messageType,jdbcType=CHAR}
+	     </if>
+	     <if test="userName != null and userName !=''" >
+	     	and instr(USER_NAME,#{userName,jdbcType=VARCHAR})>0
+	     </if>
+	     <if test="email != null and email !=''" >
+	     	and instr(EMAIL,#{email,jdbcType=VARCHAR})>0
+	     </if>
+	     <if test="messageTypes != null and messageTypes.size()>0" >
+	     	and MESSAGE_TYPE in
+			<foreach collection="messageTypes" index="index" item="item" open="(" separator="," close=")">
+		        #{item,jdbcType=CHAR}
+		    </foreach>
+	     </if>
+    </where>
+  </select>
+  <select id="findByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EMAIL_ADMINISTRATOR
+    where instr(USER_NAME,#{userName,jdbcType=VARCHAR})>0
+  </select>
+  <select id="viewByMessageType" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EMAIL_ADMINISTRATOR
+    where MESSAGE_TYPE = #{messageType,jdbcType=CHAR}
+  </select>
+  <select id="findByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EMAIL_ADMINISTRATOR
+    where instr(EMAIL,#{email,jdbcType=VARCHAR})>0
+  </select>
+</mapper>

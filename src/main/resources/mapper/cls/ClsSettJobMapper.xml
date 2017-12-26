@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsSettJobDao" >
+	<resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsSettJob" >
+	    <result column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="ACCT_DATE" property="acctDate" jdbcType="CHAR" />
+	    <result column="SETT_FROM_DATE" property="settFromDate" jdbcType="CHAR" />
+	    <result column="SETT_TO_DATE" property="settToDate" jdbcType="CHAR" />
+	    <result column="SETT_STEP" property="settStep" jdbcType="CHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="ERR_DETAIL" property="errDetail" jdbcType="VARCHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="BUSI_CODE" property="busiCode" jdbcType="VARCHAR" />
+	    <result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR" />
+	    <result column="BUSI_TRANS_TYPE" property="busiTransType" jdbcType="VARCHAR" />
+	    <result column="GUARANTEE_STYLE" property="guaranteeStyle" jdbcType="CHAR" />
+	    <result column="OFFSET_STYLE" property="offsetStyle" jdbcType="CHAR" />
+	    <result column="SETTLE_TYPE" property="settleType" jdbcType="CHAR" />
+	    <result column="SETTLE_MODE" property="settleMode" jdbcType="CHAR" />
+	    <result column="PAYEE_CODE" property="payeeCode" jdbcType="VARCHAR" />
+	    <result column="PAYER_CODE" property="payerCode" jdbcType="VARCHAR" />
+	    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+	    <result column="TN_SETTLE" property="tnSettle" jdbcType="CHAR" />
+	    <result column="SETTLE_CYCLE" property="settleCycle" jdbcType="DECIMAL" />
+	    <result column="SETTLE_CYCLE_TYPE" property="settleCycleType" jdbcType="CHAR" />
+	    <result column="SETTLE_DAY_TYPE" property="settleDayType" jdbcType="CHAR" />
+	    <result column="SETTLE_TIME" property="settleTime" jdbcType="VARCHAR" />
+	    <result column="IMPL_CLASS" property="implClass" jdbcType="VARCHAR" />
+	    <result column="PAYEE_NAME" property="payeeName" jdbcType="VARCHAR" />
+	    <result column="PAYER_NAME" property="payerName" jdbcType="VARCHAR" /> 
+  </resultMap>	
+  <!--查询-->
+ <select id="queryAll"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsSettJob" resultMap="resultMap">
+ select 
+ 	s.ID,s.ACCT_DATE ,s.SETT_FROM_DATE, s.BUSI_CODE, s.PRODUCT_CODE,s.SETT_TO_DATE,s.SETT_STEP,s.DEAL_STATUS,s.ERR_DETAIL,s.CREATE_TIME,s.UPDATE_TIME
+ 	FROM TB_CLS_SETT_JOB s where 1=1			
+<if test="startAcctDate!=null and startAcctDate !=''">
+ and ACCT_DATE <![CDATA[   >=  ]]> #{startAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="endAcctDate!=null and endAcctDate !=''">
+ and ACCT_DATE <![CDATA[   <=  ]]> #{endAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="dealStatus!=null">
+ and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+ </if>
+ <if test="settStep!=null">
+ and SETT_STEP=#{settStep,jdbcType=CHAR}
+ </if>
+<if test="busiCode  != null and  busiCode != ''">
+	and instr(BUSI_CODE ,#{busiCode ,jdbcType=VARCHAR}) > 0
+</if>
+<if test="productCode  != null and  productCode != ''">
+	and instr(PRODUCT_CODE ,#{productCode ,jdbcType=VARCHAR}) > 0
+</if>
+ order by s.CREATE_TIME desc ,s.ACCT_DATE desc
+ </select>
+ <!-- 结算详情 -->
+ <select id="queryById" parameterType="java.lang.String" resultMap="resultMap">
+select 
+	j.ACCT_DATE,
+	j.SETT_FROM_DATE,
+	j.SETT_TO_DATE,
+	j.SETT_STEP,
+	j.DEAL_STATUS,
+	j.ERR_DETAIL,
+	j.CREATE_TIME,
+	j.UPDATE_TIME,
+	j.BUSI_CODE,
+	j.PRODUCT_CODE,
+	j.BUSI_TRANS_TYPE,
+	j.GUARANTEE_STYLE,
+	j.OFFSET_STYLE,
+	j.SETTLE_TYPE,
+	j.SETTLE_MODE,
+	j.PAYEE_CODE,
+	j.PAYER_CODE,
+	j.BOOK_TYPE,
+	j.TN_SETTLE,
+	j.SETTLE_CYCLE,
+	j.SETTLE_CYCLE_TYPE,
+	j.SETTLE_DAY_TYPE,
+	j.SETTLE_TIME,
+	j.IMPL_CLASS,
+	j.PAYEE_NAME,
+	j.PAYER_NAME
+ from  TB_CLS_SETT_JOB j where j.ID = #{id,jdbcType=VARCHAR}
+</select>
+   
+</mapper>

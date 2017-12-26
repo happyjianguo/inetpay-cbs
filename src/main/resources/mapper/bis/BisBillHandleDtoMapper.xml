@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisBillHandleDtoMapper" >
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisBillHandleDto" >
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+	   	<result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+	   	<result column="DR_ACCOUNT_ID" property="drAccountId" jdbcType="VARCHAR" />
+	   	<result column="CR_ACCOUNT_ID" property="crAccountId" jdbcType="VARCHAR" />
+	   	<result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+	   	<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+	   	<result column="HANDLE" property="handle" jdbcType="VARCHAR" />
+	   	<result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+		<result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+		<result column="TRADE_ID" property="tradeId" jdbcType="VARCHAR" />
+		<result column="PAY_STATUS" property="payStatus" jdbcType="CHAR" />
+		<result column="PAY_MEMO" property="payMemo" jdbcType="VARCHAR" />
+  </resultMap>
+ <!--查询-->
+	<select id="getByCond"  parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBillHandleDto"  resultType="java.util.List" resultMap="resultMap">
+ 		select 
+ 		ID ,
+		  BOOK_TYPE ,
+		  DR_ACCOUNT_ID ,
+		  CR_ACCOUNT_ID ,
+		  AMOUNT ,
+		  REMARK ,
+		  HANDLE ,
+		  CHECK_STATUS ,
+		  CREATE_DATE,
+		  CREATOR ,
+		  MODIFY_DATE ,
+		  REVISER,
+		  TRADE_ID,
+		  PAY_STATUS,
+		  PAY_MEMO
+ 		 from TB_BIS_BILL_HANDLE
+			 <where>
+			 		CHECK_STATUS !='99'
+				  <if test="bookType != null and bookType!=''">
+				       AND BOOK_TYPE = #{bookType,jdbcType=CHAR}
+				  </if>
+				  <if test="drAccountId != null and drAccountId!=''">
+				       AND instr(DR_ACCOUNT_ID, #{drAccountId}) > 0
+				  </if>
+				   <if test="crAccountId != null and crAccountId!=''">
+				       AND  instr(CR_ACCOUNT_ID, #{crAccountId}) > 0
+				  </if>
+				   <if test="handle != null and handle!=''">
+				       AND  instr(HANDLE, #{handle}) > 0
+				  </if>
+				  <if test="checkStatus != null and checkStatus!=''">
+				       AND CHECK_STATUS = #{checkStatus,jdbcType=CHAR}
+				  </if>
+				  <if test="startDate != null" >
+			    	  and to_char(CREATE_DATE,'YYYY-MM-DD') &gt;= to_char(#{startDate},'YYYY-MM-DD')
+			      </if>
+			      <if test="endDate != null" >
+			      	  and  to_char(CREATE_DATE,'YYYY-MM-DD') &lt;= to_char(#{endDate},'YYYY-MM-DD')
+			      </if>
+			 </where>
+			 order by CREATE_DATE desc
+	</select>
+ 
+	<!--插入-->
+	<insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBillHandleDto">
+		 insert into TB_BIS_BILL_HANDLE
+		 (
+		 ID ,
+		  BOOK_TYPE ,
+		  DR_ACCOUNT_ID ,
+		  CR_ACCOUNT_ID ,
+		  AMOUNT ,
+		  REMARK ,
+		  HANDLE ,
+		  CHECK_STATUS ,
+		  CREATE_DATE,
+		  CREATOR ,
+		  MODIFY_DATE ,
+		  REVISER,
+		  TRADE_ID,
+		  PAY_STATUS
+		  )
+		  values(
+		  	#{id,jdbcType=VARCHAR} ,
+		  	#{bookType,jdbcType=CHAR} ,
+		  	#{drAccountId,jdbcType=VARCHAR} ,
+		  	#{crAccountId,jdbcType=VARCHAR} ,
+		  	#{amount,jdbcType=DECIMAL} ,
+		  	#{remark,jdbcType=VARCHAR} ,
+		  	#{handle,jdbcType=VARCHAR} ,
+		  	#{checkStatus,jdbcType=CHAR} ,
+		  	#{createDate,jdbcType=TIMESTAMP} ,
+		  	#{creator,jdbcType=VARCHAR} ,
+		  	#{modifyDate,jdbcType=TIMESTAMP} ,
+		  	#{reviser,jdbcType=VARCHAR},
+		  	#{tradeId,jdbcType=VARCHAR} ,
+		  	#{payStatus,jdbcType=CHAR} 
+		  )
+	</insert>
+	<update id="update" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBillHandleDto">
+		update TB_BIS_BILL_HANDLE
+			<set>
+             <if test="reviser != null and reviser!=''">
+                     REVISER = #{reviser,jdbcType=VARCHAR},
+             </if>
+             <if test="modifyDate != null and modifyDate!=''">
+                     MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+             </if>
+              <if test="checkStatus != null and checkStatus!=''">
+                     CHECK_STATUS  = #{checkStatus,jdbcType=CHAR}
+             </if>
+              <if test="payStatus != null and payStatus!=''">
+                     PAY_STATUS  = #{payStatus,jdbcType=CHAR}
+             </if>
+			</set>
+			<where>
+				ID = #{id}
+			</where>
+	</update>
+	<select id="details"  parameterType="String" resultMap="resultMap">
+		 select 
+		  ID ,
+		  BOOK_TYPE ,
+		  DR_ACCOUNT_ID ,
+		  CR_ACCOUNT_ID ,
+		  AMOUNT ,
+		  REMARK ,
+		  HANDLE ,
+		  CHECK_STATUS ,
+		  CREATE_DATE,
+		  CREATOR ,
+		  MODIFY_DATE ,
+		  REVISER,
+		  TRADE_ID,
+		  PAY_STATUS,
+		  PAY_MEMO
+		 from TB_BIS_BILL_HANDLE
+		 where ID=#{id}
+	</select>
+	<update id="updatePayStatus" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBillHandleDto">
+		update TB_BIS_BILL_HANDLE
+			<set>
+              <if test="payStatus != null and payStatus!=''">
+                     PAY_STATUS  = #{payStatus,jdbcType=CHAR},
+             </if>
+              <if test="payMemo != null and payMemo!=''">
+                     PAY_MEMO  = #{payMemo,jdbcType=VARCHAR}
+             </if>
+			</set>
+			<where>
+				ID = #{id}
+			</where>
+	</update>
+	
+	
+</mapper>

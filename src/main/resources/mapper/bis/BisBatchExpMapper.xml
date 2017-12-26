@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisBatchExpMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisBatchExp" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" />
+    <!-- <result column="OUTER_ACCOUNT" property="outerAccount" jdbcType="VARCHAR" /> -->
+    <result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+    <result column="SUCCESS_NUM" property="successNum" jdbcType="DECIMAL" />
+    <result column="FAIL_NUM" property="failNum" jdbcType="DECIMAL" />
+    <result column="TOTAL_NUM" property="totalNum" jdbcType="DECIMAL" />
+    <result column="TOTAL_AMT" property="totalAmt" jdbcType="DECIMAL" />
+    <result column="HANDLE_STATUS" property="handleStatus" jdbcType="CHAR" />
+    <result column="EXP_TIME" property="expTime" jdbcType="TIMESTAMP" />
+    <result column="EXP_R" property="expR" jdbcType="VARCHAR" />
+    <result column="EXP_R_NAME" property="expRName" jdbcType="VARCHAR" />
+    <result column="CHECK_R" property="checkR" jdbcType="VARCHAR" />
+    <result column="CHECK_R_NAME" property="checkRName" jdbcType="VARCHAR" />
+    <result column="CHECK_TIME" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+    <result column="EXP_REASON" property="expReason" jdbcType="VARCHAR" />
+    <result column="EXP_FILE_NAME" property="expFileName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BATCH_NO,<!--  OUTER_ACCOUNT,  -->CHECK_STATUS, SUCCESS_NUM, FAIL_NUM, TOTAL_NUM, TOTAL_AMT, 
+    HANDLE_STATUS, EXP_TIME, EXP_R, EXP_R_NAME, CHECK_R, CHECK_R_NAME, CHECK_TIME, BUSI_TYPE,CHECK_REASON,EXP_REASON,EXP_FILE_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_BATCH_EXP
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="getBatchNo" resultType="java.lang.String" parameterType="java.lang.String" >
+    SELECT BIS_BATCH_EXP_NO.NEXTVAL FROM DUAL
+  </select>
+  <select id="selectByBatchNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_BATCH_EXP
+    where BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_BATCH_EXP
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBatchExp" >
+    insert into TB_BIS_BATCH_EXP (ID, BATCH_NO,<!--  OUTER_ACCOUNT,  -->
+      CHECK_STATUS, SUCCESS_NUM, FAIL_NUM, 
+      TOTAL_NUM, TOTAL_AMT, HANDLE_STATUS, 
+      EXP_TIME, EXP_R, EXP_R_NAME, 
+      CHECK_R, CHECK_R_NAME, CHECK_TIME, 
+      BUSI_TYPE,CHECK_REASON,EXP_REASON, EXP_FILE_NAME)
+    values (#{id,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR},<!--  #{outerAccount,jdbcType=VARCHAR},  -->
+      #{checkStatus,jdbcType=CHAR}, #{successNum,jdbcType=DECIMAL}, #{failNum,jdbcType=DECIMAL}, 
+      #{totalNum,jdbcType=DECIMAL}, #{totalAmt,jdbcType=DECIMAL}, #{handleStatus,jdbcType=CHAR}, 
+      #{expTime,jdbcType=TIMESTAMP}, #{expR,jdbcType=VARCHAR}, #{expRName,jdbcType=VARCHAR}, 
+      #{checkR,jdbcType=VARCHAR}, #{checkRName,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{busiType,jdbcType=CHAR},#{checkReason,jdbcType=VARCHAR},#{expReason,jdbcType=VARCHAR},#{expFileName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBatchExp" >
+    insert into TB_BIS_BATCH_EXP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="batchNo != null" >
+        BATCH_NO,
+      </if>
+      <!-- <if test="outerAccount != null" >
+        OUTER_ACCOUNT,
+      </if> -->
+      <if test="checkStatus != null" >
+        CHECK_STATUS,
+      </if>
+      <if test="successNum != null" >
+        SUCCESS_NUM,
+      </if>
+      <if test="failNum != null" >
+        FAIL_NUM,
+      </if>
+      <if test="totalNum != null" >
+        TOTAL_NUM,
+      </if>
+      <if test="totalAmt != null" >
+        TOTAL_AMT,
+      </if>
+      <if test="handleStatus != null" >
+        HANDLE_STATUS,
+      </if>
+      <if test="expTime != null" >
+        EXP_TIME,
+      </if>
+      <if test="expR != null" >
+        EXP_R,
+      </if>
+      <if test="expRName != null" >
+        EXP_R_NAME,
+      </if>
+      <if test="checkR != null" >
+        CHECK_R,
+      </if>
+      <if test="checkRName != null" >
+        CHECK_R_NAME,
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="checkReason != null" >
+        CHECK_REASON,
+      </if>
+      <if test="expReason != null" >
+        EXP_REASON,
+      </if>
+      <if test="expFileName != null" >
+        EXP_FILE_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="outerAccount != null" >
+        #{outerAccount,jdbcType=VARCHAR},
+      </if> -->
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="successNum != null" >
+        #{successNum,jdbcType=DECIMAL},
+      </if>
+      <if test="failNum != null" >
+        #{failNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalNum != null" >
+        #{totalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmt != null" >
+        #{totalAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="handleStatus != null" >
+        #{handleStatus,jdbcType=CHAR},
+      </if>
+      <if test="expTime != null" >
+        #{expTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expR != null" >
+        #{expR,jdbcType=VARCHAR},
+      </if>
+      <if test="expRName != null" >
+        #{expRName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkR != null" >
+        #{checkR,jdbcType=VARCHAR},
+      </if>
+      <if test="checkRName != null" >
+        #{checkRName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="checkReason != null" >
+        #{checkReason,jdbcType=VARCHAR},
+      </if>
+      <if test="expReason != null" >
+        #{expReason,jdbcType=VARCHAR},
+      </if>
+      <if test="expFileName != null" >
+        #{expFileName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBatchExp" >
+    update TB_BIS_BATCH_EXP
+    <set>
+      <if test="batchNo != null" >
+        BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      </if>
+     <!--  <if test="outerAccount != null" >
+        OUTER_ACCOUNT = #{outerAccount,jdbcType=VARCHAR},
+      </if> -->
+      <if test="checkStatus != null" >
+        CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="successNum != null" >
+        SUCCESS_NUM = #{successNum,jdbcType=DECIMAL},
+      </if>
+      <if test="failNum != null" >
+        FAIL_NUM = #{failNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalNum != null" >
+        TOTAL_NUM = #{totalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmt != null" >
+        TOTAL_AMT = #{totalAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="handleStatus != null" >
+        HANDLE_STATUS = #{handleStatus,jdbcType=CHAR},
+      </if>
+      <if test="expTime != null" >
+        EXP_TIME = #{expTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expR != null" >
+        EXP_R = #{expR,jdbcType=VARCHAR},
+      </if>
+      <if test="expRName != null" >
+        EXP_R_NAME = #{expRName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkR != null" >
+        CHECK_R = #{checkR,jdbcType=VARCHAR},
+      </if>
+      <if test="checkRName != null" >
+        CHECK_R_NAME = #{checkRName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME = #{checkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="checkReason != null" >
+        CHECK_REASON = #{checkReason,jdbcType=VARCHAR},
+      </if>
+      <if test="expReason != null" >
+        EXP_REASON = #{expReason,jdbcType=VARCHAR},
+      </if>
+      <if test="expFileName != null" >
+        EXP_FILE_NAME = #{expFileName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBatchExp" >
+    update TB_BIS_BATCH_EXP
+    set BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+     <!--  OUTER_ACCOUNT = #{outerAccount,jdbcType=VARCHAR}, -->
+      CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      SUCCESS_NUM = #{successNum,jdbcType=DECIMAL},
+      FAIL_NUM = #{failNum,jdbcType=DECIMAL},
+      TOTAL_NUM = #{totalNum,jdbcType=DECIMAL},
+      TOTAL_AMT = #{totalAmt,jdbcType=DECIMAL},
+      HANDLE_STATUS = #{handleStatus,jdbcType=CHAR},
+      EXP_TIME = #{expTime,jdbcType=TIMESTAMP},
+      EXP_R = #{expR,jdbcType=VARCHAR},
+      EXP_R_NAME = #{expRName,jdbcType=VARCHAR},
+      CHECK_R = #{checkR,jdbcType=VARCHAR},
+      CHECK_R_NAME = #{checkRName,jdbcType=VARCHAR},
+      CHECK_TIME = #{checkTime,jdbcType=TIMESTAMP},
+      CHECK_REASON = #{checkReason,jdbcType=VARCHAR},
+      EXP_REASON = #{expReason,jdbcType=VARCHAR},
+      <!-- EXP_FILE_NAME = #{expFileName,jdbcType=VARCHAR}, -->
+      BUSI_TYPE = #{busiType,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBatchExp" resultMap="BaseResultMap">
+	 	select <include refid="Base_Column_List" /> from TB_BIS_BATCH_EXP
+	 	<where>
+	 		 <if test="batchNo != null and batchNo != ''" >
+	 		 	and instr(BATCH_NO,#{batchNo,jdbcType=VARCHAR})>0
+	 		 </if>
+	 		<!--  <if test="outerAccount != null and outerAccount != ''" >
+	 		 	and instr(OUTER_ACCOUNT,#{outerAccount,jdbcType=VARCHAR})>0
+	 		 </if> -->
+	 		 <if test="checkStatus != null and checkStatus != ''" >
+	 		 	and CHECK_STATUS = #{checkStatus,jdbcType=CHAR}
+	 		 </if>
+	 		 <if test="successNum != null and successNum != ''" >
+	 		 	and SUCCESS_NUM = #{successNum,jdbcType=DECIMAL}
+	 		 </if>
+	 		 <if test="failNum != null and failNum != ''" >
+	 		 	and FAIL_NUM = #{failNum,jdbcType=DECIMAL}
+	 		 </if>
+	 		 <if test="totalNum != null and totalNum != ''" >
+	 		 	and TOTAL_NUM = #{totalNum,jdbcType=DECIMAL}
+	 		 </if>
+	 		 <if test="totalAmt != null and totalAmt != ''" >
+	 		 	and TOTAL_AMT = #{totalAmt,jdbcType=DECIMAL}
+	 		 </if>
+	 		 <if test="handleStatus != null and handleStatus != ''" >
+	 		 	and HANDLE_STATUS = #{handleStatus,jdbcType=CHAR}
+	 		 </if>
+	 		 <if test="expR != null and expR != ''" >
+	 		 	and EXP_R = #{expR,jdbcType=VARCHAR}
+	 		 </if>
+	 		 <if test="expRName != null and expRName != ''" >
+	 		 	and EXP_R_NAME = #{expRName,jdbcType=VARCHAR}
+	 		 </if>
+	 		 <if test="checkR != null and checkR != ''" >
+	 		 	and CHECK_R = #{checkR,jdbcType=VARCHAR}
+	 		 </if>
+	 		 <if test="checkRName != null and checkRName != ''" >
+	 		 	and CHECK_R_NAME = #{checkRName,jdbcType=VARCHAR}
+	 		 </if>
+	 		 <if test="checkTime != null and checkTime != ''" >
+	 		 	and CHECK_TIME = #{checkTime,jdbcType=TIMESTAMP}
+	 		 </if>
+	 		 <if test="busiType != null and busiType != ''" >
+	 		 	and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+	 		 </if>
+	 		 <if test="startExpTime != null and startExpTime != ''" >
+	 		 	and to_char(EXP_TIME,'yyyy-MM-dd') &gt;= to_char(#{startExpTime,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+	 		 </if>
+	 		 <if test="endExpTime != null and endExpTime != ''" >
+	 		 	and to_char(EXP_TIME,'yyyy-MM-dd') &lt;= to_char(#{endExpTime,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+	 		 </if>
+	 		 <if test="startCheckTime != null and startCheckTime != ''" >
+	 		 	and to_char(CHECK_TIME,'yyyy-MM-dd') &gt;= to_char(#{startCheckTime,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+	 		 </if>
+	 		 <if test="endCheckTime != null and endCheckTime != ''" >
+	 		 	and to_char(CHECK_TIME,'yyyy-MM-dd') &lt;= to_char(#{endCheckTime,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+	 		 </if>
+	 	</where>
+	 	ORDER BY EXP_TIME DESC,ID DESC
+	</select>
+	<update id="updateBatchExpNum" >
+	    update TB_BIS_BATCH_EXP
+	    <set>
+	      <if test="successNum != null and successNum!=0" >
+	        SUCCESS_NUM = SUCCESS_NUM+#{successNum,jdbcType=DECIMAL},
+	      </if>
+	      <if test="failNum != null and failNum!=0" >
+	        FAIL_NUM = FAIL_NUM+#{failNum,jdbcType=DECIMAL},
+	      </if>
+	      case when FAIL_NUM+#{failNum,jdbcType=DECIMAL}=TOTAL_NUM then HANDLE_STATUS = '03'
+			   when SUCCESS_NUM+#{successNum,jdbcType=DECIMAL}=TOTAL_NUM then HANDLE_STATUS = '01'
+		  else
+			　  HANDLE_STATUS = '02'
+		  end
+	    </set>
+	    where ID = #{batchNo,jdbcType=VARCHAR}
+	</update>
+	<update id="updateAuditStatusByBatchNo" >
+	    update TB_BIS_BATCH_EXP
+	    set CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+	    CHECK_R = #{auditor,jdbcType=VARCHAR},
+	    CHECK_R_NAME = #{auditorName,jdbcType=VARCHAR},
+	    CHECK_TIME = #{checkTime,jdbcType=TIMESTAMP},
+	    CHECK_REASON = #{checkReason,jdbcType=VARCHAR}
+	    where BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+	</update>
+	<select id="isExistFile" resultType="long">
+	    select count(ID) from TB_BIS_BATCH_EXP
+	    where EXP_FILE_NAME = #{expFileName,jdbcType=VARCHAR}
+	    and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+    </select>
+</mapper>

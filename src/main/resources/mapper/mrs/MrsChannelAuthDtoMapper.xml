@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsChannelAuthDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsChannelAuthDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <id column="BANK_TYPE" property="bankType" jdbcType="VARCHAR" />
+    <result column="BUSI_START_TIME" property="busiStartTime" jdbcType="TIMESTAMP" />
+    <result column="BUSI_END_TIME" property="busiEndTime" jdbcType="TIMESTAMP" />
+    <result column="WORK_DAY" property="workDay" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BANK_TYPE, BUSI_START_TIME, BUSI_END_TIME, WORK_DAY, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsChannelAuthDtoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CHANNEL_AUTH
+    where ID = #{id,jdbcType=VARCHAR}
+      and BANK_TYPE = #{bankType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsChannelAuthDtoKey" >
+    delete from TB_MRS_CHANNEL_AUTH
+    where ID = #{id,jdbcType=VARCHAR}
+      and BANK_TYPE = #{bankType,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsChannelAuthDto" >
+    insert into TB_MRS_CHANNEL_AUTH (ID, BANK_TYPE, BUSI_START_TIME, 
+      BUSI_END_TIME, WORK_DAY, REMARK
+      )
+    values (#{id,jdbcType=VARCHAR}, #{bankType,jdbcType=VARCHAR}, #{busiStartTime,jdbcType=TIMESTAMP}, 
+      #{busiEndTime,jdbcType=TIMESTAMP}, #{workDay,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsChannelAuthDto" >
+    insert into TB_MRS_CHANNEL_AUTH
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE,
+      </if>
+      <if test="busiStartTime != null" >
+        BUSI_START_TIME,
+      </if>
+      <if test="busiEndTime != null" >
+        BUSI_END_TIME,
+      </if>
+      <if test="workDay != null" >
+        WORK_DAY,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="busiStartTime != null" >
+        #{busiStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="busiEndTime != null" >
+        #{busiEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workDay != null" >
+        #{workDay,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsChannelAuthDto" >
+    update TB_MRS_CHANNEL_AUTH
+    <set >
+      <if test="busiStartTime != null" >
+        BUSI_START_TIME = #{busiStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="busiEndTime != null" >
+        BUSI_END_TIME = #{busiEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workDay != null" >
+        WORK_DAY = #{workDay,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+      and BANK_TYPE = #{bankType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsChannelAuthDto" >
+    update TB_MRS_CHANNEL_AUTH
+    set BUSI_START_TIME = #{busiStartTime,jdbcType=TIMESTAMP},
+      BUSI_END_TIME = #{busiEndTime,jdbcType=TIMESTAMP},
+      WORK_DAY = #{workDay,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+      and BANK_TYPE = #{bankType,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisCheckEmailDtoMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisCheckEmailDto">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CHECK_MESSAGE" jdbcType="VARCHAR" property="checkMessage" />
+    <result column="CUST_ID" jdbcType="VARCHAR" property="custId" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="OPER_TYPE" jdbcType="CHAR" property="operType" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CHECK_MESSAGE, CUST_ID, EMAIL, OPER_TYPE, CREATE_TIME,STATUS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_CHECK_EMAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TB_BIS_CHECK_EMAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisCheckEmailDto">
+    insert into TB_BIS_CHECK_EMAIL (ID, CHECK_MESSAGE, CUST_ID, 
+      EMAIL, OPER_TYPE, STATUS, 
+      CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{checkMessage,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{operType,jdbcType=CHAR}, #{status,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisCheckEmailDto">
+    insert into TB_BIS_CHECK_EMAIL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="checkMessage != null">
+        CHECK_MESSAGE,
+      </if>
+      <if test="custId != null">
+        CUST_ID,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="operType != null">
+        OPER_TYPE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="checkMessage != null">
+        #{checkMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="operType != null">
+        #{operType,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisCheckEmailDto">
+    update TB_BIS_CHECK_EMAIL
+    <set>
+      <if test="checkMessage != null">
+        CHECK_MESSAGE = #{checkMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="operType != null">
+        OPER_TYPE = #{operType,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateOperTypeAndCustId" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisCheckEmailDto">
+    update TB_BIS_CHECK_EMAIL
+    set STATUS='3'
+    where CUST_ID = #{custId,jdbcType=VARCHAR} and OPER_TYPE=#{operType,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisCheckEmailDto">
+    update TB_BIS_CHECK_EMAIL
+    set CHECK_MESSAGE = #{checkMessage,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      OPER_TYPE = #{operType,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getCheckEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_CHECK_EMAIL
+    where CHECK_MESSAGE = #{checkMessage,jdbcType=VARCHAR}
+  </select>
+  <select id="getByCustIdOperTypeStatus" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_CHECK_EMAIL
+    where OPER_TYPE = #{operType,jdbcType=CHAR} and CUST_ID = #{custId,jdbcType=VARCHAR} and STATUS = #{status,jdbcType=CHAR}
+  </select>
+  <select id="getByCustIdOrCheckMessageAndOperTypeAndStatus" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_CHECK_EMAIL
+    where OPER_TYPE = #{operType,jdbcType=CHAR} AND STATUS = #{status,jdbcType=CHAR} AND 
+    	( CUST_ID = #{custId,jdbcType=VARCHAR} OR  CHECK_MESSAGE = #{checkMessage,jdbcType=VARCHAR} )
+    order by CREATE_TIME DESC
+  </select>
+  <update id="updateEmailStatus">
+    update TB_BIS_CHECK_EMAIL
+    set STATUS = #{status,jdbcType=CHAR}
+    where OPER_TYPE = #{operType,jdbcType=CHAR} and CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+</mapper>

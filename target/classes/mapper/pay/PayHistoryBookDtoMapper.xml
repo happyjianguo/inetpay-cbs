@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayHistoryBookDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayHistoryBookDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PAY_ID" property="payId" jdbcType="CHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="CHAR" />
+    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+    <result column="FEE_RATE" property="feeRate" jdbcType="DECIMAL" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_NAME" property="payeeCustName" jdbcType="VARCHAR" />
+    <result column="DR_ACCOUNT_ID" property="drAccountId" jdbcType="VARCHAR" />
+    <result column="CR_ACCOUNT_ID" property="crAccountId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="CLEAR_DATE" property="clearDate" jdbcType="CHAR" />
+    <result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+    <result column="ADJUST_STATUS" property="adjustStatus" jdbcType="CHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PAY_ID, BUSI_ID, BUSI_TYPE, TRADE_TYPE, TRADE_NAME, ORDER_AMT, FEE, FEE_TYPE, 
+    FEE_RATE, ORDER_STATUS, PAYER_CUST_ID, PAYER_CUST_NAME, PAYEE_CUST_ID, PAYEE_CUST_NAME, 
+    DR_ACCOUNT_ID, CR_ACCOUNT_ID, ACCOUNT_DATE, CLEAR_DATE, CHECK_STATUS, ADJUST_STATUS, 
+    CHANNEL_CODE, CREATE_TIME, COMPLETE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_HISTORY_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_HISTORY_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryBookDto" >
+    insert into TB_PAY_HISTORY_BOOK (ID, PAY_ID, BUSI_ID, 
+      BUSI_TYPE, TRADE_TYPE, TRADE_NAME, 
+      ORDER_AMT, FEE, FEE_TYPE, 
+      FEE_RATE, ORDER_STATUS, PAYER_CUST_ID, 
+      PAYER_CUST_NAME, PAYEE_CUST_ID, PAYEE_CUST_NAME, 
+      DR_ACCOUNT_ID, CR_ACCOUNT_ID, ACCOUNT_DATE, 
+      CLEAR_DATE, CHECK_STATUS, ADJUST_STATUS, 
+      CHANNEL_CODE, CREATE_TIME, COMPLETE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{payId,jdbcType=CHAR}, #{busiId,jdbcType=CHAR}, 
+      #{busiType,jdbcType=CHAR}, #{tradeType,jdbcType=CHAR}, #{tradeName,jdbcType=VARCHAR}, 
+      #{orderAmt,jdbcType=DECIMAL}, #{fee,jdbcType=DECIMAL}, #{feeType,jdbcType=CHAR}, 
+      #{feeRate,jdbcType=DECIMAL}, #{orderStatus,jdbcType=CHAR}, #{payerCustId,jdbcType=VARCHAR}, 
+      #{payerCustName,jdbcType=VARCHAR}, #{payeeCustId,jdbcType=VARCHAR}, #{payeeCustName,jdbcType=VARCHAR}, 
+      #{drAccountId,jdbcType=VARCHAR}, #{crAccountId,jdbcType=VARCHAR}, #{accountDate,jdbcType=CHAR}, 
+      #{clearDate,jdbcType=CHAR}, #{checkStatus,jdbcType=CHAR}, #{adjustStatus,jdbcType=CHAR}, 
+      #{channelCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryBookDto" >
+    insert into TB_PAY_HISTORY_BOOK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="payId != null" >
+        PAY_ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE,
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME,
+      </if>
+      <if test="orderAmt != null" >
+        ORDER_AMT,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE,
+      </if>
+      <if test="feeRate != null" >
+        FEE_RATE,
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS,
+      </if>
+      <if test="payerCustId != null" >
+        PAYER_CUST_ID,
+      </if>
+      <if test="payerCustName != null" >
+        PAYER_CUST_NAME,
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID,
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME,
+      </if>
+      <if test="drAccountId != null" >
+        DR_ACCOUNT_ID,
+      </if>
+      <if test="crAccountId != null" >
+        CR_ACCOUNT_ID,
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE,
+      </if>
+      <if test="clearDate != null" >
+        CLEAR_DATE,
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS,
+      </if>
+      <if test="adjustStatus != null" >
+        ADJUST_STATUS,
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=CHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="tradeName != null" >
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null" >
+        #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="feeRate != null" >
+        #{feeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="payerCustId != null" >
+        #{payerCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerCustName != null" >
+        #{payerCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="drAccountId != null" >
+        #{drAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountId != null" >
+        #{crAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="clearDate != null" >
+        #{clearDate,jdbcType=CHAR},
+      </if>
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="adjustStatus != null" >
+        #{adjustStatus,jdbcType=CHAR},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryBookDto" >
+    update TB_PAY_HISTORY_BOOK
+    <set >
+      <if test="payId != null" >
+        PAY_ID = #{payId,jdbcType=CHAR},
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null" >
+        ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE = #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="feeRate != null" >
+        FEE_RATE = #{feeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="payerCustId != null" >
+        PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerCustName != null" >
+        PAYER_CUST_NAME = #{payerCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="drAccountId != null" >
+        DR_ACCOUNT_ID = #{drAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountId != null" >
+        CR_ACCOUNT_ID = #{crAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="clearDate != null" >
+        CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="adjustStatus != null" >
+        ADJUST_STATUS = #{adjustStatus,jdbcType=CHAR},
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE = #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryBookDto" >
+    update TB_PAY_HISTORY_BOOK
+    set PAY_ID = #{payId,jdbcType=CHAR},
+      BUSI_ID = #{busiId,jdbcType=CHAR},
+      BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      FEE = #{fee,jdbcType=DECIMAL},
+      FEE_TYPE = #{feeType,jdbcType=CHAR},
+      FEE_RATE = #{feeRate,jdbcType=DECIMAL},
+      ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR},
+      PAYER_CUST_NAME = #{payerCustName,jdbcType=VARCHAR},
+      PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      DR_ACCOUNT_ID = #{drAccountId,jdbcType=VARCHAR},
+      CR_ACCOUNT_ID = #{crAccountId,jdbcType=VARCHAR},
+      ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+      CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      ADJUST_STATUS = #{adjustStatus,jdbcType=CHAR},
+      CHANNEL_CODE = #{channelCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

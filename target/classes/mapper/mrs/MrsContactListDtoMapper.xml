@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsContactListDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsContactListDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="SOURCE" property="source" jdbcType="CHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PHONE_NO" property="phoneNo" jdbcType="VARCHAR" />
+    <result column="MOBILL" property="mobill" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CERT_TYPE" property="certType" jdbcType="CHAR" />
+    <result column="CERT_NO" property="certNo" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, SOURCE, NAME, PHONE_NO, MOBILL, EMAIL, CERT_TYPE, CERT_NO, CREATE_TIME, 
+    ADDRESS, STATUS, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CONTACT_LIST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectBycustId" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsContactListDto" >
+    select
+			b.ID, b.CUST_ID, b.SOURCE, b.NAME, b.PHONE_NO, b.MOBILL, b.EMAIL, b.CERT_TYPE, b.CERT_NO, b.CREATE_TIME, 
+	    	b.ADDRESS, b.STATUS, b.REMARK
+		from TB_MRS_CONTACT_LIST b where 1=1
+			<if test="custId!=null and custId!=''">
+			    and b.CUST_ID = #{custId,jdbcType=VARCHAR}
+			</if>
+			<if test="certNo!=null and certNo!=''">
+			    and b.CERT_NO = #{certNo,jdbcType=VARCHAR}
+			</if>
+			<if test="email!=null and email!=''">
+			    and b.EMAIL = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="mobill!=null and mobill!=''">
+			    and b.MOBILL = #{mobill,jdbcType=VARCHAR}
+			</if>
+			<if test="phoneNo!=null and phoneNo!=''">
+			    and b.PHONE_NO = #{phoneNo,jdbcType=VARCHAR}
+			</if>
+			<if test="name!=null and name!=''">
+			    and b.NAME = #{name,jdbcType=VARCHAR}
+			</if>
+  </select>
+  <!-- 根据一户通号码查询联系人信息 -->
+  <select id="findByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CONTACT_LIST
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  <select id="findByIdandCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CONTACT_LIST
+    where CUST_ID = #{custId,jdbcType=VARCHAR} AND ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryAllData" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsContactListDto">
+		select
+			b.ID, b.CUST_ID, b.SOURCE, b.NAME, b.PHONE_NO, b.MOBILL, b.EMAIL, b.CERT_TYPE, b.CERT_NO, b.CREATE_TIME, 
+	    	b.ADDRESS, b.STATUS, b.REMARK
+		from TB_MRS_CONTACT_LIST b where 1=1
+			<if test="status !=null and status !=''">
+			    and b.STATUS = '${status}'
+			</if>
+			<if test="custId!=null and custId!=''">
+			    and b.CUST_ID = #{custId,jdbcType=VARCHAR}
+			</if>
+		<!-- 	<if test="status!=null and status!=''">
+			    and b.STATUS = #{status,jdbcType=CHAR}
+			</if> -->
+			<if test="certNo!=null and certNo!=''">
+			    and b.CERT_NO = #{certNo,jdbcType=VARCHAR}
+			</if>
+			<if test="email!=null and email!=''">
+			    AND instr(b.EMAIL, #{email,jdbcType=VARCHAR}) > 0 
+			</if>
+			<if test="mobill!=null and mobill!=''">
+			    AND instr(b.MOBILL, #{mobill,jdbcType=VARCHAR}) > 0 
+			</if>
+			<if test="phoneNo!=null and phoneNo!=''">
+			    AND instr(b.PHONE_NO, #{phoneNo,jdbcType=VARCHAR}) > 0 
+			</if>
+			<if test="remark!=null and remark!=''">
+			    AND instr(b.NAME, #{remark,jdbcType=VARCHAR}) > 0 
+			</if>
+		order by b.CREATE_TIME DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_CONTACT_LIST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByNameAndCustId" parameterType="java.lang.String" >
+    delete from TB_MRS_CONTACT_LIST
+    where CUST_ID = #{custId,jdbcType=VARCHAR} and NAME = #{name,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsContactListDto" >
+    insert into TB_MRS_CONTACT_LIST (ID, CUST_ID, SOURCE, 
+      NAME, PHONE_NO, MOBILL, 
+      EMAIL, CERT_TYPE, CERT_NO, 
+      CREATE_TIME, ADDRESS, STATUS, 
+      REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{source,jdbcType=CHAR}, 
+      #{name,jdbcType=VARCHAR}, #{phoneNo,jdbcType=VARCHAR}, #{mobill,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{certType,jdbcType=CHAR}, #{certNo,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsContactListDto" >
+    insert into TB_MRS_CONTACT_LIST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO,
+      </if>
+      <if test="mobill != null" >
+        MOBILL,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="certType != null" >
+        CERT_TYPE,
+      </if>
+      <if test="certNo != null" >
+        CERT_NO,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobill != null" >
+        #{mobill,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null" >
+        #{certType,jdbcType=CHAR},
+      </if>
+      <if test="certNo != null" >
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsContactListDto" >
+    update TB_MRS_CONTACT_LIST
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobill != null" >
+        MOBILL = #{mobill,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null" >
+        CERT_TYPE = #{certType,jdbcType=CHAR},
+      </if>
+      <if test="certNo != null" >
+        CERT_NO = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsContactListDto" >
+    update TB_MRS_CONTACT_LIST
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=CHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      MOBILL = #{mobill,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      CERT_TYPE = #{certType,jdbcType=CHAR},
+      CERT_NO = #{certNo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

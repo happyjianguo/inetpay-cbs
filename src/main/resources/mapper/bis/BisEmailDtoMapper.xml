@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisEmailDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SYSTEM" property="system" jdbcType="CHAR" />
+    <result column="EMAIL_TITLE" property="emailTitle" jdbcType="VARCHAR" />
+    <result column="SENDER" property="sender" jdbcType="VARCHAR" />
+    <result column="ADDRESSEE" property="addressee" jdbcType="VARCHAR" />
+    <result column="EMAIL_CONTENT" property="emailContent" jdbcType="VARCHAR" />
+    <result column="SEND_STATUS" property="sendStatus" jdbcType="CHAR" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SYSTEM, EMAIL_TITLE, SENDER, ADDRESSEE, EMAIL_CONTENT, SEND_STATUS, FAIL_REASON, 
+    CREATE_TIME, SEND_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EMAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_EMAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailDto">
+    insert into TB_BIS_EMAIL (ID, SYSTEM, EMAIL_TITLE, 
+      SENDER, ADDRESSEE, EMAIL_CONTENT, 
+      SEND_STATUS, FAIL_REASON, CREATE_TIME, 
+      SEND_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{system,jdbcType=CHAR}, #{emailTitle,jdbcType=VARCHAR}, 
+      #{sender,jdbcType=VARCHAR}, #{addressee,jdbcType=VARCHAR}, #{emailContent,jdbcType=VARCHAR}, 
+      #{sendStatus,jdbcType=CHAR}, #{failReason,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{sendTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailDto" >
+    insert into TB_BIS_EMAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="system != null" >
+        SYSTEM,
+      </if>
+      <if test="emailTitle != null" >
+        EMAIL_TITLE,
+      </if>
+      <if test="sender != null" >
+        SENDER,
+      </if>
+      <if test="addressee != null" >
+        ADDRESSEE,
+      </if>
+      <if test="emailContent != null" >
+        EMAIL_CONTENT,
+      </if>
+      <if test="sendStatus != null" >
+        SEND_STATUS,
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null" >
+        #{system,jdbcType=CHAR},
+      </if>
+      <if test="emailTitle != null" >
+        #{emailTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="addressee != null" >
+        #{addressee,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null" >
+        #{emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null" >
+        #{sendStatus,jdbcType=CHAR},
+      </if>
+      <if test="failReason != null" >
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailDto" >
+    update TB_BIS_EMAIL
+    <set >
+      <if test="system != null" >
+        SYSTEM = #{system,jdbcType=CHAR},
+      </if>
+      <if test="emailTitle != null" >
+        EMAIL_TITLE = #{emailTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        SENDER = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="addressee != null" >
+        ADDRESSEE = #{addressee,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null" >
+        EMAIL_CONTENT = #{emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null" >
+        SEND_STATUS = #{sendStatus,jdbcType=CHAR},
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailDto" >
+    update TB_BIS_EMAIL
+    set SYSTEM = #{system,jdbcType=CHAR},
+      EMAIL_TITLE = #{emailTitle,jdbcType=VARCHAR},
+      SENDER = #{sender,jdbcType=VARCHAR},
+      ADDRESSEE = #{addressee,jdbcType=VARCHAR},
+      EMAIL_CONTENT = #{emailContent,jdbcType=VARCHAR},
+      SEND_STATUS = #{sendStatus,jdbcType=CHAR},
+      FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      SEND_TIME = #{sendTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEmailDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EMAIL
+    <where>
+    <if test="system != null and system !=''" >
+      and  SYSTEM = #{system.value,jdbcType=CHAR}
+      </if>
+      <if test="emailTitle != null and emailTitle !=''" >
+      and instr(EMAIL_TITLE, #{emailTitle,jdbcType=VARCHAR}) > 0
+      <!-- and  EMAIL_TITLE like concat('%',concat(#{emailTitle,jdbcType=VARCHAR},'%'))  -->
+      </if>
+      <if test="sender != null and sender !=''" >
+       and instr(SENDER, #{sender,jdbcType=VARCHAR}) > 0
+     <!--  and  SENDER like concat('%',concat(#{sender,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="addressee != null and addressee !=''" >
+      and instr(ADDRESSEE, #{addressee,jdbcType=VARCHAR}) > 0
+     <!--  and  ADDRESSEE like concat('%',concat(#{addressee,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="emailContent != null and emailContent !=''" >
+      and instr(EMAIL_CONTENT, #{emailContent,jdbcType=VARCHAR}) > 0
+      <!-- and   EMAIL_CONTENT like concat('%',concat(#{emailContent,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="sendStatus != null and sendStatus !=''" >
+      and  SEND_STATUS = #{sendStatus.value,jdbcType=CHAR}
+      </if>
+      <if test="failReason != null and failReason !=''" >
+      and  FAIL_REASON = #{failReason,jdbcType=VARCHAR}
+      </if>
+      <if test="startCreateTime != null" >
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startCreateTime},'YYYY-MM-DD')
+      </if>
+       <if test="endCreateTime != null" >
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="startSendTime != null" >
+      and to_char(SEND_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startSendTime},'YYYY-MM-DD')
+      </if>
+       <if test="endSendTime != null" >
+      and to_char(SEND_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endSendTime},'YYYY-MM-DD')
+      </if>
+    </where>
+    order by CREATE_TIME desc
+  </select>
+</mapper>

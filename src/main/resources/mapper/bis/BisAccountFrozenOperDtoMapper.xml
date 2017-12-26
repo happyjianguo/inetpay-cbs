@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisAccountFrozenOperDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenOperDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUS_ID" property="busId" jdbcType="VARCHAR" />
+    <result column="SET_AMT" property="setAmt" jdbcType="DECIMAL" />
+    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="PAY_STATUS" property="payStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUS_ID, SET_AMT, ORDER_ID, PAY_STATUS, CREATE_TIME, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCOUNT_FROZEN_OPER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findActFrozenOperListByBusId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCOUNT_FROZEN_OPER
+    where BUS_ID = #{busId,jdbcType=VARCHAR} ORDER BY CREATE_TIME DESC
+  </select>
+  <select id="autoQueryUnDownStatus" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCOUNT_FROZEN_OPER
+    where PAY_STATUS = '00'
+  </select>
+  <select id="isExistUndownStatusOper" resultType="long" parameterType="java.lang.String" >
+    select 
+   	count(ID)
+    from TB_BIS_ACCOUNT_FROZEN_OPER
+    where BUS_ID = #{busId,jdbcType=VARCHAR}
+    and PAY_STATUS = '00'
+  </select>
+  <select id="isExistPayOper" resultType="long" parameterType="java.lang.String" >
+    select 
+   	count(ID)
+    from TB_BIS_ACCOUNT_FROZEN_OPER
+    where BUS_ID = #{busId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_ACCOUNT_FROZEN_OPER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenOperDto" >
+    insert into TB_BIS_ACCOUNT_FROZEN_OPER (ID, BUS_ID, SET_AMT, 
+      ORDER_ID, PAY_STATUS, CREATE_TIME, 
+      REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{busId,jdbcType=VARCHAR}, #{setAmt,jdbcType=DECIMAL}, 
+      #{orderId,jdbcType=VARCHAR}, #{payStatus,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenOperDto" >
+    insert into TB_BIS_ACCOUNT_FROZEN_OPER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busId != null" >
+        BUS_ID,
+      </if>
+      <if test="setAmt != null" >
+        SET_AMT,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busId != null" >
+        #{busId,jdbcType=VARCHAR},
+      </if>
+      <if test="setAmt != null" >
+        #{setAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenOperDto" >
+    update TB_BIS_ACCOUNT_FROZEN_OPER
+    <set >
+      <if test="busId != null" >
+        BUS_ID = #{busId,jdbcType=VARCHAR},
+      </if>
+      <if test="setAmt != null" >
+        SET_AMT = #{setAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS = #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenOperDto" >
+    update TB_BIS_ACCOUNT_FROZEN_OPER
+    set BUS_ID = #{busId,jdbcType=VARCHAR},
+      SET_AMT = #{setAmt,jdbcType=DECIMAL},
+      ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      PAY_STATUS = #{payStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

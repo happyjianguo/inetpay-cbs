@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActBankInterestDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActBankInterestDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+    <result column="BANK_CARD_NO" property="bankCardNo" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="INTEREST_DAY" property="interestDay" jdbcType="VARCHAR" />
+    <result column="RATE_AMOUNT" property="rateAmount" jdbcType="DECIMAL" />
+    <result column="RATE" property="rate" jdbcType="DECIMAL" />
+    <result column="INTEREST" property="interest" jdbcType="DECIMAL" />
+    <result column="INTEREST_STATUS" property="interestStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BANK_TYPE, BANK_CARD_NO, BANK_NAME, INTEREST_DAY, RATE_AMOUNT, RATE, INTEREST, 
+    INTEREST_STATUS, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_BANK_INTEREST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_BANK_INTEREST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActBankInterestDto" >
+    insert into TB_ACT_BANK_INTEREST (ID, BANK_TYPE, BANK_CARD_NO, 
+      BANK_NAME, INTEREST_DAY, RATE_AMOUNT, 
+      RATE, INTEREST, INTEREST_STATUS, 
+      CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{bankType,jdbcType=CHAR}, #{bankCardNo,jdbcType=VARCHAR}, 
+      #{bankName,jdbcType=VARCHAR}, #{interestDay,jdbcType=VARCHAR}, #{rateAmount,jdbcType=DECIMAL}, 
+      #{rate,jdbcType=DECIMAL}, #{interest,jdbcType=DECIMAL}, #{interestStatus,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActBankInterestDto" >
+    insert into TB_ACT_BANK_INTEREST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE,
+      </if>
+      <if test="bankCardNo != null" >
+        BANK_CARD_NO,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="interestDay != null" >
+        INTEREST_DAY,
+      </if>
+      <if test="rateAmount != null" >
+        RATE_AMOUNT,
+      </if>
+      <if test="rate != null" >
+        RATE,
+      </if>
+      <if test="interest != null" >
+        INTEREST,
+      </if>
+      <if test="interestStatus != null" >
+        INTEREST_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="bankCardNo != null" >
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="interestDay != null" >
+        #{interestDay,jdbcType=VARCHAR},
+      </if>
+      <if test="rateAmount != null" >
+        #{rateAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="interest != null" >
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="interestStatus != null" >
+        #{interestStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActBankInterestDto" >
+    update TB_ACT_BANK_INTEREST
+    <set >
+      <if test="bankType != null" >
+        BANK_TYPE = #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="bankCardNo != null" >
+        BANK_CARD_NO = #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="interestDay != null" >
+        INTEREST_DAY = #{interestDay,jdbcType=VARCHAR},
+      </if>
+      <if test="rateAmount != null" >
+        RATE_AMOUNT = #{rateAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null" >
+        RATE = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="interest != null" >
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="interestStatus != null" >
+        INTEREST_STATUS = #{interestStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActBankInterestDto" >
+    update TB_ACT_BANK_INTEREST
+    set BANK_TYPE = #{bankType,jdbcType=CHAR},
+      BANK_CARD_NO = #{bankCardNo,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      INTEREST_DAY = #{interestDay,jdbcType=VARCHAR},
+      RATE_AMOUNT = #{rateAmount,jdbcType=DECIMAL},
+      RATE = #{rate,jdbcType=DECIMAL},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      INTEREST_STATUS = #{interestStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.account.dto.ActBankInterestDto"  resultMap="BaseResultMap">
+  	select * from TB_ACT_BANK_INTEREST 
+  	<where>
+  		<if test="bankType != null and bankType !=''">
+  			BANK_TYPE = #{bankType,jdbcType=CHAR} 
+  		</if>
+  		<if test="bankCardNo != null and bankCardNo !=''">
+  			and instr(BANK_CARD_NO, #{bankCardNo,jdbcType=VARCHAR}) > 0
+  			<!-- and BANK_CARD_NO like concat('%',concat(#{bankCardNo,jdbcType=VARCHAR},'%')) --> 
+  		</if>
+  		<if test="bankName != null and bankName !=''">
+  			and instr(BANK_NAME, #{bankName,jdbcType=VARCHAR}) > 0
+  			<!-- and BANK_NAME like concat('%',concat(#{bankName,jdbcType=VARCHAR},'%')) --> 
+  		</if>
+  		<if test="interestDay != null and interestDay !=''">
+  			and instr(INTEREST_DAY, #{interestDay,jdbcType=VARCHAR}) > 0
+  			<!-- and INTEREST_DAY like concat('%',concat(#{interestDay,jdbcType=VARCHAR},'%')) --> 
+  		</if>
+  		<if test="interestStatus != null">
+  			and INTEREST_STATUS = #{interestStatus,jdbcType=CHAR} 
+  		</if>
+  	</where>
+  	ORDER BY INTEREST_DAY DESC
+  </select>
+</mapper>

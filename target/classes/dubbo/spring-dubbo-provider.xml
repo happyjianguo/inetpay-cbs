@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        
+						http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 声明需要暴露的服务接口 -->
+	<!-- 工作日历服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.WorkCalendarAppService" ref="workCalendarAppService"  protocol="dubbo"/>
+	<!-- 用户信息服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.UcsSecUserAppService" ref="ucsSecUserAppService"  protocol="dubbo"/>
+	<!-- 角色信息服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.UcsSecRoleAppService" ref="ucsSecRoleAppService"  protocol="dubbo"/>
+	<!-- 权限信息服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.UcsSecPermissionAppService" ref="ucsSecPermissionAppService"  protocol="dubbo"/>
+	<!-- 部门机构服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.UcsSecDepartmentAppService" ref="ucsSecDepartmentAppService"  protocol="dubbo" />
+	<!-- 操作日志服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.UcsSecOperationLogAppService" ref="ucsSecOpertionLogAppService"  protocol="dubbo" />
+	<!-- 系统参数服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisSysParamAppService" ref="bisSysParamAppService"  protocol="dubbo" />
+	<!-- 订单管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsPayPaymentAppService" ref="cbsPayPaymentAppService"  protocol="dubbo" />
+	<!-- 充值管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsPayRechargeAppService" ref="cbsPayRechargeAppService"  protocol="dubbo" />
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsRechargeAuditAppService" ref="mrsRechargeAuditAppService"  protocol="dubbo" />
+	<!-- 提现管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsPayWithdrawAppService" ref="cbsPayWithdrawAppService"  protocol="dubbo" />
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsWithdrawAuditAppService" ref="mrsWithdrawAuditAppService"  protocol="dubbo" />
+	<!-- 转账管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsPayTransferAppService" ref="cbsPayTransferAppService"  protocol="dubbo" />
+	<!-- 退款管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsPayRefundAppService" ref="cbsPayRefundAppService"  protocol="dubbo" />
+	<!-- 支付流水管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsPayBookAppService" ref="cbsPayBookAppService"  protocol="dubbo" />
+	<!-- 账务汇总管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActSubjectAppService" ref="cbsActSubjectAppService"  protocol="dubbo" />
+	<!-- 记账规则管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActRuleAppService" ref="cbsActRuleAppService"  protocol="dubbo" />
+	<!-- 记账交易流水管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActBookAppService" ref="cbsActBookAppService"  protocol="dubbo" />
+	<!-- 记账分录管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActBillAppService" ref="cbsActBillAppService"  protocol="dubbo" />
+	<!-- 账户资金管理服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActAccountAppService" ref="cbsActAccountAppService"  protocol="dubbo" />
+	<!-- 银行信息服务 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ChlBankAppService" ref="chlBankAppService"  protocol="dubbo" />
+	<!-- 计费模板 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisBillingTemplateAppService" ref="bisBillingTemplateAppService"  protocol="dubbo" />
+	<!-- 邮件校验 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisCheckEmailAppService" ref="bisCheckEmailAppService"  protocol="dubbo" />
+	<!-- 邮件发送记录 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisEmailAppService" ref="bisEmailAppService"  protocol="dubbo" />
+	<!-- 邮件发送模板 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisEmailTemplateAppService" ref="bisEmailTemplateAppService"  protocol="dubbo" />
+	<!-- 异常日志 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisExceptionLogAppService" ref="bisExceptionLogAppService"  protocol="dubbo" />
+	<!-- 消息通知 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisMsgNotificationAppService" ref="bisMsgNotificationAppService"  protocol="dubbo" />
+	<!-- 邮件发送记录-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisSmsAppService" ref="bisSmsAppService"  protocol="dubbo" />
+	<!-- 邮件发送模板-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisSmsTemplateAppService" ref="bisSmsTemplateAppService"  protocol="dubbo" />
+	<!-- 渠道信息 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ChlChannelAppService" ref="chlChannelAppService"  protocol="dubbo" />
+	<!-- 渠道参数 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ChlParamAppService" ref="chlParamAppService"  protocol="dubbo" />
+	<!-- 渠道支持模式 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ChlFrontendBusiAppService" ref="chlFrontendBusiAppService"  protocol="dubbo" />
+	<!-- 外部邮箱服务器 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsExternalMailboxServerAppService" ref="mrsExternalMailboxServerAppService"  protocol="dubbo" />
+	<!-- 会员用户操作日志 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsOperationLogAppService" ref="mrsOperationLogAppService"  protocol="dubbo" />
+	<!-- 用户黑白名单 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayBwlistAppService" ref="payBwlistAppService"  protocol="dubbo" />
+	<!-- 用户支付限额 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayLimitAppService" ref="payLimitAppService"  protocol="dubbo" />
+	<!-- 支付订单超限记录-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayOverlimitAppService" ref="payOverlimitAppService"  protocol="dubbo" />
+	<!-- 账户调账-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayAccountAdjustAppService" ref="payAccountAdjustAppService"  protocol="dubbo" />
+	<!--内部对账管理-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsCheckInnerAppService" ref="clsCheckInnerAppService"  protocol="dubbo" />
+	<!--分润结算管理管理-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsShareSettleAppService" ref="clsShareSettleAppService"  protocol="dubbo" />
+	<!-- 商户结算管理管理-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsMerchantSettleAppService" ref="clsMerchantSettleAppService"  protocol="dubbo" />
+	<!--备付金支付-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsCallAcctAppService" ref="clsCallAcctAppService"  protocol="dubbo" />
+	<!--渠道对账管理-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsCheckChannelAppService" ref="clsCheckChannelAppService"  protocol="dubbo" />
+	<!--支付监控查询-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayCheckStatusAppService" ref="payCheckStatusAppService"  protocol="dubbo" />
+	<!--渠道对账文件监控管理-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsBankCheckAppService" ref="clsBankCheckAppService"  protocol="dubbo" />
+	<!--账务监控查询-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ActCheckStatusAppService" ref="actCheckStatusAppService"  protocol="dubbo" />
+	<!--内部对账服务-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsAcctCheckAppService" ref="clsAcctCheckAppService"  protocol="dubbo" />
+	<!--渠道对账监控服务-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ChlCheckStatusAppService" ref="chlCheckStatusAppService"  protocol="dubbo" />
+	<!--商户对账文件监控服务-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsMerCheckStatusAppService" ref="clsMerCheckStatusAppService"  protocol="dubbo" />
+	<!--商户对账文件监控服务-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsReportAppService" ref="clsReportAppService"  protocol="dubbo" />
+	<!-- 定时任务服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisSchedulerAppService" ref="bisSchedulerAppService"  protocol="dubbo" />
+	<!-- 账务日期服务 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.account.app.ActAccountDateAppService" ref="actAccountDateAppService"  protocol="dubbo" />
+	<!-- 我的首页汇总信息记录条数，查询服务类-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsReviewCountAppService" ref="clsReviewCountAppService"  protocol="dubbo" />
+	<!-- 资金划拨服务 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.pay.app.PayAmtAllocateAppService" ref="payAmtAllocateAppService"  protocol="dubbo" />
+	<!-- 批量资金划拨服务 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.pay.app.PayAmtAllocateBatchAppService" ref="payAmtAllocateBatchAppService"  protocol="dubbo" />
+	<!--入账通知服务 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.BisPayAccChangeNotifyAppService" ref="bisPayAccChangeNotifyAppService"  protocol="dubbo" />
+	<!-- 红包发放服务 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.pay.app.PayRedAppService" ref="payRedAppService"  protocol="dubbo" />
+	
+	<!-- 备份 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsBackupsAppService" ref="cbsBackupsAppService"  protocol="dubbo" />
+	
+	<!-- 用户银行卡信息 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ChlUserBindBankAppService" ref="chlUserBindBankAppService"  protocol="dubbo" />
+
+	<!-- 被动开户的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.cbs.mrs.rest.MrsPassiveOpenAcntService" ref="mrsPassiveOpenAcntService"    protocol="rest" />
+	
+	<!-- 客户信息变更接口 -->
+	<!-- <dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.MrsAccountMsgInfoService" ref="mrsAccountMsgInfoService"    protocol="rest" /> -->
+	<!-- 联系人信息变更接口 -->
+	<!-- <dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.MrsContactListMsgService" ref="mrsContactListMsgService"    protocol="rest" /> -->
+	<!-- 微信号查询信息接口 -->
+	<!-- <dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.MrsLoginUserMsgService" ref="mrsLoginUserMsgService"    protocol="rest" /> -->
+	<!-- 个人客户信息操作接口 -->
+	<!-- <dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.MrsPersonDtoMsgService" ref="mrsPersonDtoMsgService"    protocol="rest" /> -->
+	<!-- 账户平台配号接口的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.cbs.mrs.rest.MrsAssignShieNoService" ref="mrsAssignShieNoService"    protocol="rest" />
+	
+	<dubbo:service interface="com.ylink.inetpay.cbs.mrs.rest.MrsAccountMsgUpdateService" ref="mrsAccountMsgUpdateService"    protocol="rest" />
+	
+	<!-- 登陆信息查询的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.cbs.mrs.rest.MrsSearchRestService" ref="mrsSearchRestService"    protocol="rest" />
+	
+	
+	<!-- 头寸调拨经办接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisTransferHandleAppService" ref="bisTransferHandleAppService"  protocol="dubbo"/>
+	
+	<!-- 对外支付经办接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.pay.app.PayExternalHandleAppService" ref="payExternalHandleAppService" protocol="dubbo" />
+	
+	<!-- 手工记账经办接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisBillHandleAppService" ref="bisBillHandleAppService" protocol="dubbo" />
+	 
+	<!-- start add by haojiao -->
+	 <!-- 业务管理的接口  -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisBusinessAppService" ref="bisBusinessAppService" protocol="dubbo" /> 
+	<!-- 机构信息的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsOrganAppService" ref="mrsOrganAppService" protocol="dubbo" />
+	<!-- 个人信息的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsPersonAppService" ref="mrsPersonAppService" protocol="dubbo" />
+	<!-- 账户管理的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsAccountAppService" ref="mrsAccountAppService" protocol="dubbo" />
+	<!-- 审核信息的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsDataAuditChangeAppService" ref="mrsDataAuditChangeAppService" protocol="dubbo" />
+	<!-- 客户登陆信息接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsLoginUserAppService" ref="mrsLoginUserAppService" protocol="dubbo" />
+	<!-- 保单查询接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PolicyQryAppService" ref="policyQryAppService" protocol="dubbo" />
+	<!-- end add by haojiao -->
+	<!-- 复核接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisAuditAppService" ref="bisAuditAppService" protocol="dubbo" />
+	<!-- 审核规则接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisAuditRuleAppService" ref="bisAuditRuleAppService" protocol="dubbo" />
+	<!-- 提供清算任务监控查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsLiquidationJobAppService" ref="clsLiquidationJobAppService" protocol="dubbo" />
+	<!-- 提供清分任务监控查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClearJobAppService" ref="clearJobAppService" protocol="dubbo" />
+	<!-- 提供结算任务监控查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsSettJobAppService" ref="clsSettJobAppService" protocol="dubbo" />
+	<!-- 提供清算订单查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsLiquidationOrderAppService" ref="clsLiquidationOrderAppService" protocol="dubbo" />
+	<!-- 提供清分订单查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsClearOrderAppService" ref="clsClearOrderAppService" protocol="dubbo" />
+	<!-- 提供结算订单查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsSettOrderAppService" ref="clsSettOrderAppService" protocol="dubbo" />
+	<!-- 提供支付流水查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsPayBookAppService" ref="clsPayBookAppService" protocol="dubbo" />
+	<!-- 银行卡卡BIN的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsChlCardBinAppService" ref="cbsChlCardBinAppService" protocol="dubbo" />
+	<!-- 银行账户接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsChlBankAccountAppService" ref="cbsChlBankAccountAppService" protocol="dubbo" />
+	<!-- 记账规则接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisActRuleAuditAppService" ref="bisActRuleAuditAppService" protocol="dubbo" />
+	<!-- 银行行号 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsChlBankCodeAppService" ref="cbsChlBankCodeAppService" protocol="dubbo" />
+	<!-- 历史账户 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisHistoryAccountAppService" ref="bisHistoryAccountAppService" protocol="dubbo" />
+	<!-- 科目审核 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisActSubjectAuditAppService" ref="bisActSubjectAuditAppService" protocol="dubbo" />
+	<!--央行联行号查询 -->
+	<dubbo:service interface="com.ylink.inetpay.cbs.bis.rest.BisBankCodeRestService" ref="bisBankCodeRestService" protocol="rest" />
+	<!--省市查询 -->
+	<dubbo:service interface="com.ylink.inetpay.cbs.bis.rest.BisAreaCityRestService" ref="bisAreaCityRestService" protocol="rest" />
+	<!-- 渠道银行表 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsChannelBankAppService" ref="cbsChannelBankAppService" protocol="dubbo" />
+	<!-- 渠道路由表 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsChannelRouteAppService" ref="cbsChannelRouteAppService" protocol="dubbo" />
+	<!-- 渠道支付订单查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.channel.app.ChlPaymentAppService" ref="chlPaymentAppService" protocol="dubbo" />
+	<!-- 渠道转账订单查询接入方的接口-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.channel.app.ChlRefundAppService" ref="chlRefundAppService" protocol="dubbo" />
+	<!-- 渠道退款订单查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.channel.app.ChlReplaceAppService" ref="chlReplaceAppService" protocol="dubbo" />
+	<!-- 渠道动账通知查询接入方的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.channel.app.ChlAccountChangeNoticeAppService" ref="chlAccountChangeNoticeAppService" protocol="dubbo" />
+	<!-- 冲正订单 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsChlCorrectOrderAppService" ref="cbsChlCorrectOrderAppService" protocol="dubbo"/>
+	<!-- 资金冻结解冻 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisAccountFrozenAuditAppService" ref="bisAccountFrozenAuditAppService" protocol="dubbo" />
+	<!-- 对外支付 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisEcternalPaymentsAppService" ref="bisEcternalPaymentsAppService" protocol="dubbo" />
+	<!-- 客户利率审核 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisActCustRateAuditAppService" ref="bisActCustRateAuditAppService" protocol="dubbo" />
+	<!-- 利率 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActCustRateAppService" ref="cbsActCustRateAppService" protocol="dubbo" />
+	<!-- 客户利率 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActCustInterestAppService" ref="cbsActCustInterestAppService" protocol="dubbo" />
+	<!-- 银行利率 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActBankInterestAppService" ref="cbsActBankInterestAppService" protocol="dubbo" />
+	<!-- 设置保证金 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisSetCashFundAppService" ref="bisSetCashFundAppService" protocol="dubbo" />
+	<!-- 城市联动-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisAreaCityAppService" ref="bisAreaCityAppService" protocol="dubbo" />
+	<!-- 客户结息日期-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsActInterestDateAppService" ref="cbsActInterestDateAppService" protocol="dubbo" />
+	<!-- 客户结息日期审核-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisActInterestDateAuditAppService" ref="bisActInterestDateAuditAppService" protocol="dubbo" />
+	<!-- 结算复核 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ClsAuditAppService" ref="clsAuditAppService" protocol="dubbo" />
+	<!-- 银行前置会话的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsChlFrontedSessionAppService" ref="cbsChlFrontedSessionAppService" protocol="dubbo" />
+	<!-- 动账文件下载的接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsChlAccChangeFileAppService" ref="cbsChlAccChangeFileAppService" protocol="dubbo" />
+	<!-- 个人信息审核列表 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsAduitAppService" ref="mrsAduitAppService" protocol="dubbo"/>
+    <!-- 支付密码 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsUserPayPasswordAppService" ref="mrsUserPayPasswordAppService" protocol="dubbo"/>
+	<!-- 审核信息内容表 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsAduitContentAppService" ref="mrsAduitContentAppService" protocol="dubbo"/>
+	<!-- 子帐户信息内容表 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsSubAccountAppService" ref="mrsSubAccountAppService" protocol="dubbo"/>
+	<!-- 渠道参数信息表 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.ChlParamAppService" ref="chlParamAppService" protocol="dubbo"/>
+	 <!-- 银行卡 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsBankBusiDtoAppService" ref="mrsBankBusiDtoAppService" protocol="dubbo"/>
+	<!-- 用户审核信息表  -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsAccountAduitInfoAppService" ref="mrsAccountAduitInfoAppService" protocol="dubbo"/>
+    <!-- 产品开户申请信息表  -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsProductAppService" ref="mrsProductAppService" protocol="dubbo"/>
+	<!-- 联系人接口 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsContactListAppService" ref="mrsContactListAppService" protocol="dubbo"/>
+	<!-- 子帐户配置表，基础配置数据 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsConfAuditAppService" ref="mrsConfAuditAppService" protocol="dubbo"/>
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsConfSubAcctAppService" ref="mrsConfSubAcctAppService" protocol="dubbo"/>
+	<!-- 附件信息表 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsCertFileAppService" ref="mrsCertFileAppService" protocol="dubbo"/>
+	<!-- 用户信息审核表 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsAccountAduitAppService" ref="mrsAccountAduitAppService" protocol="dubbo"/>
+	<!-- 客户端审核表 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsPortalReviewAduitAppService" ref="mrsPortalReviewAduitAppService" protocol="dubbo"/>
+	<!-- 渠道手续费模板 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.channel.app.CbsChlChlFeeAppService" ref="cbsChlChlFeeAppService" protocol="dubbo"/>
+	<!-- 用户信息认证 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsCheckMessageAppService" ref="mrsCheckMessageAppService" protocol="dubbo"/>
+    <!-- 手续费账单查询 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayFeeBillQueryAppService" ref="payFeeBillQueryAppService" protocol="dubbo"/>
+    <!-- 手续费汇总查询 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayFeeSummaryAppService" ref="payFeeSummaryAppService" protocol="dubbo"/>
+    <!-- 手续费账单明细查询 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayFeeBillDetailQueryAppService" ref="payFeeBillDetailQueryAppService" protocol="dubbo"/>
+    <!-- 手续费账报表单明细查询 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayFeeSummaryDetailAppService" ref="payFeeSummaryDetailAppService" protocol="dubbo"/>
+     <!-- 手机信息认证 -->
+    <dubbo:service interface="com.ylink.inetpay.cbs.mrs.rest.MrsReturnPhoneMessageCheckService" ref="mrsReturnPhoneMessageCheckService" protocol="rest"/>
+	<!-- 批量导入 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisBatchExpAppService" ref="bisBatchExpAppService" protocol="dubbo"/>
+    <!-- 手续费配置 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsPayFeeConfigAppService" ref="cbsPayFeeConfigAppService" protocol="dubbo"/>
+	<!-- 子帐户信息表，基础配置数据 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsConfAcctAppService" ref="mrsConfAcctAppService" protocol="dubbo"/>
+	<!-- 业务设置 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisAccessorAppService" ref="bisAccessorAppService" protocol="dubbo"/>
+	<!-- 商户一户通账户余额查询-->
+    <dubbo:service interface="com.ylink.inetpay.cbs.act.rest.ActSearchAccountService" ref="actSearchAccountService" protocol="rest"/>
+    <!-- 商户对外支付查询-->
+    <dubbo:service interface="com.ylink.inetpay.cbs.pay.rest.PaySearchOrderService" ref="paySearchOrderService" protocol="rest"/>
+	<!-- 参与人一户通对账单 -->
+	<dubbo:service interface=" com.ylink.inetpay.common.project.cbs.app.ClsAccessCheckAppService" ref="clsAccessCheckAppService" protocol="dubbo"/>
+	<!-- 产品服务类 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisProductAppService" ref="bisProductAppService" protocol="dubbo"/>
+	<!-- 交易类型结算周期 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisTradeTypeSettCycleAppService" ref="bisTradeTypeSettCycleAppService" protocol="dubbo"/>
+	<!--手续费汇总-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.PayFeeSummparyAppService" ref="payFeeSummparyAppService" protocol="dubbo"/>
+	<!-- 费用类型 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisFeeTypeParamAppService" ref="bisFeeTypeParamAppService" protocol="dubbo"/>
+	<!-- 结算交易类型 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisTradeTypeParamAppService" ref="bisTradeTypeParamAppService" protocol="dubbo"/>
+	<!-- 渠道出入账明细报表-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.channel.app.ChlActBillAppService" ref="chlActBillAppService" protocol="dubbo"/>
+ 
+    <!-- 机构复核业务操作服务 -->
+    <dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.MrsConfReviewAppService" ref="mrsConfReviewAppService" protocol="dubbo"/>
+ 
+	<!--  银行账户-->
+	<!-- <dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.PortalRestBankBusiService" ref="portalRestBankBusiService" protocol="rest"/> -->
+	<!--  基本信息-->
+	<!-- <dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.PortalRestAccountBaseService" ref="portalRestAccountBaseService" protocol="rest"/> -->
+	<!--  安全设置-->
+	<!-- <dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.PortalRestAccountSafeService" ref="portalRestAccountSafeService" protocol="rest"/> -->
+	<!--  收支明细-->
+	<!-- <dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.PortalRestActBillService" ref="portalRestActBillService" protocol="rest"/>
+	 支付记录
+	<dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.PortalRestPaymentService" ref="portalRestPaymentService" protocol="rest"/>
+	 充值记录
+	<dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.PortalRestRechargeService" ref="portalRestRechargeService" protocol="rest"/>
+	 提现记录
+	<dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.PortalRestWithdrawService" ref="portalRestWithdrawService" protocol="rest"/> -->
+	<!-- 门户账户外部的接口  -->
+	<dubbo:service interface="com.ylink.inetpay.cbs.portal.rest.PortalRestAccountService" ref="portalRestAccountService"    protocol="rest" />
+	<!-- 收件人设置  -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisEmailAdministratorAppService" ref="bisEmailAdministratorAppService"    protocol="dubbo" />
+	 <!-- 资产负载报表 -->
+	<dubbo:service interface="com.ylink.inetpay.common.project.channel.app.ChlAssetsAppService" ref="chlAssetsAppService"    protocol="dubbo" />
+	<!-- 批次商户对外支付列表-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.pay.app.PayAmtMerchantsAppService" ref="payAmtMerchantsAppService"    protocol="dubbo" />
+ 	<!-- 业务收入支出报表-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.pay.app.PayBusinessIncomeAppService" ref="payBusinessIncomeAppService"    protocol="dubbo" />
+	
+	<!-- 动账复核-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.BisMovingActMatchingAuditAppService" ref="bisMovingActMatchingAuditAppService"  protocol="dubbo" />
+ 
+	<!-- 批量支付-->
+	<dubbo:service interface="com.ylink.inetpay.common.project.cbs.app.CbsPayBatchAppService" ref="cbsPayBatchAppService"  protocol="dubbo" />
+ 
+</beans>

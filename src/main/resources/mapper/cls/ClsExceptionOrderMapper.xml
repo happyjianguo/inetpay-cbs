@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsExceptionOrderDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsExceptionOrder" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="CHECK_TYPE" property="checkType" jdbcType="CHAR" />
+	    <result column="CHECK_BATCH" property="checkBatch" jdbcType="CHAR" />
+	    <result column="CHECK_DAY" property="checkDay" jdbcType="CHAR" />
+	    <result column="TRADE_TYPE" property="tradeType" jdbcType="CHAR" />
+	    <result column="PAY_ID" property="payId" jdbcType="CHAR" />
+	    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+	    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+	    <result column="CHECK_ORDER_ID" property="checkOrderId" jdbcType="VARCHAR" />
+	    <result column="CHECK_ORDER_MONEY" property="checkOrderMoney" jdbcType="DECIMAL" />
+	    <result column="ACCT_TIME" property="acctTime" jdbcType="TIMESTAMP" />
+	    <result column="EXCEPTION_TYPE" property="exceptionType" jdbcType="CHAR" />
+	    <result column="EXCEPTION_DESC" property="exceptionDesc" jdbcType="VARCHAR" />
+	    <result column="ADJUST_TYPE" property="adjustType" jdbcType="CHAR" />
+	    <result column="ADJUST_STATUS" property="adjustStatus" jdbcType="CHAR" />
+	    <result column="ADJUST_TIMES" property="adjustTimes" jdbcType="CHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	 
+  </resultMap>
+ 
+ 
+<!--查询-->
+ <select id="queryExceptionOrderById"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	CHECK_TYPE ,
+ 	CHECK_BATCH ,
+ 	CHECK_DAY ,
+ 	TRADE_TYPE ,
+ 	PAY_ID ,
+ 	ORDER_AMT ,
+ 	ORDER_STATUS ,
+ 	CHECK_ORDER_ID ,
+ 	CHECK_ORDER_MONEY ,
+ 	ACCT_TIME ,
+ 	EXCEPTION_TYPE ,
+ 	EXCEPTION_DESC ,
+ 	ADJUST_TYPE ,
+ 	ADJUST_STATUS ,
+ 	ADJUST_TIMES ,
+ 	CREATE_TIME ,
+ 	UPDATE_TIME 
+ from TB_CLS_EXCEPTION_ORDER
+ where ID=#{id,jdbcType=CHAR} 
+ </select>   
+    
+ 
+</mapper>

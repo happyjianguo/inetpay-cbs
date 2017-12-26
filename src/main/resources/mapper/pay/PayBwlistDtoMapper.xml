@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayBwlistDtoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ylink.inetpay.common.project.pay.dto.PayBwlistDto">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+		<result column="BW_TYPE" property="bwType" jdbcType="CHAR" />
+		<result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+		<result column="BUSINESS_TYPE" property="businessType"
+			jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="CREATER" property="creater" jdbcType="VARCHAR" />
+		<result column="CREATER_NAME" property="createrName" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATER" property="updater" jdbcType="VARCHAR" />
+		<result column="UPDATER_NAME" property="updaterName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, CUST_ID, BW_TYPE, CUST_NAME, BUSINESS_TYPE, CREATE_TIME, CREATER,
+		CREATER_NAME,
+		UPDATE_TIME, UPDATER, UPDATER_NAME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_BWLIST
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from TB_PAY_BWLIST
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayBwlistDto">
+		insert into TB_PAY_BWLIST (ID, CUST_ID, BW_TYPE,
+		CUST_NAME, BUSINESS_TYPE, CREATE_TIME,
+		CREATER, CREATER_NAME, UPDATE_TIME,
+		UPDATER, UPDATER_NAME)
+		values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR},
+		#{bwType,jdbcType=CHAR},
+		#{custName,jdbcType=VARCHAR}, #{businessType,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{creater,jdbcType=VARCHAR}, #{createrName,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updater,jdbcType=VARCHAR}, #{updaterName,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayBwlistDto">
+		insert into TB_PAY_BWLIST
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="custId != null">
+				CUST_ID,
+			</if>
+			<if test="bwType != null">
+				BW_TYPE,
+			</if>
+			<if test="custName != null">
+				CUST_NAME,
+			</if>
+			<if test="businessType != null">
+				BUSINESS_TYPE,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="creater != null">
+				CREATER,
+			</if>
+			<if test="createrName != null">
+				CREATER_NAME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			<if test="updater != null">
+				UPDATER,
+			</if>
+			<if test="updaterName != null">
+				UPDATER_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="bwType != null">
+				#{bwType,jdbcType=CHAR},
+			</if>
+			<if test="custName != null">
+				#{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				#{businessType,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creater != null">
+				#{creater,jdbcType=VARCHAR},
+			</if>
+			<if test="createrName != null">
+				#{createrName,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updater != null">
+				#{updater,jdbcType=VARCHAR},
+			</if>
+			<if test="updaterName != null">
+				#{updaterName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayBwlistDto">
+		update TB_PAY_BWLIST
+		<set>
+			<if test="custId != null">
+				CUST_ID = #{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="bwType != null">
+				BW_TYPE = #{bwType,jdbcType=CHAR},
+			</if>
+			<if test="custName != null">
+				CUST_NAME = #{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				BUSINESS_TYPE = #{businessType,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creater != null">
+				CREATER = #{creater,jdbcType=VARCHAR},
+			</if>
+			<if test="createrName != null">
+				CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updater != null">
+				UPDATER = #{updater,jdbcType=VARCHAR},
+			</if>
+			<if test="updaterName != null">
+				UPDATER_NAME = #{updaterName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayBwlistDto">
+		update TB_PAY_BWLIST
+		set CUST_ID = #{custId,jdbcType=VARCHAR},
+		BW_TYPE = #{bwType,jdbcType=CHAR},
+		CUST_NAME = #{custName,jdbcType=VARCHAR},
+		BUSINESS_TYPE = #{businessType,jdbcType=CHAR},
+		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+		CREATER = #{creater,jdbcType=VARCHAR},
+		CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+		UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+		UPDATER = #{updater,jdbcType=VARCHAR},
+		UPDATER_NAME = #{updaterName,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="list" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayBwlistDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_BWLIST
+		<where>
+			<if test="custId != null and custId !=''">
+				and CUST_ID = #{custId,jdbcType=VARCHAR}
+			</if>
+			<if test="bwType != null and bwType !=''">
+				and BW_TYPE = #{bwType,jdbcType=CHAR}
+			</if>
+			<if test="custName != null and custName !=''">
+				and CUST_NAME = #{custName,jdbcType=VARCHAR}
+			</if>
+			<if test="businessType != null and businessType !=''">
+				and BUSINESS_TYPE = #{businessType,jdbcType=CHAR}
+			</if>
+			<if test="startCreateTime != null">
+				and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startCreateTime},'%Y-%c-%d')
+			</if>
+			<if test="endCreateTime != null">
+				and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endCreateTime},'%Y-%c-%d')
+			</if>
+			<if test="creater != null and creater !=''">
+				and CREATER = #{creater,jdbcType=VARCHAR}
+			</if>
+			<if test="createrName != null and createrName !=''">
+				and CREATER_NAME = #{createrName,jdbcType=VARCHAR}
+			</if>
+			<if test="startUpdateTime != null">
+				and date_format(UPDATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startUpdateTime},'%Y-%c-%d')
+			</if>
+			<if test="endUpdateTime != null">
+				and date_format(UPDATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endUpdateTime},'%Y-%c-%d')
+			</if>
+			<if test="updater != null and updater !=''">
+				and UPDATER = #{updater,jdbcType=VARCHAR}
+			</if>
+			<if test="updaterName != null and updaterName !=''">
+				and UPDATER_NAME = #{updaterName,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by CREATE_TIME DESC	
+	</select>
+</mapper>

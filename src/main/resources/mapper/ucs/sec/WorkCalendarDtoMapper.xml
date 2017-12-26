@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.ucs.sec.dao.WorkCalendarDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.WorkCalendarDto" >
+    <id column="DAY_ID" property="dayId" jdbcType="CHAR" />
+    <result column="WORK_FLAG" property="workDayType" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DAY_ID, WORK_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_UCS_WORK_CALENDAR
+    where DAY_ID = #{dayId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_UCS_WORK_CALENDAR
+    where DAY_ID = #{dayId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.WorkCalendarDto" >
+    insert into TB_UCS_WORK_CALENDAR (DAY_ID, WORK_FLAG)
+    values (#{dayId,jdbcType=CHAR}, #{workDayType,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.WorkCalendarDto" >
+    insert into TB_UCS_WORK_CALENDAR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dayId != null" >
+        DAY_ID,
+      </if>
+      <if test="workDayType != null" >
+        WORK_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dayId != null" >
+        #{dayId,jdbcType=CHAR},
+      </if>
+      <if test="workDayType != null" >
+        #{workDayType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.WorkCalendarDto" >
+    update TB_UCS_WORK_CALENDAR
+    <set >
+      <if test="workDayType != null" >
+        WORK_FLAG = #{workDayType,jdbcType=CHAR},
+      </if>
+    </set>
+    where DAY_ID = #{dayId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.WorkCalendarDto" >
+    update TB_UCS_WORK_CALENDAR
+    set WORK_FLAG = #{workDayType,jdbcType=CHAR}
+    where DAY_ID = #{dayId,jdbcType=CHAR}
+  </update>
+  <select id="findNextWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		SELECT w.DAY_ID FROM TB_UCS_WORK_CALENDAR w 
+		WHERE w.DAY_ID &gt; #{dayId,jdbcType=CHAR} and w.WORK_FLAG = '1' order by w.DAY_ID limit 1 
+  </select>
+  <select id="list" resultMap="BaseResultMap">
+		select * from TB_UCS_WORK_CALENDAR 
+		<where>
+			<if test="dayId != null and dayId != ''">
+				 instr(DAY_ID, #{dayId}) > 0
+			</if>
+			<if test="workDayType != null and workDayType != ''">
+				and WORK_FLAG = #{workDayType,jdbcType=CHAR}
+			</if>
+		</where>
+  </select>
+  
+  
+  <select id="getMonthFirstWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		select dayId 
+  		from(select day_id as dayId from TB_UCS_WORK_CALENDAR
+       			where work_flag='1' AND instr(DAY_ID, #{dayId}) = 1
+			) where rownum=1
+  </select>
+  <select id="getMonthSecondWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		select dayId 
+  		from(select ROWNUM as no ,day_id as dayId from TB_UCS_WORK_CALENDAR
+       			where work_flag='1' AND instr(DAY_ID, #{dayId}) = 1
+			) where no=2
+  </select>
+  <select id="getMonthLastWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		select dayId 
+  		from(select day_id as dayId from TB_UCS_WORK_CALENDAR
+       			where work_flag='1' AND instr(DAY_ID, #{dayId}) = 1 order by day_id DESC
+			) where rownum=1
+  </select>
+  <select id="getMonthSecondLastWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		select dayId from (select  dayId,ROWNUM as no  from (select DAY_ID as dayId from TB_UCS_WORK_CALENDAR
+       			where work_flag='1' AND instr(DAY_ID, #{dayId}) = 1 order by dayId desc))c where no=2
+  </select>
+  
+   <select id="getYearFirstWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		select dayId 
+  		from(select day_id as dayId from TB_UCS_WORK_CALENDAR
+       			where work_flag='1' AND instr(DAY_ID, #{dayId}) = 1
+			) where rownum=1
+  </select>
+  <select id="getYearSecondWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		select dayId 
+  		from(select ROWNUM as no ,day_id as dayId from TB_UCS_WORK_CALENDAR
+       			where work_flag='1' AND instr(DAY_ID, #{dayId}) = 1
+			) where no=2
+  </select>
+  <select id="getYearLastWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		select dayId 
+  		from(select day_id as dayId from TB_UCS_WORK_CALENDAR
+       			where work_flag='1' AND instr(DAY_ID, #{dayId}) = 1 order by day_id DESC
+			) where rownum=1
+  </select>
+  <select id="getYearSecondLastWorkDay" resultType="java.lang.String" parameterType="java.lang.String">
+  		select dayId from (select  dayId,ROWNUM as no  from (select DAY_ID as dayId from TB_UCS_WORK_CALENDAR
+       			where work_flag='1' AND instr(DAY_ID, #{dayId}) = 1 order by dayId desc))c where no=2
+  </select>
+</mapper>

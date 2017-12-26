@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActSubjectDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActSubjectDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NO" property="subjectNo" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="SUBJECT_TYPE" property="subjectType" jdbcType="CHAR" />
+    <result column="DR_CR_FLAG" property="drCrFlag" jdbcType="CHAR" />
+    <result column="SUBJECT_LEVEL" property="subjectLevel" jdbcType="CHAR" />
+    <result column="PARENT_SUBJECT" property="parentSubject" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+    <result column="CURRENOY" property="currenoy" jdbcType="CHAR" />
+    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+    <result column="sub2No" property="sub2No" jdbcType="VARCHAR" />
+    <result column="subAcctType" property="subAcctType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SUBJECT_NO, SUBJECT_NAME, SUBJECT_TYPE, DR_CR_FLAG, SUBJECT_LEVEL, PARENT_SUBJECT,CURRENOY,BOOK_TYPE
+  </sql>
+  <sql id="Base_ColumnVo_List" >
+    A.ID, A.SUBJECT_NO, A.SUBJECT_NAME, A.SUBJECT_TYPE, A.DR_CR_FLAG, A.SUBJECT_LEVEL, A.PARENT_SUBJECT,A.CURRENOY,A.BOOK_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_SUBJECT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="getSubjects" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_SUBJECT
+    where BOOK_TYPE = #{value,jdbcType=CHAR}
+  </select>
+  <select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActSubjectDto">
+		select
+		SUBJECT_NO, SUBJECT_NAME, SUBJECT_TYPE, DR_CR_FLAG, SUBJECT_LEVEL, PARENT_SUBJECT,AMOUNT as amount,BOOK_TYPE 
+		from V_SUBJECT_WITH_AMOUNT
+		where 1=1
+		<if test="subjectNo != null and subjectNo != ''">
+			and SUBJECT_NO  = #{subjectNo,jdbcType=VARCHAR}
+		</if>
+		<if test="subjectName != null and subjectName != ''">
+			and SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR}
+		</if>
+		<if test="subjectType != null and subjectType != ''">
+			and SUBJECT_TYPE = #{subjectType,jdbcType=CHAR}
+		</if>
+		<if test="drCrFlag != null and drCrFlag != ''">
+			and DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR}
+		</if>
+		<if test="subjectLevel != null and subjectLevel != ''">
+			and SUBJECT_LEVEL = #{subjectLevel,jdbcType=CHAR}
+		</if>
+		<if test="parentSubject != null and parentSubject != ''">
+			and PARENT_SUBJECT = #{parentSubject,jdbcType=VARCHAR}
+		</if>
+		<if test="amount != null and amount != ''">
+			and AMOUNT<![CDATA[   =  ]]>#{amount}
+		</if>
+		<if test="bookType !=null and bookType!=''">
+		    and BOOK_TYPE = #{bookType,jdbcType=CHAR}
+		</if>
+		order by SUBJECT_NO ASC
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_SUBJECT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActSubjectDto" >
+    insert into TB_ACT_SUBJECT (ID, SUBJECT_NO, SUBJECT_NAME, 
+      SUBJECT_TYPE, DR_CR_FLAG, SUBJECT_LEVEL, 
+      PARENT_SUBJECT,CURRENOY,BOOK_TYPE)
+    values (#{id,jdbcType=VARCHAR}, #{subjectNo,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, 
+      #{subjectType,jdbcType=CHAR}, #{drCrFlag,jdbcType=CHAR}, #{subjectLevel,jdbcType=CHAR}, 
+      #{parentSubject,jdbcType=VARCHAR}, #{currenoy,jdbcType=CHAR}, #{bookType,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActSubjectDto" >
+    insert into TB_ACT_SUBJECT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="subjectNo != null" >
+        SUBJECT_NO,
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME,
+      </if>
+      <if test="subjectType != null" >
+        SUBJECT_TYPE,
+      </if>
+      <if test="drCrFlag != null" >
+        DR_CR_FLAG,
+      </if>
+      <if test="subjectLevel != null" >
+        SUBJECT_LEVEL,
+      </if>
+      <if test="parentSubject != null" >
+        PARENT_SUBJECT,
+      </if>
+      <if test="currenoy != null" >
+        CURRENOY,
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null" >
+        #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        #{subjectType,jdbcType=CHAR},
+      </if>
+      <if test="drCrFlag != null" >
+        #{drCrFlag,jdbcType=CHAR},
+      </if>
+      <if test="subjectLevel != null" >
+        #{subjectLevel,jdbcType=CHAR},
+      </if>
+      <if test="parentSubject != null" >
+        #{parentSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="currenoy != null" >
+        #{currenoy,jdbcType=CHAR},
+      </if>
+      <if test="bookType != null" >
+        #{bookType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActSubjectDto" >
+    update TB_ACT_SUBJECT
+    <set >
+      <if test="subjectNo != null" >
+        SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        SUBJECT_TYPE = #{subjectType,jdbcType=CHAR},
+      </if>
+      <if test="drCrFlag != null" >
+        DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR},
+      </if>
+      <if test="subjectLevel != null" >
+        SUBJECT_LEVEL = #{subjectLevel,jdbcType=CHAR},
+      </if>
+      <if test="parentSubject != null" >
+        PARENT_SUBJECT = #{parentSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="currenoy != null" >
+        CURRENOY = #{currenoy,jdbcType=CHAR},
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActSubjectDto" >
+    update TB_ACT_SUBJECT
+    set SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      SUBJECT_TYPE = #{subjectType,jdbcType=CHAR},
+      DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR},
+      SUBJECT_LEVEL = #{subjectLevel,jdbcType=CHAR},
+      PARENT_SUBJECT = #{parentSubject,jdbcType=VARCHAR},
+      CURRENOY = #{currenoy,jdbcType=CHAR},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="listAll" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActSubjectDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_ACT_SUBJECT
+  </select>
+  <select id="findBySubjecNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+      <include refid="Base_Column_List" />
+    from TB_ACT_SUBJECT
+    where SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR}
+  </select>
+  <select id="findBysubjectsNo" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+      <include refid="Base_Column_List" />
+    from TB_ACT_SUBJECT
+    where SUBJECT_NO in
+    <foreach collection="subjectsNo" index="index" item="items" open="(" separator="," close=")">
+            #{items}
+    </foreach>
+  </select>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.account.dto.ActSubjectDto">
+	select * from TB_ACT_SUBJECT
+	<where>
+		<if test="subjectNo != null and subjectNo != ''">
+			and instr(SUBJECT_NO, #{subjectNo,jdbcType=VARCHAR}) > 0
+			<!-- SUBJECT_NO like concat('%',concat(#{subjectNo,jdbcType=VARCHAR},'%')) -->
+		</if>
+		<if test="subjectName != null and subjectName != ''">
+			and instr(SUBJECT_NAME, #{subjectName,jdbcType=VARCHAR}) > 0
+			<!-- and SUBJECT_NAME like concat('%',concat(#{subjectName,jdbcType=VARCHAR},'%')) -->
+		</if>
+		<if test="bookType != null">
+			and BOOK_TYPE = #{bookType,jdbcType=CHAR}
+		</if>
+		<if test="subjectType != null">
+			and SUBJECT_TYPE = #{subjectType,jdbcType=CHAR}
+		</if>
+		<if test="subjectLevel != null">
+			and SUBJECT_LEVEL = #{subjectLevel,jdbcType=CHAR}
+		</if>
+	</where>
+  </select>
+  <select id="findLevelOneSubject" resultMap="BaseResultMap" >
+	select * from TB_ACT_SUBJECT where SUBJECT_LEVEL = '1' 
+  </select>
+  <select id="findLevelOneSubjectByBookType" resultMap="BaseResultMap" >
+	select * from TB_ACT_SUBJECT where SUBJECT_LEVEL = '1'
+	<if test="bookType != null">
+		and BOOK_TYPE = #{bookType,jdbcType=CHAR}
+	</if>
+  </select>
+  <select id="findBySubjectNo" resultMap="BaseResultMap" >
+	select * from TB_ACT_SUBJECT where SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR} 
+  </select>
+  <select id="findByParentSubjectNo" resultMap="BaseResultMap" >
+	select * from TB_ACT_SUBJECT where PARENT_SUBJECT = #{subjectNo,jdbcType=VARCHAR} 
+  </select>
+  <select id="getSubjectName" resultMap="BaseResultMap" parameterType="java.lang.String">
+	 select * from TB_ACT_SUBJECT where SUBJECT_NO = #{subjectNo2,jdbcType=VARCHAR}
+  </select>
+  <!-- <select id="" resultMap="BaseResultMap" parameterType="java.lang.String">
+	 select * from TB_ACT_SUBJECT where acctTypeNo = #{acctTypeNo,jdbcType=VARCHAR}
+  </select> -->
+  <!--获取所有一级科目  -->
+  <select id="queryActSubjectDto" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_act_subject t
+		where t.subject_level = '1'
+		and t.book_type='1' 
+  </select>
+   <!-- 获取二级科目  -->
+  	<select id="findActSubject"  resultMap="BaseResultMap">
+	select sb.amt as AMOUNT ,s.* from (select sum(t.cash_amount) as amt ,ta.subject_no
+		from tb_act_subject ta
+		left join tb_act_history_account t
+		on t.subject_no_2 = ta.subject_no and 
+		t.account_date = #{lastAccountDate,jdbcType=CHAR}
+		where
+			ta.subject_level = '2'
+			and ta.book_type='1'
+			group by ta.subject_no) sb left join tb_act_subject s on
+			s.subject_no=sb.subject_no
+  	</select>
+  <select id="findByAcctTypeNo" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+      <include refid="Base_ColumnVo_List" />
+    from TB_ACT_SUBJECT A,TB_ACT_BUSI_REF_SUB B
+    where B.ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR}
+    AND A.SUBJECT_NO = B.SUB2_NO
+    AND B.BUSI_TYPE in
+    <foreach collection="busiTypes" index="index" item="items" open="(" separator="," close=")">
+            #{items.value}
+    </foreach>
+  </select>
+  <!-- 根据子账户配置编号查询子账户配置所属大类下面所有科目信息    不能跨库查询 -->
+  <!-- <select id="findActByConfAcctId" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select distinct B.sub2_no AS sub2No,
+    	A.ID, A.SUBJECT_NO, A.SUBJECT_NAME, A.SUBJECT_TYPE, A.DR_CR_FLAG, A.SUBJECT_LEVEL, A.PARENT_SUBJECT,A.CURRENOY,A.BOOK_TYPE
+    from TB_ACT_SUBJECT A,TB_ACT_BUSI_REF_SUB B
+    where A.SUBJECT_NO = B.SUB2_NO
+	    AND B.ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR}
+  </select> -->
+  
+</mapper>

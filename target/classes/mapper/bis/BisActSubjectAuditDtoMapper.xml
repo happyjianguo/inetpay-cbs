@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisActSubjectAuditDtoMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisActSubjectAuditDto">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="SUBJECT_NO" jdbcType="VARCHAR" property="subjectNo" />
+    <result column="SUBJECT_NAME" jdbcType="VARCHAR" property="subjectName" />
+    <result column="SUBJECT_TYPE" jdbcType="CHAR" property="subjectType" />
+    <result column="DR_CR_FLAG" jdbcType="CHAR" property="drCrFlag" />
+    <result column="SUBJECT_LEVEL" jdbcType="CHAR" property="subjectLevel" />
+    <result column="PARENT_SUBJECT" jdbcType="VARCHAR" property="parentSubject" />
+    <result column="CURRENOY" jdbcType="CHAR" property="currenoy" />
+    <result column="BOOK_TYPE" jdbcType="CHAR" property="bookType" />
+    <result column="OPERATE_TYPE" jdbcType="CHAR" property="operateType" />
+    <result column="REF_ID" jdbcType="VARCHAR" property="refId" />
+    <result column="OPERATOR" jdbcType="VARCHAR" property="operator" />
+    <result column="OPERATOR_NAME" jdbcType="VARCHAR" property="operatorName" />
+    <result column="AUDIT_STATUS" jdbcType="CHAR" property="auditStatus" />
+    <result column="AUDIT_TIME" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="AUDITOR" jdbcType="VARCHAR" property="auditor" />
+    <result column="AUDITOR_NAME" jdbcType="VARCHAR" property="auditorName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisActSubjectAuditDto">
+    <result column="REMARK" jdbcType="CLOB" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, SUBJECT_NO, SUBJECT_NAME, SUBJECT_TYPE, DR_CR_FLAG, SUBJECT_LEVEL, PARENT_SUBJECT, 
+    CURRENOY, BOOK_TYPE, OPERATE_TYPE, REF_ID, OPERATOR, OPERATOR_NAME, AUDIT_STATUS, 
+    AUDIT_TIME, CREATE_TIME, AUDITOR, AUDITOR_NAME
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_ACT_SUBJECT_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TB_BIS_ACT_SUBJECT_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActSubjectAuditDto">
+    insert into TB_BIS_ACT_SUBJECT_AUDIT (ID, SUBJECT_NO, SUBJECT_NAME, 
+      SUBJECT_TYPE, DR_CR_FLAG, SUBJECT_LEVEL, 
+      PARENT_SUBJECT, CURRENOY, BOOK_TYPE, 
+      OPERATE_TYPE, REF_ID, OPERATOR, 
+      OPERATOR_NAME, AUDIT_STATUS, AUDIT_TIME, 
+      CREATE_TIME, AUDITOR, AUDITOR_NAME, 
+      REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{subjectNo,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, 
+      #{subjectType,jdbcType=CHAR}, #{drCrFlag,jdbcType=CHAR}, #{subjectLevel,jdbcType=CHAR}, 
+      #{parentSubject,jdbcType=VARCHAR}, #{currenoy,jdbcType=CHAR}, #{bookType,jdbcType=CHAR}, 
+      #{operateType,jdbcType=CHAR}, #{refId,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
+      #{operatorName,jdbcType=VARCHAR}, #{auditStatus,jdbcType=CHAR}, #{auditTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, #{auditorName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActSubjectAuditDto">
+    insert into TB_BIS_ACT_SUBJECT_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="subjectNo != null">
+        SUBJECT_NO,
+      </if>
+      <if test="subjectName != null">
+        SUBJECT_NAME,
+      </if>
+      <if test="subjectType != null">
+        SUBJECT_TYPE,
+      </if>
+      <if test="drCrFlag != null">
+        DR_CR_FLAG,
+      </if>
+      <if test="subjectLevel != null">
+        SUBJECT_LEVEL,
+      </if>
+      <if test="parentSubject != null">
+        PARENT_SUBJECT,
+      </if>
+      <if test="currenoy != null">
+        CURRENOY,
+      </if>
+      <if test="bookType != null">
+        BOOK_TYPE,
+      </if>
+      <if test="operateType != null">
+        OPERATE_TYPE,
+      </if>
+      <if test="refId != null">
+        REF_ID,
+      </if>
+      <if test="operator != null">
+        OPERATOR,
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME,
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS,
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="auditor != null">
+        AUDITOR,
+      </if>
+      <if test="auditorName != null">
+        AUDITOR_NAME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null">
+        #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null">
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null">
+        #{subjectType,jdbcType=CHAR},
+      </if>
+      <if test="drCrFlag != null">
+        #{drCrFlag,jdbcType=CHAR},
+      </if>
+      <if test="subjectLevel != null">
+        #{subjectLevel,jdbcType=CHAR},
+      </if>
+      <if test="parentSubject != null">
+        #{parentSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="currenoy != null">
+        #{currenoy,jdbcType=CHAR},
+      </if>
+      <if test="bookType != null">
+        #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=CHAR},
+      </if>
+      <if test="refId != null">
+        #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null">
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null">
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActSubjectAuditDto">
+    update TB_BIS_ACT_SUBJECT_AUDIT
+    <set>
+      <if test="subjectNo != null">
+        SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null">
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null">
+        SUBJECT_TYPE = #{subjectType,jdbcType=CHAR},
+      </if>
+      <if test="drCrFlag != null">
+        DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR},
+      </if>
+      <if test="subjectLevel != null">
+        SUBJECT_LEVEL = #{subjectLevel,jdbcType=CHAR},
+      </if>
+      <if test="parentSubject != null">
+        PARENT_SUBJECT = #{parentSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="currenoy != null">
+        CURRENOY = #{currenoy,jdbcType=CHAR},
+      </if>
+      <if test="bookType != null">
+        BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="operateType != null">
+        OPERATE_TYPE = #{operateType,jdbcType=CHAR},
+      </if>
+      <if test="refId != null">
+        REF_ID = #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        OPERATOR = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null">
+        AUDITOR = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null">
+        AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=CLOB},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActSubjectAuditDto">
+    update TB_BIS_ACT_SUBJECT_AUDIT
+    set SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      SUBJECT_TYPE = #{subjectType,jdbcType=CHAR},
+      DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR},
+      SUBJECT_LEVEL = #{subjectLevel,jdbcType=CHAR},
+      PARENT_SUBJECT = #{parentSubject,jdbcType=VARCHAR},
+      CURRENOY = #{currenoy,jdbcType=CHAR},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      OPERATE_TYPE = #{operateType,jdbcType=CHAR},
+      REF_ID = #{refId,jdbcType=VARCHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=CLOB}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActSubjectAuditDto">
+    update TB_BIS_ACT_SUBJECT_AUDIT
+    set SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      SUBJECT_TYPE = #{subjectType,jdbcType=CHAR},
+      DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR},
+      SUBJECT_LEVEL = #{subjectLevel,jdbcType=CHAR},
+      PARENT_SUBJECT = #{parentSubject,jdbcType=VARCHAR},
+      CURRENOY = #{currenoy,jdbcType=CHAR},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      OPERATE_TYPE = #{operateType,jdbcType=CHAR},
+      REF_ID = #{refId,jdbcType=VARCHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.account.dto.ActSubjectDto">
+	select * from TB_BIS_ACT_SUBJECT_AUDIT 
+	<where> AUDIT_STATUS != '03' 
+		<if test="subjectNo != null and subjectNo != ''">
+			and instr(SUBJECT_NO, #{subjectNo,jdbcType=VARCHAR}) > 0
+			<!-- and SUBJECT_NO like concat('%',concat(#{subjectNo,jdbcType=VARCHAR},'%')) -->
+		</if>
+		<if test="subjectName != null and subjectName != ''">
+			and instr(SUBJECT_NAME, #{subjectName,jdbcType=VARCHAR}) > 0
+			<!-- and SUBJECT_NAME like concat('%',concat(#{subjectName,jdbcType=VARCHAR},'%')) -->
+		</if>
+		<if test="bookType != null">
+			and BOOK_TYPE = #{bookType,jdbcType=CHAR}
+		</if>
+		<if test="subjectType != null">
+			and SUBJECT_TYPE = #{subjectType,jdbcType=CHAR}
+		</if>
+		<if test="subjectLevel != null">
+			and SUBJECT_LEVEL = #{subjectLevel,jdbcType=CHAR}
+		</if>
+		<if test="operator != null and operator != ''">
+			and instr(OPERATOR, #{operator,jdbcType=VARCHAR}) > 0
+			<!-- and OPERATOR like concat('%',concat(#{operator,jdbcType=VARCHAR},'%')) -->
+		</if>
+		<if test="auditor != null and auditor != ''">
+			and instr(AUDITOR, #{auditor,jdbcType=VARCHAR}) > 0
+			<!-- and AUDITOR like concat('%',concat(#{auditor,jdbcType=VARCHAR},'%')) -->
+		</if>
+		<if test="operateType != null">
+			and OPERATE_TYPE = #{operateType,jdbcType=CHAR}
+		</if>
+		<if test="auditStatus != null">
+			and AUDIT_STATUS = #{auditStatus,jdbcType=CHAR}
+		</if>
+	</where>
+	order by CREATE_TIME desc 
+  </select>
+  <select id="countWaitAuditBySubjectNo" resultType="long" parameterType="java.lang.String">
+  	select count(*) from TB_BIS_ACT_SUBJECT_AUDIT where SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR} and AUDIT_STATUS='00'
+  </select>
+  <select id="getAuditNum" resultType="long">
+	 select count(*) from TB_BIS_ACT_RULE_AUDIT
+	 where AUDIT_STATUS = #{auditPass,jdbcType=CHAR}
+	 and ID in
+	 <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+     </foreach>
+  </select>
+</mapper>

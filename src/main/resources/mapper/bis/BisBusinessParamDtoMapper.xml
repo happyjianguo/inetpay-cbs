@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisBusinessParamDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessParamDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSINESS_CODE" property="businessCode" jdbcType="VARCHAR" />
+    <result column="PARAM_CODE" property="paramCode" jdbcType="VARCHAR" />
+    <result column="PARAM_VALUE" property="paramValue" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="NORDER" property="norder" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSINESS_CODE, PARAM_CODE, PARAM_VALUE, REMARK, NORDER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_BUSINESS_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_BUSINESS_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessParamDto" >
+    insert into TB_BIS_BUSINESS_PARAM (ID, BUSINESS_CODE, PARAM_CODE, 
+      PARAM_VALUE, REMARK, NORDER
+      )
+    values (#{id,jdbcType=VARCHAR}, #{businessCode,jdbcType=VARCHAR}, #{paramCode,jdbcType=VARCHAR}, 
+      #{paramValue,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{norder,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessParamDto" >
+    insert into TB_BIS_BUSINESS_PARAM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="businessCode != null" >
+        BUSINESS_CODE,
+      </if>
+      <if test="paramCode != null" >
+        PARAM_CODE,
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="norder != null" >
+        NORDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramCode != null" >
+        #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="norder != null" >
+        #{norder,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessParamDto" >
+    update TB_BIS_BUSINESS_PARAM
+    <set >
+      <if test="businessCode != null" >
+        BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramCode != null" >
+        PARAM_CODE = #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="norder != null" >
+        NORDER = #{norder,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessParamDto" >
+    update TB_BIS_BUSINESS_PARAM
+    set BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      PARAM_CODE = #{paramCode,jdbcType=VARCHAR},
+      PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      NORDER = #{norder,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateBusinessParam" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessParamDto" >
+    update TB_BIS_BUSINESS_PARAM
+    set
+      PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="listByBusiCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from TB_BIS_BUSINESS_PARAM
+    where BUSINESS_CODE = #{busiCode,jdbcType=VARCHAR}
+    order by NORDER ASC
+  </select>
+  <insert id="batchSave" parameterType="list" >
+     insert into TB_BIS_BUSINESS_PARAM (ID, BUSINESS_CODE, PARAM_CODE, 
+      PARAM_VALUE, REMARK, NORDER)
+	<foreach collection="params" index="index" item="item" separator=" union all ">
+		select 
+		#{item.id,jdbcType=VARCHAR}, #{item.businessCode,jdbcType=VARCHAR}, #{item.paramCode,jdbcType=VARCHAR}, 
+      	#{item.paramValue,jdbcType=VARCHAR}, #{item.remark,jdbcType=VARCHAR}, #{item.norder,jdbcType=DECIMAL}
+		from dual
+	</foreach>
+  </insert>
+  
+</mapper>

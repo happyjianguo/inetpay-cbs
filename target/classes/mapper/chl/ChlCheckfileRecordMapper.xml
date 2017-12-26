@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.chl.dao.ChlCheckfileRecordMapper" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.channel.dto.TbChlCheckfileRecordDto" >
+	    <result column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="CHANNEL_CODE" property="channelCode" jdbcType="CHAR" />
+	    <result column="CHECK_DATE" property="checkDate" jdbcType="CHAR" />
+	    <result column="CHECK_STATE" property="checkState" jdbcType="CHAR" />
+	    <result column="PROCESS_STATE" property="processState" jdbcType="CHAR" />
+	    <result column="ERR_CODE" property="errCode" jdbcType="VARCHAR" />
+	    <result column="ERR_DESC" property="errDesc" jdbcType="VARCHAR" />
+	    <result column="BANK_CHECK_FILE" property="bankCheckFile" jdbcType="VARCHAR" />
+	    <result column="BANK_FTP_URL" property="bankFtpUrl" jdbcType="VARCHAR" />
+	    <result column="GET_BANK_FIL_TIME" property="getBankFilTime" jdbcType="TIMESTAMP" />
+	    <result column="DONE_BANK_FIL_TIME" property="doneBankFilTime" jdbcType="TIMESTAMP" />
+	    <result column="CLS_CHECK_FILE" property="clsCheckFile" jdbcType="VARCHAR" />
+	    <result column="CLS_FTP_URL" property="clsFtpUrl" jdbcType="VARCHAR" />
+	    <result column="CLS_UPLOAD_TIME" property="clsUploadTime" jdbcType="TIMESTAMP" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	 
+  </resultMap>
+  <sql id="Base_Column_List">
+     ID,CHECK_DATE,CHANNEL_CODE,CHECK_STATE,PROCESS_STATE,ERR_CODE,ERR_DESC,
+     BANK_CHECK_FILE,CLS_CHECK_FILE,CREATE_TIME
+  </sql>
+<!--查询-->
+ <select id="queryById"  parameterType="java.lang.String" resultMap="resultMap">
+ select * from TB_CHL_CHECKFILE_RECORD
+ where ID=#{id,jdbcType=VARCHAR} 
+ </select>
+ 
+<!--查询-->
+ <select id="queryChlCheckfileRecord"  parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlCheckfileRecordDto" resultMap="resultMap">
+ select  
+   <include refid="Base_Column_List" />
+ from TB_CHL_CHECKFILE_RECORD
+ where 1=1
+<if test="checkState!=null and checkState!=''">
+	and CHECK_STATE=#{checkState,jdbcType=CHAR}
+</if>
+<if test="channelCode!=null and channelCode!=''">
+	and CHANNEL_CODE=#{channelCode,jdbcType=CHAR}
+</if>
+<if test="processState!=null and processState!=''">
+	and PROCESS_STATE=#{processState,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	and DATE_FORMAT(CHECK_DATE,'%Y%m%d')<![CDATA[   <=  ]]>DATE_FORMAT(#{endTime,jdbcType=DATE},'%Y%m%d')
+</if>
+<if test="startTime!=null">
+	and DATE_FORMAT(CHECK_DATE,'%Y%m%d')<![CDATA[   >=  ]]>DATE_FORMAT(#{startTime,jdbcType=DATE},'%Y%m%d')
+</if> 
+order by CHECK_DATE desc,CREATE_TIME DESC, id desc
+ </select>
+ 
+<!--更新-->
+ <update id="changeStatus" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlCheckfileRecordDto">
+ update TB_CHL_CHECKFILE_RECORD set
+ 	PROCESS_STATE=#{processState,jdbcType=CHAR} 
+ where 
+ 	ID=#{id,jdbcType=VARCHAR}  
+ </update>
+  
+</mapper>

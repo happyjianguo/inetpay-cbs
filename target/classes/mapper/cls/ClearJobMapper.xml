@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClearJobDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsClearJob" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="ACCT_DATE" property="acctDate" jdbcType="CHAR" />
+	    <result column="JOB_TYPE" property="jobType" jdbcType="CHAR" />
+	    <result column="CLEAR_TYPE" property="clearType" jdbcType="CHAR" />
+	    <result column="POLICY_COUNT" property="policyCount" jdbcType="DECIMAL" />
+	    <result column="FEE_SUM" property="feeSum" jdbcType="DECIMAL" />
+	    <result column="SALE_FEE_SUM" property="saleFeeSum" jdbcType="DECIMAL" />
+	    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+	    <result column="CLEAR_STEP" property="clearStep" jdbcType="CHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="ERR_DETAIL" property="errDetail" jdbcType="VARCHAR" />
+	    <result column="OLD_JOB_ID" property="oldJobId" jdbcType="VARCHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="BUSI_CODE" property="busiCode" jdbcType="VARCHAR" />
+	    <result column="IMPL_CLASS" property="implClass" jdbcType="VARCHAR" />
+  </resultMap>	
+	
+ 
+<!--查询-->
+ <select id="queryAll"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsClearJob" resultMap="resultMap">
+ select 
+ 	s.ID ,s.ACCT_DATE ,
+ 	s.JOB_TYPE,s.CLEAR_TYPE,
+ 	s.POLICY_COUNT,s.FEE_SUM,
+ 	s.SALE_FEE_SUM,s.FILE_NAME,
+ 	s.CLEAR_STEP,s.DEAL_STATUS,
+ 	s.ERR_DETAIL,s.CREATE_TIME,
+ 	s.UPDATE_TIME,
+ 	s.OLD_JOB_ID,
+ 	s.BUSI_CODE
+ from TB_CLS_CLEAR_JOB s where 1=1
+ <if test="startAcctDate!=null and startAcctDate !=''">
+ and ACCT_DATE  <![CDATA[   >=  ]]> #{startAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="endAcctDate!=null and endAcctDate !=''">
+ and ACCT_DATE  <![CDATA[   <=  ]]> #{endAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="dealStatus!=null">
+ and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+ </if>
+ <if test="clearStep!=null">
+ and CLEAR_STEP=#{clearStep,jdbcType=CHAR}
+ </if>
+ <if test="jobType!=null">
+ and JOB_TYPE=#{jobType,jdbcType=CHAR}
+ </if>
+ order by s.ACCT_DATE desc
+ </select>
+ 
+ <!-- 查询清分订单详情 -->
+ <select id="detail" parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	s.ID ,s.ACCT_DATE ,s.JOB_TYPE,
+ 	s.CLEAR_TYPE,s.POLICY_COUNT,
+ 	s.FEE_SUM,s.SALE_FEE_SUM,
+ 	s.FILE_NAME,s.CLEAR_STEP,
+ 	s.DEAL_STATUS,s.ERR_DETAIL,
+ 	s.CREATE_TIME,s.UPDATE_TIME,
+ 	s.OLD_JOB_ID,
+ 	s.BUSI_CODE,
+ 	s.IMPL_CLASS
+ from TB_CLS_CLEAR_JOB s where s.ID=#{id}
+ </select>  
+</mapper>

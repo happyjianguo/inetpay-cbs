@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsConfReviewDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfReviewDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="BIND_CARD_REVIEW" property="bindCardReview" jdbcType="CHAR" />
+    <result column="UNBIND_CARD_REVIEW" property="unbindCardReview" jdbcType="CHAR" />
+    <result column="RECHARGE_REVIEW" property="rechargeReview" jdbcType="CHAR" />
+    <result column="WITHDRAW_REVIEW" property="withdrawReview" jdbcType="CHAR" />
+    <result column="BATH_PAY_REVIEW" property="bathPayReview" jdbcType="CHAR" />
+    <result column="IS_GLOBAL" property="isGlobal" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <!-- 连表查询字段 -->
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, BIND_CARD_REVIEW, UNBIND_CARD_REVIEW, RECHARGE_REVIEW, WITHDRAW_REVIEW, 
+    BATH_PAY_REVIEW, IS_GLOBAL, CREATE_TIME, UPDATE_TIME,REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CONF_REVIEW
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   select 
+    	P.ID, P.CUST_ID, P.BIND_CARD_REVIEW, P.UNBIND_CARD_REVIEW, P.RECHARGE_REVIEW, P.WITHDRAW_REVIEW,
+    	P.BATH_PAY_REVIEW, P.IS_GLOBAL, P.CREATE_TIME , A.CUSTOMER_NAME AS CUSTOMER_NAME,P.UPDATE_TIME,P.REMARK
+    from TB_MRS_CONF_REVIEW P, TB_MRS_ORGAN A
+    where P.CUST_ID = A.CUST_ID 
+    AND P.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfReviewDto" resultMap="BaseResultMap">
+    select 
+    	P.ID, A.CUST_ID, P.BIND_CARD_REVIEW, P.UNBIND_CARD_REVIEW, P.RECHARGE_REVIEW, P.WITHDRAW_REVIEW,
+    	P.BATH_PAY_REVIEW, P.IS_GLOBAL, P.CREATE_TIME , A.CUSTOMER_NAME AS CUSTOMER_NAME,P.UPDATE_TIME,P.REMARK
+     from TB_MRS_ORGAN A  Left JOIN TB_MRS_CONF_REVIEW P ON P.CUST_ID = A.CUST_ID 
+    where 1 = 1 
+   	  <if test="id != null and id != ''">
+        and P.ID = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="custId != null and custId != ''" >
+   	   	and	instr(P.CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="bindCardReview != null and bindCardReview != ''">
+        and P.BIND_CARD_REVIEW = #{bindCardReview,jdbcType=CHAR}
+      </if>
+      <if test="unbindCardReview != null and unbindCardReview != ''">
+        and P.UNBIND_CARD_REVIEW = #{unbindCardReview,jdbcType=CHAR}
+      </if>
+      <if test="rechargeReview != null and rechargeReview != ''">
+        and P.RECHARGE_REVIEW = #{rechargeReview,jdbcType=CHAR}
+      </if>
+      <if test="withdrawReview != null and withdrawReview != ''">
+        and P.WITHDRAW_REVIEW = #{withdrawReview,jdbcType=CHAR}
+      </if>
+      <if test="bathPayReview != null and bathPayReview != ''">
+        and P.BATH_PAY_REVIEW = #{bathPayReview,jdbcType=CHAR}
+      </if>
+      <if test="startTime !=null and startTime !=''">
+		and to_char(P.CREATE_TIME,'yyyy-MM-dd')<![CDATA[   >=  ]]>#{startTime}
+	  </if>
+	  <if test="endTime !=null and endTime !=''">
+		and to_char(P.CREATE_TIME,'yyyy-MM-dd')<![CDATA[   <=  ]]>#{endTime}
+	  </if>
+       ORDER BY P.CREATE_TIME DESC
+  </select>
+  <!-- 根据一户通编号，机构复核业务主键查询信息 -->
+  <select id="selectByCustIdAndId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CONF_REVIEW
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+    <if test="id !=null and id !=''">
+		and ID != #{id }
+  	</if>
+  </select>
+  <!-- 根据一户通编号查询机构复核业务 -->
+  <select id="selectByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+	    from TB_MRS_CONF_REVIEW
+	    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询机构复核业务全局参数 -->
+  <select id="selectByIsGlobal" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+	    from TB_MRS_CONF_REVIEW
+	    where IS_GLOBAL = '1'
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_CONF_REVIEW
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfReviewDto" >
+    insert into TB_MRS_CONF_REVIEW (ID, CUST_ID, BIND_CARD_REVIEW, 
+      UNBIND_CARD_REVIEW, RECHARGE_REVIEW, WITHDRAW_REVIEW, 
+      BATH_PAY_REVIEW, IS_GLOBAL, CREATE_TIME, 
+      UPDATE_TIME,REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{bindCardReview,jdbcType=CHAR}, 
+      #{unbindCardReview,jdbcType=CHAR}, #{rechargeReview,jdbcType=CHAR}, #{withdrawReview,jdbcType=CHAR}, 
+      #{bathPayReview,jdbcType=CHAR}, #{isGlobal,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP},#{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfReviewDto" >
+    insert into TB_MRS_CONF_REVIEW
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="bindCardReview != null" >
+        BIND_CARD_REVIEW,
+      </if>
+      <if test="unbindCardReview != null" >
+        UNBIND_CARD_REVIEW,
+      </if>
+      <if test="rechargeReview != null" >
+        RECHARGE_REVIEW,
+      </if>
+      <if test="withdrawReview != null" >
+        WITHDRAW_REVIEW,
+      </if>
+      <if test="bathPayReview != null" >
+        BATH_PAY_REVIEW,
+      </if>
+      <if test="isGlobal != null" >
+        IS_GLOBAL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="bindCardReview != null" >
+        #{bindCardReview,jdbcType=CHAR},
+      </if>
+      <if test="unbindCardReview != null" >
+        #{unbindCardReview,jdbcType=CHAR},
+      </if>
+      <if test="rechargeReview != null" >
+        #{rechargeReview,jdbcType=CHAR},
+      </if>
+      <if test="withdrawReview != null" >
+        #{withdrawReview,jdbcType=CHAR},
+      </if>
+      <if test="bathPayReview != null" >
+        #{bathPayReview,jdbcType=CHAR},
+      </if>
+      <if test="isGlobal != null" >
+        #{isGlobal,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfReviewDto" >
+    update TB_MRS_CONF_REVIEW
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="bindCardReview != null" >
+        BIND_CARD_REVIEW = #{bindCardReview,jdbcType=CHAR},
+      </if>
+      <if test="unbindCardReview != null" >
+        UNBIND_CARD_REVIEW = #{unbindCardReview,jdbcType=CHAR},
+      </if>
+      <if test="rechargeReview != null" >
+        RECHARGE_REVIEW = #{rechargeReview,jdbcType=CHAR},
+      </if>
+      <if test="withdrawReview != null" >
+        WITHDRAW_REVIEW = #{withdrawReview,jdbcType=CHAR},
+      </if>
+      <if test="bathPayReview != null" >
+        BATH_PAY_REVIEW = #{bathPayReview,jdbcType=CHAR},
+      </if>
+      <if test="isGlobal != null" >
+        IS_GLOBAL = #{isGlobal,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfReviewDto" >
+    update TB_MRS_CONF_REVIEW
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      BIND_CARD_REVIEW = #{bindCardReview,jdbcType=CHAR},
+      UNBIND_CARD_REVIEW = #{unbindCardReview,jdbcType=CHAR},
+      RECHARGE_REVIEW = #{rechargeReview,jdbcType=CHAR},
+      WITHDRAW_REVIEW = #{withdrawReview,jdbcType=CHAR},
+      BATH_PAY_REVIEW = #{bathPayReview,jdbcType=CHAR},
+      IS_GLOBAL = #{isGlobal,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

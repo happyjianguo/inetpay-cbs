@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisSysParamDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="KEY" property="key" jdbcType="VARCHAR" />
+    <result column="VALUE" property="value" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATER" property="updater" jdbcType="VARCHAR" />
+    <result column="UPDATER_NAME" property="updaterName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, GROUP_NAME, KEY, VALUE, CREATE_TIME, UPDATE_TIME, UPDATER, UPDATER_NAME,REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SYS_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_SYS_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" >
+    insert into TB_BIS_SYS_PARAM (ID, GROUP_NAME, KEY, 
+      VALUE, CREATE_TIME, UPDATE_TIME, 
+      UPDATER, UPDATER_NAME,REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updater,jdbcType=VARCHAR}, #{updaterName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" >
+    insert into TB_BIS_SYS_PARAM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="groupName != null" >
+        GROUP_NAME,
+      </if>
+      <if test="key != null" >
+        KEY,
+      </if>
+      <if test="value != null" >
+        VALUE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updater != null" >
+        UPDATER,
+      </if>
+      <if test="updaterName != null" >
+        UPDATER_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterName != null" >
+        #{updaterName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" >
+    update TB_BIS_SYS_PARAM
+    <set >
+      <if test="groupName != null" >
+        GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        KEY = #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        VALUE = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null" >
+        UPDATER = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterName != null" >
+        UPDATER_NAME = #{updaterName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" >
+    update TB_BIS_SYS_PARAM
+    set GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      KEY = #{key,jdbcType=VARCHAR},
+      VALUE = #{value,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATER = #{updater,jdbcType=VARCHAR},
+      UPDATER_NAME = #{updaterName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SYS_PARAM
+    <where>
+     <if test="groupName != null and groupName!=''" >
+       and instr(GROUP_NAME, #{groupName,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="key != null and key!=''" >
+       and instr(KEY,#{key,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="value != null and value!=''" >
+       and instr(VALUE,#{value,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="startCreateTime != null" >
+       and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="endCreateTime != null" >
+       and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{createTime},'YYYY-MM-DD')
+      </if>
+      <if test="startUpdateTime != null" >
+       and to_char(UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startUpdateTime},'YYYY-MM-DD')
+      </if>
+      <if test="endUpdateTime != null" >
+       and to_char(UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endUpdateTime},'YYYY-MM-DD')
+      </if>
+      <if test="updater != null and updater!=''" >
+       and UPDATER = #{updater,jdbcType=VARCHAR}
+      </if>
+      <if test="updaterName != null and updaterName!=''" >
+       and UPDATER_NAME = #{updaterName,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by CREATE_TIME desc,KEY DESC
+  </select>
+  <select id="mapAllCode" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SYS_PARAM
+  </select>
+  <select id="getValue" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" resultType="String">
+   select 
+    value
+    from TB_BIS_SYS_PARAM
+    where KEY=#{key}
+  </select>
+  <select id="selectByKey"  resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SYS_PARAM
+    where KEY=#{key}
+  </select>
+   <select id="getLimitParams" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSysParamDto" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SYS_PARAM
+    where GROUP_NAME=#{groupName}
+  </select>
+  
+   <select id="findByParamNames" resultMap="BaseResultMap" parameterType="java.util.List">
+  	SELECT <include refid="Base_Column_List" />
+  	FROM TB_BIS_SYS_PARAM
+    WHERE KEY IN
+    <foreach collection="list" item="item" open="(" close=")" separator=",">
+    	#{item,jdbcType=VARCHAR}
+    </foreach>
+  </select>
+  
+</mapper>

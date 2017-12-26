@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayFeeSummaryDetailDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayFeeSummaryDetailDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+    <result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+    <result column="MER_CODE" property="merCode" jdbcType="VARCHAR" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+  </resultMap>
+  
+   <select id="list" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeSummaryDetailDto" resultMap="BaseResultMap">
+	SELECT 
+	  ID, 
+	  BUSI_ID, 
+	  MER_ORDER_ID, 
+	  MER_NAME, 
+	  CREATE_TIME,
+	  ACCOUNT_DATE,
+	  ORDER_AMT,
+	  FEE,
+	  '01' as FEE_TYPE
+	FROM tb_pay_amt_allocate 
+	WHERE
+	DEAL_STATUS='4'
+	<if test="merName != null and merName != ''" >
+   	   and	instr(MER_NAME, #{merName}) > 0
+    </if>
+	 <if test="busiId != null and busiId != ''" >
+   	   	and	instr(BUSI_ID, #{busiId}) > 0
+     </if>
+      <if test="merOrderId != null and merOrderId != ''" >
+   	   	and	instr(MER_ORDER_ID, #{merOrderId}) > 0
+     </if>
+     <!-- <if test="feeType != null and feeType != ''" >
+   	   	and b.FEE_TYPE = #{feeType,jdbcType=CHAR}
+     </if> -->
+     <if test="startTime !=null and startTime !=''">
+		and to_char(ACCOUNT_DATE,'yyyy-MM-dd')<![CDATA[   >=  ]]>to_char(#{startTime},'yyyy-MM-dd')
+	</if>
+	<if test="endTime !=null and endTime !=''">
+		and to_char(ACCOUNT_DATE,'yyyy-MM-dd')<![CDATA[   <=  ]]>to_char(#{endTime},'yyyy-MM-dd')
+	</if>
+	  ORDER BY CREATE_TIME DESC
+   </select>
+   
+</mapper>

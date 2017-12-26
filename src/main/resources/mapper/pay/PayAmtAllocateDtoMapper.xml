@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayAmtAllocateDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_NAME" property="payeeCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_TYPE" property="payeeBankType" jdbcType="CHAR"  />
+    <result column="PAYEE_BANK_CUST_NAME" property="payeeBankCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_CARD_NO" property="payeeBankCardNo" jdbcType="VARCHAR" />
+    <result column="ALLOCATE_TYPE" property="allocateType" jdbcType="CHAR" />   
+    <result column="ALLOCATE_STATUS" property="allocateStatus" jdbcType="CHAR" />
+    <result column="ALLOCATE_REASON" property="allocateReason" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />    
+    <result column="PAYER_BANK_TYPE" property="payerBankType" jdbcType="CHAR" />
+    <result column="PAYER_BANK_CUST_NAME" property="payerBankCustName" jdbcType="VARCHAR" />
+    <result column="PAYER_BANK_CARD_NO" property="payerBankCardNo" jdbcType="VARCHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="FEE_STYLE" property="feeStyle" jdbcType="CHAR" />
+    <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" />
+    <result column="ACCESS_CODE" property="accessCode" jdbcType="VARCHAR" />
+    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+    <result column="MER_ORDER_DATE" property="merOrderDate" jdbcType="CHAR" />
+    <result column="PAYER_BANK_CARD_NO" property="payerBankCardNo" jdbcType="VARCHAR" />
+    <result column="MER_CODE" property="merCode" jdbcType="VARCHAR" />
+    <result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+    <result column="EXT_ORG_ID" property="extOrgId" jdbcType="CHAR" />
+    <result column="ORDER_TYPE" property="orderType" jdbcType="VARCHAR" />       
+    <result column="NOTIFY_URL" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="CLEAR_DATE" property="clearDate" jdbcType="CHAR" />
+    <result column="PAYER_ACCT_SUB" property="payerAcctSub" jdbcType="VARCHAR" />
+    <result column="PAYEE_ACCT_SUB" property="payeeAcctSub" jdbcType="VARCHAR" />
+    <result column="CURRENOY" property="currenoy" jdbcType="CHAR" />    
+    <result column="PUB_PRIV" property="pubPriv" jdbcType="CHAR" />
+    <result column="CITY" property="city" jdbcType="VARCHAR" />
+    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+    <result column="CENTRAL_BK" property="centralBk" jdbcType="VARCHAR" />
+    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+    <result column="PAYER_BANK_NAME" property="payerBankName" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_NAME" property="payeeBankName" jdbcType="VARCHAR" />
+    <result column="PAYER_CENTRAL_BK" property="payerCentralBk" jdbcType="VARCHAR" />
+    <result column="SETTLE_MODE" property="settleMode" jdbcType="CHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="VARCHAR" />
+    <result column="ACCESS_NAME" property="accessName" jdbcType="VARCHAR" /> 
+  </resultMap>
+  <sql id="Base_Column_List" >
+	 ID,BUSI_ID,PAYER_CUST_ID,PAYER_CUST_NAME,PAYEE_CUST_ID,PAYEE_CUST_NAME,PAYEE_BANK_TYPE
+	,PAYEE_BANK_CUST_NAME,PAYEE_BANK_CARD_NO,ALLOCATE_TYPE,ALLOCATE_STATUS,ALLOCATE_REASON
+	,CREATE_TIME,COMPLETE_TIME,PAYER_BANK_TYPE,PAYER_BANK_CUST_NAME,PAYER_BANK_CARD_NO,ORDER_AMT,FEE,FEE_STYLE,BATCH_NO
+	,ACCESS_CODE,MER_ORDER_ID,MER_ORDER_DATE,MER_CODE,MER_NAME,EXT_ORG_ID,ORDER_TYPE,NOTIFY_URL
+	,REMARK,ACCOUNT_DATE,CLEAR_DATE,PAYER_ACCT_SUB,PAYEE_ACCT_SUB,CURRENOY,PUB_PRIV,CITY,PROVINCE
+	,CENTRAL_BK,DEAL_STATUS,PAYER_CENTRAL_BK,SETTLE_MODE,CHANNEL_CODE,ACCESS_NAME 
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_AMT_ALLOCATE
+    where BUSI_ID = #{busiId,jdbcType=CHAR}
+  </select>
+  
+  <select id="findPayAmtAllocateByBatchNo"  resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto"  >
+  	select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_AMT_ALLOCATE
+    where  BATCH_NO = #{batchNo,jdbcType=CHAR}
+  	and ALLOCATE_TYPE = #{allocateType,jdbcType=CHAR}
+  </select>
+   
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_AMT_ALLOCATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" >
+    insert into TB_PAY_AMT_ALLOCATE (ID, BUSI_ID, PAYER_CUST_ID, 
+      PAYER_CUST_NAME, PAYEE_CUST_ID, PAYEE_CUST_NAME, 
+      PAYEE_BANK_TYPE, PAYEE_BANK_CUST_NAME, PAYEE_BANK_CARD_NO, 
+      ALLOCATE_TYPE, REF_BUSI_ID, ALLOCATE_STATUS, 
+      ALLOCATE_REASON, CREATE_TIME, COMPLETE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{busiId,jdbcType=CHAR}, #{payerCustId,jdbcType=VARCHAR}, 
+      #{payerCustName,jdbcType=VARCHAR}, #{payeeCustId,jdbcType=VARCHAR}, #{payeeCustName,jdbcType=VARCHAR}, 
+      #{payeeBankType,jdbcType=VARCHAR}, #{payeeBankCustName,jdbcType=VARCHAR}, #{payeeBankCardNo,jdbcType=VARCHAR}, 
+      #{allocateType,jdbcType=CHAR}, #{refBusiId,jdbcType=VARCHAR}, #{allocateStatus,jdbcType=CHAR}, 
+      #{allocateReason,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" >
+    insert into TB_PAY_AMT_ALLOCATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="payerCustId != null" >
+        PAYER_CUST_ID,
+      </if>
+      <if test="payerCustName != null" >
+        PAYER_CUST_NAME,
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID,
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME,
+      </if>
+      <if test="payeeBankType != null" >
+        PAYEE_BANK_TYPE,
+      </if>
+      <if test="payeeBankCustName != null" >
+        PAYEE_BANK_CUST_NAME,
+      </if>
+      <if test="payeeBankCardNo != null" >
+        PAYEE_BANK_CARD_NO,
+      </if>
+      <if test="allocateType != null" >
+        ALLOCATE_TYPE,
+      </if>
+      <if test="refBusiId != null" >
+        REF_BUSI_ID,
+      </if>
+      <if test="allocateStatus != null" >
+        ALLOCATE_STATUS,
+      </if>
+      <if test="allocateReason != null" >
+        ALLOCATE_REASON,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="payerCustId != null" >
+        #{payerCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerCustName != null" >
+        #{payerCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankType != null" >
+        #{payeeBankType,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCustName != null" >
+        #{payeeBankCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCardNo != null" >
+        #{payeeBankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="allocateType != null" >
+        #{allocateType,jdbcType=CHAR},
+      </if>
+      <if test="refBusiId != null" >
+        #{refBusiId,jdbcType=VARCHAR},
+      </if>
+      <if test="allocateStatus != null" >
+        #{allocateStatus,jdbcType=CHAR},
+      </if>
+      <if test="allocateReason != null" >
+        #{allocateReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" >
+    update TB_PAY_AMT_ALLOCATE
+    <set >
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="payerCustId != null" >
+        PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerCustName != null" >
+        PAYER_CUST_NAME = #{payerCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankType != null" >
+        PAYEE_BANK_TYPE = #{payeeBankType,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCustName != null" >
+        PAYEE_BANK_CUST_NAME = #{payeeBankCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCardNo != null" >
+        PAYEE_BANK_CARD_NO = #{payeeBankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="allocateType != null" >
+        ALLOCATE_TYPE = #{allocateType,jdbcType=CHAR},
+      </if>
+      <if test="refBusiId != null" >
+        REF_BUSI_ID = #{refBusiId,jdbcType=VARCHAR},
+      </if>
+      <if test="allocateStatus != null" >
+        ALLOCATE_STATUS = #{allocateStatus,jdbcType=CHAR},
+      </if>
+      <if test="allocateReason != null" >
+        ALLOCATE_REASON = #{allocateReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" >
+    update TB_PAY_AMT_ALLOCATE
+    set BUSI_ID = #{busiId,jdbcType=CHAR},
+      PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR},
+      PAYER_CUST_NAME = #{payerCustName,jdbcType=VARCHAR},
+      PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      PAYEE_BANK_TYPE = #{payeeBankType,jdbcType=VARCHAR},
+      PAYEE_BANK_CUST_NAME = #{payeeBankCustName,jdbcType=VARCHAR},
+      PAYEE_BANK_CARD_NO = #{payeeBankCardNo,jdbcType=VARCHAR},
+      ALLOCATE_TYPE = #{allocateType,jdbcType=CHAR},
+      REF_BUSI_ID = #{refBusiId,jdbcType=VARCHAR},
+      ALLOCATE_STATUS = #{allocateStatus,jdbcType=CHAR},
+      ALLOCATE_REASON = #{allocateReason,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>   
+  <select id="listBatchNo" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" resultMap="BaseResultMap" >  
+	 select
+    <include refid="Base_Column_List" />
+     from TB_PAY_AMT_ALLOCATE 
+     where 1=1 
+     <if test="batchNo !=null and batchNo !=''">
+	 	and BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+	</if>
+	<if test="an_type !=null and an_type !=''">
+	 	and ALLOCATE_TYPE = #{an_type} 
+	</if>
+	 order by CREATE_TIME desc
+  </select>  
+  
+  <select id="list"  resultMap="BaseResultMap" >  
+	 select
+    <include refid="Base_Column_List" />
+     from TB_PAY_AMT_ALLOCATE 
+     where 1=1 
+    <if test="queryparam.payerCustId !=null  and queryparam.payerCustId !=''">
+		and instr(PAYER_CUST_ID, #{queryparam.payerCustId}) > 0
+	</if>
+	  <if test="queryparam.payeeCustId !=null  and queryparam.payeeCustId!=''">
+		and instr(PAYEE_CUST_ID, #{queryparam.payeeCustId}) > 0
+	</if>
+	 <if test="queryparam.payeeCustName !=null  and queryparam.payeeCustName !=''">
+		and instr(PAYEE_CUST_NAME, #{queryparam.payeeCustName}) > 0
+	</if>
+	
+    <if test="queryparam.busiId !=null  and queryparam.busiId !=''">
+		and instr(BUSI_ID, #{queryparam.busiId}) > 0
+	</if>	
+	<if test="queryparam.merName !=null  and queryparam.merName !=''">
+		and  instr(MER_NAME, #{queryparam.merName}) > 0
+	</if>
+	<if test="queryparam.payerCustName !=null  and queryparam.payerCustName !=''">
+		and  instr(PAYER_CUST_NAME, #{queryparam.payerCustName}) > 0
+	</if>
+	<if test="queryparam.merOrderId !=null  and queryparam.merOrderId !=''">
+		and  instr(MER_ORDER_ID, #{queryparam.merOrderId}) > 0
+	</if>	
+	<if test="queryparam.orderType !=null  and queryparam.orderType !=''">
+		and  instr(ORDER_TYPE, #{queryparam.orderType}) > 0
+	</if>
+	<if test="queryparam.allocateStatus!=null  and queryparam.allocateStatus!=''">
+		and ALLOCATE_STATUS=#{queryparam.allocateStatus,jdbcType=CHAR}
+	</if>	 		
+	 <if test="queryparam.startCreateTime !=null and queryparam.startCreateTime !=''">
+		and date_format(CREATE_TIME,'%Y%m%d')<![CDATA[   >=  ]]>date_format(#{queryparam.startCreateTime},'%Y%m%d')
+	</if>
+	 <if test="queryparam.endCreateTime !=null and queryparam.endCreateTime !=''">
+		and date_format(CREATE_TIME,'%Y%m%d')<![CDATA[   <=  ]]>date_format(#{queryparam.endCreateTime},'%Y%m%d')
+	</if> 
+	<if test="queryparam.startOrderAmt != null and queryparam.startOrderAmt != ''">
+		and ORDER_AMT<![CDATA[   >=  ]]>#{queryparam.startOrderAmt}
+	</if>
+	<if test="queryparam.endOrderAmt != null and queryparam.endOrderAmt != ''">
+		and ORDER_AMT<![CDATA[   <=  ]]>#{queryparam.endOrderAmt}
+	</if>	 	 
+	<if test="payerBankTypeLis!=null and payerBankTypeLis.size()>0">
+	  and PAYER_BANK_TYPE IN
+	  <foreach collection="payerBankTypeLis" item="item" open="(" close=")" separator=",">
+		#{item.bankType}
+	  </foreach>
+	</if>
+	
+	<if test="queryparam.payeeAcctSub !=null  and queryparam.payeeAcctSub !=''">
+		and instr(PAYEE_ACCT_SUB,#{queryparam.payeeAcctSub,jdbcType=VARCHAR}) > 0
+	</if>
+	<if test="queryparam.payerAcctSub !=null  and queryparam.payerAcctSub !=''">
+		and instr(PAYER_ACCT_SUB,#{queryparam.payerAcctSub,jdbcType=VARCHAR}) > 0
+	</if>
+	<if test="queryparam.payerBankCardNo !=null  and queryparam.payerBankCardNo !=''">
+	 	and instr (PAYER_BANK_CARD_NO,#{queryparam.payerBankCardNo,jdbcType=VARCHAR}) > 0
+	</if>	
+	<if test="payeeBankTypeList !=null and  payeeBankTypeList.size()>0">
+	  and PAYEE_BANK_TYPE IN
+	  <foreach collection="payeeBankTypeList" item="item" open="(" close=")" separator=",">
+   		#{item.bankType}
+  	</foreach>
+	</if>
+	<if test="queryparam.centralBk !=null  and queryparam.centralBk !=''">
+		and instr(CENTRAL_BK,#{queryparam.centralBk,jdbcType=VARCHAR}) > 0
+	</if>
+	<if test="queryparam.payerCentralBk !=null  and queryparam.payerCentralBk !=''">
+		and instr(PAYER_CENTRAL_BK,#{queryparam.payerCentralBk,jdbcType=VARCHAR}) > 0
+	</if>
+	<if test="queryparam.payeeBankCardNo !=null  and queryparam.payeeBankCardNo !=''">
+	 	and instr(PAYEE_BANK_CARD_NO,#{queryparam.payeeBankCardNo,jdbcType=VARCHAR}) > 0
+	</if>
+	<if test="queryparam.settleMode !=null  and queryparam.settleMode !=''">
+	 	and SETTLE_MODE = #{queryparam.settleMode,jdbcType=CHAR}
+	</if>
+	<if test="queryparam.payerCustName!=null  and  queryparam.payerCustName!=''">
+	 	and instr(PAYER_CUST_NAME,#{queryparam.payerCustName,jdbcType=VARCHAR}) > 0
+	</if>
+	<if test="queryparam.payerBankCodes !=null  and queryparam.payerBankCodes.size()>0">
+		and PAYER_CENTRAL_BK in
+		<foreach collection="queryparam.payerBankCodes" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+	</if>
+	<if test="queryparam.payeeBankCodes!=null  and queryparam.payeeBankCodes.size()>0">
+		and CENTRAL_BK in
+		<foreach collection="queryparam.payeeBankCodes" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+	</if>	
+	<if test="queryparam.payeeBankCustName !=null  and queryparam.payeeBankCustName !=''">
+		and instr(PAYEE_BANK_CUST_NAME,#{queryparam.payeeBankCustName,jdbcType=CHAR}) > 0
+	</if>
+	 <if test="queryparam.payeeAcctSub !=null  and queryparam.payeeAcctSub !=''">
+	 		and instr(PAYEE_ACCT_SUB,#{queryparam.payeeAcctSub,jdbcType=VARCHAR}) > 0 
+	</if>
+	<if test="queryparam.payeeAcctSub !=null  and queryparam.payeeAcctSub !=''">
+	 		and instr(PAYEE_ACCT_SUB,#{queryparam.payeeAcctSub,jdbcType=VARCHAR}) > 0 
+	</if>
+	<if test="queryparam.merCode !=null and queryparam.merCode !=''">
+	 	and MER_CODE = #{queryparam.merCode,jdbcType=VARCHAR}
+	</if>
+	<if test="queryparam.batchNo !=null and queryparam.batchNo !=''">
+	 	and BATCH_NO = #{queryparam.batchNo,jdbcType=VARCHAR}
+	</if>
+	 and ALLOCATE_TYPE in(#{queryparam.all_type},#{queryparam.an_type}) order by CREATE_TIME desc
+  </select>
+  
+  <select id="queryAll" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" resultMap="BaseResultMap" >  
+	 select
+    <include refid="Base_Column_List" />
+     from TB_PAY_AMT_ALLOCATE 
+     where 1=1 
+    <if test="payerCustId !=null  and payerCustId !=''">
+		and instr(PAYER_CUST_ID, #{payerCustId}) > 0
+	</if>
+	<if test="payeeCustId !=null  and payeeCustId !=''">
+		and instr(PAYEE_CUST_ID, #{payeeCustId}) > 0
+	</if>
+	 <if test="payeeCustName !=null  and payeeCustName !=''">
+		and instr(PAYEE_CUST_NAME, #{payeeCustName}) > 0
+	</if>
+    <if test="busiId !=null  and busiId !=''">
+		and instr(BUSI_ID, #{busiId}) > 0
+	</if>	
+	<if test="merName !=null  and merName !=''">
+		and  instr(MER_NAME, #{merName}) > 0
+	</if>
+	<if test="payerCustName !=null  and payerCustName !=''">
+		and  instr(PAYER_CUST_NAME, #{payerCustName}) > 0
+	</if>
+	<if test="merOrderId !=null  and merOrderId !=''">
+		and  instr(MER_ORDER_ID, #{merOrderId}) > 0
+	</if>	
+	<if test="orderType !=null  and orderType !=''">
+		and  instr(ORDER_TYPE, #{orderType}) > 0
+	</if>
+	<if test="allocateStatus!=null  and allocateStatus!=''">
+		and ALLOCATE_STATUS=#{allocateStatus,jdbcType=CHAR}
+	</if>	 		
+	 <if test="startCreateTime !=null and startCreateTime !=''">
+		and date_format(CREATE_TIME,'%Y%m%d')<![CDATA[   >=  ]]>date_format(#{startCreateTime},'%Y%m%d')
+	</if>
+	 <if test="endCreateTime !=null and endCreateTime !=''">
+		and date_format(CREATE_TIME,'%Y%m%d')<![CDATA[   <=  ]]>date_format(#{endCreateTime},'%Y%m%d')
+	</if>
+	<if test="startCompleteTime !=null and startCompleteTime !=''">
+		and date_format(COMPLETE_TIME,'%Y%m%d')<![CDATA[   >=  ]]>date_format(#{startCompleteTime},'%Y%m%d')
+	</if>
+	 <if test="endCompleteTime !=null and endCompleteTime !=''">
+		and date_format(COMPLETE_TIME,'%Y%m%d')<![CDATA[   <=  ]]>date_format(#{endCompleteTime},'%Y%m%d')
+	</if> 
+	<if test="startOrderAmt != null and startOrderAmt != ''">
+		and ORDER_AMT<![CDATA[   >=  ]]>#{startOrderAmt}
+	</if>
+	<if test="endOrderAmt != null and endOrderAmt != ''">
+		and ORDER_AMT<![CDATA[   <=  ]]>#{endOrderAmt}
+	</if>	 	 
+	 order by CREATE_TIME desc
+  </select>
+ 
+  <select id="listForOut" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" resultMap="BaseResultMap" >  
+	 select
+    <include refid="Base_Column_List" />
+     from TB_PAY_AMT_ALLOCATE 
+     where 1=1 
+    
+	<if test="merOrderId !=null  and merOrderId !=''">
+		and  instr(MER_ORDER_ID, #{merOrderId}) > 0
+	</if>			
+	 <if test="startCreateTime !=null and startCreateTime !=''">
+		and date_format(CREATE_TIME,'%Y%m%d')<![CDATA[   >=  ]]>date_format(#{startCreateTime},'%Y%m%d')
+	</if>
+	 <if test="endCreateTime !=null and endCreateTime !=''">
+		and date_format(CREATE_TIME,'%Y%m%d')<![CDATA[   <=  ]]>date_format(#{endCreateTime},'%Y%m%d')
+	</if> 
+	<if test="payerCustId !=null and payerCustId !=''">
+		and PAYER_CUST_ID = #{payerCustId, jdbcType=VARCHAR}
+	</if>
+	<if test="payeeBankCardNo !=null  and payeeBankCardNo !=''">
+			 and instr(PAYEE_BANK_CARD_NO,#{payeeBankCardNo,jdbcType=VARCHAR}) > 0
+	</if>
+	<if test="payeeBankCustName !=null  and payeeBankCustName !=''">
+			 and instr(PAYEE_BANK_CUST_NAME,#{payeeBankCustName,jdbcType=VARCHAR}) > 0
+	</if>
+	<if test="merCode !=null and merCode !=''">
+	 	and MER_CODE = #{merCode,jdbcType=VARCHAR}
+	</if>
+	<if test="batchNo !=null and batchNo !=''">
+	 	and BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+	</if>
+	<if test="dealStatus !=null and dealStatus !=''">
+	 	and DEAL_STATUS = #{dealStatus,jdbcType=VARCHAR}
+	</if>
+	<if test="queryOrders !=null">
+		and ALLOCATE_STATUS in 
+		<foreach collection="queryOrders" index="index" item="item" open="(" separator="," close=")">
+            #{item.value,jdbcType=CHAR}
+        </foreach>
+	</if>
+	order by CREATE_TIME desc
+  </select>
+  <select id="alloAndRechangelistForOut" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateDto" resultMap="BaseResultMap" >  
+	 select
+    <include refid="Base_Column_List" />
+     from TB_PAY_AMT_ALLOCATE paa 
+     where 1=1 
+    
+	 <if test="startCreateTime !=null and startCreateTime !=''">
+		and date_format(CREATE_TIME,'%Y%m%d')<![CDATA[   >=  ]]>date_format(#{startCreateTime},'%Y%m%d')
+	</if>
+	 <if test="endCreateTime !=null and endCreateTime !=''">
+		and date_format(CREATE_TIME,'%Y%m%d')<![CDATA[   <=  ]]>date_format(#{endCreateTime},'%Y%m%d')
+	</if> 
+	<if test="merCode !=null and merCode !=''">
+	 	and MER_CODE = #{merCode,jdbcType=VARCHAR}
+	</if>
+	order by CREATE_TIME desc
+  </select>
+</mapper>

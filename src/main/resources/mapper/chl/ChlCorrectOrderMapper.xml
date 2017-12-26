@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.chl.dao.ChlCorrectOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.channel.dto.ChlCorrectOrderDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="CHAR" />
+    <result column="PLAT_TRADE_NO" property="platTradeNo" jdbcType="VARCHAR" />
+    <result column="PAY_ID" property="payId" jdbcType="VARCHAR" />
+    <result column="CHANNEL_TRADE_NO" property="channelTradeNo" jdbcType="VARCHAR" />
+    <result column="OLD_PLAT_TRADE_NO" property="oldPlatTradeNo" jdbcType="VARCHAR" />
+    <result column="OLD_PAY_ID" property="oldPayId" jdbcType="VARCHAR" />
+    <result column="OLD_CHANNEL_TRADE_NO" property="oldChannelTradeNo" jdbcType="VARCHAR" />
+    <result column="PAYER_ACC" property="payerAcc" jdbcType="VARCHAR" />
+    <result column="PAYER_NAME" property="payerName" jdbcType="VARCHAR" />
+    <result column="PAYER_BANK_TYPE" property="payerBankType" jdbcType="CHAR" />
+    <result column="PAYER_BANK_CODE" property="payerBankCode" jdbcType="VARCHAR" />
+    <result column="PAYEE_ACC" property="payeeAcc" jdbcType="VARCHAR" />
+    <result column="PAYEE_NAME" property="payeeName" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_TYPE" property="payeeBankType" jdbcType="CHAR" />
+    <result column="PAYEE_BANK_CODE" property="payeeBankCode" jdbcType="VARCHAR" />
+    <result column="IS_PUBLIC" property="isPublic" jdbcType="CHAR" />
+    <result column="TOTAL_FEE" property="totalFee" jdbcType="BIGINT" />
+    <result column="TRADE_STATE" property="tradeState" jdbcType="CHAR" />
+    <result column="ERR_CODE" property="errCode" jdbcType="VARCHAR" />
+    <result column="ERR_DESC" property="errDesc" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CHANNEL_CODE, PLAT_TRADE_NO, PAY_ID, CHANNEL_TRADE_NO, OLD_PLAT_TRADE_NO, OLD_PAY_ID, 
+    OLD_CHANNEL_TRADE_NO, PAYER_ACC, PAYER_NAME, PAYER_BANK_TYPE, PAYER_BANK_CODE, PAYEE_ACC, 
+    PAYEE_NAME, PAYEE_BANK_TYPE, PAYEE_BANK_CODE, IS_PUBLIC, TOTAL_FEE, TRADE_STATE, 
+    ERR_CODE, ERR_DESC, CREATE_TIME, UPDATE_TIME, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_chl_correct_order
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_chl_correct_order
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.channel.dto.ChlCorrectOrderDto" >
+    insert into tb_chl_correct_order (ID, CHANNEL_CODE, PLAT_TRADE_NO, 
+      PAY_ID, CHANNEL_TRADE_NO, OLD_PLAT_TRADE_NO, 
+      OLD_PAY_ID, OLD_CHANNEL_TRADE_NO, PAYER_ACC, 
+      PAYER_NAME, PAYER_BANK_TYPE, PAYER_BANK_CODE, 
+      PAYEE_ACC, PAYEE_NAME, PAYEE_BANK_TYPE, 
+      PAYEE_BANK_CODE, IS_PUBLIC, TOTAL_FEE, 
+      TRADE_STATE, ERR_CODE, ERR_DESC, 
+      CREATE_TIME, UPDATE_TIME, REMARK
+      )
+    values (#{id,jdbcType=VARCHAR}, #{channelCode,jdbcType=CHAR}, #{platTradeNo,jdbcType=VARCHAR}, 
+      #{payId,jdbcType=VARCHAR}, #{channelTradeNo,jdbcType=VARCHAR}, #{oldPlatTradeNo,jdbcType=VARCHAR}, 
+      #{oldPayId,jdbcType=VARCHAR}, #{oldChannelTradeNo,jdbcType=VARCHAR}, #{payerAcc,jdbcType=VARCHAR}, 
+      #{payerName,jdbcType=VARCHAR}, #{payerBankType,jdbcType=CHAR}, #{payerBankCode,jdbcType=VARCHAR}, 
+      #{payeeAcc,jdbcType=VARCHAR}, #{payeeName,jdbcType=VARCHAR}, #{payeeBankType,jdbcType=CHAR}, 
+      #{payeeBankCode,jdbcType=VARCHAR}, #{isPublic,jdbcType=CHAR}, #{totalFee,jdbcType=BIGINT}, 
+      #{tradeState,jdbcType=CHAR}, #{errCode,jdbcType=VARCHAR}, #{errDesc,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.channel.dto.ChlCorrectOrderDto" >
+    insert into tb_chl_correct_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE,
+      </if>
+      <if test="platTradeNo != null" >
+        PLAT_TRADE_NO,
+      </if>
+      <if test="payId != null" >
+        PAY_ID,
+      </if>
+      <if test="channelTradeNo != null" >
+        CHANNEL_TRADE_NO,
+      </if>
+      <if test="oldPlatTradeNo != null" >
+        OLD_PLAT_TRADE_NO,
+      </if>
+      <if test="oldPayId != null" >
+        OLD_PAY_ID,
+      </if>
+      <if test="oldChannelTradeNo != null" >
+        OLD_CHANNEL_TRADE_NO,
+      </if>
+      <if test="payerAcc != null" >
+        PAYER_ACC,
+      </if>
+      <if test="payerName != null" >
+        PAYER_NAME,
+      </if>
+      <if test="payerBankType != null" >
+        PAYER_BANK_TYPE,
+      </if>
+      <if test="payerBankCode != null" >
+        PAYER_BANK_CODE,
+      </if>
+      <if test="payeeAcc != null" >
+        PAYEE_ACC,
+      </if>
+      <if test="payeeName != null" >
+        PAYEE_NAME,
+      </if>
+      <if test="payeeBankType != null" >
+        PAYEE_BANK_TYPE,
+      </if>
+      <if test="payeeBankCode != null" >
+        PAYEE_BANK_CODE,
+      </if>
+      <if test="isPublic != null" >
+        IS_PUBLIC,
+      </if>
+      <if test="totalFee != null" >
+        TOTAL_FEE,
+      </if>
+      <if test="tradeState != null" >
+        TRADE_STATE,
+      </if>
+      <if test="errCode != null" >
+        ERR_CODE,
+      </if>
+      <if test="errDesc != null" >
+        ERR_DESC,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="platTradeNo != null" >
+        #{platTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelTradeNo != null" >
+        #{channelTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPlatTradeNo != null" >
+        #{oldPlatTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPayId != null" >
+        #{oldPayId,jdbcType=VARCHAR},
+      </if>
+      <if test="oldChannelTradeNo != null" >
+        #{oldChannelTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerAcc != null" >
+        #{payerAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="payerBankType != null" >
+        #{payerBankType,jdbcType=CHAR},
+      </if>
+      <if test="payerBankCode != null" >
+        #{payerBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeAcc != null" >
+        #{payeeAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeName != null" >
+        #{payeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankType != null" >
+        #{payeeBankType,jdbcType=CHAR},
+      </if>
+      <if test="payeeBankCode != null" >
+        #{payeeBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        #{isPublic,jdbcType=CHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="tradeState != null" >
+        #{tradeState,jdbcType=CHAR},
+      </if>
+      <if test="errCode != null" >
+        #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errDesc != null" >
+        #{errDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.channel.dto.ChlCorrectOrderDto" >
+    update tb_chl_correct_order
+    <set >
+      <if test="channelCode != null" >
+        CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="platTradeNo != null" >
+        PLAT_TRADE_NO = #{platTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payId != null" >
+        PAY_ID = #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelTradeNo != null" >
+        CHANNEL_TRADE_NO = #{channelTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPlatTradeNo != null" >
+        OLD_PLAT_TRADE_NO = #{oldPlatTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPayId != null" >
+        OLD_PAY_ID = #{oldPayId,jdbcType=VARCHAR},
+      </if>
+      <if test="oldChannelTradeNo != null" >
+        OLD_CHANNEL_TRADE_NO = #{oldChannelTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerAcc != null" >
+        PAYER_ACC = #{payerAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        PAYER_NAME = #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="payerBankType != null" >
+        PAYER_BANK_TYPE = #{payerBankType,jdbcType=CHAR},
+      </if>
+      <if test="payerBankCode != null" >
+        PAYER_BANK_CODE = #{payerBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeAcc != null" >
+        PAYEE_ACC = #{payeeAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeName != null" >
+        PAYEE_NAME = #{payeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankType != null" >
+        PAYEE_BANK_TYPE = #{payeeBankType,jdbcType=CHAR},
+      </if>
+      <if test="payeeBankCode != null" >
+        PAYEE_BANK_CODE = #{payeeBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        IS_PUBLIC = #{isPublic,jdbcType=CHAR},
+      </if>
+      <if test="totalFee != null" >
+        TOTAL_FEE = #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="tradeState != null" >
+        TRADE_STATE = #{tradeState,jdbcType=CHAR},
+      </if>
+      <if test="errCode != null" >
+        ERR_CODE = #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errDesc != null" >
+        ERR_DESC = #{errDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.channel.dto.ChlCorrectOrderDto" >
+    update tb_chl_correct_order
+    set CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      PLAT_TRADE_NO = #{platTradeNo,jdbcType=VARCHAR},
+      PAY_ID = #{payId,jdbcType=VARCHAR},
+      CHANNEL_TRADE_NO = #{channelTradeNo,jdbcType=VARCHAR},
+      OLD_PLAT_TRADE_NO = #{oldPlatTradeNo,jdbcType=VARCHAR},
+      OLD_PAY_ID = #{oldPayId,jdbcType=VARCHAR},
+      OLD_CHANNEL_TRADE_NO = #{oldChannelTradeNo,jdbcType=VARCHAR},
+      PAYER_ACC = #{payerAcc,jdbcType=VARCHAR},
+      PAYER_NAME = #{payerName,jdbcType=VARCHAR},
+      PAYER_BANK_TYPE = #{payerBankType,jdbcType=CHAR},
+      PAYER_BANK_CODE = #{payerBankCode,jdbcType=VARCHAR},
+      PAYEE_ACC = #{payeeAcc,jdbcType=VARCHAR},
+      PAYEE_NAME = #{payeeName,jdbcType=VARCHAR},
+      PAYEE_BANK_TYPE = #{payeeBankType,jdbcType=CHAR},
+      PAYEE_BANK_CODE = #{payeeBankCode,jdbcType=VARCHAR},
+      IS_PUBLIC = #{isPublic,jdbcType=CHAR},
+      TOTAL_FEE = #{totalFee,jdbcType=BIGINT},
+      TRADE_STATE = #{tradeState,jdbcType=CHAR},
+      ERR_CODE = #{errCode,jdbcType=VARCHAR},
+      ERR_DESC = #{errDesc,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="findAll" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.channel.dto.ChlCorrectOrderDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_CHL_CORRECT_ORDER
+		where 1 = 1 
+		<if test="payId != null and payId != ''">
+			and instr(PAY_ID,#{payId,jdbcType=VARCHAR})>0 
+		</if>
+		<if test="channelTradeNo != null and channelTradeNo != ''">
+			and instr(CHANNEL_TRADE_NO,#{channelTradeNo,jdbcType=VARCHAR})>0 
+		</if>
+		<if test="channelCode != null and channelCode != ''">
+			and CHANNEL_CODE = #{channelCode,jdbcType=CHAR} 
+		</if>
+		<if test="payerAcc != null and payerAcc != ''">
+			and instr(PAYER_ACC, #{payerAcc,jdbcType=VARCHAR})>0
+		</if>
+		<if test="payeeAcc != null and payeeAcc != ''">
+			and instr(PAYEE_ACC, #{payeeAcc,jdbcType=VARCHAR})>0
+		</if>
+		<if test="tradeState != null and tradeState != ''">
+			and TRADE_STATE = #{tradeState,jdbcType=CHAR}
+		</if>
+        <if test="startTime !=null">
+        	and DATE_FORMAT(CREATE_TIME,'%Y%m%d') <![CDATA[   >=  ]]> DATE_FORMAT(#{startTime},'%Y%m%d') 
+        </if>
+        <if test="endTime !=null">
+        	and DATE_FORMAT(CREATE_TIME,'%Y%m%d') <![CDATA[   <=  ]]> DATE_FORMAT(#{endTime},'%Y%m%d')
+        </if>
+		 order by CREATE_TIME DESC
+	</select>
+</mapper>

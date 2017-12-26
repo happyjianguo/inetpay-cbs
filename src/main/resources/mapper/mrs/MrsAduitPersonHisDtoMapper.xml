@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsAduitPersonHisDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitPersonHisDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ADUIT_ID" property="aduitId" jdbcType="VARCHAR" />
+    <result column="ADUIT_USER_ID" property="aduitUserId" jdbcType="VARCHAR" />
+    <result column="ADUIT_USER_NAME" property="aduitUserName" jdbcType="VARCHAR" />
+    <result column="ADUIT_STATUS" property="aduitStatus" jdbcType="CHAR" />
+    <result column="ADUIT_TIME" property="aduitTime" jdbcType="TIMESTAMP" />
+    <result column="ADUIT_REMARK" property="aduitRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ADUIT_ID, ADUIT_USER_ID, ADUIT_USER_NAME, ADUIT_STATUS, ADUIT_TIME, ADUIT_REMARK, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ADUIT_PERSON_HIS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findListHisPage" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitPersonHisDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ADUIT_PERSON_HIS where 1=1  
+    <if test="aduitId !=null and aduitId !=''">
+      and ADUIT_ID = #{aduitId}
+    </if>
+    order by ADUIT_TIME desc
+  </select>
+  <select id="findListHisAll" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitPersonHisDto">
+  	  select 
+    	<include refid="Base_Column_List" />
+    	from TB_MRS_ADUIT_PERSON_HIS where ADUIT_ID = #{aduitId,jdbcType=VARCHAR}
+  </select>
+  <select id="findListHisByLoginId" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select t.ID as id, t.ADUIT_ID as aduitId,
+		t.ADUIT_USER_ID as aduitUserId,
+		t.ADUIT_USER_NAME as aduitUserName,
+		t.ADUIT_STATUS ,
+		t.ADUIT_TIME as aduitTime,
+		t.ADUIT_REMARK as aduitRemark,
+		t.CREATE_TIME as createTime
+	from TB_MRS_ADUIT_PERSON_HIS t
+	left join TB_MRS_ADUIT_INFO a on t.aduit_id=a.id
+	left join TB_MRS_PORTAL_ACCOUNT_ADUIT p on p.aduit_id=a.id
+	where p.status='01' and p.login_id=#{loginId,jdbcType=VARCHAR}
+	order by t.create_time DESC 
+  </select>
+  
+  <select id="findByAduitIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select 
+  	 <include refid="Base_Column_List" /> 
+  	from TB_MRS_ADUIT_PERSON_HIS where ADUIT_ID= #{aduitId,jdbcType=VARCHAR} and ADUIT_USER_ID = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_ADUIT_PERSON_HIS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitPersonHisDto" >
+    insert into TB_MRS_ADUIT_PERSON_HIS (ID, ADUIT_ID, ADUIT_USER_ID, 
+      ADUIT_USER_NAME, ADUIT_STATUS, ADUIT_TIME, 
+      ADUIT_REMARK, CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{aduitId,jdbcType=VARCHAR}, #{aduitUserId,jdbcType=VARCHAR}, 
+      #{aduitUserName,jdbcType=VARCHAR}, #{aduitStatus,jdbcType=CHAR}, #{aduitTime,jdbcType=TIMESTAMP}, 
+      #{aduitRemark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitPersonHisDto" >
+    insert into TB_MRS_ADUIT_PERSON_HIS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="aduitId != null" >
+        ADUIT_ID,
+      </if>
+      <if test="aduitUserId != null" >
+        ADUIT_USER_ID,
+      </if>
+      <if test="aduitUserName != null" >
+        ADUIT_USER_NAME,
+      </if>
+      <if test="aduitStatus != null" >
+        ADUIT_STATUS,
+      </if>
+      <if test="aduitTime != null" >
+        ADUIT_TIME,
+      </if>
+      <if test="aduitRemark != null" >
+        ADUIT_REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitId != null" >
+        #{aduitId,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitUserId != null" >
+        #{aduitUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitUserName != null" >
+        #{aduitUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitStatus != null" >
+        #{aduitStatus,jdbcType=CHAR},
+      </if>
+      <if test="aduitTime != null" >
+        #{aduitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aduitRemark != null" >
+        #{aduitRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitPersonHisDto" >
+    update TB_MRS_ADUIT_PERSON_HIS
+    <set >
+      <if test="aduitId != null" >
+        ADUIT_ID = #{aduitId,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitUserId != null" >
+        ADUIT_USER_ID = #{aduitUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitUserName != null" >
+        ADUIT_USER_NAME = #{aduitUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitStatus != null" >
+        ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR},
+      </if>
+      <if test="aduitTime != null" >
+        ADUIT_TIME = #{aduitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aduitRemark != null" >
+        ADUIT_REMARK = #{aduitRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitPersonHisDto" >
+    update TB_MRS_ADUIT_PERSON_HIS
+    set ADUIT_ID = #{aduitId,jdbcType=VARCHAR},
+      ADUIT_USER_ID = #{aduitUserId,jdbcType=VARCHAR},
+      ADUIT_USER_NAME = #{aduitUserName,jdbcType=VARCHAR},
+      ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR},
+      ADUIT_TIME = #{aduitTime,jdbcType=TIMESTAMP},
+      ADUIT_REMARK = #{aduitRemark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

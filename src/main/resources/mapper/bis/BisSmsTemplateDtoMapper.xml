@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisSmsTemplateDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsTemplateDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSINESS_SCENARIO" property="businessScenario" jdbcType="CHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="SEND_START_TIME" property="sendStartTime" jdbcType="CHAR" />
+    <result column="SEND_END_TIME" property="sendEndTime" jdbcType="CHAR" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATER_NAME" property="createrName" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+    <result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSINESS_SCENARIO, PHONE, NAME, CONTENT, STATUS, SEND_START_TIME, SEND_END_TIME, 
+    CREATER, CREATER_NAME, CREATE_TIME, REVISER, REVISER_NAME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SMS_TEMPLATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_SMS_TEMPLATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsTemplateDto" >
+    insert into TB_BIS_SMS_TEMPLATE (ID, BUSINESS_SCENARIO, PHONE, 
+      NAME, CONTENT, STATUS, 
+      SEND_START_TIME, SEND_END_TIME, CREATER, 
+      CREATER_NAME, CREATE_TIME, REVISER, 
+      REVISER_NAME, UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{businessScenario,jdbcType=CHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{sendStartTime,jdbcType=CHAR}, #{sendEndTime,jdbcType=CHAR}, #{creater,jdbcType=VARCHAR}, 
+      #{createrName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{reviser,jdbcType=VARCHAR}, 
+      #{reviserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsTemplateDto" >
+    insert into TB_BIS_SMS_TEMPLATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="businessScenario != null" >
+        BUSINESS_SCENARIO,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="sendStartTime != null" >
+        SEND_START_TIME,
+      </if>
+      <if test="sendEndTime != null" >
+        SEND_END_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="reviser != null" >
+        REVISER,
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScenario != null" >
+        #{businessScenario,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="sendStartTime != null" >
+        #{sendStartTime,jdbcType=CHAR},
+      </if>
+      <if test="sendEndTime != null" >
+        #{sendEndTime,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviser != null" >
+        #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsTemplateDto" >
+    update TB_BIS_SMS_TEMPLATE
+    <set >
+      <if test="businessScenario != null" >
+        BUSINESS_SCENARIO = #{businessScenario,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="sendStartTime != null" >
+        SEND_START_TIME = #{sendStartTime,jdbcType=CHAR},
+      </if>
+      <if test="sendEndTime != null" >
+        SEND_END_TIME = #{sendEndTime,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviser != null" >
+        REVISER = #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsTemplateDto" >
+    update TB_BIS_SMS_TEMPLATE
+    set BUSINESS_SCENARIO = #{businessScenario,jdbcType=CHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      SEND_START_TIME = #{sendStartTime,jdbcType=CHAR},
+      SEND_END_TIME = #{sendEndTime,jdbcType=CHAR},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REVISER = #{reviser,jdbcType=VARCHAR},
+      REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+   <select id="getSmsTempla" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SMS_TEMPLATE
+    where BUSINESS_SCENARIO = #{templateCode,jdbcType=CHAR}
+  </select>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsTemplateDto">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SMS_TEMPLATE
+   <where>
+    <if test="businessScenario != null and businessScenario !=''" >
+       and BUSINESS_SCENARIO = #{businessScenario.value,jdbcType=CHAR}
+      </if>
+      <if test="phone != null and phone !=''" >
+       and instr(PHONE, #{phone,jdbcType=VARCHAR}) > 0
+       <!-- and PHONE like concat('%',concat(#{phone,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="name != null and name !=''" >
+       and instr(NAME, #{name,jdbcType=VARCHAR}) > 0
+      <!-- and  NAME like concat('%',concat(#{name,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="content != null and content !=''" >
+      and instr(CONTENT, #{content,jdbcType=VARCHAR}) > 0
+      <!-- and  CONTENT like concat('%',concat(#{content,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="status != null and status !=''" >
+      and  STATUS = #{status.value,jdbcType=CHAR}
+      </if>
+      <if test="sendStartTime != null and sendStartTime !=''" >
+      and  SEND_START_TIME = #{sendStartTime,jdbcType=CHAR}
+      </if>
+      <if test="sendEndTime != null and sendEndTime !=''" >
+      and  SEND_END_TIME = #{sendEndTime,jdbcType=CHAR}
+      </if>
+      <if test="creater != null and creater !=''" >
+      and  CREATER = #{creater,jdbcType=VARCHAR}
+      </if>
+      <if test="createrName != null and createrName !=''" >
+      and  CREATER_NAME = #{createrName,jdbcType=VARCHAR}
+      </if>
+      <if test="startCreateTime != null" >
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="endCreateTime != null" >
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="reviser != null and reviser !=''" >
+      and  REVISER = #{reviser,jdbcType=VARCHAR}
+      </if>
+      <if test="reviserName != null and reviserName !=''" >
+      and  REVISER_NAME = #{reviserName,jdbcType=VARCHAR}
+      </if>
+      <if test="startUpdateTime != null" >
+      and to_char(UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startUpdateTime},'YYYY-MM-DD')
+      </if>
+      <if test="endUpdateTime != null" >
+      and to_char(UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endUpdateTime},'YYYY-MM-DD')
+      </if>
+   </where>
+   order by ID desc
+  </select>
+</mapper>

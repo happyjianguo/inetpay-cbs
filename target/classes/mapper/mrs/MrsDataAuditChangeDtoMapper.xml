@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsDataAuditChangeDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsDataAuditChangeDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="REF_ID" property="refId" jdbcType="VARCHAR" />
+    <result column="CHANGE_TYPE" property="changeType" jdbcType="CHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="CHAR" />
+    <result column="CHANGE_CONTENT" property="changeContent" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS" property="auditStatus" jdbcType="CHAR" />
+    <result column="AUDIT_REASON" property="auditReason" jdbcType="VARCHAR" />
+    <result column="AUDIT_USER" property="auditUser" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, REF_ID, CHANGE_TYPE, USER_TYPE, CHANGE_CONTENT, AUDIT_STATUS, AUDIT_REASON, AUDIT_USER, 
+    AUDIT_TIME, CREATE_USER, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_DATA_AUDIT_CHANGE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByRefId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_DATA_AUDIT_CHANGE
+    where REF_ID = #{refId,jdbcType=VARCHAR}
+    	and AUDIT_STATUS='0'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_DATA_AUDIT_CHANGE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsDataAuditChangeDto" >
+    insert into TB_MRS_DATA_AUDIT_CHANGE (ID, REF_ID, CHANGE_TYPE, 
+      USER_TYPE, CHANGE_CONTENT, AUDIT_STATUS, 
+      AUDIT_REASON, AUDIT_USER, AUDIT_TIME, 
+      CREATE_USER, CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{refId,jdbcType=VARCHAR}, #{changeType,jdbcType=CHAR}, 
+      #{userType,jdbcType=CHAR}, #{changeContent,jdbcType=VARCHAR}, #{auditStatus,jdbcType=CHAR}, 
+      #{auditReason,jdbcType=VARCHAR}, #{auditUser,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsDataAuditChangeDto" >
+    insert into TB_MRS_DATA_AUDIT_CHANGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="refId != null" >
+        REF_ID,
+      </if>
+      <if test="changeType != null" >
+        CHANGE_TYPE,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="changeContent != null" >
+        CHANGE_CONTENT,
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS,
+      </if>
+      <if test="auditReason != null" >
+        AUDIT_REASON,
+      </if>
+      <if test="auditUser != null" >
+        AUDIT_USER,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="refId != null" >
+        #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="changeType != null" >
+        #{changeType,jdbcType=CHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=CHAR},
+      </if>
+      <if test="changeContent != null" >
+        #{changeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditReason != null" >
+        #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUser != null" >
+        #{auditUser,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsDataAuditChangeDto" >
+    update TB_MRS_DATA_AUDIT_CHANGE
+    <set >
+      <if test="refId != null" >
+        REF_ID = #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="changeType != null" >
+        CHANGE_TYPE = #{changeType,jdbcType=CHAR},
+      </if>
+      <if test="userType != null" >
+        USER_TYPE = #{userType,jdbcType=CHAR},
+      </if>
+      <if test="changeContent != null" >
+        CHANGE_CONTENT = #{changeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditReason != null" >
+        AUDIT_REASON = #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUser != null" >
+        AUDIT_USER = #{auditUser,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsDataAuditChangeDto" >
+    update TB_MRS_DATA_AUDIT_CHANGE
+    set REF_ID = #{refId,jdbcType=VARCHAR},
+      CHANGE_TYPE = #{changeType,jdbcType=CHAR},
+      USER_TYPE = #{userType,jdbcType=CHAR},
+      CHANGE_CONTENT = #{changeContent,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      AUDIT_REASON = #{auditReason,jdbcType=VARCHAR},
+      AUDIT_USER = #{auditUser,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="getPayNoVal" resultType="String">
+	select SEQ_PAY_NO.nextval from dual
+  </select>
+</mapper>

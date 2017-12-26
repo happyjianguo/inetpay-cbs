@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsMerCheckDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsAccessCheck" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="ACCESS_CODE" property="accessCode" jdbcType="CHAR" />
+	    <result column="FILE_DAY" property="fileDay" jdbcType="CHAR" />
+	    <result column="UPLOAD_STAUS" property="uploadStaus" jdbcType="CHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="ACCESS_FILE" property="accessFile" jdbcType="VARCHAR" />
+	    <result column="FTP_URL" property="ftpUrl" jdbcType="VARCHAR" />
+	    <result column="PAY_COUNT" property="payCount" jdbcType="DECIMAL" />
+	    <result column="PAY_AMOUNT" property="payAmount" jdbcType="DECIMAL" />
+	    <result column="REFUND_COUNT" property="refundCount" jdbcType="DECIMAL" />
+	    <result column="REFUND_AMOUNT" property="refundAmount" jdbcType="DECIMAL" />
+	    <result column="FEE_AMOUNT" property="feeAmount" jdbcType="DECIMAL" />
+	    <result column="SETTL_AMOUT" property="settlAmout" jdbcType="DECIMAL" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	 
+  </resultMap>
+  
+<select id="queryById" parameterType="java.lang.String" resultMap="resultMap">
+select *
+ from TB_CLS_ACCESS_CHECK 
+ where ID=#{id,jdbcType=CHAR}
+</select>
+
+<select id="queryMerCheck" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsAccessCheck" resultMap="resultMap">
+select *
+ from TB_CLS_ACCESS_CHECK
+ where 1=1
+ <if test="uploadStaus!=null and uploadStaus!=''">
+	and UPLOAD_STAUS=#{uploadStaus,jdbcType=CHAR}
+</if>
+ <if test="dealStatus!=null and dealStatus!=''">
+	and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	and to_date(FILE_DAY,'yyyyMMdd')&lt;=#{endTime,jdbcType=DATE}
+</if>
+<if test="startTime!=null">
+	and to_date(FILE_DAY,'yyyyMMdd')&gt;=#{startTime,jdbcType=DATE}
+</if>
+order by FILE_DAY desc,ACCESS_CODE desc
+</select>
+ 
+ 
+ <update id="updateMerCheck" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsAccessCheck">
+update  TB_CLS_ACCESS_CHECK mer
+set DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+where ID=#{id,jdbcType=CHAR}
+ </update> 
+</mapper>

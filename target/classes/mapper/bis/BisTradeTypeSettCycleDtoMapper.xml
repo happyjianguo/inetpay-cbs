@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisTradeTypeSettCycleDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeSettCycleDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSINESS_CODE" property="businessCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR" />
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="VARCHAR" />
+    <result column="OFFSET_STYLE" property="offsetStyle" jdbcType="CHAR" />
+    <result column="ASSURANCE_STYLE" property="assuranceStyle" jdbcType="CHAR" />
+    <result column="SETTLE_CYCLE" property="settleCycle" jdbcType="DECIMAL" />
+    <result column="SETTLE_CYCLE_TYPE" property="settleCycleType" jdbcType="CHAR" />
+    <result column="FIRST_SETTLE_DAY" property="firstSettleDay" jdbcType="CHAR" />
+    <result column="LAST_SETTLE_DAY" property="lastSettleDay" jdbcType="CHAR" />
+    <result column="SETTLE_DAY" property="settleDay" jdbcType="CHAR" />
+    <result column="CREATER_REVISER_NAME" property="createrReviserName" jdbcType="VARCHAR" />
+    <result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+    <result column="TN_SETTLE" property="tnSettle" jdbcType="CHAR" />
+    <result column="SETTLE_DAY_TYPE" property="settleDayType" jdbcType="CHAR" />
+    <result column="SETTLE_HOUR" property="settleHour" jdbcType="DECIMAL" />
+    <result column="SETTLE_MINUTE" property="settleMinute" jdbcType="DECIMAL" />
+    <result column="DAY_OF_MONTH" property="dayOfMonth" jdbcType="DECIMAL" />
+    <result column="FEE_MODE" property="feeMode" jdbcType="CHAR" />
+    <result column="PAYER_FEE_TYPE" property="payerFeeType" jdbcType="CHAR" />
+    <result column="PAYEE_FEE_TYPE" property="payeeFeeType" jdbcType="CHAR" />
+    <result column="PAYER_FEE_RATE" property="payerFeeRate" jdbcType="DECIMAL" />
+    <result column="PAYEE_FEE_RATE" property="payeeFeeRate" jdbcType="DECIMAL" />
+    <result column="PAYER_FEE_LOW" property="payerFeeLow" jdbcType="DECIMAL" />
+    <result column="PAYEE_FEE_LOW" property="payeeFeeLow" jdbcType="DECIMAL" />
+    <result column="PAYER_FEE_TOP" property="payerFeeTop" jdbcType="DECIMAL" />
+    <result column="PAYEE_FEE_TOP" property="payeeFeeTop" jdbcType="DECIMAL" />
+    <result column="FEE_TN_SETTLE" property="feeTnSettle" jdbcType="CHAR" />
+    <result column="FEE_SETTLE_CYCLE" property="feeSettleCycle" jdbcType="DECIMAL" />
+    <result column="FEE_SETTLE_CYCLE_TYPE" property="feeSettleCycleType" jdbcType="CHAR" />
+    <result column="FEE_FIRST_SETTLE_DAY" property="feeFirstSettleDay" jdbcType="CHAR" />
+    <result column="FEE_LAST_SETTLE_DAY" property="feeLastSettleDay" jdbcType="CHAR" />
+    <result column="FEE_SETTLE_DAY" property="feeSettleDay" jdbcType="CHAR" />
+    <result column="FEE_SETTLE_DAY_TYPE" property="feeSettleDayType" jdbcType="CHAR" />
+    <result column="FEE_SETTLE_HOUR" property="feeSettleHour" jdbcType="DECIMAL" />
+    <result column="FEE_SETTLE_MINUTE" property="feeSettleMinute" jdbcType="DECIMAL" />
+    <result column="FEE_DAY_OF_MONTH" property="feeDayOfMonth" jdbcType="DECIMAL" />
+    <result column="TRADE_TYPE_NAME" property="tradeTypeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSINESS_CODE, PRODUCT_CODE, TRADE_TYPE, OFFSET_STYLE, ASSURANCE_STYLE, SETTLE_CYCLE, 
+    SETTLE_CYCLE_TYPE, FIRST_SETTLE_DAY, LAST_SETTLE_DAY, SETTLE_DAY, CREATER_REVISER_NAME, 
+    REVISER_NAME, CREATE_DATE, MODIFY_DATE, BOOK_TYPE, TN_SETTLE, SETTLE_DAY_TYPE, SETTLE_HOUR, 
+    SETTLE_MINUTE, DAY_OF_MONTH, FEE_MODE, PAYER_FEE_TYPE, PAYEE_FEE_TYPE, PAYER_FEE_RATE, 
+    PAYEE_FEE_RATE, PAYER_FEE_LOW, PAYEE_FEE_LOW, PAYER_FEE_TOP, PAYEE_FEE_TOP, FEE_TN_SETTLE, 
+    FEE_SETTLE_CYCLE, FEE_SETTLE_CYCLE_TYPE, FEE_FIRST_SETTLE_DAY, FEE_LAST_SETTLE_DAY, 
+    FEE_SETTLE_DAY, FEE_SETTLE_DAY_TYPE, FEE_SETTLE_HOUR, FEE_SETTLE_MINUTE, FEE_DAY_OF_MONTH,
+    TRADE_TYPE_NAME
+  </sql>
+  <select id="findByProductCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_TRADE_TYPE_SETT_CYCLE
+    where PRODUCT_CODE = #{productCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_TRADE_TYPE_SETT_CYCLE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_TRADE_TYPE_SETT_CYCLE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeSettCycleDto" >
+    insert into TB_BIS_TRADE_TYPE_SETT_CYCLE (ID, BUSINESS_CODE, PRODUCT_CODE, 
+      TRADE_TYPE, OFFSET_STYLE, ASSURANCE_STYLE, 
+      SETTLE_CYCLE, SETTLE_CYCLE_TYPE, FIRST_SETTLE_DAY, 
+      LAST_SETTLE_DAY, SETTLE_DAY, CREATER_REVISER_NAME, 
+      REVISER_NAME, CREATE_DATE, MODIFY_DATE, 
+      BOOK_TYPE, TN_SETTLE, SETTLE_DAY_TYPE, 
+      SETTLE_HOUR, SETTLE_MINUTE, DAY_OF_MONTH, 
+      FEE_MODE, PAYER_FEE_TYPE, PAYEE_FEE_TYPE, 
+      PAYER_FEE_RATE, PAYEE_FEE_RATE, PAYER_FEE_LOW, 
+      PAYEE_FEE_LOW, PAYER_FEE_TOP, PAYEE_FEE_TOP, 
+      FEE_TN_SETTLE, FEE_SETTLE_CYCLE, FEE_SETTLE_CYCLE_TYPE, 
+      FEE_FIRST_SETTLE_DAY, FEE_LAST_SETTLE_DAY, FEE_SETTLE_DAY, 
+      FEE_SETTLE_DAY_TYPE, FEE_SETTLE_HOUR, FEE_SETTLE_MINUTE, 
+      FEE_DAY_OF_MONTH,TRADE_TYPE_NAME)
+    values (#{id,jdbcType=VARCHAR}, #{businessCode,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, 
+      #{tradeType,jdbcType=VARCHAR}, #{offsetStyle,jdbcType=CHAR}, #{assuranceStyle,jdbcType=CHAR}, 
+      #{settleCycle,jdbcType=DECIMAL}, #{settleCycleType,jdbcType=CHAR}, #{firstSettleDay,jdbcType=CHAR}, 
+      #{lastSettleDay,jdbcType=CHAR}, #{settleDay,jdbcType=CHAR}, #{createrReviserName,jdbcType=VARCHAR}, 
+      #{reviserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{bookType,jdbcType=CHAR}, #{tnSettle,jdbcType=CHAR}, #{settleDayType,jdbcType=CHAR}, 
+      #{settleHour,jdbcType=DECIMAL}, #{settleMinute,jdbcType=DECIMAL}, #{dayOfMonth,jdbcType=DECIMAL}, 
+      #{feeMode,jdbcType=CHAR}, #{payerFeeType,jdbcType=CHAR}, #{payeeFeeType,jdbcType=CHAR}, 
+      #{payerFeeRate,jdbcType=DECIMAL}, #{payeeFeeRate,jdbcType=DECIMAL}, #{payerFeeLow,jdbcType=DECIMAL}, 
+      #{payeeFeeLow,jdbcType=DECIMAL}, #{payerFeeTop,jdbcType=DECIMAL}, #{payeeFeeTop,jdbcType=DECIMAL}, 
+      #{feeTnSettle,jdbcType=CHAR}, #{feeSettleCycle,jdbcType=DECIMAL}, #{feeSettleCycleType,jdbcType=CHAR}, 
+      #{feeFirstSettleDay,jdbcType=CHAR}, #{feeLastSettleDay,jdbcType=CHAR}, #{feeSettleDay,jdbcType=CHAR}, 
+      #{feeSettleDayType,jdbcType=CHAR}, #{feeSettleHour,jdbcType=DECIMAL}, #{feeSettleMinute,jdbcType=DECIMAL}, 
+      #{feeDayOfMonth,jdbcType=DECIMAL}, #{tradeTypeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeSettCycleDto" >
+    insert into TB_BIS_TRADE_TYPE_SETT_CYCLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="businessCode != null" >
+        BUSINESS_CODE,
+      </if>
+      <if test="productCode != null" >
+        PRODUCT_CODE,
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE,
+      </if>
+      <if test="offsetStyle != null" >
+        OFFSET_STYLE,
+      </if>
+      <if test="assuranceStyle != null" >
+        ASSURANCE_STYLE,
+      </if>
+      <if test="settleCycle != null" >
+        SETTLE_CYCLE,
+      </if>
+      <if test="settleCycleType != null" >
+        SETTLE_CYCLE_TYPE,
+      </if>
+      <if test="firstSettleDay != null" >
+        FIRST_SETTLE_DAY,
+      </if>
+      <if test="lastSettleDay != null" >
+        LAST_SETTLE_DAY,
+      </if>
+      <if test="settleDay != null" >
+        SETTLE_DAY,
+      </if>
+      <if test="createrReviserName != null" >
+        CREATER_REVISER_NAME,
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE,
+      </if>
+      <if test="tnSettle != null" >
+        TN_SETTLE,
+      </if>
+      <if test="settleDayType != null" >
+        SETTLE_DAY_TYPE,
+      </if>
+      <if test="settleHour != null" >
+        SETTLE_HOUR,
+      </if>
+      <if test="settleMinute != null" >
+        SETTLE_MINUTE,
+      </if>
+      <if test="dayOfMonth != null" >
+        DAY_OF_MONTH,
+      </if>
+      <if test="feeMode != null" >
+        FEE_MODE,
+      </if>
+      <if test="payerFeeType != null" >
+        PAYER_FEE_TYPE,
+      </if>
+      <if test="payeeFeeType != null" >
+        PAYEE_FEE_TYPE,
+      </if>
+      <if test="payerFeeRate != null" >
+        PAYER_FEE_RATE,
+      </if>
+      <if test="payeeFeeRate != null" >
+        PAYEE_FEE_RATE,
+      </if>
+      <if test="payerFeeLow != null" >
+        PAYER_FEE_LOW,
+      </if>
+      <if test="payeeFeeLow != null" >
+        PAYEE_FEE_LOW,
+      </if>
+      <if test="payerFeeTop != null" >
+        PAYER_FEE_TOP,
+      </if>
+      <if test="payeeFeeTop != null" >
+        PAYEE_FEE_TOP,
+      </if>
+      <if test="feeTnSettle != null" >
+        FEE_TN_SETTLE,
+      </if>
+      <if test="feeSettleCycle != null" >
+        FEE_SETTLE_CYCLE,
+      </if>
+      <if test="feeSettleCycleType != null" >
+        FEE_SETTLE_CYCLE_TYPE,
+      </if>
+      <if test="feeFirstSettleDay != null" >
+        FEE_FIRST_SETTLE_DAY,
+      </if>
+      <if test="feeLastSettleDay != null" >
+        FEE_LAST_SETTLE_DAY,
+      </if>
+      <if test="feeSettleDay != null" >
+        FEE_SETTLE_DAY,
+      </if>
+      <if test="feeSettleDayType != null" >
+        FEE_SETTLE_DAY_TYPE,
+      </if>
+      <if test="feeSettleHour != null" >
+        FEE_SETTLE_HOUR,
+      </if>
+      <if test="feeSettleMinute != null" >
+        FEE_SETTLE_MINUTE,
+      </if>
+      <if test="feeDayOfMonth != null" >
+        FEE_DAY_OF_MONTH,
+      </if>
+      <if test="tradeTypeName != null" >
+        TRADE_TYPE_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="offsetStyle != null" >
+        #{offsetStyle,jdbcType=CHAR},
+      </if>
+      <if test="assuranceStyle != null" >
+        #{assuranceStyle,jdbcType=CHAR},
+      </if>
+      <if test="settleCycle != null" >
+        #{settleCycle,jdbcType=DECIMAL},
+      </if>
+      <if test="settleCycleType != null" >
+        #{settleCycleType,jdbcType=CHAR},
+      </if>
+      <if test="firstSettleDay != null" >
+        #{firstSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="lastSettleDay != null" >
+        #{lastSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="settleDay != null" >
+        #{settleDay,jdbcType=CHAR},
+      </if>
+      <if test="createrReviserName != null" >
+        #{createrReviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookType != null" >
+        #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="tnSettle != null" >
+        #{tnSettle,jdbcType=CHAR},
+      </if>
+      <if test="settleDayType != null" >
+        #{settleDayType,jdbcType=CHAR},
+      </if>
+      <if test="settleHour != null" >
+        #{settleHour,jdbcType=DECIMAL},
+      </if>
+      <if test="settleMinute != null" >
+        #{settleMinute,jdbcType=DECIMAL},
+      </if>
+      <if test="dayOfMonth != null" >
+        #{dayOfMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="feeMode != null" >
+        #{feeMode,jdbcType=CHAR},
+      </if>
+      <if test="payerFeeType != null" >
+        #{payerFeeType,jdbcType=CHAR},
+      </if>
+      <if test="payeeFeeType != null" >
+        #{payeeFeeType,jdbcType=CHAR},
+      </if>
+      <if test="payerFeeRate != null" >
+        #{payerFeeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="payeeFeeRate != null" >
+        #{payeeFeeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="payerFeeLow != null" >
+        #{payerFeeLow,jdbcType=DECIMAL},
+      </if>
+      <if test="payeeFeeLow != null" >
+        #{payeeFeeLow,jdbcType=DECIMAL},
+      </if>
+      <if test="payerFeeTop != null" >
+        #{payerFeeTop,jdbcType=DECIMAL},
+      </if>
+      <if test="payeeFeeTop != null" >
+        #{payeeFeeTop,jdbcType=DECIMAL},
+      </if>
+      <if test="feeTnSettle != null" >
+        #{feeTnSettle,jdbcType=CHAR},
+      </if>
+      <if test="feeSettleCycle != null" >
+        #{feeSettleCycle,jdbcType=DECIMAL},
+      </if>
+      <if test="feeSettleCycleType != null" >
+        #{feeSettleCycleType,jdbcType=CHAR},
+      </if>
+      <if test="feeFirstSettleDay != null" >
+        #{feeFirstSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="feeLastSettleDay != null" >
+        #{feeLastSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="feeSettleDay != null" >
+        #{feeSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="feeSettleDayType != null" >
+        #{feeSettleDayType,jdbcType=CHAR},
+      </if>
+      <if test="feeSettleHour != null" >
+        #{feeSettleHour,jdbcType=DECIMAL},
+      </if>
+      <if test="feeSettleMinute != null" >
+        #{feeSettleMinute,jdbcType=DECIMAL},
+      </if>
+      <if test="feeDayOfMonth != null" >
+        #{feeDayOfMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeTypeName != null" >
+        #{tradeTypeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeSettCycleDto" >
+    update TB_BIS_TRADE_TYPE_SETT_CYCLE
+    <set >
+      <if test="businessCode != null" >
+        BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        PRODUCT_CODE = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="offsetStyle != null" >
+        OFFSET_STYLE = #{offsetStyle,jdbcType=CHAR},
+      </if>
+      <if test="assuranceStyle != null" >
+        ASSURANCE_STYLE = #{assuranceStyle,jdbcType=CHAR},
+      </if>
+      <if test="settleCycle != null" >
+        SETTLE_CYCLE = #{settleCycle,jdbcType=DECIMAL},
+      </if>
+      <if test="settleCycleType != null" >
+        SETTLE_CYCLE_TYPE = #{settleCycleType,jdbcType=CHAR},
+      </if>
+      <if test="firstSettleDay != null" >
+        FIRST_SETTLE_DAY = #{firstSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="lastSettleDay != null" >
+        LAST_SETTLE_DAY = #{lastSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="settleDay != null" >
+        SETTLE_DAY = #{settleDay,jdbcType=CHAR},
+      </if>
+      <if test="createrReviserName != null" >
+        CREATER_REVISER_NAME = #{createrReviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="tnSettle != null" >
+        TN_SETTLE = #{tnSettle,jdbcType=CHAR},
+      </if>
+      <if test="settleDayType != null" >
+        SETTLE_DAY_TYPE = #{settleDayType,jdbcType=CHAR},
+      </if>
+      <if test="settleHour != null" >
+        SETTLE_HOUR = #{settleHour,jdbcType=DECIMAL},
+      </if>
+      <if test="settleMinute != null" >
+        SETTLE_MINUTE = #{settleMinute,jdbcType=DECIMAL},
+      </if>
+      <if test="dayOfMonth != null" >
+        DAY_OF_MONTH = #{dayOfMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="feeMode != null" >
+        FEE_MODE = #{feeMode,jdbcType=CHAR},
+      </if>
+      <if test="payerFeeType != null" >
+        PAYER_FEE_TYPE = #{payerFeeType,jdbcType=CHAR},
+      </if>
+      <if test="payeeFeeType != null" >
+        PAYEE_FEE_TYPE = #{payeeFeeType,jdbcType=CHAR},
+      </if>
+      <if test="payerFeeRate != null" >
+        PAYER_FEE_RATE = #{payerFeeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="payeeFeeRate != null" >
+        PAYEE_FEE_RATE = #{payeeFeeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="payerFeeLow != null" >
+        PAYER_FEE_LOW = #{payerFeeLow,jdbcType=DECIMAL},
+      </if>
+      <if test="payeeFeeLow != null" >
+        PAYEE_FEE_LOW = #{payeeFeeLow,jdbcType=DECIMAL},
+      </if>
+      <if test="payerFeeTop != null" >
+        PAYER_FEE_TOP = #{payerFeeTop,jdbcType=DECIMAL},
+      </if>
+      <if test="payeeFeeTop != null" >
+        PAYEE_FEE_TOP = #{payeeFeeTop,jdbcType=DECIMAL},
+      </if>
+      <if test="feeTnSettle != null" >
+        FEE_TN_SETTLE = #{feeTnSettle,jdbcType=CHAR},
+      </if>
+      <if test="feeSettleCycle != null" >
+        FEE_SETTLE_CYCLE = #{feeSettleCycle,jdbcType=DECIMAL},
+      </if>
+      <if test="feeSettleCycleType != null" >
+        FEE_SETTLE_CYCLE_TYPE = #{feeSettleCycleType,jdbcType=CHAR},
+      </if>
+      <if test="feeFirstSettleDay != null" >
+        FEE_FIRST_SETTLE_DAY = #{feeFirstSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="feeLastSettleDay != null" >
+        FEE_LAST_SETTLE_DAY = #{feeLastSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="feeSettleDay != null" >
+        FEE_SETTLE_DAY = #{feeSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="feeSettleDayType != null" >
+        FEE_SETTLE_DAY_TYPE = #{feeSettleDayType,jdbcType=CHAR},
+      </if>
+      <if test="feeSettleHour != null" >
+        FEE_SETTLE_HOUR = #{feeSettleHour,jdbcType=DECIMAL},
+      </if>
+      <if test="feeSettleMinute != null" >
+        FEE_SETTLE_MINUTE = #{feeSettleMinute,jdbcType=DECIMAL},
+      </if>
+      <if test="feeDayOfMonth != null" >
+        FEE_DAY_OF_MONTH = #{feeDayOfMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeTypeName != null" >
+        TRADE_TYPE_NAME = #{tradeTypeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeSettCycleDto" >
+    update TB_BIS_TRADE_TYPE_SETT_CYCLE
+    set BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      PRODUCT_CODE = #{productCode,jdbcType=VARCHAR},
+      TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+      OFFSET_STYLE = #{offsetStyle,jdbcType=CHAR},
+      ASSURANCE_STYLE = #{assuranceStyle,jdbcType=CHAR},
+      SETTLE_CYCLE = #{settleCycle,jdbcType=DECIMAL},
+      SETTLE_CYCLE_TYPE = #{settleCycleType,jdbcType=CHAR},
+      FIRST_SETTLE_DAY = #{firstSettleDay,jdbcType=CHAR},
+      LAST_SETTLE_DAY = #{lastSettleDay,jdbcType=CHAR},
+      SETTLE_DAY = #{settleDay,jdbcType=CHAR},
+      CREATER_REVISER_NAME = #{createrReviserName,jdbcType=VARCHAR},
+      REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      TN_SETTLE = #{tnSettle,jdbcType=CHAR},
+      SETTLE_DAY_TYPE = #{settleDayType,jdbcType=CHAR},
+      SETTLE_HOUR = #{settleHour,jdbcType=DECIMAL},
+      SETTLE_MINUTE = #{settleMinute,jdbcType=DECIMAL},
+      DAY_OF_MONTH = #{dayOfMonth,jdbcType=DECIMAL},
+      FEE_MODE = #{feeMode,jdbcType=CHAR},
+      PAYER_FEE_TYPE = #{payerFeeType,jdbcType=CHAR},
+      PAYEE_FEE_TYPE = #{payeeFeeType,jdbcType=CHAR},
+      PAYER_FEE_RATE = #{payerFeeRate,jdbcType=DECIMAL},
+      PAYEE_FEE_RATE = #{payeeFeeRate,jdbcType=DECIMAL},
+      PAYER_FEE_LOW = #{payerFeeLow,jdbcType=DECIMAL},
+      PAYEE_FEE_LOW = #{payeeFeeLow,jdbcType=DECIMAL},
+      PAYER_FEE_TOP = #{payerFeeTop,jdbcType=DECIMAL},
+      PAYEE_FEE_TOP = #{payeeFeeTop,jdbcType=DECIMAL},
+      FEE_TN_SETTLE = #{feeTnSettle,jdbcType=CHAR},
+      FEE_SETTLE_CYCLE = #{feeSettleCycle,jdbcType=DECIMAL},
+      FEE_SETTLE_CYCLE_TYPE = #{feeSettleCycleType,jdbcType=CHAR},
+      FEE_FIRST_SETTLE_DAY = #{feeFirstSettleDay,jdbcType=CHAR},
+      FEE_LAST_SETTLE_DAY = #{feeLastSettleDay,jdbcType=CHAR},
+      FEE_SETTLE_DAY = #{feeSettleDay,jdbcType=CHAR},
+      FEE_SETTLE_DAY_TYPE = #{feeSettleDayType,jdbcType=CHAR},
+      FEE_SETTLE_HOUR = #{feeSettleHour,jdbcType=DECIMAL},
+      FEE_SETTLE_MINUTE = #{feeSettleMinute,jdbcType=DECIMAL},
+      FEE_DAY_OF_MONTH = #{feeDayOfMonth,jdbcType=DECIMAL},
+      TRADE_TYPE_NAME = #{tradeTypeName,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="listByBusiCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" /> from TB_BIS_TRADE_TYPE_SETT_CYCLE
+    where BUSINESS_CODE = #{busiCode,jdbcType=VARCHAR}
+  </select>
+  <update id="clearSettleDayAndSetLastSettleDayById" >
+      update TB_BIS_TRADE_TYPE_SETT_CYCLE set
+      SETTLE_DAY = null,
+      LAST_SETTLE_DAY = #{lastSettleDay,jdbcType=CHAR},
+      MODIFY_DATE=sysdate
+      where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="clearFeeSettleDayAndSetLastSettleDayById" parameterType="java.lang.String" >
+    update TB_BIS_TRADE_TYPE_SETT_CYCLE set
+    FEE_SETTLE_DAY = null,
+    FEE_LAST_SETTLE_DAY = #{lastSettleDay,jdbcType=CHAR},
+    MODIFY_DATE=sysdate
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="findByBusiCodeAndTradeTypeCode" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" /> from TB_BIS_TRADE_TYPE_SETT_CYCLE
+    where BUSINESS_CODE = #{busiCode,jdbcType=VARCHAR} and TRADE_TYPE = #{tradeTypeCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

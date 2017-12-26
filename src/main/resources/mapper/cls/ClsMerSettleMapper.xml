@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsMerSettleDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.CLsMerchantSettleVo" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="MER_CODE" property="merCode" jdbcType="CHAR" />
+	    <result column="MER_NAME" property="merName" jdbcType="CHAR" />
+	    <result column="PLAN_DAY" property="planDay" jdbcType="CHAR" />
+	    <result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+	    <result column="RECORD_COUNT" property="recordCount" jdbcType="DECIMAL" />
+	    <result column="TOTAL_MOMEY" property="totalMoney" jdbcType="DECIMAL" />
+	    <result column="TOTAL_REAL_MOMEY" property="totalRealMoney" jdbcType="DECIMAL" />
+	    <result column="FEE_MOMEY" property="feeMoney" jdbcType="CHAR" />
+	    <result column="STATUS" property="status" jdbcType="CHAR" />
+	    <result column="EXCEPT_REASON" property="exceptReason" jdbcType="VARCHAR" />
+	    <result column="REVIEW_STATUS" property="reviewStatus" jdbcType="CHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="APPLICANT_NAME" property="applicatiName" jdbcType="CHAR" />
+	    <result column="APPLY_TIME" property="applyDate" jdbcType="DATE" />
+	    <result column="AUDITER_NAME" property="auditerName" jdbcType="CHAR" />
+	    <result column="REVIEW_TIME" property="reviewDate" jdbcType="DATE" />
+	    <result column="CHECK_SUGG" property="checkSugg" jdbcType="CHAR" />
+	    <result column="SETT_ID" property="settId" jdbcType="CHAR" />
+	    
+  </resultMap>
+	
+
+  <resultMap id="resultMap2" type="com.ylink.inetpay.common.project.clear.dto.ClsMerSett" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="MER_CODE" property="merCode" jdbcType="CHAR" />
+	    <result column="MER_NAME" property="merName" jdbcType="CHAR" />
+	    <result column="PLAN_DAY" property="planDay" jdbcType="CHAR" />
+	    <result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+	    <result column="SETT_MONEY" property="settMoney" jdbcType="DECIMAL" />
+	    <result column="PAY_COUNT" property="payCount" jdbcType="DECIMAL" />
+	    <result column="PAY_MONEY" property="payMoney" jdbcType="DECIMAL" />
+	    <result column="PAY_FEE" property="payFee" jdbcType="DECIMAL" />
+	    <result column="REFUND_COUNT" property="refundCount" jdbcType="DECIMAL" />
+	    <result column="REFNUD_MONEY" property="refnudMoney" jdbcType="DECIMAL" />
+	    <result column="TOTAL_REFUND_FEE" property="totalRefundFee" jdbcType="DECIMAL" />
+	    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+	    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+	    <result column="BANK_ACC" property="bankAcc" jdbcType="VARCHAR" />
+	    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+	    <result column="SETT_STATUS" property="settStatus" jdbcType="CHAR" />
+	    <result column="EXCEPT_REASON" property="exceptReason" jdbcType="VARCHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="ORG_BANK_TYPE" property="orgBankType" jdbcType="CHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="SETT_ID" property="settId" jdbcType="CHAR" />
+  </resultMap>
+<select id="queryMerSett" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsMerSett"  resultMap="resultMap2">
+select s.* from TB_CLS_MER_SETT s
+where 1=1
+<if test="merCode!=null and merCode!=''">
+	and s.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+<if test="settStatus!=null and settStatus!=''">
+	and s.SETT_STATUS=#{settStatus,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	and s.PLAN_DAY&lt;=to_char(#{endTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and s.PLAN_DAY&gt;=to_char(#{startTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="maxTime!=null">
+	and s.REAL_DAY&lt;=to_char(#{maxTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="minTime!=null">
+	and  s.REAL_DAY&gt;=to_char(#{minTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="dealStatus!=null and dealStatus!=''">
+	and s.DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+</if>
+<if test="statusList != null ">
+    		 and SETT_STATUS in
+    <foreach collection="statusList" item="item" index="index" open="(" separator="," close=")">#{item.value}</foreach>
+ </if>
+order by s.PLAN_DAY desc,s.ID desc
+</select>	
+	
+	   
+<select id="queryMerSettSummary" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsMerSett" 
+resultType="com.ylink.inetpay.common.core.dto.ReporHeadDto">
+select 
+(select count(*) from 
+(select MER_CODE from TB_CLS_MER_SETT
+where  1=1
+<if test="dealStatus!=null and dealStatus!=''">
+	and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+</if>
+<if test="settStatus!=null and settStatus!=''">
+	and SETT_STATUS=#{settStatus,jdbcType=CHAR}
+</if>
+<if test="merCode!=null and merCode!=''">
+	and MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	and PLAN_DAY&lt;=to_char(#{endTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and PLAN_DAY&gt;=to_char(#{startTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="maxTime!=null">
+	and REAL_DAY&lt;=to_char(#{maxTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="minTime!=null">
+	and  REAL_DAY&gt;=to_char(#{minTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+group by mer_code
+) ) as allNum,
+(nvl(sum(t.PAY_MONEY),0)-nvl(sum(t.REFNUD_MONEY),0)) as allAmt, 
+nvl(sum(t.SETT_MONEY),0) as succNum,
+(nvl(sum(t.PAY_FEE),0)-nvl(sum(t.TOTAL_REFUND_FEE),0)) as succAmt
+from TB_CLS_MER_SETT t
+where 1=1
+<if test="dealStatus!=null and dealStatus!=''">
+	and t.DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+</if>
+<if test="settStatus!=null and settStatus!=''">
+	and t.SETT_STATUS=#{settStatus,jdbcType=CHAR}
+</if>
+<if test="merCode!=null and merCode!=''">
+	and t.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	and t.PLAN_DAY&lt;=to_char(#{endTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and t.PLAN_DAY&gt;=to_char(#{startTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="maxTime!=null">
+	and t.REAL_DAY&lt;=to_char(#{maxTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="minTime!=null">
+	and  t.REAL_DAY&gt;=to_char(#{minTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+group by null
+</select>
+ 
+<!--查询-->
+ <select id="queryClsMerSett"  parameterType="com.ylink.inetpay.common.project.clear.dto.CLsMerchantSettleVo" resultMap="resultMap">
+ select 
+ 	s.ID ,s.MER_CODE ,s.MER_NAME ,s.PLAN_DAY ,s.REAL_DAY ,s.DEAL_STATUS,(s.PAY_COUNT+s.REFUND_COUNT) AS RECORD_COUNT,
+ 	(s.PAY_MONEY-s.REFNUD_MONEY) AS TOTAL_MOMEY,s.SETT_MONEY AS TOTAL_REAL_MOMEY,(s.PAY_FEE-s.TOTAL_REFUND_FEE) AS FEE_MOMEY,
+ 	s.SETT_STATUS AS STATUS ,s.EXCEPT_REASON,s.SETT_ID <!--,c.REVIEW_STATUS,c.APPLICANT_NAME,c.APPLY_TIME,
+	c.AUDITER_NAME,c.REVIEW_TIME,c.CHECK_SUGG-->
+ from TB_CLS_MER_SETT s <!--left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=s.id and c.BUSI_TYPE='01' -->
+ where 1=1
+ and (select count(c1.ID) from TB_CLS_RECORD_CHECK c1 where c1.REPORT_ID=s.id and c1.REVIEW_STATUS in ('1'))=0
+<if test="id!=null and id!=''">
+	and s.ID=#{id,jdbcType=CHAR}
+</if>
+<if test="status!=null and status!=''">
+	and s.SETT_STATUS=#{status,jdbcType=CHAR}
+</if>
+<if test="merCode!=null and merCode!=''">
+	and s.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+<if test="dealStatus!=null and dealStatus!=''">
+	and s.DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	and s.PLAN_DAY&lt;=to_char(#{endTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and s.PLAN_DAY&gt;=to_char(#{startTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="maxTime!=null">
+	and s.REAL_DAY&lt;=to_char(#{maxTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="minTime!=null">
+	and s.REAL_DAY&gt;=to_char(#{minTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="statusList != null ">
+    		 and SETT_STATUS in
+    <foreach collection="statusList" item="item" index="index" open="(" separator="," close=")">#{item.value}</foreach>
+ </if>
+order by s.PLAN_DAY desc,s.ID desc
+ </select>
+ <!-- 审核列表 -->
+  <select id="findMerSettleAudit"  parameterType="com.ylink.inetpay.common.project.clear.dto.CLsMerchantSettleVo" resultMap="resultMap">
+	 select 
+	 	s.ID ,s.MER_CODE ,s.MER_NAME ,s.PLAN_DAY ,s.REAL_DAY ,s.DEAL_STATUS,(s.PAY_COUNT+s.REFUND_COUNT) AS RECORD_COUNT,
+	 	(s.PAY_MONEY-s.REFNUD_MONEY) AS TOTAL_MOMEY,s.SETT_MONEY AS TOTAL_REAL_MOMEY,(s.PAY_FEE-s.TOTAL_REFUND_FEE) AS FEE_MOMEY,
+	 	s.SETT_STATUS AS STATUS ,s.EXCEPT_REASON ,s.SETT_ID,c.REVIEW_STATUS,c.APPLICANT_NAME,c.APPLY_TIME,c.AUDITER_NAME,c.REVIEW_TIME,c.CHECK_SUGG
+	 	from TB_CLS_MER_SETT s left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=s.id and c.BUSI_TYPE='01' 
+	 where c.REPORT_ID is not null
+	<if test="id!=null and id!=''">
+		and s.ID=#{id,jdbcType=CHAR}
+	</if>
+	<if test="status!=null and status!=''">
+		and s.SETT_STATUS=#{status,jdbcType=CHAR}
+	</if>
+	<if test="merCode!=null and merCode!=''">
+		and s.MER_CODE=#{merCode,jdbcType=CHAR}
+	</if>
+	<if test="endTime!=null">
+		and s.PLAN_DAY&lt;=to_char(#{endTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="startTime!=null">
+		and s.PLAN_DAY&gt;=to_char(#{startTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="maxTime!=null">
+		and s.REAL_DAY&lt;=to_char(#{maxTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="minTime!=null">
+		and s.REAL_DAY&gt;=to_char(#{minTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="reviewStatus != null">
+		and c.REVIEW_STATUS = #{reviewStatus,jdbcType=CHAR}
+	</if>
+	order by s.PLAN_DAY desc,c.REVIEW_STATUS asc,s.ID desc
+ </select>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ <select id="queryById"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	s.ID ,
+ 	s.MER_CODE ,
+ 	s.MER_NAME ,
+ 	s.PLAN_DAY ,
+ 	s.REAL_DAY ,
+ 	(s.PAY_COUNT+s.REFUND_COUNT) AS RECORD_COUNT,
+ 	(s.PAY_MONEY-s.REFNUD_MONEY) AS TOTAL_MOMEY,
+ 	s.SETT_MONEY AS TOTAL_REAL_MOMEY,
+ 	(s.PAY_FEE-s.TOTAL_REFUND_FEE) AS FEE_MOMEY,
+ 	s.SETT_STATUS AS STATUS ,
+ 	s.EXCEPT_REASON,s.DEAL_STATUS,s.SETT_ID
+ 	<!--,
+ 	c.REVIEW_STATUS,
+ 	c.APPLICANT_NAME,
+	c.APPLY_TIME,
+	c.AUDITER_NAME,
+	c.REVIEW_TIME,
+	c.CHECK_SUGG
+	-->
+ from TB_CLS_MER_SETT s <!--left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=s.id and c.BUSI_TYPE='01' -->
+ where s.id=#{id,jdbcType=CHAR}
+ </select>
+  
+</mapper>

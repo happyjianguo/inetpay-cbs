@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisBusinessDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSINESS_CODE" property="businessCode" jdbcType="VARCHAR" />
+    <result column="BUSINESS_NAME" property="businessName" jdbcType="VARCHAR" />
+    <result column="PAYEE_NAME" property="payeeName" jdbcType="VARCHAR" />
+    <result column="PAYEE_CODE" property="payeeCode" jdbcType="VARCHAR" />
+    <result column="SETTLE_CYCLE" property="settleCycle" jdbcType="DECIMAL" />
+    <result column="SETTLE_CYCLE_TYPE" property="settleCycleType" jdbcType="CHAR" />
+    <result column="SETTLE_TYPE" property="settleType" jdbcType="CHAR" />
+    <result column="FIRST_SETTLE_DAY" property="firstSettleDay" jdbcType="CHAR" />
+    <result column="LAST_SETTLE_DAY" property="lastSettleDay" jdbcType="CHAR" />
+    <result column="SETTLE_DAY" property="settleDay" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+    <result column="SETTLE_MODE" property="settleMode" jdbcType="CHAR" />
+    <result column="PAYER_CODE" property="payerCode" jdbcType="VARCHAR" />
+    <result column="PAYER_NAME" property="payerName" jdbcType="VARCHAR" />
+    <result column="ACCESSOR_CODE" property="accessorCode" jdbcType="VARCHAR" />
+    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+    <result column="TN_SETTLE" property="tnSettle" jdbcType="CHAR" />
+    <result column="SETTLE_DAY_TYPE" property="settleDayType" jdbcType="CHAR" />
+    <result column="SETTLE_HOUR" property="settleHour" jdbcType="DECIMAL" />
+    <result column="SETTLE_MINUTE" property="settleMinute" jdbcType="DECIMAL" />
+    <result column="DAY_OF_MONTH" property="dayOfMonth" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSINESS_CODE, BUSINESS_NAME, PAYEE_NAME, PAYEE_CODE, SETTLE_CYCLE, SETTLE_CYCLE_TYPE, 
+    SETTLE_TYPE, FIRST_SETTLE_DAY, LAST_SETTLE_DAY, SETTLE_DAY, CREATE_DATE, MODIFY_DATE, 
+    STATUS, CREATER, REVISER, SETTLE_MODE, PAYER_CODE, PAYER_NAME, ACCESSOR_CODE, BOOK_TYPE, 
+    TN_SETTLE, SETTLE_DAY_TYPE, SETTLE_HOUR, SETTLE_MINUTE, DAY_OF_MONTH
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_BUSINESS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findByBusinessCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_BUSINESS
+    where BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="queryAccessorCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+     from TB_BIS_BUSINESS
+     where ACCESSOR_CODE = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_BUSINESS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessDto" >
+    insert into TB_BIS_BUSINESS (ID, BUSINESS_CODE, BUSINESS_NAME, 
+      PAYEE_NAME, PAYEE_CODE, SETTLE_CYCLE, 
+      SETTLE_CYCLE_TYPE, SETTLE_TYPE, FIRST_SETTLE_DAY, 
+      LAST_SETTLE_DAY, SETTLE_DAY, CREATE_DATE, 
+      MODIFY_DATE, STATUS, CREATER, 
+      REVISER, SETTLE_MODE, PAYER_CODE, 
+      PAYER_NAME, ACCESSOR_CODE, BOOK_TYPE, 
+      TN_SETTLE, SETTLE_DAY_TYPE, SETTLE_HOUR, 
+      SETTLE_MINUTE, DAY_OF_MONTH)
+    values (#{id,jdbcType=VARCHAR}, #{businessCode,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR}, 
+      #{payeeName,jdbcType=VARCHAR}, #{payeeCode,jdbcType=VARCHAR}, #{settleCycle,jdbcType=DECIMAL}, 
+      #{settleCycleType,jdbcType=CHAR}, #{settleType,jdbcType=CHAR}, #{firstSettleDay,jdbcType=CHAR}, 
+      #{lastSettleDay,jdbcType=CHAR}, #{settleDay,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{creater,jdbcType=VARCHAR}, 
+      #{reviser,jdbcType=VARCHAR}, #{settleMode,jdbcType=CHAR}, #{payerCode,jdbcType=VARCHAR}, 
+      #{payerName,jdbcType=VARCHAR}, #{accessorCode,jdbcType=VARCHAR}, #{bookType,jdbcType=CHAR}, 
+      #{tnSettle,jdbcType=CHAR}, #{settleDayType,jdbcType=CHAR}, #{settleHour,jdbcType=DECIMAL}, 
+      #{settleMinute,jdbcType=DECIMAL}, #{dayOfMonth,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessDto" >
+    insert into TB_BIS_BUSINESS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="businessCode != null" >
+        BUSINESS_CODE,
+      </if>
+      <if test="businessName != null" >
+        BUSINESS_NAME,
+      </if>
+      <if test="payeeName != null" >
+        PAYEE_NAME,
+      </if>
+      <if test="payeeCode != null" >
+        PAYEE_CODE,
+      </if>
+      <if test="settleCycle != null" >
+        SETTLE_CYCLE,
+      </if>
+      <if test="settleCycleType != null" >
+        SETTLE_CYCLE_TYPE,
+      </if>
+      <if test="settleType != null" >
+        SETTLE_TYPE,
+      </if>
+      <if test="firstSettleDay != null" >
+        FIRST_SETTLE_DAY,
+      </if>
+      <if test="lastSettleDay != null" >
+        LAST_SETTLE_DAY,
+      </if>
+      <if test="settleDay != null" >
+        SETTLE_DAY,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="reviser != null" >
+        REVISER,
+      </if>
+      <if test="settleMode != null" >
+        SETTLE_MODE,
+      </if>
+      <if test="payerCode != null" >
+        PAYER_CODE,
+      </if>
+      <if test="payerName != null" >
+        PAYER_NAME,
+      </if>
+      <if test="accessorCode != null" >
+        ACCESSOR_CODE,
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE,
+      </if>
+      <if test="tnSettle != null" >
+        TN_SETTLE,
+      </if>
+      <if test="settleDayType != null" >
+        SETTLE_DAY_TYPE,
+      </if>
+      <if test="settleHour != null" >
+        SETTLE_HOUR,
+      </if>
+      <if test="settleMinute != null" >
+        SETTLE_MINUTE,
+      </if>
+      <if test="dayOfMonth != null" >
+        DAY_OF_MONTH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null" >
+        #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeName != null" >
+        #{payeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCode != null" >
+        #{payeeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="settleCycle != null" >
+        #{settleCycle,jdbcType=DECIMAL},
+      </if>
+      <if test="settleCycleType != null" >
+        #{settleCycleType,jdbcType=CHAR},
+      </if>
+      <if test="settleType != null" >
+        #{settleType,jdbcType=CHAR},
+      </if>
+      <if test="firstSettleDay != null" >
+        #{firstSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="lastSettleDay != null" >
+        #{lastSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="settleDay != null" >
+        #{settleDay,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="reviser != null" >
+        #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="settleMode != null" >
+        #{settleMode,jdbcType=CHAR},
+      </if>
+      <if test="payerCode != null" >
+        #{payerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="accessorCode != null" >
+        #{accessorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bookType != null" >
+        #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="tnSettle != null" >
+        #{tnSettle,jdbcType=CHAR},
+      </if>
+      <if test="settleDayType != null" >
+        #{settleDayType,jdbcType=CHAR},
+      </if>
+      <if test="settleHour != null" >
+        #{settleHour,jdbcType=DECIMAL},
+      </if>
+      <if test="settleMinute != null" >
+        #{settleMinute,jdbcType=DECIMAL},
+      </if>
+      <if test="dayOfMonth != null" >
+        #{dayOfMonth,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessDto" >
+    update TB_BIS_BUSINESS
+    <set >
+      <if test="businessCode != null" >
+        BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null" >
+        BUSINESS_NAME = #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeName != null" >
+        PAYEE_NAME = #{payeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCode != null" >
+        PAYEE_CODE = #{payeeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="settleCycle != null" >
+        SETTLE_CYCLE = #{settleCycle,jdbcType=DECIMAL},
+      </if>
+      <if test="settleCycleType != null" >
+        SETTLE_CYCLE_TYPE = #{settleCycleType,jdbcType=CHAR},
+      </if>
+      <if test="settleType != null" >
+        SETTLE_TYPE = #{settleType,jdbcType=CHAR},
+      </if>
+      <if test="firstSettleDay != null" >
+        FIRST_SETTLE_DAY = #{firstSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="lastSettleDay != null" >
+        LAST_SETTLE_DAY = #{lastSettleDay,jdbcType=CHAR},
+      </if>
+      <if test="settleDay != null" >
+        SETTLE_DAY = #{settleDay,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="reviser != null" >
+        REVISER = #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="settleMode != null" >
+        SETTLE_MODE = #{settleMode,jdbcType=CHAR},
+      </if>
+      <if test="payerCode != null" >
+        PAYER_CODE = #{payerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        PAYER_NAME = #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="accessorCode != null" >
+        ACCESSOR_CODE = #{accessorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="tnSettle != null" >
+        TN_SETTLE = #{tnSettle,jdbcType=CHAR},
+      </if>
+      <if test="settleDayType != null" >
+        SETTLE_DAY_TYPE = #{settleDayType,jdbcType=CHAR},
+      </if>
+      <if test="settleHour != null" >
+        SETTLE_HOUR = #{settleHour,jdbcType=DECIMAL},
+      </if>
+      <if test="settleMinute != null" >
+        SETTLE_MINUTE = #{settleMinute,jdbcType=DECIMAL},
+      </if>
+      <if test="dayOfMonth != null" >
+        DAY_OF_MONTH = #{dayOfMonth,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisBusinessDto" >
+    update TB_BIS_BUSINESS
+    set BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      BUSINESS_NAME = #{businessName,jdbcType=VARCHAR},
+      PAYEE_NAME = #{payeeName,jdbcType=VARCHAR},
+      PAYEE_CODE = #{payeeCode,jdbcType=VARCHAR},
+      SETTLE_CYCLE = #{settleCycle,jdbcType=DECIMAL},
+      SETTLE_CYCLE_TYPE = #{settleCycleType,jdbcType=CHAR},
+      SETTLE_TYPE = #{settleType,jdbcType=CHAR},
+      FIRST_SETTLE_DAY = #{firstSettleDay,jdbcType=CHAR},
+      LAST_SETTLE_DAY = #{lastSettleDay,jdbcType=CHAR},
+      SETTLE_DAY = #{settleDay,jdbcType=CHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      REVISER = #{reviser,jdbcType=VARCHAR},
+      SETTLE_MODE = #{settleMode,jdbcType=CHAR},
+      PAYER_CODE = #{payerCode,jdbcType=VARCHAR},
+      PAYER_NAME = #{payerName,jdbcType=VARCHAR},
+      ACCESSOR_CODE = #{accessorCode,jdbcType=VARCHAR},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      TN_SETTLE = #{tnSettle,jdbcType=CHAR},
+      SETTLE_DAY_TYPE = #{settleDayType,jdbcType=CHAR},
+      SETTLE_HOUR = #{settleHour,jdbcType=DECIMAL},
+      SETTLE_MINUTE = #{settleMinute,jdbcType=DECIMAL},
+      DAY_OF_MONTH = #{dayOfMonth,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.vo.bis.BisBusinessVO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from TB_BIS_BUSINESS
+    where 1 = 1
+    <if test="businessCode != null and businessCode != ''">
+      and	instr(BUSINESS_CODE, #{businessCode,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="businessName != null and businessName != ''">
+      and	instr(BUSINESS_NAME, #{businessName,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="payeeName != null and payeeName != ''">
+      and	instr(PAYEE_NAME, #{payeeName,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="payeeCode != null and payeeCode != ''">
+      and	instr(PAYEE_CODE, #{payeeCode,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="settleCycle != null and settleCycle != ''">
+      and SETTLE_CYCLE_TYPE = #{settleCycle,jdbcType=CHAR}
+    </if>
+    <if test="settleType != null and settleType != ''">
+      and SETTLE_TYPE = #{settleType,jdbcType=CHAR}
+    </if>
+    <if test="settleMode != null and settleMode != ''">
+      and SETTLE_MODE = #{settleMode,jdbcType=CHAR}
+    </if>
+    <if test="status != null and status != ''">
+      and STATUS = #{status,jdbcType=CHAR}
+    </if>
+    <if test="startFirstSettleDay != null and startFirstSettleDay != ''">
+      and FIRST_SETTLE_DAY <![CDATA[   >=  ]]> #{startFirstSettleDay,jdbcType=VARCHAR}
+    </if>
+    <if test="endFirstSettleDay != null and endFirstSettleDay != ''">
+      and FIRST_SETTLE_DAY <![CDATA[   <=  ]]> #{endFirstSettleDay,jdbcType=VARCHAR}
+    </if>
+    <if test="startLastSettleDay != null and startLastSettleDay != ''">
+      and LAST_SETTLE_DAY <![CDATA[   >=  ]]> #{startLastSettleDay,jdbcType=VARCHAR}
+    </if>
+    <if test="endLastSettleDay != null and endLastSettleDay != ''">
+      and LAST_SETTLE_DAY <![CDATA[   <=  ]]> #{endLastSettleDay,jdbcType=VARCHAR}
+    </if>
+    <if test="startSettleDay != null and startSettleDay != ''">
+      and SETTLE_DAY <![CDATA[  >=  ]]> #{startSettleDay,jdbcType=VARCHAR}
+    </if>
+    <if test="endSettleDay != null and endSettleDay != ''">
+      and SETTLE_DAY <![CDATA[  <=  ]]> #{endSettleDay,jdbcType=VARCHAR}
+    </if>
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="find" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from TB_BIS_BUSINESS
+    where 1 = 1
+    <if test="businessCode != null and businessCode != ''">
+      and BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR}
+    </if>
+    <if test="payeeCode != null and payeeCode != ''">
+      and PAYEE_CODE = #{payeeCode,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null and status != ''">
+      and STATUS = #{status,jdbcType=CHAR}
+    </if>
+  </select>
+</mapper>

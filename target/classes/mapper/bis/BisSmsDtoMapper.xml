@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisSmsDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SYSTEM" property="system" jdbcType="CHAR" />
+    <result column="SEND_ER" property="sendEr" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+    <result column="SEND_CONTENT" property="sendContent" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="SEND_START_TIME" property="sendStartTime" />
+    <result column="SEND_END_TIME" property="sendEndTime" />
+    <result column="SEND_CHANNEL" property="sendChannel" jdbcType="CHAR"/>
+    <result column="SEND_TYPE" property="sendType" jdbcType="CHAR"/>
+    <result column="MESS_TYPE" property="messType" jdbcType="CHAR"/>
+    <result column="OPENID" property="openId" jdbcType="VARCHAR"/>
+    <result column="MESS_TITLE" property="messTitle" jdbcType="VARCHAR"/>
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL"/>
+    <result column="BALANCE" property="balance" jdbcType="DECIMAL"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SYSTEM, SEND_ER, MOBILE, STATUS, FAIL_REASON, SEND_CONTENT, CREATE_TIME, SEND_TIME,SEND_START_TIME,SEND_END_TIME,SEND_CHANNEL,SEND_TYPE,MESS_TYPE,OPENID,MESS_TITLE,AMOUNT,BALANCE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SMS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_SMS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsDto">
+    insert into TB_BIS_SMS (ID, SYSTEM, SEND_ER, 
+      MOBILE, STATUS, FAIL_REASON, 
+      SEND_CONTENT, CREATE_TIME, SEND_TIME,SEND_START_TIME,SEND_END_TIME
+      ,SEND_CHANNEL,SEND_TYPE,MESS_TYPE,OPENID,MESS_TITLE,AMOUNT,BALANCE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{system,jdbcType=CHAR}, #{sendEr,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{failReason,jdbcType=VARCHAR}, 
+      #{sendContent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{sendTime,jdbcType=TIMESTAMP},#{sendStartTime,jdbcType=CHAR},#{sendEndTime,jdbcType=CHAR}
+      ,#{sendChannel,jdbcType=CHAR} ,#{sendType,jdbcType=CHAR} ,#{messType ,jdbcType=CHAR} ,#{openId ,jdbcType=VARCHAR}
+       ,#{messTitle ,jdbcType=VARCHAR} ,#{amount,jdbcType=DECIMAL},#{balance,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsDto" >
+    insert into TB_BIS_SMS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="system != null" >
+        SYSTEM,
+      </if>
+      <if test="sendEr != null" >
+        SEND_ER,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON,
+      </if>
+      <if test="sendContent != null" >
+        SEND_CONTENT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME,
+      </if>
+      <if test="sendEndTime != null" >
+        SEND_END_TIME,
+      </if>
+      
+      <if test="sendChannel  != null" >
+        SEND_CHANNEL ,
+      </if>
+      <if test="sendType  != null" >
+        SEND_TYPE,
+      </if>
+      <if test="messType   != null" >
+        MESS_TYPE,
+      </if>
+      <if test="openId  != null" >
+        OPENID,
+      </if>
+       <if test="messTitle   != null" >
+        MESS_TITLE ,
+      </if>
+      <if test="amount != null" >
+        AMOUNT ,
+      </if>
+      <if test="balance != null" >
+        BALANCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null" >
+        #{system,jdbcType=CHAR},
+      </if>
+      <if test="sendEr != null" >
+        #{sendEr,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="failReason != null" >
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="sendContent != null" >
+        #{sendContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="sendStartTime != null" >
+        #{sendStartTime},
+      </if>
+       <if test="sendEndTime != null" >
+        #{sendEndTime},
+      </if>
+      
+      <if test="sendChannel != null" >
+        #{sendChannel,jdbcType=CHAR},
+      </if>
+      <if test="sendType != null" >
+        #{sendType,jdbcType=CHAR},
+      </if>
+      <if test="messType  != null" >
+        #{messType ,jdbcType=CHAR},
+      </if>
+      <if test="openId  != null" >
+        #{openId ,jdbcType=VARCHAR},
+      </if>
+      <if test="messTitle != null" >
+        #{messTitle ,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="balance  != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsDto" >
+    update TB_BIS_SMS
+    <set >
+      <if test="system != null" >
+        SYSTEM = #{system,jdbcType=CHAR},
+      </if>
+      <if test="sendEr != null" >
+        SEND_ER = #{sendEr,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="sendContent != null" >
+        SEND_CONTENT = #{sendContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="sendEndTime != null" >
+        SEND_END_TIME = #{sendEndTime},
+      </if>
+       <if test="sendStartTime != null" >
+        SEND_START_TIME = #{sendStartTime},
+      </if>
+      
+      <if test="sendChannel != null" >
+        SEND_CHANNEL  =#{sendChannel,jdbcType=CHAR},
+      </if>
+      <if test="sendType != null" >
+        SEND_TYPE  =#{sendType,jdbcType=CHAR},
+      </if>
+      <if test="messType != null" >
+        MESS_TYPE  =#{messType ,jdbcType=CHAR},
+      </if>
+      <if test="openId  != null" >
+       OPENID = #{openId ,jdbcType=VARCHAR},
+      </if>
+      <if test="messTitle != null" >
+       MESS_TITLE = #{messTitle ,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+       AMOUNT = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="balance  != null" >
+        BALANCE=#{balance,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsDto" >
+    update TB_BIS_SMS
+    set SYSTEM = #{system,jdbcType=CHAR},
+      SEND_ER = #{sendEr,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      SEND_CONTENT = #{sendContent,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      SEND_END_TIME = #{sendEndTime},
+      SEND_START_TIME = #{sendStartTime},
+      SEND_TIME = #{sendTime,jdbcType=TIMESTAMP},
+      SEND_CHANNEL  =#{sendChannel,jdbcType=CHAR},
+      SEND_TYPE  =#{sendType,jdbcType=CHAR},
+      MESS_TYPE  =#{messType ,jdbcType=CHAR},
+      OPENID = #{openId ,jdbcType=VARCHAR},
+      MESS_TITLE = #{messTitle ,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=DECIMAL},
+      BALANCE=#{balance,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSmsDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SMS
+   <where>
+   <if test="system != null and system !=''" >
+      and SYSTEM = #{system.value,jdbcType=CHAR}
+      </if>
+      <if test="sendEr != null and sendEr !=''" >
+      and instr(SEND_ER, #{sendEr,jdbcType=VARCHAR}) > 0
+      <!-- and  SEND_ER like concat('%',concat(#{sendEr,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="mobile != null and mobile !=''" >
+      and instr(MOBILE, #{mobile,jdbcType=VARCHAR}) > 0
+      <!-- and  MOBILE like concat('%',concat(#{mobile,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="status != null and status !=''" >
+      and  STATUS = #{status,jdbcType=CHAR}
+      </if>
+      <if test="failReason != null and failReason !=''" >
+      and  FAIL_REASON = #{failReason,jdbcType=VARCHAR}
+      </if>
+      <if test="sendContent != null and sendContent !=''" >
+      and instr(SEND_CONTENT, #{sendContent,jdbcType=VARCHAR}) > 0
+      <!-- and  SEND_CONTENT like concat('%,'concat(#{sendContent,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="startCreateTime != null" >
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="endCreateTime != null" >
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="startSendTime != null" >
+      and to_char(SEND_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startSendTime},'YYYY-MM-DD')
+      </if>
+      <if test="endSendTime != null" >
+      and to_char(SEND_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endSendTime},'YYYY-MM-DD')
+      </if>
+      <if test="sendStartTime != null and sendStartTime!=''" >
+      and to_char(SEND_START_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{sendStartTime},'YYYY-MM-DD')
+      </if>
+      <if test="sendEndTime != null and sendEndTime!=''" >
+      and to_char(SEND_END_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{sendEndTime},'YYYY-MM-DD')
+      </if>
+      
+      <if test="sendChannel != null and sendChannel !=''" >
+      and  SEND_CHANNEL  =#{sendChannel,jdbcType=CHAR}
+      </if>
+      <if test="sendType != null  and sendType !=''" >
+      and  SEND_TYPE  =#{sendType,jdbcType=CHAR}
+      </if>
+      <if test="messType  != null  and messType !=''" >
+      and  MESS_TYPE  =#{messType ,jdbcType=CHAR}
+      </if>
+      <if test="openId  != null  and openId !=''" >
+      and OPENID = #{openId ,jdbcType=VARCHAR}
+      </if>
+      <if test="messTitle != null  and messTitle !=''" >
+      and MESS_TITLE = #{messTitle ,jdbcType=VARCHAR}
+      </if>
+      <if test="amount != null" >
+      and  AMOUNT = #{amount,jdbcType=DECIMAL}
+      </if>
+      <if test="balance  != null" >
+      and  BALANCE=#{balance,jdbcType=DECIMAL}
+      </if>
+   </where>
+   order by CREATE_TIME DESC
+  </select>
+  <select id="getSms" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SMS
+    where SEND_START_TIME &lt;= #{time} and SEND_END_TIME &gt;= #{time}
+    and  STATUS = #{sendStatus.value,jdbcType=CHAR}
+  </select>
+  <update id="updateStatus" >
+  	update TB_BIS_SMS set STATUS = #{newStatus.value,jdbcType=CHAR}
+  	where STATUS = #{oldStatus.value,jdbcType=CHAR}
+  	and ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

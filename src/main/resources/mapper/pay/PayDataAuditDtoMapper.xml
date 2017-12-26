@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayDataAuditDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.pay.PayDataAuditDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="REF_ID" property="refId" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="CHANGE_CONTENT" property="changeContent" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS" property="auditStatus" jdbcType="CHAR" />
+    <!-- <result column="AUDIT_REASON" property="auditReason" jdbcType="VARCHAR" />
+    <result column="AUDIT_USER" property="auditUser" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" /> -->
+    <result column="refund_type" property="refundType" jdbcType="CHAR" />
+	<result column="must_check_num" property="mustCheckNum" jdbcType="DECIMAL" />
+	<result column="already_check_num" property="alreadyCheckNum" jdbcType="DECIMAL" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, REF_ID, BUSI_TYPE, CHANGE_CONTENT, AUDIT_STATUS,<!--  AUDIT_REASON, AUDIT_USER, AUDIT_TIME,  -->
+    CREATE_USER, CREATE_TIME,REFUND_TYPE,MUST_CHECK_NUM,ALREADY_CHECK_NUM
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_DATA_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_DATA_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.pay.PayDataAuditDto" >
+    insert into TB_PAY_DATA_AUDIT (ID, REF_ID, BUSI_TYPE, 
+      CHANGE_CONTENT, AUDIT_STATUS, <!-- AUDIT_REASON, --> 
+      <!-- AUDIT_USER, AUDIT_TIME, --> CREATE_USER, 
+      CREATE_TIME,REFUND_TYPE,MUST_CHECK_NUM,ALREADY_CHECK_NUM)
+    values (#{id,jdbcType=VARCHAR}, #{refId,jdbcType=VARCHAR}, #{busiType,jdbcType=CHAR}, 
+      #{changeContent,jdbcType=VARCHAR}, #{auditStatus,jdbcType=CHAR},<!--  #{auditReason,jdbcType=VARCHAR}, --> 
+      <!-- #{auditUser,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, --> #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP},#{refundType,jdbcType=CHAR},#{mustCheckNum,jdbcType=DECIMAL},#{alreadyCheckNum,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.pay.PayDataAuditDto" >
+    insert into TB_PAY_DATA_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="refId != null" >
+        REF_ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="changeContent != null" >
+        CHANGE_CONTENT,
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS,
+      </if>
+      <!-- <if test="auditReason != null" >
+        AUDIT_REASON,
+      </if>
+      <if test="auditUser != null" >
+        AUDIT_USER,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if> -->
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="refundType != null" >
+        REFUND_TYPE,
+      </if>
+      <if test="mustCheckNum != null" >
+        MUST_CHECK_NUM,
+      </if>
+      <if test="alreadyCheckNum != null" >
+        ALREADY_CHECK_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="refId != null" >
+        #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="changeContent != null" >
+        #{changeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=CHAR},
+      </if>
+     <!--  <if test="auditReason != null" >
+        #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUser != null" >
+        #{auditUser,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if> -->
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundType != null" >
+        #{refundType,jdbcType=CHAR},
+      </if>
+      <if test="mustCheckNum != null" >
+        #{mustCheckNum,jdbcType=DECIMAL},
+      </if>
+      <if test="alreadyCheckNum != null" >
+        #{alreadyCheckNum,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.pay.PayDataAuditDto" >
+    update TB_PAY_DATA_AUDIT
+    <set >
+      <if test="refId != null" >
+        REF_ID = #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="changeContent != null" >
+        CHANGE_CONTENT = #{changeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      </if>
+     <!--  <if test="auditReason != null" >
+        AUDIT_REASON = #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUser != null" >
+        AUDIT_USER = #{auditUser,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if> -->
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundType != null" >
+        REFUND_TYPE = #{refundType,jdbcType=CHAR},
+      </if>
+      <if test="mustCheckNum != null" >
+        MUST_CHECK_NUM = #{mustCheckNum,jdbcType=DECIMAL},
+      </if>
+      <if test="alreadyCheckNum != null" >
+        ALREADY_CHECK_NUM = #{alreadyCheckNum,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.pay.PayDataAuditDto" >
+    update TB_PAY_DATA_AUDIT
+    set REF_ID = #{refId,jdbcType=VARCHAR},
+      BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      CHANGE_CONTENT = #{changeContent,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      <!-- AUDIT_REASON = #{auditReason,jdbcType=VARCHAR},
+      AUDIT_USER = #{auditUser,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP}, -->
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REFUND_TYPE = #{refundType,jdbcType=CHAR},
+      MUST_CHECK_NUM = #{mustCheckNum,jdbcType=DECIMAL},
+      ALREADY_CHECK_NUM = #{alreadyCheckNum,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+<select id="selectByRefId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_DATA_AUDIT
+    where REF_ID = #{refId,jdbcType=VARCHAR}
+    	and AUDIT_STATUS='0'
+  </select>
+</mapper>

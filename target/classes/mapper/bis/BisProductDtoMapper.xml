@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisProductDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisProductDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_CODE" property="businessCode" jdbcType="VARCHAR" />
+    <result column="CREATER_REVISER_NAME" property="createrReviserName" jdbcType="VARCHAR" />
+    <result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PRODUCT_CODE, PRODUCT_NAME, BUSINESS_CODE, CREATER_REVISER_NAME, REVISER_NAME, 
+    CREATE_DATE, MODIFY_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_PRODUCT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findByProductCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_PRODUCT
+    where PRODUCT_CODE = #{productCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_PRODUCT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisProductDto" >
+    insert into TB_BIS_PRODUCT (ID, PRODUCT_CODE, PRODUCT_NAME, 
+      BUSINESS_CODE, CREATER_REVISER_NAME, REVISER_NAME, 
+      CREATE_DATE, MODIFY_DATE)
+    values (#{id,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{businessCode,jdbcType=VARCHAR}, #{createrReviserName,jdbcType=VARCHAR}, #{reviserName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisProductDto" >
+    insert into TB_BIS_PRODUCT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="productCode != null" >
+        PRODUCT_CODE,
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME,
+      </if>
+      <if test="businessCode != null" >
+        BUSINESS_CODE,
+      </if>
+      <if test="createrReviserName != null" >
+        CREATER_REVISER_NAME,
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createrReviserName != null" >
+        #{createrReviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisProductDto" >
+    update TB_BIS_PRODUCT
+    <set >
+      <if test="productCode != null" >
+        PRODUCT_CODE = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createrReviserName != null" >
+        CREATER_REVISER_NAME = #{createrReviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisProductDto" >
+    update TB_BIS_PRODUCT
+    set PRODUCT_CODE = #{productCode,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      CREATER_REVISER_NAME = #{createrReviserName,jdbcType=VARCHAR},
+      REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="list" resultMap="Pojo_ResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisProductDto" >
+    select 
+    <include refid="Pojo_Column_List" />
+    from TB_BIS_PRODUCT p left join tb_bis_trade_type_sett_cycle t on p.PRODUCT_CODE=t.PRODUCT_CODE
+    left join TB_BIS_BUSINESS b on p.BUSINESS_CODE=b.BUSINESS_CODE
+    <where>
+    	<if test="productName != null and productName !=''" >
+        	and instr(p.PRODUCT_NAME,#{productName,jdbcType=VARCHAR})>0
+        </if>
+    	<if test="tradeTypeName != null and tradeTypeName !=''" >
+    		and instr(t.TRADE_TYPE_NAME,#{tradeTypeName,jdbcType=VARCHAR})>0
+        </if>
+        <if test="businessCode != null and businessCode !=''" >
+        	and p.BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR}
+        </if>
+        <if test="assuranceStyle != null and assuranceStyle !=''" >
+        	and t.ASSURANCE_STYLE = #{assuranceStyle,jdbcType=CHAR}
+        </if>
+        <if test="settleCycleType != null and settleCycleType !=''" >
+        	and t.SETTLE_CYCLE_TYPE = #{settleCycleType,jdbcType=CHAR}
+        </if>
+    </where>
+ 	order by p.CREATE_DATE desc
+  </select>
+  
+  <select id="findProductTradeById" resultMap="Pojo_ResultMap" parameterType="string" >
+    select 
+    <include refid="Pojo_Column_List" />
+    from TB_BIS_PRODUCT p left join TB_BIS_TRADE_TYPE_SETT_CYCLE t on p.PRODUCT_CODE=t.PRODUCT_CODE
+    left join TB_BIS_BUSINESS b on p.BUSINESS_CODE=b.BUSINESS_CODE
+    where p.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <resultMap id="Pojo_ResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisProductTradeTypePojoDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_CODE" property="businessCode" jdbcType="VARCHAR" />
+    <result column="CREATER_REVISER_NAME" property="createrReviserName" jdbcType="VARCHAR" />
+    <result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+   	
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="VARCHAR" />
+    <result column="OFFSET_STYLE" property="offsetStyle" jdbcType="CHAR" />
+    <result column="ASSURANCE_STYLE" property="assuranceStyle" jdbcType="CHAR" />
+    <result column="SETTLE_CYCLE" property="settleCycle" jdbcType="DECIMAL" />
+    <result column="SETTLE_CYCLE_TYPE" property="settleCycleType" jdbcType="CHAR" />
+    <result column="FIRST_SETTLE_DAY" property="firstSettleDay" jdbcType="CHAR" />
+    <result column="LAST_SETTLE_DAY" property="lastSettleDay" jdbcType="CHAR" />
+    <result column="SETTLE_DAY" property="settleDay" jdbcType="CHAR" />
+    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+    <result column="TN_SETTLE" property="tnSettle" jdbcType="CHAR" />
+    <result column="SETTLE_DAY_TYPE" property="settleDayType" jdbcType="CHAR" />
+    <result column="SETTLE_HOUR" property="settleHour" jdbcType="DECIMAL" />
+    <result column="SETTLE_MINUTE" property="settleMinute" jdbcType="DECIMAL" />
+    <result column="DAY_OF_MONTH" property="dayOfMonth" jdbcType="DECIMAL" />
+    <result column="FEE_MODE" property="feeMode" jdbcType="CHAR" />
+    <result column="PAYER_FEE_TYPE" property="payerFeeType" jdbcType="CHAR" />
+    <result column="PAYEE_FEE_TYPE" property="payeeFeeType" jdbcType="CHAR" />
+    <result column="PAYER_FEE_RATE" property="payerFeeRate" jdbcType="DECIMAL" />
+    <result column="PAYEE_FEE_RATE" property="payeeFeeRate" jdbcType="DECIMAL" />
+    <result column="PAYER_FEE_LOW" property="payerFeeLow" jdbcType="DECIMAL" />
+    <result column="PAYEE_FEE_LOW" property="payeeFeeLow" jdbcType="DECIMAL" />
+    <result column="PAYER_FEE_TOP" property="payerFeeTop" jdbcType="DECIMAL" />
+    <result column="PAYEE_FEE_TOP" property="payeeFeeTop" jdbcType="DECIMAL" />
+    <result column="FEE_TN_SETTLE" property="feeTnSettle" jdbcType="CHAR" />
+    <result column="FEE_SETTLE_CYCLE" property="feeSettleCycle" jdbcType="DECIMAL" />
+    <result column="FEE_SETTLE_CYCLE_TYPE" property="feeSettleCycleType" jdbcType="CHAR" />
+    <result column="FEE_FIRST_SETTLE_DAY" property="feeFirstSettleDay" jdbcType="CHAR" />
+    <result column="FEE_LAST_SETTLE_DAY" property="feeLastSettleDay" jdbcType="CHAR" />
+    <result column="FEE_SETTLE_DAY" property="feeSettleDay" jdbcType="CHAR" />
+    <result column="FEE_SETTLE_DAY_TYPE" property="feeSettleDayType" jdbcType="CHAR" />
+    <result column="FEE_SETTLE_HOUR" property="feeSettleHour" jdbcType="DECIMAL" />
+    <result column="FEE_SETTLE_MINUTE" property="feeSettleMinute" jdbcType="DECIMAL" />
+    <result column="FEE_DAY_OF_MONTH" property="feeDayOfMonth" jdbcType="DECIMAL" />
+    <result column="TRADE_TYPE_NAME" property="tradeTypeName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_NAME" property="businessName" jdbcType="VARCHAR" />
+    <result column="tradeTypeSettCycleId" property="tradeTypeSettCycleId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Pojo_Column_List" >
+    p.ID, p.PRODUCT_CODE, p.PRODUCT_NAME, p.BUSINESS_CODE, p.CREATER_REVISER_NAME, p.REVISER_NAME, 
+    p.CREATE_DATE, p.MODIFY_DATE,
+    t.ID as tradeTypeSettCycleId, t.TRADE_TYPE, t.OFFSET_STYLE, t.ASSURANCE_STYLE, t.SETTLE_CYCLE, 
+    t.SETTLE_CYCLE_TYPE, t.FIRST_SETTLE_DAY, t.LAST_SETTLE_DAY, t.SETTLE_DAY,
+    t.BOOK_TYPE, t.TN_SETTLE, t.SETTLE_DAY_TYPE, t.SETTLE_HOUR, 
+    t.SETTLE_MINUTE, t.DAY_OF_MONTH, t.FEE_MODE, t.PAYER_FEE_TYPE, t.PAYEE_FEE_TYPE, t.PAYER_FEE_RATE, 
+    t.PAYEE_FEE_RATE, t.PAYER_FEE_LOW, t.PAYEE_FEE_LOW, t.PAYER_FEE_TOP, t.PAYEE_FEE_TOP, t.FEE_TN_SETTLE, 
+    t.FEE_SETTLE_CYCLE, t.FEE_SETTLE_CYCLE_TYPE, t.FEE_FIRST_SETTLE_DAY, t.FEE_LAST_SETTLE_DAY, 
+    t.FEE_SETTLE_DAY, t.FEE_SETTLE_DAY_TYPE, t.FEE_SETTLE_HOUR, t.FEE_SETTLE_MINUTE, t.FEE_DAY_OF_MONTH,
+    t.TRADE_TYPE_NAME,b.BUSINESS_NAME
+  </sql>
+</mapper>

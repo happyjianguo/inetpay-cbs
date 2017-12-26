@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisMovingActMatchingAuditDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisMovingActMatchingAuditDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACC_CHANGE_TYPE" property="accChangeType" jdbcType="CHAR" />
+    <result column="DR_CR" property="drCr" jdbcType="CHAR" />
+    <result column="REC_BANK_ACCOUNT" property="recBankAccount" jdbcType="VARCHAR" />
+    <result column="REC_BANK_ACCOUNT_NAME" property="recBankAccountName" jdbcType="VARCHAR" />
+    <result column="PAY_BANK_ACCOUNT" property="payBankAccount" jdbcType="VARCHAR" />
+    <result column="PAY_BANK_ACCOUNT_NAME" property="payBankAccountName" jdbcType="VARCHAR" />
+    <result column="ACC_CHANGE_AMOUNT" property="accChangeAmount" jdbcType="DECIMAL" />
+    <result column="POST_SCRIPT" property="postScript" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DAY" property="accountDay" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATER_NAME" property="createrName" jdbcType="VARCHAR" />
+    <result column="AUDITOR" property="auditor" jdbcType="VARCHAR" />
+    <result column="AUDITOR_NAME" property="auditorName" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="AUDIT_REMARK" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS" property="auditStatus" jdbcType="CHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="ACC_CHANGE_BUSI_ID" property="accChangeBusiId" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ACC_CHANGE_TYPE, DR_CR, REC_BANK_ACCOUNT, REC_BANK_ACCOUNT_NAME, PAY_BANK_ACCOUNT, 
+    PAY_BANK_ACCOUNT_NAME, ACC_CHANGE_AMOUNT,  POST_SCRIPT, ACCOUNT_DAY, 
+    CREATE_TIME, CREATER, CREATER_NAME, AUDITOR, AUDITOR_NAME, AUDIT_TIME, AUDIT_REMARK, 
+    AUDIT_STATUS, BUSI_ID, ORDER_ID,ACC_CHANGE_BUSI_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_MOVING_ACT_MATCHING_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询所有 -->
+  <select id="queryAll"  resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisMovingActMatchingAuditDto" >
+  	select 
+  	  	<include refid="Base_Column_List"/>
+  	from TB_BIS_MOVING_ACT_MATCHING_AUDIT
+  	where 1=1
+  	<if test="accChangeType!=null  and accChangeType!=''">
+	 	and ACC_CHANGE_TYPE=#{accChangeType,jdbcType=CHAR}
+	</if>
+  	 <if test="drCr!=null  and drCr!=''">
+	 	and DR_CR=#{drCr,jdbcType=CHAR}
+	</if>
+	 <if test="auditStatus!=null  and auditStatus!=''">
+	 	and AUDIT_STATUS=#{auditStatus,jdbcType=CHAR}
+	</if>
+	 <if test="postScript !=null  and postScript !=''">
+	 	and  POST_SCRIPT LIKE '%${postScript}%'
+	</if>
+	<if test="orderId !=null  and orderId !=''">
+	 	and  ORDER_ID LIKE '%${orderId}%'
+	</if>		
+  
+  </select>
+  
+ <select id="findAllByBusIdAndStatus"  resultMap="BaseResultMap"  parameterType="java.lang.String" >
+	 select 
+  	  	<include refid="Base_Column_List"/>
+  		from TB_BIS_MOVING_ACT_MATCHING_AUDIT
+		 where BUSI_ID = #{id,jdbcType=VARCHAR} and AUDIT_STATUS='00' 
+	</select>  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_MOVING_ACT_MATCHING_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisMovingActMatchingAuditDto" >
+    insert into TB_BIS_MOVING_ACT_MATCHING_AUDIT (ID, ACC_CHANGE_TYPE, DR_CR, 
+      REC_BANK_ACCOUNT, REC_BANK_ACCOUNT_NAME, PAY_BANK_ACCOUNT, 
+      PAY_BANK_ACCOUNT_NAME, ACC_CHANGE_AMOUNT,   
+      POST_SCRIPT, ACCOUNT_DAY, CREATE_TIME, 
+      CREATER, CREATER_NAME, AUDITOR, 
+      AUDITOR_NAME, AUDIT_TIME, AUDIT_REMARK, 
+      AUDIT_STATUS, BUSI_ID, ORDER_ID,ACC_CHANGE_BUSI_ID
+      )
+    values (#{id,jdbcType=VARCHAR}, #{accChangeType,jdbcType=CHAR}, #{drCr,jdbcType=CHAR}, 
+      #{recBankAccount,jdbcType=VARCHAR}, #{recBankAccountName,jdbcType=VARCHAR}, #{payBankAccount,jdbcType=VARCHAR}, 
+      #{payBankAccountName,jdbcType=VARCHAR}, #{accChangeAmount,jdbcType=DECIMAL},
+      #{postScript,jdbcType=VARCHAR}, #{accountDay,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{creater,jdbcType=VARCHAR}, #{createrName,jdbcType=VARCHAR}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditorName,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, #{auditRemark,jdbcType=VARCHAR}, 
+      #{auditStatus,jdbcType=CHAR}, #{busiId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{accChangeBusiId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisMovingActMatchingAuditDto" >
+    insert into TB_BIS_MOVING_ACT_MATCHING_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="accChangeType != null" >
+        ACC_CHANGE_TYPE,
+      </if>
+      <if test="drCr != null" >
+        DR_CR,
+      </if>
+      <if test="recBankAccount != null" >
+        REC_BANK_ACCOUNT,
+      </if>
+      <if test="recBankAccountName != null" >
+        REC_BANK_ACCOUNT_NAME,
+      </if>
+      <if test="payBankAccount != null" >
+        PAY_BANK_ACCOUNT,
+      </if>
+      <if test="payBankAccountName != null" >
+        PAY_BANK_ACCOUNT_NAME,
+      </if>
+      <if test="accChangeAmount != null" >
+        ACC_CHANGE_AMOUNT,
+      </if>
+      <if test="postScript != null" >
+        POST_SCRIPT,
+      </if>
+      <if test="accountDay != null" >
+        ACCOUNT_DAY,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME,
+      </if>
+      <if test="auditor != null" >
+        AUDITOR,
+      </if>
+      <if test="auditorName != null" >
+        AUDITOR_NAME,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+      <if test="auditRemark != null" >
+        AUDIT_REMARK,
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="accChangeType != null" >
+        #{accChangeType,jdbcType=CHAR},
+      </if>
+      <if test="drCr != null" >
+        #{drCr,jdbcType=CHAR},
+      </if>
+      <if test="recBankAccount != null" >
+        #{recBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="recBankAccountName != null" >
+        #{recBankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="payBankAccount != null" >
+        #{payBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payBankAccountName != null" >
+        #{payBankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accChangeAmount != null" >
+        #{accChangeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="postScript != null" >
+        #{postScript,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDay != null" >
+        #{accountDay,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null" >
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisMovingActMatchingAuditDto" >
+    update TB_BIS_MOVING_ACT_MATCHING_AUDIT
+    <set >
+      <if test="accChangeType != null" >
+        ACC_CHANGE_TYPE = #{accChangeType,jdbcType=CHAR},
+      </if>
+      <if test="drCr != null" >
+        DR_CR = #{drCr,jdbcType=CHAR},
+      </if>
+      <if test="recBankAccount != null" >
+        REC_BANK_ACCOUNT = #{recBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="recBankAccountName != null" >
+        REC_BANK_ACCOUNT_NAME = #{recBankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="payBankAccount != null" >
+        PAY_BANK_ACCOUNT = #{payBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payBankAccountName != null" >
+        PAY_BANK_ACCOUNT_NAME = #{payBankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accChangeAmount != null" >
+        ACC_CHANGE_AMOUNT = #{accChangeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="postScript != null" >
+        POST_SCRIPT = #{postScript,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDay != null" >
+        ACCOUNT_DAY = #{accountDay,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        AUDITOR = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null" >
+        AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRemark != null" >
+        AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisMovingActMatchingAuditDto" >
+    update TB_BIS_MOVING_ACT_MATCHING_AUDIT
+    set ACC_CHANGE_TYPE = #{accChangeType,jdbcType=CHAR},
+      DR_CR = #{drCr,jdbcType=CHAR},
+      REC_BANK_ACCOUNT = #{recBankAccount,jdbcType=VARCHAR},
+      REC_BANK_ACCOUNT_NAME = #{recBankAccountName,jdbcType=VARCHAR},
+      PAY_BANK_ACCOUNT = #{payBankAccount,jdbcType=VARCHAR},
+      PAY_BANK_ACCOUNT_NAME = #{payBankAccountName,jdbcType=VARCHAR},
+      ACC_CHANGE_AMOUNT = #{accChangeAmount,jdbcType=DECIMAL},
+      POST_SCRIPT = #{postScript,jdbcType=VARCHAR},
+      ACCOUNT_DAY = #{accountDay,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      BUSI_ID = #{busiId,jdbcType=VARCHAR},
+      ORDER_ID = #{orderId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

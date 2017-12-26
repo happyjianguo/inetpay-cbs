@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        
+						http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 生成远程服务代理，可以和本地bean一样使用 -->
+	<!-- 联系人 -->
+	<!-- <dubbo:reference id="mrsContactAppService" interface="com.ylink.inetpay.common.project.cbs.app.MrsContactAppService" /> -->
+	<dubbo:reference id="smsManageAppServices" interface="com.ylink.inetpay.common.project.channel.app.SmsManageAppService" />
+	<dubbo:reference id="riskControlAppService" interface="com.ylink.inetpay.common.project.pay.app.RiskControlAppService" />
+	<dubbo:reference id="emailManageAppService" interface="com.ylink.inetpay.common.project.access.app.EmailManageAppService" />
+	<dubbo:reference id="smsManageAppService" interface="com.ylink.inetpay.common.project.access.app.SmsManageAppService" />
+	<dubbo:reference id="paySystemPayBwlistAppService" interface="com.ylink.inetpay.common.project.pay.app.PayBwlistAppService" />
+	<dubbo:reference id="paySystemPayLimitAppService" interface="com.ylink.inetpay.common.project.pay.app.PayLimitAppService" />
+	<dubbo:reference id="paySystemPayAccountAdjustAppService" interface="com.ylink.inetpay.common.project.pay.app.PayAccountAdjustAppService"  retries="0"/>
+	<dubbo:reference id="actBookAppService" interface="com.ylink.inetpay.common.project.account.app.ActBookAppService" />
+	<dubbo:reference id="actFileAppService" interface="com.ylink.inetpay.common.project.account.app.ActFileAppService" />
+	<dubbo:reference id="clearChannelCheckAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearChannelCheckAppService" />
+	<dubbo:reference id="clearInnerCheckAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearInnerCheckAppService" />
+	<dubbo:reference id="payMerchantAppService" interface="com.ylink.inetpay.common.project.pay.app.PayMerchantAppService" />
+	<dubbo:reference id="checkFileTaskAppService" interface="com.ylink.inetpay.common.project.channel.app.CheckFileTaskAppService" timeout="60000" retries="0"  />
+	<dubbo:reference id="clearMerchantAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearMerchantAppService" />
+	<dubbo:reference id="payWithdrawAppService" interface="com.ylink.inetpay.common.project.pay.app.PayWithdrawAppService" />
+	<dubbo:reference id="payTransferAppService" interface="com.ylink.inetpay.common.project.pay.app.PayTransferAppService" />
+	<dubbo:reference id="payRefundAppService" interface="com.ylink.inetpay.common.project.pay.app.PayRefundAppService" />
+	<dubbo:reference id="payPaymentAppService" interface="com.ylink.inetpay.common.project.pay.app.PayPaymentAppService" />
+	<dubbo:reference id="clearInitAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearInitAppService" />
+	<dubbo:reference id="clearShareAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearShareAppService" />
+	<dubbo:reference id="clearTransferFundAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearTransferFundAppService" />
+	<dubbo:reference id="fastPayAppService" interface="com.ylink.inetpay.common.project.channel.app.FastPayAppService" />
+	<dubbo:reference id="clearReportAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearReportAppService" />
+	<dubbo:reference id="chlSystemChlBankAppService" interface="com.ylink.inetpay.common.project.channel.app.ChlBankAppService" />
+	<dubbo:reference id="chlSystemChlChannelAppService" interface="com.ylink.inetpay.common.project.channel.app.ChlChannelAppService" />
+	<dubbo:reference id="chlSystemChlParamAppService" interface="com.ylink.inetpay.common.project.channel.app.ChlParamAppService" />
+	<dubbo:reference id="clearBackupsAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearBackupsAppService" />
+	<dubbo:reference id="chlCardBinAppService" interface="com.ylink.inetpay.common.project.channel.app.ChlCardBinAppService" />
+	<dubbo:reference id="actRuleAppService" interface="com.ylink.inetpay.common.project.account.app.ActRuleAppService" />
+	<dubbo:reference id="chlBankCodeAppService" interface="com.ylink.inetpay.common.project.channel.app.ChlBankCodeAppService" />
+	<dubbo:reference id="payOutPayAppService" interface="com.ylink.inetpay.common.project.pay.app.PayOutPayAppService" retries="0"/>
+	<dubbo:reference id="chlBankAccountAppService" interface="com.ylink.inetpay.common.project.channel.app.ChlBankAccountAppService" />
+	<dubbo:reference id="actSubjectAppService" interface="com.ylink.inetpay.common.project.account.app.ActSubjectAppService" />
+	<dubbo:reference id="accountInfoQueryAppService" interface="com.ylink.inetpay.common.project.channel.app.AccountInfoQueryAppService" />
+	<dubbo:reference id="chlChannelRouteAppService" interface="com.ylink.inetpay.common.project.channel.app.ChlChannelRouteAppService" />
+	<dubbo:reference id="chlChannelBankAppService" interface="com.ylink.inetpay.common.project.channel.app.ChlChannelBankAppService" />
+	<dubbo:reference id="refundAppService" interface="com.ylink.inetpay.common.project.channel.app.RefundAppService" />
+
+    <dubbo:reference id="payRechargeAppService" interface="com.ylink.inetpay.common.project.pay.app.PayRechargeAppService" />
+	
+	<!-- <dubbo:reference id="mrsPassiveOpenAcntService" interface="com.ylink.inetpay.cbs.mrs.rest.MrsPassiveOpenAcntService" />  -->
+	<!-- <dubbo:reference id="cbsChlBankCodeAppService" interface="com.ylink.inetpay.common.project.cbs.app.CbsChlBankCodeAppService" /> -->
+	<dubbo:reference id="clearAuditAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearAuditAppService" />
+	
+	<!-- start add by haojiao -->
+	<dubbo:reference id="clearCATAppService" interface="com.ylink.inetpay.common.project.clear.app.ClearCATAppService" />
+	<dubbo:reference id="identifVerifAppService" interface="com.ylink.inetpay.common.project.channel.app.IdentifVerifAppService" />
+	<!-- end add by haojiao -->
+	<dubbo:reference id="actCustRateAppService" interface="com.ylink.inetpay.common.project.account.app.ActCustRateAppService" />
+	<dubbo:reference id="actHistoryAccountAppService" interface="com.ylink.inetpay.common.project.account.app.ActHistoryAccountAppService" />
+	<dubbo:reference id="actBankInterestAppService" interface="com.ylink.inetpay.common.project.account.app.ActBankInterestAppService" />
+	<dubbo:reference id="actInterestDateAppService" interface="com.ylink.inetpay.common.project.account.app.ActInterestDateAppService" />
+	<dubbo:reference id="actCustInterestAppService" interface="com.ylink.inetpay.common.project.account.app.ActCustInterestAppService" />
+	<!-- 渠道签到签退服务 -->
+	<dubbo:reference id="chlFrontSessionAppService" retries="0" interface="com.ylink.inetpay.common.project.channel.app.ChlFrontSessionAppService" />
+	<!-- 动账通知服务 -->
+	<dubbo:reference id="chlAccountChangeNotifyAppService" retries="0" interface="com.ylink.inetpay.common.project.channel.app.ChlAccountChangeNotifyAppService"/>
+	<dubbo:reference id="payAccChangeNotifyAppService" retries="0" interface="com.ylink.inetpay.common.project.pay.app.PayAccChangeNotifyAppService"/>
+	<dubbo:reference id="chlChlFeeAppService" retries="0" interface="com.ylink.inetpay.common.project.channel.app.ChlChlFeeAppService"/>
+	<!-- <dubbo:reference id="chlChannelAppService" retries="0" interface="com.ylink.inetpay.common.project.channel.app.ChlChannelAppService"/> -->
+	<!-- 渠道表 -->
+	<dubbo:reference id="chlFrontAccountAppService" retries="0" interface="com.ylink.inetpay.common.project.channel.app.ChlFrontAccountAppService" timeout="60000"/>
+	<!--手续费生效-->
+	<dubbo:reference id="payFeeConfigAppService" retries="0" interface="com.ylink.inetpay.common.project.pay.app.PayFeeConfigAppService" />
+	<!--手续费汇总-->
+	<dubbo:reference id="payFeeSummaryDtoAppService" retries="0" interface="com.ylink.inetpay.common.project.pay.app.PayFeeSummaryDtoAppService" />
+	
+</beans>

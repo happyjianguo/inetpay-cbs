@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsSubAccountDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubAccountDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="SUB_ACCOUNT_CODE" property="subAccountCode" jdbcType="VARCHAR" />
+    <result column="SUB_ACCOUNT_NAME" property="subAccountName" jdbcType="VARCHAR" />
+    <result column="SUB_ACCOUNT_TYPE" property="subAccountType" jdbcType="CHAR" />
+    <result column="SUB_ACCOUNT_STATUS" property="subAccountStatus" jdbcType="CHAR" />
+    <result column="ACCOUNT_OWN_TYPE" property="accountOwnType" jdbcType="CHAR" />
+    <result column="ACCOUNT_SOURCE" property="accountSource" jdbcType="CHAR" />
+    <result column="PLATFORM_CODE" property="platformCode" jdbcType="VARCHAR" />
+    <result column="OPEN_TIME" property="openTime" jdbcType="TIMESTAMP" />
+    <result column="CLOSE_TIME" property="closeTime" jdbcType="TIMESTAMP" />
+    <result column="CLOSE_OPERATOR" property="closeOperator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPERATOR" property="createOperator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_OPERATOR" property="updateOperator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, SUB_ACCOUNT_CODE, SUB_ACCOUNT_NAME, SUB_ACCOUNT_TYPE, SUB_ACCOUNT_STATUS, 
+    ACCOUNT_OWN_TYPE, ACCOUNT_SOURCE, PLATFORM_CODE, OPEN_TIME, CLOSE_TIME, CLOSE_OPERATOR, 
+    CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, UPDATE_OPERATOR
+  </sql>
+   <sql id="Base_Main_Column_List" >
+    s.ID, s.CUST_ID, s.SUB_ACCOUNT_CODE, s.SUB_ACCOUNT_NAME, s.SUB_ACCOUNT_TYPE, s.SUB_ACCOUNT_STATUS, s.
+    ACCOUNT_OWN_TYPE, s.ACCOUNT_SOURCE, s.PLATFORM_CODE, s.OPEN_TIME, s.CLOSE_TIME, s.CLOSE_OPERATOR, s.
+    CREATE_TIME, s.CREATE_OPERATOR, s.UPDATE_TIME, s.UPDATE_OPERATOR
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_SUB_ACCOUNT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_SUB_ACCOUNT
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  <select id="findByCustIdAndSubAccountType" resultMap="BaseResultMap" 
+  	parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubAccountDto" >
+    select 
+    <include refid="Base_Main_Column_List" />
+    from TB_MRS_SUB_ACCOUNT s 
+    left join TB_MRS_ACCOUNT a on a.CUST_ID = s.CUST_ID
+    where a.ACCOUNT_STATUS !='2'
+     <if test="custId != null and custId != ''">
+        and a.CUST_ID = #{custId,jdbcType=VARCHAR}
+      </if>
+       <if test="subAccountType != null and subAccountType != ''">
+        and s.SUB_ACCOUNT_TYPE = #{subAccountType,jdbcType=CHAR}
+      </if>
+      <if test="subAccountCode != null and subAccountCode != ''">
+        and s.SUB_ACCOUNT_CODE = #{subAccountCode,jdbcType=CHAR}
+      </if>
+  </select>
+  <select id="findByAccountNameandCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_SUB_ACCOUNT 
+    where SUB_ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR} and CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  <select id="findSubAccountStatusByCustIdAndType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_SUB_ACCOUNT 
+    where CUST_ID = #{custId,jdbcType=VARCHAR} and SUB_ACCOUNT_TYPE = '01'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_SUB_ACCOUNT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubAccountDto" >
+    insert into TB_MRS_SUB_ACCOUNT (ID, CUST_ID, SUB_ACCOUNT_CODE, 
+      SUB_ACCOUNT_NAME, SUB_ACCOUNT_TYPE, SUB_ACCOUNT_STATUS, 
+      ACCOUNT_OWN_TYPE, ACCOUNT_SOURCE, PLATFORM_CODE, 
+      OPEN_TIME, CLOSE_TIME, CLOSE_OPERATOR, 
+      CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, 
+      UPDATE_OPERATOR)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{subAccountCode,jdbcType=VARCHAR}, 
+      #{subAccountName,jdbcType=VARCHAR}, #{subAccountType,jdbcType=CHAR}, #{subAccountStatus,jdbcType=CHAR}, 
+      #{accountOwnType,jdbcType=CHAR}, #{accountSource,jdbcType=CHAR}, #{platformCode,jdbcType=VARCHAR}, 
+      #{openTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP}, #{closeOperator,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateOperator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubAccountDto" >
+    insert into TB_MRS_SUB_ACCOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="subAccountCode != null" >
+        SUB_ACCOUNT_CODE,
+      </if>
+      <if test="subAccountName != null" >
+        SUB_ACCOUNT_NAME,
+      </if>
+      <if test="subAccountType != null" >
+        SUB_ACCOUNT_TYPE,
+      </if>
+      <if test="subAccountStatus != null" >
+        SUB_ACCOUNT_STATUS,
+      </if>
+      <if test="accountOwnType != null" >
+        ACCOUNT_OWN_TYPE,
+      </if>
+      <if test="accountSource != null" >
+        ACCOUNT_SOURCE,
+      </if>
+      <if test="platformCode != null" >
+        PLATFORM_CODE,
+      </if>
+      <if test="openTime != null" >
+        OPEN_TIME,
+      </if>
+      <if test="closeTime != null" >
+        CLOSE_TIME,
+      </if>
+      <if test="closeOperator != null" >
+        CLOSE_OPERATOR,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateOperator != null" >
+        UPDATE_OPERATOR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountCode != null" >
+        #{subAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountName != null" >
+        #{subAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountType != null" >
+        #{subAccountType,jdbcType=CHAR},
+      </if>
+      <if test="subAccountStatus != null" >
+        #{subAccountStatus,jdbcType=CHAR},
+      </if>
+      <if test="accountOwnType != null" >
+        #{accountOwnType,jdbcType=CHAR},
+      </if>
+      <if test="accountSource != null" >
+        #{accountSource,jdbcType=CHAR},
+      </if>
+      <if test="platformCode != null" >
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null" >
+        #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeOperator != null" >
+        #{closeOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubAccountDto" >
+    update TB_MRS_SUB_ACCOUNT
+    <set >
+      <if test="custId != null and custId !=''" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountCode != null and subAccountCode !=''" >
+        SUB_ACCOUNT_CODE = #{subAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountName != null and subAccountName !=''" >
+        SUB_ACCOUNT_NAME = #{subAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountType != null and subAccountType !=''" >
+        SUB_ACCOUNT_TYPE = #{subAccountType,jdbcType=CHAR},
+      </if>
+      <if test="subAccountStatus != null and subAccountStatus !=''" >
+        SUB_ACCOUNT_STATUS = #{subAccountStatus,jdbcType=CHAR},
+      </if>
+      <if test="accountOwnType != null and accountOwnType !=''" >
+        ACCOUNT_OWN_TYPE = #{accountOwnType,jdbcType=CHAR},
+      </if>
+      <if test="accountSource != null and accountSource !=''" >
+        ACCOUNT_SOURCE = #{accountSource,jdbcType=CHAR},
+      </if>
+      <if test="platformCode != null and platformCode !=''" >
+        PLATFORM_CODE = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null and openTime !=''" >
+        OPEN_TIME = #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null and closeTime !=''" >
+        CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeOperator != null and closeOperator !=''" >
+        CLOSE_OPERATOR = #{closeOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime !=''" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null and createOperator !=''" >
+        CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime !=''" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null and updateOperator !=''" >
+        UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubAccountDto" >
+    update TB_MRS_SUB_ACCOUNT
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      SUB_ACCOUNT_CODE = #{subAccountCode,jdbcType=VARCHAR},
+      SUB_ACCOUNT_NAME = #{subAccountName,jdbcType=VARCHAR},
+      SUB_ACCOUNT_TYPE = #{subAccountType,jdbcType=CHAR},
+      SUB_ACCOUNT_STATUS = #{subAccountStatus,jdbcType=CHAR},
+      ACCOUNT_OWN_TYPE = #{accountOwnType,jdbcType=CHAR},
+      ACCOUNT_SOURCE = #{accountSource,jdbcType=CHAR},
+      PLATFORM_CODE = #{platformCode,jdbcType=VARCHAR},
+      OPEN_TIME = #{openTime,jdbcType=TIMESTAMP},
+      CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+      CLOSE_OPERATOR = #{closeOperator,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByCustId" >
+    update TB_MRS_SUB_ACCOUNT
+    set 
+      SUB_ACCOUNT_STATUS = #{subAccountStatus,jdbcType=CHAR}, UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByCustIdAndSubType" >
+    update TB_MRS_SUB_ACCOUNT
+    set 
+      SUB_ACCOUNT_STATUS = #{subAccountStatus,jdbcType=CHAR}, UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+    	AND  SUB_ACCOUNT_TYPE = #{subAccountType,jdbcType=CHAR}
+  </update>
+  <insert id="insertList"  >
+    insert into TB_MRS_SUB_ACCOUNT (ID, CUST_ID, SUB_ACCOUNT_CODE, 
+      SUB_ACCOUNT_NAME, SUB_ACCOUNT_TYPE, SUB_ACCOUNT_STATUS, 
+      ACCOUNT_OWN_TYPE, ACCOUNT_SOURCE, PLATFORM_CODE, 
+      OPEN_TIME, CLOSE_TIME, CLOSE_OPERATOR, 
+      CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, 
+      UPDATE_OPERATOR)
+    <foreach collection="subAccountList" index="index" item="item" separator="union all">
+		select
+		#{item.id,jdbcType=VARCHAR}, #{item.custId,jdbcType=VARCHAR}, #{item.subAccountCode,jdbcType=VARCHAR}, 
+		#{item.subAccountName,jdbcType=VARCHAR}, #{item.subAccountType,jdbcType=CHAR}, #{item.subAccountStatus,jdbcType=CHAR}, 
+		#{item.accountOwnType,jdbcType=CHAR}, #{item.accountSource,jdbcType=CHAR}, #{item.platformCode,jdbcType=VARCHAR}, 
+		#{item.openTime,jdbcType=TIMESTAMP}, #{item.closeTime,jdbcType=TIMESTAMP}, #{item.closeOperator,jdbcType=VARCHAR}, 
+		#{item.createTime,jdbcType=TIMESTAMP}, #{item.createOperator,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP}, 
+		#{item.updateOperator,jdbcType=VARCHAR} from dual
+	</foreach>
+  </insert>
+</mapper>

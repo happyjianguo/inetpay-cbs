@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActBusiRefSubDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActBusiRefSubDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="ACCT_TYPE_NO" property="acctTypeNo" jdbcType="VARCHAR" />
+    <result column="SUB2_NO" property="sub2No" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_TYPE, ACCT_TYPE_NO, SUB2_NO, REMARK, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_BUSI_REF_SUB
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据子账号类别查询科目编号 -->
+  <select id="findSub2NoByAcctTypeNos" resultType="java.lang.String" parameterType="java.util.List" >
+    select 
+    distinct SUB2_NO
+    from TB_ACT_BUSI_REF_SUB 
+    <if test="acctTypeNos !=null and acctTypeNos != ''">
+	    where ACCT_TYPE_NO in
+		    <foreach collection="acctTypeNos" index="index" item="item" open="(" separator="," close=")">
+		     #{item}
+		    </foreach>
+    </if>
+  </select>
+  <!-- 根据子账号类别查询对象信息 -->
+  <select id="findByAcctTypeNos" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    distinct SUB2_NO,ID, BUSI_TYPE, ACCT_TYPE_NO, SUB2_NO, REMARK, CREATE_TIME
+    from TB_ACT_BUSI_REF_SUB 
+    <if test="acctTypeNos !=null and acctTypeNos != ''">
+	    where ACCT_TYPE_NO in 
+		    <foreach collection="acctTypeNos" index="index" item="item" open="(" separator="," close=")">
+		     #{item}
+		    </foreach>
+    </if>
+    <if test="busiTypes !=null and busiTypes != ''">
+	    AND BUSI_TYPE in
+	    <foreach collection="busiTypes" index="index" item="items" open="(" separator="," close=")">
+	            #{items.value}
+	    </foreach>
+	</if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_BUSI_REF_SUB
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActBusiRefSubDto" >
+    insert into TB_ACT_BUSI_REF_SUB (ID, BUSI_TYPE, ACCT_TYPE_NO, 
+      SUB2_NO, REMARK, CREATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{busiType,jdbcType=CHAR}, #{acctTypeNo,jdbcType=VARCHAR}, 
+      #{sub2No,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActBusiRefSubDto" >
+    insert into TB_ACT_BUSI_REF_SUB
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="acctTypeNo != null" >
+        ACCT_TYPE_NO,
+      </if>
+      <if test="sub2No != null" >
+        SUB2_NO,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="acctTypeNo != null" >
+        #{acctTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sub2No != null" >
+        #{sub2No,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActBusiRefSubDto" >
+    update TB_ACT_BUSI_REF_SUB
+    <set >
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="acctTypeNo != null" >
+        ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sub2No != null" >
+        SUB2_NO = #{sub2No,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActBusiRefSubDto" >
+    update TB_ACT_BUSI_REF_SUB
+    set BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR},
+      SUB2_NO = #{sub2No,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

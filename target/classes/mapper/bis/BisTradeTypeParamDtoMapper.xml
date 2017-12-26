@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisTradeTypeParamDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeParamDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TRADE_TYPE_CODE" property="tradeTypeCode" jdbcType="VARCHAR" />
+    <result column="TRADE_TYPE_NAME" property="tradeTypeName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_CODE" property="businessCode" jdbcType="VARCHAR" />
+    <result column="ASSURE_ACCT_TRADE_TYPE" property="assureAcctTradeType" jdbcType="CHAR" />
+    <result column="NO_ASSURE_ACCT_TRADE_TYPE" property="noAssureAcctTradeType" jdbcType="CHAR" />
+    <result column="EDITABLE" property="editable" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TRADE_TYPE_CODE, TRADE_TYPE_NAME, BUSINESS_CODE, ASSURE_ACCT_TRADE_TYPE, NO_ASSURE_ACCT_TRADE_TYPE, 
+    EDITABLE
+  </sql>
+  
+  <!-- 模糊查询 -->
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeParamDto"
+		resultMap="BaseResultMap">
+		select *  from   TB_BIS_TRADE_TYPE_PARAM
+		  <where>
+			<if test=" tradeTypeCode != null and  tradeTypeCode != ''">
+				and instr(TRADE_TYPE_CODE , #{tradeTypeCode ,jdbcType=VARCHAR}) > 0 
+			</if>
+			<if test=" tradeTypeName  != null and tradeTypeName   != ''">
+				and instr(TRADE_TYPE_NAME  , #{tradeTypeName ,jdbcType=VARCHAR}) > 0 
+			</if>
+			<if test=" businessCode != null and businessCode != ''">
+				and instr(BUSINESS_CODE , #{businessCode ,jdbcType=VARCHAR}) > 0 
+			</if>
+			<if test=" assureAcctTradeType != null and assureAcctTradeType   != ''">
+				and instr(ASSURE_ACCT_TRADE_TYPE  , #{assureAcctTradeType ,jdbcType=CHAR}) > 0 
+			</if>
+			<if test=" noAssureAcctTradeType  != null and noAssureAcctTradeType   != ''">
+				and instr(NO_ASSURE_ACCT_TRADE_TYPE  ,#{noAssureAcctTradeType  ,jdbcType=CHAR}) > 0 
+			</if>
+			<if test=" editable  != null and  editable  != ''">
+				and instr(EDITABLE  , #{editable ,jdbcType=CHAR}) > 0 
+			</if>
+		 	 
+		 </where> 
+	 </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_TRADE_TYPE_PARAM
+    where TRADE_TYPE_CODE = #{tradeTypeCode,jdbcType=VARCHAR}
+  </select>
+  <select id="findByTradeTypeCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_TRADE_TYPE_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_TRADE_TYPE_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeParamDto" >
+    insert into TB_BIS_TRADE_TYPE_PARAM (ID, TRADE_TYPE_CODE, TRADE_TYPE_NAME, 
+      BUSINESS_CODE, ASSURE_ACCT_TRADE_TYPE, NO_ASSURE_ACCT_TRADE_TYPE, 
+      EDITABLE)
+    values (#{id,jdbcType=VARCHAR}, #{tradeTypeCode,jdbcType=VARCHAR}, #{tradeTypeName,jdbcType=VARCHAR}, 
+      #{businessCode,jdbcType=VARCHAR}, #{assureAcctTradeType,jdbcType=CHAR}, #{noAssureAcctTradeType,jdbcType=CHAR}, 
+      #{editable,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeParamDto" >
+    insert into TB_BIS_TRADE_TYPE_PARAM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="tradeTypeCode != null" >
+        TRADE_TYPE_CODE,
+      </if>
+      <if test="tradeTypeName != null" >
+        TRADE_TYPE_NAME,
+      </if>
+      <if test="businessCode != null" >
+        BUSINESS_CODE,
+      </if>
+      <if test="assureAcctTradeType != null" >
+        ASSURE_ACCT_TRADE_TYPE,
+      </if>
+      <if test="noAssureAcctTradeType != null" >
+        NO_ASSURE_ACCT_TRADE_TYPE,
+      </if>
+      <if test="editable != null" >
+        EDITABLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTypeCode != null" >
+        #{tradeTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTypeName != null" >
+        #{tradeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="assureAcctTradeType != null" >
+        #{assureAcctTradeType,jdbcType=CHAR},
+      </if>
+      <if test="noAssureAcctTradeType != null" >
+        #{noAssureAcctTradeType,jdbcType=CHAR},
+      </if>
+      <if test="editable != null" >
+        #{editable,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeParamDto" >
+    update TB_BIS_TRADE_TYPE_PARAM
+    <set >
+      <if test="tradeTypeCode != null" >
+        TRADE_TYPE_CODE = #{tradeTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTypeName != null" >
+        TRADE_TYPE_NAME = #{tradeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="assureAcctTradeType != null" >
+        ASSURE_ACCT_TRADE_TYPE = #{assureAcctTradeType,jdbcType=CHAR},
+      </if>
+      <if test="noAssureAcctTradeType != null" >
+        NO_ASSURE_ACCT_TRADE_TYPE = #{noAssureAcctTradeType,jdbcType=CHAR},
+      </if>
+      <if test="editable != null" >
+        EDITABLE = #{editable,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTradeTypeParamDto" >
+    update TB_BIS_TRADE_TYPE_PARAM
+    set TRADE_TYPE_CODE = #{tradeTypeCode,jdbcType=VARCHAR},
+      TRADE_TYPE_NAME = #{tradeTypeName,jdbcType=VARCHAR},
+      BUSINESS_CODE = #{businessCode,jdbcType=VARCHAR},
+      ASSURE_ACCT_TRADE_TYPE = #{assureAcctTradeType,jdbcType=CHAR},
+      NO_ASSURE_ACCT_TRADE_TYPE = #{noAssureAcctTradeType,jdbcType=CHAR},
+      EDITABLE = #{editable,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

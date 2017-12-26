@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsPortalAccountAduitDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalAccountAduitDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_SOURCE" property="busiSource" jdbcType="CHAR" />
+    <result column="LOGIN_ID" property="loginId" jdbcType="VARCHAR" />
+    <result column="ADUIT_ID" property="aduitId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_SOURCE, LOGIN_ID, ADUIT_ID, STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_PORTAL_ACCOUNT_ADUIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByAduitId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	 select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_PORTAL_ACCOUNT_ADUIT
+    where ADUIT_ID = #{aduitId,jdbcType=VARCHAR} 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_PORTAL_ACCOUNT_ADUIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalAccountAduitDto" >
+    insert into TB_MRS_PORTAL_ACCOUNT_ADUIT (ID, BUSI_SOURCE, LOGIN_ID, 
+      ADUIT_ID, STATUS, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{busiSource,jdbcType=CHAR}, #{loginId,jdbcType=VARCHAR}, 
+      #{aduitId,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalAccountAduitDto" >
+    insert into TB_MRS_PORTAL_ACCOUNT_ADUIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiSource != null" >
+        BUSI_SOURCE,
+      </if>
+      <if test="loginId != null" >
+        LOGIN_ID,
+      </if>
+      <if test="aduitId != null" >
+        ADUIT_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiSource != null" >
+        #{busiSource,jdbcType=CHAR},
+      </if>
+      <if test="loginId != null" >
+        #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitId != null" >
+        #{aduitId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalAccountAduitDto" >
+    update TB_MRS_PORTAL_ACCOUNT_ADUIT
+    <set >
+      <if test="busiSource != null and busiSource !=''" >
+        BUSI_SOURCE = #{busiSource,jdbcType=CHAR},
+      </if>
+      <if test="loginId != null and loginId !=''" >
+        LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitId != null and aduitId !=''" >
+        ADUIT_ID = #{aduitId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null and status !=''" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null and createTime !=''" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime !=''" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalAccountAduitDto" >
+    update TB_MRS_PORTAL_ACCOUNT_ADUIT
+    set BUSI_SOURCE = #{busiSource,jdbcType=CHAR},
+      LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+      ADUIT_ID = #{aduitId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

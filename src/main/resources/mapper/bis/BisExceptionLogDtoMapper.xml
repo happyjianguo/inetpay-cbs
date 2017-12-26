@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisExceptionLogDtoMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisExceptionLogDto">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="SYSTEM" jdbcType="CHAR" property="system" />
+    <result column="NLEVEL" jdbcType="CHAR" property="nlevel" />
+    <result column="TYPE" jdbcType="CHAR" property="type" />
+    <result column="CONTENT" jdbcType="VARCHAR" property="content" />
+    <result column="ALLPATH" jdbcType="VARCHAR" property="allpath" />
+    <result column="REQUINFO" jdbcType="VARCHAR" property="requinfo" />
+    <result column="RESPINFO" jdbcType="VARCHAR" property="respinfo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="TRAN_NO" jdbcType="VARCHAR" property="tranNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, SYSTEM, NLEVEL, TYPE, CONTENT, ALLPATH, REQUINFO, RESPINFO, CREATE_TIME,TRAN_NO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EXCEPTION_LOG
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TB_BIS_EXCEPTION_LOG
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisExceptionLogDto">
+    insert into TB_BIS_EXCEPTION_LOG (ID, SYSTEM, NLEVEL, 
+      TYPE, CONTENT, ALLPATH, 
+      REQUINFO, RESPINFO, CREATE_TIME,TRAN_NO
+      )
+    values (#{id,jdbcType=VARCHAR}, #{system,jdbcType=CHAR}, #{nlevel,jdbcType=CHAR}, 
+      #{type,jdbcType=CHAR}, #{content,jdbcType=VARCHAR}, #{allpath,jdbcType=VARCHAR}, 
+      #{requinfo,jdbcType=VARCHAR}, #{respinfo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{tranNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisExceptionLogDto">
+    insert into TB_BIS_EXCEPTION_LOG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="system != null">
+        SYSTEM,
+      </if>
+      <if test="nlevel != null">
+        NLEVEL,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+      <if test="allpath != null">
+        ALLPATH,
+      </if>
+      <if test="requinfo != null">
+        REQUINFO,
+      </if>
+      <if test="respinfo != null">
+        RESPINFO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+       <if test="tranNo != null">
+        TRAN_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null">
+        #{system,jdbcType=CHAR},
+      </if>
+      <if test="nlevel != null">
+        #{nlevel,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="allpath != null">
+        #{allpath,jdbcType=VARCHAR},
+      </if>
+      <if test="requinfo != null">
+        #{requinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="respinfo != null">
+        #{respinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tranNo != null">
+        #{tranNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisExceptionLogDto">
+    update TB_BIS_EXCEPTION_LOG
+    <set>
+      <if test="system != null">
+        SYSTEM = #{system,jdbcType=CHAR},
+      </if>
+      <if test="nlevel != null">
+        NLEVEL = #{nlevel,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=CHAR},
+      </if>
+      <if test="content != null">
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="allpath != null">
+        ALLPATH = #{allpath,jdbcType=VARCHAR},
+      </if>
+      <if test="requinfo != null">
+        REQUINFO = #{requinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="respinfo != null">
+        RESPINFO = #{respinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tranNo != null">
+        tranNo = #{tranNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisExceptionLogDto">
+    update TB_BIS_EXCEPTION_LOG
+    set SYSTEM = #{system,jdbcType=CHAR},
+      NLEVEL = #{nlevel,jdbcType=CHAR},
+      TYPE = #{type,jdbcType=CHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      ALLPATH = #{allpath,jdbcType=VARCHAR},
+      REQUINFO = #{requinfo,jdbcType=VARCHAR},
+      RESPINFO = #{respinfo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      TRAN_NO = #{tranNo,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateSendStatusById">
+    update TB_BIS_EXCEPTION_LOG
+    set IS_SEND = #{sendStatus,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+   <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisExceptionLogDto" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EXCEPTION_LOG
+    <where>
+    <if test="system != null and system !=''">
+      and  SYSTEM = #{system,jdbcType=CHAR}
+      </if>
+      <if test="nlevel != null and nlevel !=''">
+      and  NLEVEL = #{nlevel.value,jdbcType=CHAR}
+      </if>
+      <if test="type != null and type !=''">
+      and  TYPE = #{type.value,jdbcType=CHAR}
+      </if>
+      <if test="content != null and content !=''">
+      and  instr(CONTENT,#{content,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="allpath != null and allpath !=''">
+      and  ALLPATH = #{allpath,jdbcType=VARCHAR}
+      </if>
+      <if test="requinfo != null and requinfo !=''">
+      and  REQUINFO = #{requinfo,jdbcType=VARCHAR}
+      </if>
+      <if test="respinfo != null and respinfo !=''">
+      and  RESPINFO = #{respinfo,jdbcType=VARCHAR}
+      </if>
+      <if test="startCreateTime != null">
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="endCreateTime != null">
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="tranNo != null and tranNo !=''">
+      and  TRAN_NO = #{tranNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by CREATE_TIME DESC
+  </select>
+  <select id="findAbleSendExceptionLog" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_EXCEPTION_LOG
+    where NLEVEL = #{nlevel.value,jdbcType=CHAR} and IS_SEND is null
+  </select>
+</mapper>

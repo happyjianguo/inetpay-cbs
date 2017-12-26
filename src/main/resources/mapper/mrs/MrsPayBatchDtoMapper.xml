@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsPayBatchDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayBatchDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" />
+    <result column="MER_ORDER_DATE" property="merOrderDate" jdbcType="CHAR" />
+    <result column="MER_CODE" property="merCode" jdbcType="VARCHAR" />
+    <result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_CODE" property="productCode" jdbcType="CHAR" />
+    <result column="TOTAL_NUM" property="totalNum" jdbcType="DECIMAL" />
+    <result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="SUCCESS_NUM" property="successNum" jdbcType="DECIMAL" />
+    <result column="FAIL_NUM" property="failNum" jdbcType="DECIMAL" />
+    <result column="FAIL_AMOUNT" property="failAmount" jdbcType="DECIMAL" />
+    <result column="SUCCESS_AMOUNT" property="successAmount" jdbcType="DECIMAL" />
+    <result column="NOTIFY_URL" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+    <result column="ADUIT_STATUS" property="aduitStatus" jdbcType="CHAR" />
+    <result column="ADUIT_REMARK" property="aduitRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ERROR_CODE" property="errorCode" jdbcType="VARCHAR" />
+    <result column="ERROR_REMARK" property="errorRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_NO" property="createUserNo" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR" />
+    <result column="ADUIT_USER_ID" property="auditUserId" jdbcType="VARCHAR" />
+    <result column="ADUIT_USER_NAME" property="auditUserName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BATCH_NO, MER_ORDER_DATE, MER_CODE, MER_NAME, PRODUCT_CODE, TOTAL_NUM, TOTAL_AMOUNT, 
+    SUCCESS_NUM, FAIL_NUM, FAIL_AMOUNT, SUCCESS_AMOUNT, NOTIFY_URL, FILE_NAME, ADUIT_STATUS, 
+    ADUIT_REMARK, CREATE_TIME, REMARK, UPDATE_TIME, ERROR_CODE, ERROR_REMARK,
+    CREATE_USER_NO,CREATE_USER_NAME,ADUIT_USER_ID,ADUIT_USER_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_PAY_BATCH
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_PAY_BATCH
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayBatchDto" >
+    insert into TB_MRS_PAY_BATCH (ID, BATCH_NO, MER_ORDER_DATE, 
+      MER_CODE, MER_NAME, PRODUCT_CODE, 
+      TOTAL_NUM, TOTAL_AMOUNT, SUCCESS_NUM, 
+      FAIL_NUM, FAIL_AMOUNT, SUCCESS_AMOUNT, 
+      NOTIFY_URL, FILE_NAME, ADUIT_STATUS, 
+      ADUIT_REMARK, CREATE_TIME, REMARK, 
+      UPDATE_TIME, ERROR_CODE, ERROR_REMARK,
+      CREATE_USER_NO,CREATE_USER_NAME,ADUIT_USER_ID,ADUIT_USER_NAME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{merOrderDate,jdbcType=CHAR}, 
+      #{merCode,jdbcType=VARCHAR}, #{merName,jdbcType=VARCHAR}, #{productCode,jdbcType=CHAR}, 
+      #{totalNum,jdbcType=DECIMAL}, #{totalAmount,jdbcType=DECIMAL}, #{successNum,jdbcType=DECIMAL}, 
+      #{failNum,jdbcType=DECIMAL}, #{failAmount,jdbcType=DECIMAL}, #{successAmount,jdbcType=DECIMAL}, 
+      #{notifyUrl,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{aduitStatus,jdbcType=CHAR}, 
+      #{aduitRemark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{errorCode,jdbcType=VARCHAR}, #{errorRemark,jdbcType=VARCHAR},
+      #{createUserNo,jdbcType=VARCHAR},#{createUserName,jdbcType=VARCHAR},
+      #{auditUserId,jdbcType=VARCHAR},#{auditUserName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayBatchDto" >
+    insert into TB_MRS_PAY_BATCH
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="batchNo != null" >
+        BATCH_NO,
+      </if>
+      <if test="merOrderDate != null" >
+        MER_ORDER_DATE,
+      </if>
+      <if test="merCode != null" >
+        MER_CODE,
+      </if>
+      <if test="merName != null" >
+        MER_NAME,
+      </if>
+      <if test="productCode != null" >
+        PRODUCT_CODE,
+      </if>
+      <if test="totalNum != null" >
+        TOTAL_NUM,
+      </if>
+      <if test="totalAmount != null" >
+        TOTAL_AMOUNT,
+      </if>
+      <if test="successNum != null" >
+        SUCCESS_NUM,
+      </if>
+      <if test="failNum != null" >
+        FAIL_NUM,
+      </if>
+      <if test="failAmount != null" >
+        FAIL_AMOUNT,
+      </if>
+      <if test="successAmount != null" >
+        SUCCESS_AMOUNT,
+      </if>
+      <if test="notifyUrl != null" >
+        NOTIFY_URL,
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME,
+      </if>
+      <if test="aduitStatus != null" >
+        ADUIT_STATUS,
+      </if>
+      <if test="aduitRemark != null" >
+        ADUIT_REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="errorCode != null" >
+        ERROR_CODE,
+      </if>
+      <if test="errorRemark != null" >
+        ERROR_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merOrderDate != null" >
+        #{merOrderDate,jdbcType=CHAR},
+      </if>
+      <if test="merCode != null" >
+        #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merName != null" >
+        #{merName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=CHAR},
+      </if>
+      <if test="totalNum != null" >
+        #{totalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="successNum != null" >
+        #{successNum,jdbcType=DECIMAL},
+      </if>
+      <if test="failNum != null" >
+        #{failNum,jdbcType=DECIMAL},
+      </if>
+      <if test="failAmount != null" >
+        #{failAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="successAmount != null" >
+        #{successAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitStatus != null" >
+        #{aduitStatus,jdbcType=CHAR},
+      </if>
+      <if test="aduitRemark != null" >
+        #{aduitRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="errorCode != null" >
+        #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRemark != null" >
+        #{errorRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayBatchDto" >
+    update TB_MRS_PAY_BATCH
+    <set >
+      <if test="batchNo != null" >
+        BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merOrderDate != null" >
+        MER_ORDER_DATE = #{merOrderDate,jdbcType=CHAR},
+      </if>
+      <if test="merCode != null" >
+        MER_CODE = #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merName != null" >
+        MER_NAME = #{merName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        PRODUCT_CODE = #{productCode,jdbcType=CHAR},
+      </if>
+      <if test="totalNum != null" >
+        TOTAL_NUM = #{totalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        TOTAL_AMOUNT = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="successNum != null" >
+        SUCCESS_NUM = #{successNum,jdbcType=DECIMAL},
+      </if>
+      <if test="failNum != null" >
+        FAIL_NUM = #{failNum,jdbcType=DECIMAL},
+      </if>
+      <if test="failAmount != null" >
+        FAIL_AMOUNT = #{failAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="successAmount != null" >
+        SUCCESS_AMOUNT = #{successAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="notifyUrl != null" >
+        NOTIFY_URL = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitStatus != null" >
+        ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR},
+      </if>
+      <if test="aduitRemark != null" >
+        ADUIT_REMARK = #{aduitRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="errorCode != null" >
+        ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="createUserNo != null" >
+        CREATE_USER_NO = #{createUserNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null" >
+        CREATE_USER_NAME = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserId != null" >
+        ADUIT_USER_ID = #{auditUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName != null" >
+        ADUIT_USER_NAME = #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayBatchDto" >
+    update TB_MRS_PAY_BATCH
+    set BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      MER_ORDER_DATE = #{merOrderDate,jdbcType=CHAR},
+      MER_CODE = #{merCode,jdbcType=VARCHAR},
+      MER_NAME = #{merName,jdbcType=VARCHAR},
+      PRODUCT_CODE = #{productCode,jdbcType=CHAR},
+      TOTAL_NUM = #{totalNum,jdbcType=DECIMAL},
+      TOTAL_AMOUNT = #{totalAmount,jdbcType=DECIMAL},
+      SUCCESS_NUM = #{successNum,jdbcType=DECIMAL},
+      FAIL_NUM = #{failNum,jdbcType=DECIMAL},
+      FAIL_AMOUNT = #{failAmount,jdbcType=DECIMAL},
+      SUCCESS_AMOUNT = #{successAmount,jdbcType=DECIMAL},
+      NOTIFY_URL = #{notifyUrl,jdbcType=VARCHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR},
+      ADUIT_REMARK = #{aduitRemark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      ERROR_REMARK = #{errorRemark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayBatchDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_PAY_BATCH
+		where 1=1
+		     and ADUIT_STATUS IS NULL
+		<if test="batchNo != null and batchNo != ''">
+			and INSTR(BATCH_NO,#{batchNo,jdbcType=VARCHAR}) > 0 
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and INSTR(MER_CODE,#{merCode,jdbcType=VARCHAR}) > 0 
+		</if>
+		 <if test="aduitStatus != null and aduitStatus != ''">
+       		 and ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR}
+     	 </if>
+		<if test="totalNum != null and totalNum != ''">
+			and TOTAL_NUM<![CDATA[   =  ]]>#{totalNum}
+		</if>
+		<if test="startTotalNum != null and startTotalNum != ''">
+			and TOTAL_NUM<![CDATA[   >=  ]]>#{startTotalNum}
+		</if>
+		<if test="endTotalNum != null and endTotalNum != ''">
+			and TOTAL_NUM<![CDATA[   <=  ]]>#{endTotalNum}
+		</if>
+		
+		<if test="totalAmount != null and totalAmount != ''">
+			and TOTAL_AMOUNT<![CDATA[   =  ]]>#{totalAmount}
+		</if>
+		<if test="startTotalAmount != null and startTotalAmount != ''">
+			and TOTAL_AMOUNT<![CDATA[   >=  ]]>#{startTotalAmount}
+		</if>
+		<if test="endTotalAmount != null and endTotalAmount != ''">
+			and TOTAL_AMOUNT<![CDATA[   <=  ]]>#{endTotalAmount}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+  
+  <select id="queryAllDataAudit" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayBatchDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_PAY_BATCH
+		where 1=1
+		<if test="batchNo != null and batchNo != ''">
+			and INSTR(BATCH_NO,#{batchNo,jdbcType=VARCHAR}) > 0 
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and INSTR(MER_CODE,#{merCode,jdbcType=VARCHAR}) > 0 
+		</if>
+		<if test="aduitStatus == null or aduitStatus == ''">
+       		 and ADUIT_STATUS IS NOT NULL
+     	 </if>
+		 <if test="aduitStatus != null and aduitStatus != ''">
+       		 and ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR}
+     	 </if>
+     	 
+		<if test="totalNum != null and totalNum != ''">
+			and TOTAL_NUM<![CDATA[   =  ]]>#{totalNum}
+		</if>
+		<if test="startTotalNum != null and startTotalNum != ''">
+			and TOTAL_NUM<![CDATA[   >=  ]]>#{startTotalNum}
+		</if>
+		<if test="endTotalNum != null and endTotalNum != ''">
+			and TOTAL_NUM<![CDATA[   <=  ]]>#{endTotalNum}
+		</if>
+		
+		<if test="totalAmount != null and totalAmount != ''">
+			and TOTAL_AMOUNT<![CDATA[   =  ]]>#{totalAmount}
+		</if>
+		<if test="startTotalAmount != null and startTotalAmount != ''">
+			and TOTAL_AMOUNT<![CDATA[   >=  ]]>#{startTotalAmount}
+		</if>
+		<if test="endTotalAmount != null and endTotalAmount != ''">
+			and TOTAL_AMOUNT<![CDATA[   <=  ]]>#{endTotalAmount}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+  
+</mapper>

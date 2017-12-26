@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsAduitAttachmentDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitAttachmentDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ADUIT_CONTENT_ID" property="aduitContentId" jdbcType="VARCHAR" />
+    <result column="STORAGE_PATH" property="storagePath" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="SUFFIX" property="suffix" jdbcType="VARCHAR" />
+    <result column="FILE_SIZE" property="fileSize" jdbcType="DECIMAL" />
+    <result column="CONTENT_TYPE" property="contentType" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CATALOG" property="catalog" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CERT_TYPE" property="certType" jdbcType="CHAR" />
+    <result column="CERT_NO" property="certNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ADUIT_CONTENT_ID, STORAGE_PATH, NAME, SUFFIX, FILE_SIZE, CONTENT_TYPE, STATUS, 
+    CATALOG, REMARK, CREATE_TIME, CERT_TYPE, CERT_NO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ADUIT_ATTACHMENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findMrsAduitAttachmentDtoByAduitId" resultType="java.lang.String" parameterType="java.lang.String">
+  	select CERT_TYPE from TB_MRS_ADUIT_ATTACHMENT where ADUIT_CONTENT_ID = #{aduitId,jdbcType=VARCHAR} group by CERT_TYPE
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_ADUIT_ATTACHMENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitAttachmentDto" >
+    insert into TB_MRS_ADUIT_ATTACHMENT (ID, ADUIT_CONTENT_ID, STORAGE_PATH, 
+      NAME, SUFFIX, FILE_SIZE, 
+      CONTENT_TYPE, STATUS, CATALOG, 
+      REMARK, CREATE_TIME, CERT_TYPE, 
+      CERT_NO)
+    values (#{id,jdbcType=VARCHAR}, #{aduitContentId,jdbcType=VARCHAR}, #{storagePath,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{suffix,jdbcType=VARCHAR}, #{fileSize,jdbcType=DECIMAL}, 
+      #{contentType,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{catalog,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{certType,jdbcType=CHAR}, 
+      #{certNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitAttachmentDto" >
+    insert into TB_MRS_ADUIT_ATTACHMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="aduitContentId != null" >
+        ADUIT_CONTENT_ID,
+      </if>
+      <if test="storagePath != null" >
+        STORAGE_PATH,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="suffix != null" >
+        SUFFIX,
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE,
+      </if>
+      <if test="contentType != null" >
+        CONTENT_TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="catalog != null" >
+        CATALOG,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="certType != null" >
+        CERT_TYPE,
+      </if>
+      <if test="certNo != null" >
+        CERT_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitContentId != null" >
+        #{aduitContentId,jdbcType=VARCHAR},
+      </if>
+      <if test="storagePath != null" >
+        #{storagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null" >
+        #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        #{fileSize,jdbcType=DECIMAL},
+      </if>
+      <if test="contentType != null" >
+        #{contentType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="catalog != null" >
+        #{catalog,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certType != null" >
+        #{certType,jdbcType=CHAR},
+      </if>
+      <if test="certNo != null" >
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- 批量插入审核人信息 -->
+  <insert id="batchInsert">
+    insert into TB_MRS_ADUIT_ATTACHMENT (ID, ADUIT_CONTENT_ID, STORAGE_PATH, 
+      NAME, SUFFIX, FILE_SIZE, 
+      CONTENT_TYPE, STATUS, CATALOG, 
+      REMARK, CREATE_TIME, CERT_TYPE, 
+      CERT_NO)
+    <foreach collection="aduitAttachmentList" index="index" item="item" separator="union all">
+		select #{item.id,jdbcType=VARCHAR}, 
+		#{item.aduitContentId,jdbcType=VARCHAR}, 
+		#{item.storagePath,jdbcType=VARCHAR}, 
+       	#{item.name,jdbcType=VARCHAR},
+       	#{item.suffix,jdbcType=VARCHAR},
+        #{item.fileSize,jdbcType=DECIMAL}, 
+      	#{item.contentType,jdbcType=VARCHAR},
+      	#{item.status,jdbcType=CHAR},
+       	#{item.catalog,jdbcType=VARCHAR}, 
+      	#{item.remark,jdbcType=VARCHAR},
+       	#{item.createTime,jdbcType=TIMESTAMP},
+        #{item.certType,jdbcType=CHAR}, 
+      	#{item.certNo,jdbcType=VARCHAR} from dual
+	</foreach>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitAttachmentDto" >
+    update TB_MRS_ADUIT_ATTACHMENT
+    <set >
+      <if test="aduitContentId != null" >
+        ADUIT_CONTENT_ID = #{aduitContentId,jdbcType=VARCHAR},
+      </if>
+      <if test="storagePath != null" >
+        STORAGE_PATH = #{storagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null" >
+        SUFFIX = #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE = #{fileSize,jdbcType=DECIMAL},
+      </if>
+      <if test="contentType != null" >
+        CONTENT_TYPE = #{contentType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="catalog != null" >
+        CATALOG = #{catalog,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certType != null" >
+        CERT_TYPE = #{certType,jdbcType=CHAR},
+      </if>
+      <if test="certNo != null" >
+        CERT_NO = #{certNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitAttachmentDto" >
+    update TB_MRS_ADUIT_ATTACHMENT
+    set ADUIT_CONTENT_ID = #{aduitContentId,jdbcType=VARCHAR},
+      STORAGE_PATH = #{storagePath,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      SUFFIX = #{suffix,jdbcType=VARCHAR},
+      FILE_SIZE = #{fileSize,jdbcType=DECIMAL},
+      CONTENT_TYPE = #{contentType,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CATALOG = #{catalog,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CERT_TYPE = #{certType,jdbcType=CHAR},
+      CERT_NO = #{certNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

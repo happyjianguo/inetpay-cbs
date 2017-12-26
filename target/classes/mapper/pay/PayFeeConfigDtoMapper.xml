@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayFeeConfigDtoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ylink.inetpay.common.project.pay.dto.PayFeeConfigDto">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="FEE_CODE" property="feeCode" jdbcType="CHAR" />
+		<result column="WEIGHT_VALUE" property="weightValue" jdbcType="DECIMAL" />
+		<result column="MER_CODE" property="merCode" jdbcType="VARCHAR" />
+		<result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+		<result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+		<result column="SETTLE_CYCLE" property="settleCycle" jdbcType="CHAR" />
+		<result column="SETTLE_DATE" property="settleDate" jdbcType="DECIMAL" />
+		<result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+		<result column="FEE_VALUE" property="feeValue" jdbcType="DECIMAL" />
+		<result column="BASE_VALUE" property="baseValue" jdbcType="DECIMAL" />
+		<result column="CAP_VALUE" property="capValue" jdbcType="DECIMAL" />
+		<result column="EFFECTIVE_DATE" property="effectiveDate"
+			jdbcType="VARCHAR" />
+		<result column="FEE_STATE" property="feeState" jdbcType="CHAR" />
+		<result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+		<result column="MODIFY_TIME" property="modifyTime" jdbcType="DATE" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<!-- 新加字段 -->
+		<result column="CYCLE_VALUE" property="cycleValue" jdbcType="DECIMAL" />
+		<result column="TN_MODE" property="tnMode" jdbcType="CHAR" />
+		<result column="SETTLE_DAY_TYPE" property="settleDayType" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, FEE_CODE, WEIGHT_VALUE, MER_CODE, MER_NAME, BUSI_TYPE,
+		SETTLE_CYCLE,
+		SETTLE_DATE,
+		FEE_TYPE, FEE_VALUE, BASE_VALUE, CAP_VALUE,
+		EFFECTIVE_DATE, FEE_STATE,
+		MODIFY_USER,
+		MODIFY_TIME, CREATE_USER,
+		CREATE_TIME, REMARK,
+		CYCLE_VALUE,TN_MODE,SETTLE_DAY_TYPE
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tb_pay_fee_config
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		tb_pay_fee_config
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeConfigDto">
+		insert into tb_pay_fee_config (ID, FEE_CODE,
+		WEIGHT_VALUE,
+		MER_CODE, MER_NAME, BUSI_TYPE,
+		SETTLE_CYCLE, SETTLE_DATE,
+		FEE_TYPE,
+		FEE_VALUE, BASE_VALUE, CAP_VALUE,
+		EFFECTIVE_DATE, FEE_STATE,
+		MODIFY_USER,
+		MODIFY_TIME, CREATE_USER, CREATE_TIME,
+		REMARK,CYCLE_VALUE,TN_MODE,SETTLE_DAY_TYPE)
+		values
+		(#{id,jdbcType=VARCHAR}, #{feeCode,jdbcType=CHAR},
+		#{weightValue,jdbcType=DECIMAL},
+		#{merCode,jdbcType=VARCHAR},
+		#{merName,jdbcType=VARCHAR}, #{busiType,jdbcType=CHAR},
+		#{settleCycle,jdbcType=CHAR}, #{settleDate,jdbcType=DECIMAL},
+		#{feeType,jdbcType=CHAR},
+		#{feeValue,jdbcType=DECIMAL},
+		#{baseValue,jdbcType=DECIMAL}, #{capValue,jdbcType=DECIMAL},
+		#{effectiveDate,jdbcType=VARCHAR}, #{feeState,jdbcType=CHAR},
+		#{modifyUser,jdbcType=VARCHAR},
+		#{modifyTime,jdbcType=DATE},
+		#{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE},
+		#{remark,jdbcType=VARCHAR},
+		#{cycleValue,jdbcType=DECIMAL},
+		#{tnMode,jdbcType=CHAR},
+		#{settleDayType,jdbcType=DECIMAL})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeConfigDto">
+		insert into tb_pay_fee_config
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="feeCode != null">
+				FEE_CODE,
+			</if>
+			<if test="weightValue != null">
+				WEIGHT_VALUE,
+			</if>
+			<if test="merCode != null">
+				MER_CODE,
+			</if>
+			<if test="merName != null">
+				MER_NAME,
+			</if>
+			<if test="busiType != null">
+				BUSI_TYPE,
+			</if>
+			<if test="settleCycle != null">
+				SETTLE_CYCLE,
+			</if>
+			<if test="settleDate != null">
+				SETTLE_DATE,
+			</if>
+			<if test="feeType != null">
+				FEE_TYPE,
+			</if>
+			<if test="feeValue != null">
+				FEE_VALUE,
+			</if>
+			<if test="baseValue != null">
+				BASE_VALUE,
+			</if>
+			<if test="capValue != null">
+				CAP_VALUE,
+			</if>
+			<if test="effectiveDate != null">
+				EFFECTIVE_DATE,
+			</if>
+			<if test="feeState != null">
+				FEE_STATE,
+			</if>
+			<if test="modifyUser != null">
+				MODIFY_USER,
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME,
+			</if>
+			<if test="createUser != null">
+				CREATE_USER,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+
+			<if test="cycleValue != null">
+				CYCLE_VALUE,
+			</if>
+			<if test="tnMode != null">
+				TN_MODE,
+			</if>
+			<if test="settleDayType != null">
+				SETTLE_DAY_TYPE,
+			</if>
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="feeCode != null">
+				#{feeCode,jdbcType=CHAR},
+			</if>
+			<if test="weightValue != null">
+				#{weightValue,jdbcType=DECIMAL},
+			</if>
+			<if test="merCode != null">
+				#{merCode,jdbcType=VARCHAR},
+			</if>
+			<if test="merName != null">
+				#{merName,jdbcType=VARCHAR},
+			</if>
+			<if test="busiType != null">
+				#{busiType,jdbcType=CHAR},
+			</if>
+			<if test="settleCycle != null">
+				#{settleCycle,jdbcType=CHAR},
+			</if>
+			<if test="settleDate != null">
+				#{settleDate,jdbcType=DECIMAL},
+			</if>
+			<if test="feeType != null">
+				#{feeType,jdbcType=CHAR},
+			</if>
+			<if test="feeValue != null">
+				#{feeValue,jdbcType=DECIMAL},
+			</if>
+			<if test="baseValue != null">
+				#{baseValue,jdbcType=DECIMAL},
+			</if>
+			<if test="capValue != null">
+				#{capValue,jdbcType=DECIMAL},
+			</if>
+			<if test="effectiveDate != null">
+				#{effectiveDate,jdbcType=VARCHAR},
+			</if>
+			<if test="feeState != null">
+				#{feeState,jdbcType=CHAR},
+			</if>
+			<if test="modifyUser != null">
+				#{modifyUser,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=DATE},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		
+			<if test="cycleValue != null">
+				#{cycleValue,jdbcType=DECIMAL},
+			</if>
+			<if test="tnMode != null">
+				#{tnMode,jdbcType=CHAR},
+			</if>
+			<if test="settleDayType != null">
+				#{settleDayType,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeConfigDto">
+		update tb_pay_fee_config
+		<set>
+			<if test="feeCode != null">
+				FEE_CODE = #{feeCode,jdbcType=CHAR},
+			</if>
+			<if test="weightValue != null">
+				WEIGHT_VALUE = #{weightValue,jdbcType=DECIMAL},
+			</if>
+			<if test="merCode != null">
+				MER_CODE = #{merCode,jdbcType=VARCHAR},
+			</if>
+			<if test="merName != null">
+				MER_NAME = #{merName,jdbcType=VARCHAR},
+			</if>
+			<if test="busiType != null">
+				BUSI_TYPE = #{busiType,jdbcType=CHAR},
+			</if>
+			<if test="settleCycle != null">
+				SETTLE_CYCLE = #{settleCycle,jdbcType=CHAR},
+			</if>
+			<if test="settleDate != null">
+				SETTLE_DATE = #{settleDate,jdbcType=DECIMAL},
+			</if>
+			<if test="feeType != null">
+				FEE_TYPE = #{feeType,jdbcType=CHAR},
+			</if>
+			<if test="feeValue != null">
+				FEE_VALUE = #{feeValue,jdbcType=DECIMAL},
+			</if>
+			<if test="baseValue != null">
+				BASE_VALUE = #{baseValue,jdbcType=DECIMAL},
+			</if>
+			<if test="capValue != null">
+				CAP_VALUE = #{capValue,jdbcType=DECIMAL},
+			</if>
+			<if test="effectiveDate != null">
+				EFFECTIVE_DATE = #{effectiveDate,jdbcType=VARCHAR},
+			</if>
+			<if test="feeState != null">
+				FEE_STATE = #{feeState,jdbcType=CHAR},
+			</if>
+			<if test="modifyUser != null">
+				MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=DATE},
+			</if>
+			<if test="createUser != null">
+				CREATE_USER = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="cycleValue != null">
+				CYCLE_VALUE = #{cycleValue,jdbcType=DECIMAL},
+			</if>
+			<if test="tnMode != null">
+				TN_MODE = #{tnMode,jdbcType=CHAR},
+			</if>
+			<if test="settleDayType != null">
+				SETTLE_DAY_TYPE = #{settleDayType,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeConfigDto">
+		update tb_pay_fee_config
+		set FEE_CODE =
+		#{feeCode,jdbcType=CHAR},
+		WEIGHT_VALUE =
+		#{weightValue,jdbcType=DECIMAL},
+		MER_CODE =
+		#{merCode,jdbcType=VARCHAR},
+		MER_NAME = #{merName,jdbcType=VARCHAR},
+		BUSI_TYPE = #{busiType,jdbcType=CHAR},
+		SETTLE_CYCLE =
+		#{settleCycle,jdbcType=CHAR},
+		SETTLE_DATE =
+		#{settleDate,jdbcType=DECIMAL},
+		FEE_TYPE = #{feeType,jdbcType=CHAR},
+		FEE_VALUE = #{feeValue,jdbcType=DECIMAL},
+		BASE_VALUE =
+		#{baseValue,jdbcType=DECIMAL},
+		CAP_VALUE =
+		#{capValue,jdbcType=DECIMAL},
+		EFFECTIVE_DATE =
+		#{effectiveDate,jdbcType=VARCHAR},
+		FEE_STATE =
+		#{feeState,jdbcType=CHAR},
+		MODIFY_USER =
+		#{modifyUser,jdbcType=VARCHAR},
+		MODIFY_TIME =
+		#{modifyTime,jdbcType=DATE},
+		CREATE_USER =
+		#{createUser,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=DATE},
+		REMARK = #{remark,jdbcType=VARCHAR},
+		CYCLE_VALUE=
+		#{cycleValue,jdbcType=DECIMAL},
+		TN_MODE=
+		#{tnMode,jdbcType=CHAR},
+		SETTLE_DAY_TYPE=
+		#{settleDayType,jdbcType=DECIMAL}
+		where
+		ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="findFeeConfig" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		tb_pay_fee_config
+		WHERE
+		<if test="merCode != null">
+			MER_CODE =#{merCode,jdbcType=VARCHAR}
+		</if>
+		<if test="busiType != null">
+			AND BUSI_TYPE =#{busiType,jdbcType=CHAR}
+		</if>
+		<if test="effectiveDate != null">
+			AND EFFECTIVE_DATE =#{effectiveDate,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="editAjaxcheck" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		tb_pay_fee_config
+		WHERE
+		<if test="merCode != null">
+			MER_CODE =#{merCode,jdbcType=VARCHAR}
+		</if>
+		<if test="busiType != null">
+			AND BUSI_TYPE =#{busiType,jdbcType=CHAR}
+		</if>
+		<if test="effectiveDate != null">
+			AND EFFECTIVE_DATE =#{effectiveDate,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="findByCondition" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeConfigDto">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		tb_pay_fee_config
+		WHERE 1=1
+		<if test="merName != null and merName !=''">
+			and instr(MER_NAME,#{merName,jdbcType=VARCHAR})>0
+		</if>
+		<if test="startTime != null and startTime !=''">
+			<!--  to_char(EFFECTIVE_DATE,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{queryParam.startTime},'YYYY-MM-DD') -->
+			<!-- and EFFECTIVE_DATE<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD') -->
+			  and to_char(EFFECTIVE_DATE,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime != null and endTime !=''">
+			<!--  to_char(EFFECTIVE_DATE,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{queryParam.endTime},'YYYY-MM-DD') -->
+			 and to_char(EFFECTIVE_DATE,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+		<if test="busiType != null and busiType !=''">
+			and BUSI_TYPE =#{busiType,jdbcType=CHAR}
+		</if>
+		<if test="settleCycle != null and settleCycle !=''">
+			and SETTLE_CYCLE =#{settleCycle,jdbcType=CHAR}
+		</if>
+		<if test="feeType != null and feeType!=''">
+			and FEE_TYPE =#{feeType,jdbcType=CHAR}
+		</if>
+		<if test="feeState != null and feeState !=''">
+			and FEE_STATE =#{feeState,jdbcType=CHAR}
+		</if>
+		ORDER BY EFFECTIVE_DATE DESC
+	</select>
+	
+	<select id="findByStatusPage" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeConfigDto">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		tb_pay_fee_config
+		WHERE 1=1
+		<if test="feeState != null and feeState !=''">
+			and FEE_STATE =#{feeState,jdbcType=CHAR}
+		</if>
+		<if test="effectiveDate != null and effectiveDate !=''">
+			and EFFECTIVE_DATE =to_char(#{effectiveDate,jdbcType=DATE},'YYYY-MM-DD')
+		</if>
+	</select>
+	
+	<select id="queryByMerCodeBusiTypeEffectiveDate" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeConfigDto">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		tb_pay_fee_config
+		<where>
+			<if test="merCode != null and merCode !=''">
+			 AND MER_CODE=#{merCode,jdbcType=VARCHAR}
+			</if>
+			<if test="busiType != null and busiType !=''">
+			AND BUSI_TYPE=#{busiType,jdbcType=CHAR}
+			</if>
+			<if test="feeState != null and feeState !=''">
+			AND FEE_STATE=#{feeState,jdbcType=CHAR}
+			</if>
+			<if test="effectiveDate != null and effectiveDate !=''">
+			AND EFFECTIVE_DATE!=#{effectiveDate,jdbcType=VARCHAR}
+			</if>
+		</where>
+		
+	</select>
+	
+	<select id="getPlatTradeNoSeqNo" parameterType="string" resultType="long">
+ 		select nextVal(#{seqName})
+ 	</select>
+</mapper>

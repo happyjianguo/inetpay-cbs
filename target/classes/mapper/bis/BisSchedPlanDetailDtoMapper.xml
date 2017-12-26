@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisSchedPlanDetailDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedPlanDetailDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PLAN_DETAIL_TYPE" property="planDetailType" jdbcType="VARCHAR" />
+    <result column="PLAN_TYPE" property="planType" jdbcType="VARCHAR" />
+    <result column="PLAN_ID" property="planId" jdbcType="VARCHAR" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="PRE_DETAIL_ID" property="preDetailId" jdbcType="VARCHAR" />
+    <result column="FIRE_TIME" property="fireTime" jdbcType="TIMESTAMP" />
+    <result column="FINISH_TIME" property="finishTime" jdbcType="TIMESTAMP" />
+    <result column="FINISHED" property="finished" jdbcType="CHAR" />
+    <result column="FAILURE_COUNT" property="failureCount" jdbcType="DECIMAL" />
+    <result column="ERR_MSG" property="errMsg" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="BUSI_URL" property="busiUrl" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PLAN_DETAIL_TYPE,PLAN_TYPE, PLAN_ID, GROUP_NAME, PRE_DETAIL_ID, FIRE_TIME, FINISH_TIME, FINISHED, 
+    FAILURE_COUNT, ERR_MSG, CREATE_TIME, DESCRIPTION, BUSI_URL, ACCOUNT_DATE,STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SCHED_PLAN_DETAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_SCHED_PLAN_DETAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedPlanDetailDto" >
+    insert into TB_BIS_SCHED_PLAN_DETAIL (ID, PLAN_DETAIL_TYPE,PLAN_TYPE, PLAN_ID, 
+      GROUP_NAME, PRE_DETAIL_ID, FIRE_TIME, 
+      FINISH_TIME, FINISHED, FAILURE_COUNT, 
+      ERR_MSG, CREATE_TIME, DESCRIPTION, 
+      BUSI_URL, ACCOUNT_DATE,STATUS)
+    values (#{id,jdbcType=VARCHAR}, #{planDetailType,jdbcType=VARCHAR},#{planType,jdbcType=VARCHAR}, #{planId,jdbcType=VARCHAR}, 
+      #{groupName,jdbcType=VARCHAR}, #{preDetailId,jdbcType=VARCHAR}, #{fireTime,jdbcType=TIMESTAMP}, 
+      #{finishTime,jdbcType=TIMESTAMP}, #{finished,jdbcType=CHAR}, #{failureCount,jdbcType=DECIMAL}, 
+      #{errMsg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, 
+      #{busiUrl,jdbcType=VARCHAR}, #{accountDate,jdbcType=CHAR}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedPlanDetailDto" >
+    insert into TB_BIS_SCHED_PLAN_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="planDetailType != null" >
+        PLAN_DETAIL_TYPE,
+      </if>
+      <if test="planType != null" >
+        PLAN_TYPE,
+      </if>
+      <if test="planId != null" >
+        PLAN_ID,
+      </if>
+      <if test="groupName != null" >
+        GROUP_NAME,
+      </if>
+      <if test="preDetailId != null" >
+        PRE_DETAIL_ID,
+      </if>
+      <if test="fireTime != null" >
+        FIRE_TIME,
+      </if>
+      <if test="finishTime != null" >
+        FINISH_TIME,
+      </if>
+      <if test="finished != null" >
+        FINISHED,
+      </if>
+      <if test="failureCount != null" >
+        FAILURE_COUNT,
+      </if>
+      <if test="errMsg != null" >
+        ERR_MSG,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="busiUrl != null" >
+        BUSI_URL,
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="planDetailType != null" >
+        #{planDetailType,jdbcType=VARCHAR},
+      </if>
+      <if test="planType != null" >
+        #{planType,jdbcType=VARCHAR},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="preDetailId != null" >
+        #{preDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="fireTime != null" >
+        #{fireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finished != null" >
+        #{finished,jdbcType=CHAR},
+      </if>
+      <if test="failureCount != null" >
+        #{failureCount,jdbcType=DECIMAL},
+      </if>
+      <if test="errMsg != null" >
+        #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="busiUrl != null" >
+        #{busiUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedPlanDetailDto" >
+    update TB_BIS_SCHED_PLAN_DETAIL
+    <set >
+      <if test="planDetailType != null" >
+        PLAN_DETAIL_TYPE = #{planDetailType,jdbcType=VARCHAR},
+      </if>
+      <if test="planType != null" >
+        PLAN_TYPE = #{planType,jdbcType=VARCHAR},
+      </if>
+      <if test="planId != null" >
+        PLAN_ID = #{planId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="preDetailId != null" >
+        PRE_DETAIL_ID = #{preDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="fireTime != null" >
+        FIRE_TIME = #{fireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finished != null" >
+        FINISHED = #{finished,jdbcType=CHAR},
+      </if>
+      <if test="failureCount != null" >
+        FAILURE_COUNT = #{failureCount,jdbcType=DECIMAL},
+      </if>
+      <if test="errMsg != null" >
+        ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="busiUrl != null" >
+        BUSI_URL = #{busiUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedPlanDetailDto" >
+    update TB_BIS_SCHED_PLAN_DETAIL
+    set PLAN_DETAIL_TYPE = #{planDetailType,jdbcType=VARCHAR},
+      PLAN_TYPE = #{planType,jdbcType=VARCHAR},
+      PLAN_ID = #{planId,jdbcType=VARCHAR},
+      GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      PRE_DETAIL_ID = #{preDetailId,jdbcType=VARCHAR},
+      FIRE_TIME = #{fireTime,jdbcType=TIMESTAMP},
+      FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
+      FINISHED = #{finished,jdbcType=CHAR},
+      FAILURE_COUNT = #{failureCount,jdbcType=DECIMAL},
+      ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      BUSI_URL = #{busiUrl,jdbcType=VARCHAR},
+      ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getWithLock" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from TB_BIS_SCHED_PLAN_DETAIL where ID = #{id,jdbcType=VARCHAR} for update 
+  </select>
+  <insert id="saveList" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedPlanDetailDto">
+	insert into TB_BIS_SCHED_PLAN_DETAIL (ID, PLAN_DETAIL_TYPE,PLAN_TYPE, PLAN_ID, GROUP_NAME, PRE_DETAIL_ID, FIRE_TIME, FINISH_TIME, FINISHED, 
+   	 	FAILURE_COUNT, ERR_MSG, CREATE_TIME, DESCRIPTION, BUSI_URL, ACCOUNT_DATE,STATUS) 
+		<foreach collection="jpdList" item="item" index="index" separator="union all">
+			select #{item.id,jdbcType=VARCHAR}, #{item.planDetailType,jdbcType=VARCHAR},#{item.planType,jdbcType=VARCHAR},#{item.planId,jdbcType=VARCHAR},
+				 #{item.groupName,jdbcType=VARCHAR},#{item.preDetailId,jdbcType=VARCHAR},#{item.fireTime,jdbcType=TIMESTAMP},
+				 #{item.finishTime,jdbcType=TIMESTAMP},#{item.finished,jdbcType=CHAR},#{item.failureCount,jdbcType=DECIMAL},
+				 #{item.errMsg,jdbcType=VARCHAR},#{item.createTime,jdbcType=TIMESTAMP},#{item.description,jdbcType=VARCHAR},
+				 #{item.busiUrl,jdbcType=VARCHAR},#{item.accountDate,jdbcType=CHAR},#{item.status,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+  </insert>
+  <select id="listAll" resultMap="BaseResultMap">
+   select * from TB_BIS_SCHED_PLAN_DETAIL 
+  </select>
+  <select id="list" resultMap="BaseResultMap" parameterType="string">
+	select * from TB_BIS_SCHED_PLAN_DETAIL where PLAN_ID = #{jobPlanId,jdbcType=VARCHAR} order by to_number(substr(id,14)) asc
+  </select>  
+  <select id="listRelyOnUnsuccessful" resultMap="BaseResultMap" parameterType="string">
+	select * from TB_BIS_SCHED_PLAN_DETAIL 
+		where 
+		instr(PRE_DETAIL_ID, #{jobDetailId,jdbcType=VARCHAR}) > 0
+		<!-- PRE_DETAIL_ID like concat(concat('%',#{jobDetailId,jdbcType=VARCHAR}),'%') -->  
+		AND STATUS != 'SUCCESS'
+  </select>
+  <update id="updateFireTimeAfterInvoke">
+	UPDATE TB_BIS_SCHED_PLAN_DETAIL set FIRE_TIME=#{fireTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=VARCHAR} and FIRE_TIME IS NULL
+  </update>
+  <update id="updateStatusAfterInvoke">
+	UPDATE TB_BIS_SCHED_PLAN_DETAIL set status = #{newValue,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR} and status not in ('SUCCESS','FAILURE')
+  </update>
+  <select id="countUnSuccessPlanDetails" resultType="long" parameterType="string">
+  	select count(*) from TB_BIS_SCHED_PLAN_DETAIL where PLAN_ID = #{planId,jdbcType=VARCHAR} 
+  		and STATUS != 'SUCCESS'
+  </select>
+  <select id="countUnSuccessPlanDetailsByDetailIds" resultType="long">
+  	select count(*) from TB_BIS_SCHED_PLAN_DETAIL where STATUS != 'SUCCESS' 
+  		and ID in 
+  		<foreach collection="planDetailIdList" item="item" open="(" separator="," close=")">
+  			#{item,jdbcType=VARCHAR}
+  		</foreach>
+  </select>
+</mapper>

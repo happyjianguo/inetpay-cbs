@@ -1,0 +1,23 @@
+FROM reg-mirror.shie.site/shie-base/centos6-tomcat:7
+
+MAINTAINER chenjiangtao@shie.com.cn
+
+ENV PROJ_NAME cbs
+
+RUN mkdir -p /app/shie/${PROJ_NAME}/conf
+
+#ADD conf /app/shie/${PROJ_NAME}/conf
+
+#ENV CLASSPATH=/app/shie/${PROJ_NAME}/config/${ENV_NAME}:/usr/local/jdk/lib/dt.jar:/usr/local/jdk/lib/tools.jar
+
+COPY target/${PROJ_NAME}*.war /app/shie/${PROJ_NAME}/
+
+RUN unzip -d ${CATALINA_HOME}/webapps/${PROJ_NAME} /app/shie/${PROJ_NAME}/${PROJ_NAME}*.war
+
+RUN rm -rf ${CATALINA_HOME}/webapps/${PROJ_NAME}/WEB-INF/lib/comm-conf-0.0.1-SNAPSHOT.jar
+
+RUN mkdir -p ${CATALINA_HOME}/webapps/${PROJ_NAME}/WEB-INF/classes/comm/config
+
+RUN sed -i '2i cp ${CATALINA_HOME}/webapps/${PROJ_NAME}/WEB-INF/classes/config/${ENV_NAME}/*  ${CATALINA_HOME}/webapps/${PROJ_NAME}/WEB-INF/classes/comm/config/' /usr/local/tomcat/bin/catalina.sh
+
+#RUN sed -i '2i cp /app/shie/${PROJ_NAME}/conf/${ENV_NAME}/* ${CATALINA_HOME}/webapps/${PROJ_NAME}/WEB-INF/classes' /usr/local/tomcat/bin/catalina.sh

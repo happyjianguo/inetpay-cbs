@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayTransferDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayTransferDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="CHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="FEE_REMARK" property="feeRemark" jdbcType="VARCHAR" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+    <result column="PAYER_BANK_CUST_NAME" property="payerBankCustName" jdbcType="VARCHAR" />
+    <result column="PAYER_BANK_CARD_NO" property="payerBankCardNo" jdbcType="VARCHAR" />
+    <result column="PAYER_BANK_CARD_TYPE" property="payerBankCardType" jdbcType="CHAR" />
+    <result column="PAYER_BANK_TYPE" property="payerBankType" jdbcType="CHAR" />
+    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_NAME" property="payeeCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_CUST_NAME" property="payeeBankCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_CARD_NO" property="payeeBankCardNo" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_CARD_TYPE" property="payeeBankCardType" jdbcType="CHAR" />
+    <result column="PAYEE_BANK_TYPE" property="payeeBankType" jdbcType="CHAR" />
+    <result column="PAYEE_CHANNEL_NAME" property="payeeChannelName" jdbcType="VARCHAR" />
+    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="TRANSFER_TYPE" property="transferType" jdbcType="CHAR"/>
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="station"  type="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo" >
+		<result column="busiType" property="busiType" jdbcType="CHAR" />
+		<result column="tradeType" property="tradeType" jdbcType="CHAR" />
+		<result column="allCount" property="allCount" jdbcType="CHAR" />
+		<result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+		<result column="successCount" property="succCount" jdbcType="INTEGER" />
+		<result column="successAmt" property="succAmt" jdbcType="DECIMAL" />
+		<result column="failCount" property="failCount" jdbcType="INTEGER" />
+		<result column="failAmt" property="failAmt" jdbcType="DECIMAL" />
+		<result column="rate" property="rate" jdbcType="DOUBLE" />
+		<result column="payerCustId" property="payerCustId" jdbcType="CHAR" />
+		<result column="payerCustName" property="payerCustName" jdbcType="CHAR" />
+		<result column="merCode" property="merCode" jdbcType="CHAR" />
+		<result column="merName" property="merName" jdbcType="CHAR" />
+		<result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+</resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_ID, CUST_ID, CUST_NAME, ACCOUNT_TYPE, ORDER_AMT, FEE, FEE_REMARK, ORDER_STATUS, 
+    PAYER_BANK_CUST_NAME, PAYER_BANK_CARD_NO, PAYER_BANK_CARD_TYPE, PAYER_BANK_TYPE, 
+    PAYEE_CUST_ID, PAYEE_CUST_NAME, PAYEE_BANK_CUST_NAME, PAYEE_BANK_CARD_NO, PAYEE_BANK_CARD_TYPE, 
+    PAYEE_BANK_TYPE, PAYEE_CHANNEL_NAME, TRADE_NAME, REMARK, ACCOUNT_DATE, CREATE_TIME, 
+    COMPLETE_TIME,TRANSFER_TYPE,FAIL_REASON
+  </sql>
+   <resultMap id="ReportResultMap" type="com.ylink.inetpay.common.core.dto.ReporHeadDto" >
+ 	  <result column="allNum" property="allNum" jdbcType="DECIMAL" />
+ 	  <result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+  </resultMap>
+   <select id="reportSumData" resultMap="ReportResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayTransferDto" >
+   		select  count(1) as allNum, nvl(sum(order_amt),0) as allAmt from TB_PAY_TRANSFER 
+		where 1=1
+		<if test="orderStatus != null and orderStatus != ''">
+			and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+		</if>
+		<if test="busiId != null and busiId != ''">
+			and BUSI_ID = #{busiId,jdbcType=CHAR}
+		</if>
+		<if test="custId != null and custId != ''">
+			and CUST_ID = #{custId,jdbcType=VARCHAR}
+		</if>
+		<if test="custName != null and custName != ''">
+			and	instr(CUST_NAME, #{custName}) > 0
+		</if>
+		<if test="orderAmt != null and orderAmt != ''">
+			and ORDER_AMT<![CDATA[   =  ]]>#{orderAmt}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and ORDER_AMT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and ORDER_AMT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+		</if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_TRANSFER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="selectByBusiId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_TRANSFER
+		where BUSI_ID = #{busiId,jdbcType=CHAR}
+	</select>
+	<select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayTransferDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_TRANSFER
+		where 1=1
+		<if test="orderStatus != null and orderStatus != ''">
+			and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+		</if>
+		<if test="busiId != null and busiId != ''">
+			and BUSI_ID = #{busiId,jdbcType=CHAR}
+		</if>
+		<if test="custId != null and custId != ''">
+			and CUST_ID = #{custId,jdbcType=VARCHAR}
+		</if>
+		<if test="custName != null and custName != ''">
+			and	instr(CUST_NAME, #{custName}) > 0
+		</if>
+		<if test="orderAmt != null and orderAmt != ''">
+			and ORDER_AMT<![CDATA[   =  ]]>#{orderAmt}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and ORDER_AMT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and ORDER_AMT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+		</if>
+		<if test="accountDate != null and accountDate != ''">
+			and ACCOUNT_DATE = #{accountDate,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC,BUSI_ID DESC
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_TRANSFER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayTransferDto" >
+    insert into TB_PAY_TRANSFER (ID, BUSI_ID, CUST_ID, 
+      CUST_NAME, ACCOUNT_TYPE, ORDER_AMT, 
+      FEE, FEE_REMARK, ORDER_STATUS, 
+      PAYER_BANK_CUST_NAME, PAYER_BANK_CARD_NO, PAYER_BANK_CARD_TYPE, 
+      PAYER_BANK_TYPE, PAYEE_CUST_ID, PAYEE_CUST_NAME, 
+      PAYEE_BANK_CUST_NAME, PAYEE_BANK_CARD_NO, PAYEE_BANK_CARD_TYPE, 
+      PAYEE_BANK_TYPE, PAYEE_CHANNEL_NAME, TRADE_NAME, 
+      REMARK, ACCOUNT_DATE, CREATE_TIME, 
+      COMPLETE_TIME,TRANSFER_TYPE,FAIL_REASON)
+    values (#{id,jdbcType=VARCHAR}, #{busiId,jdbcType=CHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{custName,jdbcType=VARCHAR}, #{accountType,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL}, 
+      #{fee,jdbcType=DECIMAL}, #{feeRemark,jdbcType=VARCHAR}, #{orderStatus,jdbcType=CHAR}, 
+      #{payerBankCustName,jdbcType=VARCHAR}, #{payerBankCardNo,jdbcType=VARCHAR}, #{payerBankCardType,jdbcType=CHAR}, 
+      #{payerBankType,jdbcType=VARCHAR}, #{payeeCustId,jdbcType=VARCHAR}, #{payeeCustName,jdbcType=VARCHAR}, 
+      #{payeeBankCustName,jdbcType=VARCHAR}, #{payeeBankCardNo,jdbcType=VARCHAR}, #{payeeBankCardType,jdbcType=CHAR}, 
+      #{payeeBankType,jdbcType=VARCHAR}, #{payeeChannelName,jdbcType=VARCHAR}, #{tradeName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{accountDate,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{completeTime,jdbcType=TIMESTAMP},#{transferType,jdbcType=CHAR},#{failReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayTransferDto" >
+    insert into TB_PAY_TRANSFER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE,
+      </if>
+      <if test="orderAmt != null" >
+        ORDER_AMT,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="feeRemark != null" >
+        FEE_REMARK,
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS,
+      </if>
+      <if test="payerBankCustName != null" >
+        PAYER_BANK_CUST_NAME,
+      </if>
+      <if test="payerBankCardNo != null" >
+        PAYER_BANK_CARD_NO,
+      </if>
+      <if test="payerBankCardType != null" >
+        PAYER_BANK_CARD_TYPE,
+      </if>
+      <if test="payerBankType != null" >
+        PAYER_BANK_TYPE,
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID,
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME,
+      </if>
+      <if test="payeeBankCustName != null" >
+        PAYEE_BANK_CUST_NAME,
+      </if>
+      <if test="payeeBankCardNo != null" >
+        PAYEE_BANK_CARD_NO,
+      </if>
+      <if test="payeeBankCardType != null" >
+        PAYEE_BANK_CARD_TYPE,
+      </if>
+      <if test="payeeBankType != null" >
+        PAYEE_BANK_TYPE,
+      </if>
+      <if test="payeeChannelName != null" >
+        PAYEE_CHANNEL_NAME,
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+      <if test="transferType != null">
+      	TRANSFER_TYPE,
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=CHAR},
+      </if>
+      <if test="orderAmt != null" >
+        #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="feeRemark != null" >
+        #{feeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="payerBankCustName != null" >
+        #{payerBankCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payerBankCardNo != null" >
+        #{payerBankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerBankCardType != null" >
+        #{payerBankCardType,jdbcType=CHAR},
+      </if>
+      <if test="payerBankType != null" >
+        #{payerBankType,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCustName != null" >
+        #{payeeBankCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCardNo != null" >
+        #{payeeBankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCardType != null" >
+        #{payeeBankCardType,jdbcType=CHAR},
+      </if>
+      <if test="payeeBankType != null" >
+        #{payeeBankType,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeChannelName != null" >
+        #{payeeChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeName != null" >
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferType != null">
+      	#{transferType,jdbcType=CHAR},
+      </if>
+      <if test="failReason != null" >
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayTransferDto" >
+    update TB_PAY_TRANSFER
+    <set >
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE = #{accountType,jdbcType=CHAR},
+      </if>
+      <if test="orderAmt != null" >
+        ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="feeRemark != null" >
+        FEE_REMARK = #{feeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="payerBankCustName != null" >
+        PAYER_BANK_CUST_NAME = #{payerBankCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payerBankCardNo != null" >
+        PAYER_BANK_CARD_NO = #{payerBankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerBankCardType != null" >
+        PAYER_BANK_CARD_TYPE = #{payerBankCardType,jdbcType=CHAR},
+      </if>
+      <if test="payerBankType != null" >
+        PAYER_BANK_TYPE = #{payerBankType,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCustName != null" >
+        PAYEE_BANK_CUST_NAME = #{payeeBankCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCardNo != null" >
+        PAYEE_BANK_CARD_NO = #{payeeBankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBankCardType != null" >
+        PAYEE_BANK_CARD_TYPE = #{payeeBankCardType,jdbcType=CHAR},
+      </if>
+      <if test="payeeBankType != null" >
+        PAYEE_BANK_TYPE = #{payeeBankType,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeChannelName != null" >
+        PAYEE_CHANNEL_NAME = #{payeeChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferType != null">
+      	TRANSFER_TYPE = #{transferType,jdbcType=CHAR},
+      </if>
+      <if test="failReason != null" >
+       FAIL_REASON= #{failReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayTransferDto" >
+    update TB_PAY_TRANSFER
+    set BUSI_ID = #{busiId,jdbcType=CHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      ACCOUNT_TYPE = #{accountType,jdbcType=CHAR},
+      ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      FEE = #{fee,jdbcType=DECIMAL},
+      FEE_REMARK = #{feeRemark,jdbcType=VARCHAR},
+      ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      PAYER_BANK_CUST_NAME = #{payerBankCustName,jdbcType=VARCHAR},
+      PAYER_BANK_CARD_NO = #{payerBankCardNo,jdbcType=VARCHAR},
+      PAYER_BANK_CARD_TYPE = #{payerBankCardType,jdbcType=CHAR},
+      PAYER_BANK_TYPE = #{payerBankType,jdbcType=VARCHAR},
+      PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      PAYEE_BANK_CUST_NAME = #{payeeBankCustName,jdbcType=VARCHAR},
+      PAYEE_BANK_CARD_NO = #{payeeBankCardNo,jdbcType=VARCHAR},
+      PAYEE_BANK_CARD_TYPE = #{payeeBankCardType,jdbcType=CHAR},
+      PAYEE_BANK_TYPE = #{payeeBankType,jdbcType=VARCHAR},
+      PAYEE_CHANNEL_NAME = #{payeeChannelName,jdbcType=VARCHAR},
+      TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      TRANSFER_TYPE = #{transferType,jdbcType=CHAR},
+      FAIL_REASON = #{failReason,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+
+<select id="queryTransferStation"  resultMap="station" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo">
+SELECT 
+b.PAYER_CUST_ID as payerCustId,
+b.PAYER_CUST_NAME as payerCustName,
+b.busi_type as busiType,
+(count(b.id)) as allCount,
+nvl(sum(a.order_amt),0) allAmt,
+
+(select count(d.id) FROM TB_PAY_TRANSFER c,TB_PAY_BOOK d where  d.TRADE_TYPE in ('05','06') and c.ORDER_STATUS='04' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_TRANSFER c,TB_PAY_BOOK d where c.BUSI_ID=d.BUSI_ID and d.TRADE_TYPE in ('05','06') and c.ORDER_STATUS='04' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+
+(select count(d.id) from TB_PAY_TRANSFER c,TB_PAY_BOOK d where  d.TRADE_TYPE in ('05','06') and c.ORDER_STATUS='05' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_TRANSFER c,TB_PAY_BOOK d where c.BUSI_ID=d.BUSI_ID and d.TRADE_TYPE='03' and c.ORDER_STATUS='05' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt,
+
+((select count(d.id) from  TB_PAY_TRANSFER c,TB_PAY_BOOK d where  d.TRADE_TYPE in ('05','06') and c.ORDER_STATUS='04' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+)
+/
+decode(count(b.id),0,1,count(b.id))) as rate
+
+FROM TB_PAY_TRANSFER a,TB_PAY_BOOK b
+where a.BUSI_ID=b.BUSI_ID
+and b.TRADE_TYPE in ('05','06')
+<if test="endTime!=null"> and date_format(b.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(b.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="payerCustId != null and payerCustId !=''"> and b.PAYER_CUST_ID=#{payerCustId,jdbcType=CHAR} </if>
+<if test="payerCustName != null and payerCustName != ''"> and b.PAYER_CUST_NAME=#{payerCustName,jdbcType=CHAR} </if>
+<if test="busiType !=null and busiType !=''"> and b.busi_type=#{busiType,jdbcType=CHAR} </if>
+group by b.PAYER_CUST_ID ,b.PAYER_CUST_NAME,b.busi_type
+  </select>  
+</mapper>

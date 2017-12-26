@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisAccountFrozenAuditDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenAuditDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <!-- <result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" /> -->
+    <result column="FROZEN_ACCOUNT_ID" property="frozenAccountId" jdbcType="VARCHAR" />
+    <result column="FROZEN_ACCOUNT_NAME" property="frozenAccountName" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+    <result column="FROZEN_APPLY_TIME" property="frozenApplyTime" jdbcType="TIMESTAMP" />
+    <result column="FROZEN_VALID_TIME" property="frozenValidTime" jdbcType="TIMESTAMP" />
+    <result column="FROZEN_END_TIME" property="frozenEndTime" jdbcType="TIMESTAMP" />
+    <result column="FROZEN_DAYS" property="frozenDays" jdbcType="DECIMAL" />
+    <result column="FROZEN_REASON" property="frozenReason" jdbcType="VARCHAR" />
+    <result column="FROZEN_STATUS" property="frozenStatus" jdbcType="CHAR" />
+    <result column="FROZEN_AUDIT_STATUS" property="frozenAuditStatus" jdbcType="CHAR" />
+    <result column="FROZEN_OPERATOR" property="frozenOperator" jdbcType="VARCHAR" />
+    <result column="FROZEN_OPERATOR_NAME" property="frozenOperatorName" jdbcType="VARCHAR" />
+    <!-- <result column="UNFREEZE_TYPE" property="unfreezeType" jdbcType="CHAR" /> -->
+    <!-- <result column="REMARK" property="remark" jdbcType="VARCHAR" /> -->
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" />
+    <result column="APPLE_TYPE" property="appleType" jdbcType="CHAR" />
+    <result column="ACTUAL_FROZEN_AMT" property="actualFrozenAmt" jdbcType="DECIMAL" />
+    <result column="UNFROZEN_AMT" property="unfrozenAmt" jdbcType="DECIMAL" />
+    <result column="ACTUAL_UNFROZEN_AMT" property="actualUnfrozenAmt" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, <!-- ACCOUNT_ID, ACCOUNT_NAME, --> FROZEN_ACCOUNT_ID, FROZEN_ACCOUNT_NAME, CUST_ID, CUST_NAME, 
+    AMOUNT, FROZEN_APPLY_TIME, FROZEN_VALID_TIME, FROZEN_END_TIME, FROZEN_DAYS, FROZEN_REASON, 
+    FROZEN_STATUS, FROZEN_AUDIT_STATUS, FROZEN_OPERATOR, FROZEN_OPERATOR_NAME, UNFREEZE_TYPE, 
+    <!-- REMARK, --> SUBJECT_NAME, BATCH_NO, APPLE_TYPE, ACTUAL_FROZEN_AMT, UNFROZEN_AMT, ACTUAL_UNFROZEN_AMT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCOUNT_FROZEN_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findActFrozenListByBatchNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCOUNT_FROZEN_AUDIT
+    where BATCH_NO = #{batch_no,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_ACCOUNT_FROZEN_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenAuditDto" >
+    insert into TB_BIS_ACCOUNT_FROZEN_AUDIT (ID, <!-- ACCOUNT_ID, ACCOUNT_NAME, --> 
+      FROZEN_ACCOUNT_ID, FROZEN_ACCOUNT_NAME, CUST_ID, 
+      CUST_NAME, AMOUNT, FROZEN_APPLY_TIME, 
+      FROZEN_VALID_TIME, FROZEN_END_TIME, FROZEN_DAYS, 
+      FROZEN_REASON, FROZEN_STATUS, FROZEN_AUDIT_STATUS, 
+      FROZEN_OPERATOR, FROZEN_OPERATOR_NAME, <!-- UNFREEZE_TYPE, --> 
+      <!-- REMARK, --> SUBJECT_NAME, BATCH_NO, 
+      APPLE_TYPE, ACTUAL_FROZEN_AMT, UNFROZEN_AMT, 
+      ACTUAL_UNFROZEN_AMT)
+    values (#{id,jdbcType=VARCHAR},<!--  #{accountId,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR},  -->
+      #{frozenAccountId,jdbcType=VARCHAR}, #{frozenAccountName,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{custName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{frozenApplyTime,jdbcType=TIMESTAMP}, 
+      #{frozenValidTime,jdbcType=TIMESTAMP}, #{frozenEndTime,jdbcType=TIMESTAMP}, #{frozenDays,jdbcType=DECIMAL}, 
+      #{frozenReason,jdbcType=VARCHAR}, #{frozenStatus,jdbcType=CHAR}, #{frozenAuditStatus,jdbcType=CHAR}, 
+      #{frozenOperator,jdbcType=VARCHAR}, #{frozenOperatorName,jdbcType=VARCHAR}, <!-- #{unfreezeType,jdbcType=CHAR}, --> 
+     <!--  #{remark,jdbcType=VARCHAR}, --> #{subjectName,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, 
+      #{appleType,jdbcType=CHAR}, #{actualFrozenAmt,jdbcType=DECIMAL}, #{unfrozenAmt,jdbcType=DECIMAL}, 
+      #{actualUnfrozenAmt,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenAuditDto" >
+    insert into TB_BIS_ACCOUNT_FROZEN_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <!-- <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="accountName != null" >
+        ACCOUNT_NAME,
+      </if> -->
+      <if test="frozenAccountId != null" >
+        FROZEN_ACCOUNT_ID,
+      </if>
+      <if test="frozenAccountName != null" >
+        FROZEN_ACCOUNT_NAME,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="frozenApplyTime != null" >
+        FROZEN_APPLY_TIME,
+      </if>
+      <if test="frozenValidTime != null" >
+        FROZEN_VALID_TIME,
+      </if>
+      <if test="frozenEndTime != null" >
+        FROZEN_END_TIME,
+      </if>
+      <if test="frozenDays != null" >
+        FROZEN_DAYS,
+      </if>
+      <if test="frozenReason != null" >
+        FROZEN_REASON,
+      </if>
+      <if test="frozenStatus != null" >
+        FROZEN_STATUS,
+      </if>
+      <if test="frozenAuditStatus != null" >
+        FROZEN_AUDIT_STATUS,
+      </if>
+      <if test="frozenOperator != null" >
+        FROZEN_OPERATOR,
+      </if>
+      <if test="frozenOperatorName != null" >
+        FROZEN_OPERATOR_NAME,
+      </if>
+     <!--  <if test="unfreezeType != null" >
+        UNFREEZE_TYPE,
+      </if> -->
+      <!-- <if test="remark != null" >
+        REMARK,
+      </if> -->
+      <if test="subjectName != null" >
+        SUBJECT_NAME,
+      </if>
+      <if test="batchNo != null" >
+        BATCH_NO,
+      </if>
+      <if test="appleType != null" >
+        APPLE_TYPE,
+      </if>
+      <if test="actualFrozenAmt != null" >
+        ACTUAL_FROZEN_AMT,
+      </if>
+      <if test="unfrozenAmt != null" >
+        UNFROZEN_AMT,
+      </if>
+      <if test="actualUnfrozenAmt != null" >
+        ACTUAL_UNFROZEN_AMT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if> -->
+      <if test="frozenAccountId != null" >
+        #{frozenAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="frozenAccountName != null" >
+        #{frozenAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenApplyTime != null" >
+        #{frozenApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="frozenValidTime != null" >
+        #{frozenValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="frozenEndTime != null" >
+        #{frozenEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="frozenDays != null" >
+        #{frozenDays,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenReason != null" >
+        #{frozenReason,jdbcType=VARCHAR},
+      </if>
+      <if test="frozenStatus != null" >
+        #{frozenStatus,jdbcType=CHAR},
+      </if>
+      <if test="frozenAuditStatus != null" >
+        #{frozenAuditStatus,jdbcType=CHAR},
+      </if>
+      <if test="frozenOperator != null" >
+        #{frozenOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="frozenOperatorName != null" >
+        #{frozenOperatorName,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="unfreezeType != null" >
+        #{unfreezeType,jdbcType=CHAR},
+      </if> -->
+      <!-- <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if> -->
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="appleType != null" >
+        #{appleType,jdbcType=CHAR},
+      </if>
+      <if test="actualFrozenAmt != null" >
+        #{actualFrozenAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="unfrozenAmt != null" >
+        #{unfrozenAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="actualUnfrozenAmt != null" >
+        #{actualUnfrozenAmt,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenAuditDto" >
+    update TB_BIS_ACCOUNT_FROZEN_AUDIT
+    <set >
+      <!-- <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      </if> -->
+      <if test="frozenAccountId != null" >
+        FROZEN_ACCOUNT_ID = #{frozenAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="frozenAccountName != null" >
+        FROZEN_ACCOUNT_NAME = #{frozenAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenApplyTime != null" >
+        FROZEN_APPLY_TIME = #{frozenApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="frozenValidTime != null" >
+        FROZEN_VALID_TIME = #{frozenValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="frozenEndTime != null" >
+        FROZEN_END_TIME = #{frozenEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="frozenDays != null" >
+        FROZEN_DAYS = #{frozenDays,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenReason != null" >
+        FROZEN_REASON = #{frozenReason,jdbcType=VARCHAR},
+      </if>
+      <if test="frozenStatus != null" >
+        FROZEN_STATUS = #{frozenStatus,jdbcType=CHAR},
+      </if>
+      <if test="frozenAuditStatus != null" >
+        FROZEN_AUDIT_STATUS = #{frozenAuditStatus,jdbcType=CHAR},
+      </if>
+      <if test="frozenOperator != null" >
+        FROZEN_OPERATOR = #{frozenOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="frozenOperatorName != null" >
+        FROZEN_OPERATOR_NAME = #{frozenOperatorName,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="unfreezeType != null" >
+        UNFREEZE_TYPE = #{unfreezeType,jdbcType=CHAR},
+      </if> -->
+      <!-- <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if> -->
+      <if test="subjectName != null" >
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="appleType != null" >
+        APPLE_TYPE = #{appleType,jdbcType=CHAR},
+      </if>
+      <if test="actualFrozenAmt != null" >
+        ACTUAL_FROZEN_AMT = #{actualFrozenAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="unfrozenAmt != null" >
+        UNFROZEN_AMT = #{unfrozenAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="actualUnfrozenAmt != null" >
+        ACTUAL_UNFROZEN_AMT = #{actualUnfrozenAmt,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenAuditDto" >
+    update TB_BIS_ACCOUNT_FROZEN_AUDIT
+    set <!-- ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR}, -->
+      FROZEN_ACCOUNT_ID = #{frozenAccountId,jdbcType=VARCHAR},
+      FROZEN_ACCOUNT_NAME = #{frozenAccountName,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=DECIMAL},
+      FROZEN_APPLY_TIME = #{frozenApplyTime,jdbcType=TIMESTAMP},
+      FROZEN_VALID_TIME = #{frozenValidTime,jdbcType=TIMESTAMP},
+      FROZEN_END_TIME = #{frozenEndTime,jdbcType=TIMESTAMP},
+      FROZEN_DAYS = #{frozenDays,jdbcType=DECIMAL},
+      FROZEN_REASON = #{frozenReason,jdbcType=VARCHAR},
+      FROZEN_STATUS = #{frozenStatus,jdbcType=CHAR},
+      FROZEN_AUDIT_STATUS = #{frozenAuditStatus,jdbcType=CHAR},
+      FROZEN_OPERATOR = #{frozenOperator,jdbcType=VARCHAR},
+      FROZEN_OPERATOR_NAME = #{frozenOperatorName,jdbcType=VARCHAR},
+      <!-- UNFREEZE_TYPE = #{unfreezeType,jdbcType=CHAR}, -->
+     <!--  REMARK = #{remark,jdbcType=VARCHAR}, -->
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      APPLE_TYPE = #{appleType,jdbcType=CHAR},
+      ACTUAL_FROZEN_AMT = #{actualFrozenAmt,jdbcType=DECIMAL},
+      UNFROZEN_AMT = #{unfrozenAmt,jdbcType=DECIMAL},
+      ACTUAL_UNFROZEN_AMT = #{actualUnfrozenAmt,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getSequence" resultType="long" flushCache="true" useCache="false" >
+		select SEQ_ACT_FROZEN_AUDIT.Nextval from dual
+  </select>
+  <insert id="batchAccountFrozenExp" parameterType="list" >
+     insert into TB_BIS_ACCOUNT_FROZEN_AUDIT 
+        (ID, <!-- ACCOUNT_ID, ACCOUNT_NAME, -->
+		FROZEN_ACCOUNT_ID, FROZEN_ACCOUNT_NAME, CUST_ID,
+		CUST_NAME, AMOUNT, FROZEN_APPLY_TIME,
+		FROZEN_VALID_TIME, FROZEN_END_TIME, FROZEN_DAYS,
+		FROZEN_REASON, FROZEN_STATUS, FROZEN_AUDIT_STATUS,
+		FROZEN_OPERATOR, FROZEN_OPERATOR_NAME, <!-- FROZEN_AUDITOR,
+		FROZEN_AUDITOR_NAME,  FROZEN_AUDIT_TIME,REMARK,-->
+		SUBJECT_NAME,<!-- FROZEN_REJECT_REASON,FROZEN_CANCEL_REASON, -->
+		BATCH_NO,APPLE_TYPE,ACTUAL_FROZEN_AMT,UNFROZEN_AMT,ACTUAL_UNFROZEN_AMT)
+	<foreach collection="batchDtos" index="index" item="item" separator=" union all ">
+		select 
+		#{item.id,jdbcType=VARCHAR}, <!-- #{item.accountId,jdbcType=VARCHAR},
+		#{item.accountName,jdbcType=VARCHAR}, -->#{item.frozenAccountId,jdbcType=VARCHAR},
+		#{item.frozenAccountName,jdbcType=VARCHAR}, #{item.custId,jdbcType=VARCHAR},
+		#{item.custName,jdbcType=VARCHAR}, #{item.amount,jdbcType=DECIMAL},
+		#{item.frozenApplyTime,jdbcType=TIMESTAMP},#{item.frozenValidTime,jdbcType=TIMESTAMP},
+		#{item.frozenEndTime,jdbcType=TIMESTAMP}, #{item.frozenDays,jdbcType=DECIMAL},
+		#{item.frozenReason,jdbcType=VARCHAR}, #{item.frozenStatus,jdbcType=CHAR},
+		#{item.frozenAuditStatus,jdbcType=CHAR},#{item.frozenOperator,jdbcType=VARCHAR},
+		#{item.frozenOperatorName,jdbcType=VARCHAR},<!--#{item.frozenAuditor,jdbcType=VARCHAR},
+		#{item.frozenAuditorName,jdbcType=VARCHAR},#{item.frozenAuditTime,jdbcType=TIMESTAMP}, 
+		#{item.remark,jdbcType=VARCHAR},-->#{item.subjectName,jdbcType=VARCHAR},
+		<!-- #{item.frozenRejectReason,jdbcType=VARCHAR},#{item.frozenCancelReason,jdbcType=VARCHAR}, -->
+		#{item.batchNo,jdbcType=VARCHAR},#{item.appleType,jdbcType=CHAR},
+		#{item.actualFrozenAmt,jdbcType=DECIMAL},#{item.unfrozenAmt,jdbcType=DECIMAL},#{item.actualUnfrozenAmt,jdbcType=DECIMAL}
+		from dual
+	</foreach>
+  	</insert>
+	<update id="updateBatchAuditStatus"> 
+		update TB_BIS_ACCOUNT_FROZEN_AUDIT 
+		set FROZEN_AUDIT_STATUS = #{auditStatus,jdbcType=CHAR} 
+		where ID = #{batchNo,jdbcType=VARCHAR}
+	</update>
+	<select id="findListByBatchNo" resultMap="BaseResultMap">
+		select * from TB_BIS_ACCOUNT_FROZEN_AUDIT
+		where BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+	</select>
+	<update id="updateActualAmt"> 
+		update TB_BIS_ACCOUNT_FROZEN_AUDIT 
+		set ACTUAL_FROZEN_AMT = ACTUAL_FROZEN_AMT+#{setAmt,jdbcType=DECIMAL}
+		,FROZEN_STATUS =#{frozenStatus,jdbcType=CHAR} 
+		where ID =#{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateDealStatus"> 
+		update TB_BIS_ACCOUNT_FROZEN_AUDIT 
+		set DEAL_STATUS = #{newStatus,jdbcType=CHAR}
+		where ID =#{id,jdbcType=VARCHAR} and DEAL_STATUS =#{oldStatus,jdbcType=CHAR}
+	</update>
+	<select id="listFrozen"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenAuditDto"
+		resultMap="BaseResultMap">
+		select * from TB_BIS_ACCOUNT_FROZEN_AUDIT
+		<where>
+			1=1
+			<include refid="listWhereSql" />
+		</where>
+		order by FROZEN_APPLY_TIME desc
+	</select>
+	<select id="listUnfreezeAudit"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountFrozenAuditDto"
+		resultMap="BaseResultMap">
+		select * from TB_BIS_ACCOUNT_FROZEN_AUDIT
+		<where>
+			1=1
+			<include refid="listWhereSql" />
+			and (FROZEN_STATUS = '2' or FROZEN_STATUS = '3' or FROZEN_STATUS = '4')
+		</where>
+		order by FROZEN_APPLY_TIME desc
+	</select>
+	
+	<sql id="listWhereSql">
+		<if test="id != null and id != ''">
+			and instr(id, #{id,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="frozenAccountId != null and frozenAccountId != ''">
+			and instr(FROZEN_ACCOUNT_ID, #{frozenAccountId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="subjectName != null and subjectName != ''">
+			and instr(SUBJECT_NAME, #{subjectName,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="custId != null and custId != ''">
+			and instr(CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="custName != null and custName != ''">
+			and instr(CUST_NAME, #{custName,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="subjectName != null and subjectName != ''">
+			and instr(SUBJECT_NAME, #{subjectName,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="frozenValidTime != null">
+			and to_char(FROZEN_VALID_TIME,'YYYY-MM-DD') = to_char(#{frozenValidTime,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+		</if>
+		<if test="frozenEndTime != null">
+			and to_char(FROZEN_END_TIME,'YYYY-MM-DD') = to_char(#{frozenEndTime,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+		</if>
+		<if test="frozenStatus != null">
+			and FROZEN_STATUS = #{frozenStatus,jdbcType=CHAR}
+		</if>
+		<if test="frozenAuditStatus != null">
+			and FROZEN_AUDIT_STATUS = #{frozenAuditStatus,jdbcType=CHAR}
+		</if>
+		<if test="appleType != null">
+			and APPLE_TYPE = #{appleType,jdbcType=CHAR}
+		</if>
+		<if test="batchNo != null and batchNo != ''">
+			and instr(BATCH_NO, #{batchNo,jdbcType=VARCHAR}) > 0
+		</if>
+	</sql>
+	
+	<select id="queryFrozenListByIds" resultMap="BaseResultMap" parameterType="list" >
+	   select 
+	   <include refid="Base_Column_List" />
+	   from TB_BIS_ACCOUNT_FROZEN_AUDIT
+	   where 1=1
+	   <if test="ids!=null and ids.size()>0">
+	   and id in 
+	   <foreach collection="ids" item="id" open="(" separator="," close=")">
+	   #{id }
+	   </foreach>
+	   </if>
+	</select>
+	<update id="updateUnFrozenAmt"> 
+		update TB_BIS_ACCOUNT_FROZEN_AUDIT 
+		set UNFROZEN_AMT = UNFROZEN_AMT+#{setAmt,jdbcType=DECIMAL}
+		<if test="frozenStatus!=null and frozenStatus!=''">
+			,FROZEN_STATUS =#{frozenStatus,jdbcType=CHAR} 
+		</if>
+		where ID =#{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateActualUnFrozenAmt"> 
+		update TB_BIS_ACCOUNT_FROZEN_AUDIT 
+		set ACTUAL_UNFROZEN_AMT = ACTUAL_UNFROZEN_AMT+#{actualFrozenAmt,jdbcType=DECIMAL},
+		UNFROZEN_AMT = UNFROZEN_AMT+#{setAmt,jdbcType=DECIMAL}
+		<if test="frozenStatus!=null and frozenStatus!=''">
+			,FROZEN_STATUS =#{frozenStatus,jdbcType=CHAR} 
+		</if>
+		where ID =#{id,jdbcType=VARCHAR}
+	</update>
+	<select id="listFrozenWaitOrDing" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from TB_BIS_ACCOUNT_FROZEN_AUDIT
+	    where to_char(FROZEN_VALID_TIME,'YYYY-MM-DD') &lt;=to_char(#{actDate,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+	    and to_char(FROZEN_END_TIME,'YYYY-MM-DD') &gt; to_char(#{actDate,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+	    and FROZEN_AUDIT_STATUS = '01'
+	    and AMOUNT != ACTUAL_FROZEN_AMT
+	 </select>
+	 <select id="listUnFrozenByEndTime" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from TB_BIS_ACCOUNT_FROZEN_AUDIT
+	    where to_char(FROZEN_END_TIME,'YYYY-MM-DD') &lt;= to_char(#{actDate,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+	    and FROZEN_AUDIT_STATUS = '01'<!-- 可有可无 -->
+	    and UNFROZEN_AMT != ACTUAL_FROZEN_AMT 
+	</select>
+	
+	<update id="autoUpdateUnFrozenByActDate"> 
+		update TB_BIS_ACCOUNT_FROZEN_AUDIT 
+		set FROZEN_STATUS = '4'
+		where to_char(FROZEN_END_TIME,'YYYY-MM-DD') &lt;= to_char(#{actDate,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+		AND FROZEN_STATUS IN ('0','1') AND ACTUAL_UNFROZEN_AMT=0
+	</update>
+	<select id="findListByUnFrozenByActDate" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from TB_BIS_ACCOUNT_FROZEN_AUDIT
+	    where to_char(FROZEN_END_TIME,'YYYY-MM-DD') &lt;= to_char(#{actDate,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+		AND FROZEN_STATUS IN ('0','1') AND ACTUAL_UNFROZEN_AMT=0 AND FROZEN_AUDIT_STATUS = '01'
+	</select>
+	<update id="updateFrozenStatus"> 
+		update TB_BIS_ACCOUNT_FROZEN_AUDIT 
+		set FROZEN_STATUS = #{frozenStatus,jdbcType=CHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="getAuditNum" resultType="long">
+	    select 
+	    count(ID)
+	    from TB_BIS_ACCOUNT_FROZEN_AUDIT
+	    where FROZEN_AUDIT_STATUS = #{auditPass,jdbcType=CHAR}
+	    and FROZEN_STATUS = #{frozenApply,jdbcType=CHAR}
+	    <if test="ids!=null and ids.size()>0">
+	    and id in 
+	    <foreach collection="ids" item="id" open="(" separator="," close=")">
+			#{id }
+		</foreach>
+		</if> 
+	</select>
+	<update id="updateAuditStatusByBatchNo" >
+	    update TB_BIS_ACCOUNT_FROZEN_AUDIT
+	    set FROZEN_AUDIT_STATUS = #{auditStatus,jdbcType=CHAR}
+	    where BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+	</update>
+</mapper>

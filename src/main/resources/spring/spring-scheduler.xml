@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <!-- 日终处理-初始化 -->
+    <bean id="dayEndSettlementSchedulerService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.DayEndSettlementSchedulerServiceImpl" />
+    <bean id="dayEndSettlementJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="dayEndSettlementSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="dayEndSettlementCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="dayEndSettlementJobDetail" />
+        <property name="group" value="SETTLEMENT" />
+        <property name="cronExpression" value="0 50 23 * * ?" />
+        <property name="description" value="日终处理-初始化" />
+    </bean>
+
+    <!-- 清结算日终处理 -->
+    <bean id="settlementDayEndBatchSchedulerService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.DayEndBatchSchedulerServiceImpl" />
+    <bean id="settlementDayEndBatchJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="settlementDayEndBatchSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="settlementDayEndBatchCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="settlementDayEndBatchJobDetail" />
+        <property name="group" value="SETTLEMENT" />
+        <property name="cronExpression" value="0 0/3 * * * ?" />
+        <property name="description" value="日终处理-批处理" />
+    </bean>
+
+    <!-- 提现/转账/退款至中间户 -->
+    <bean id="toBankConfirmSchedulerService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ToBankConfirmSchedulerServiceImpl" />
+    <bean id="toBankConfirmJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="toBankConfirmSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="toBankConfirmCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="toBankConfirmJobDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="提现/转账/退款至中间户" />
+    </bean>
+    
+     <!-- 平台对外支付 -->
+    <bean id="bisEcternalPaymentsSchedulerService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.BisEcternalPaymentsSchedulerServiceImpl" />
+    <bean id="bisEcternalPaymentsJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="bisEcternalPaymentsSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="bisEcternalPaymentsConfirmCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="bisEcternalPaymentsJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="平台对外支付" />
+    </bean>
+
+    <!-- 提现/转账/退款/对外支付至银行 -->
+    <bean id="toBankSchedulerService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ToBankSchedulerServiceImpl" />
+    <bean id="toBankJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="toBankSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="toBankCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="toBankJobDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0/30 * * * ?" />
+        <property name="description" value="提现/转账/退款至银行" />
+    </bean>
+
+    <!--处理 充值超时为支付的数据 -->
+    <bean id="payRechangeSchedulerService" class="com.ylink.inetpay.cbs.bis.scheduler.PayRechangeSchedulerServiceImpl" />
+    <bean id="payRechangeDetail" class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="payRechangeSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="payRechangeCronTrigger" class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="payRechangeDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0 0/4 * * ?" />
+        <property name="description" value="处理充值超时为支付的数据 " />
+    </bean>
+
+
+    <!-- 订单查询 -->
+    <bean id="paymentOrderQuerySchedulerService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.PaymentOrderQuerySchedulerServiceImpl" />
+    <bean id="paymentOrderQueryDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="paymentOrderQuerySchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="paymentOrderQueryCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="paymentOrderQueryDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="订单查询" />
+    </bean>
+
+    <!-- 下载和解析资金渠道流水 -->
+    <bean id="downLoadChannelBookSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.DownLoadChannelBookSchedulerServiceImpl" />
+    <bean id="downLoadChannelBookJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="downLoadChannelBookSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="downloadChannelBookCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="downLoadChannelBookJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0 0/2 * * ?" />
+        <property name="description" value="下载和解析资金渠道流水" />
+    </bean>
+
+    <!-- 渠道对账 -->
+    <bean id="channelCheckSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ChannelCheckSchedulerServiceImpl" />
+    <bean id="channelCheckJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="channelCheckSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="channelCheckCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="channelCheckJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0/30 * * * ?" />
+        <property name="description" value="渠道对账" />
+    </bean>
+
+    <!-- 检查超期未对账的资金渠道流水和支付抽取流水 -->
+    <bean id="checkChannelUncheckSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.CheckChannelUncheckSchedulerServiceImpl" />
+    <bean id="checkChannelUncheckJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="checkChannelUncheckSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="checkChannelUncheckCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="checkChannelUncheckJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0 0/6 * * ?" />
+        <property name="description" value="检查超期未对账渠道流水和支付流水" />
+    </bean>
+
+    <!-- 渠道自动调账 -->
+    <bean id="channelAutoAdjustSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ChannelAutoAdjustSchedulerServiceImpl" />
+    <bean id="channelAutoAdjustJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="channelAutoAdjustSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="channelAutoAdjustCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="channelAutoAdjustJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0 0/1 * * ?" />
+        <property name="description" value="渠道自动调账" />
+    </bean>
+
+    <!-- 资金渠道对账预处理 -->
+    <bean id="channelCheckPreDealSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ChannelCheckPreDealSchedulerServiceImpl" />
+    <bean id="channelCheckPreDealJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="channelCheckPreDealSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="channelCheckPreDealCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="channelCheckPreDealJobDetail" />
+        <property name="group" value="CHANNEL" />
+        <property name="cronExpression" value="0 0 0/1 * * ?" />
+        <property name="description" value="资金渠道对账预处理" />
+    </bean>
+
+
+    <!-- 统一运营系统用户解锁处理 -->
+    <bean id="ucsSecUserUnlockSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.UcsSecUserUnlockSchedulerServiceImpl" />
+    <bean id="ucsSecUserUnlockJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="ucsSecUserUnlockSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="ucsSecUserUnlockCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="ucsSecUserUnlockJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="10 5 0 * * ?" />
+        <property name="description" value="统一运营系统用户解锁处理" />
+    </bean>
+
+
+    <!-- 支付成功结果通知 -->
+    <bean id="paySuccessNoticeSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.PaySuccessNoticeSchedulerServiceImpl" />
+    <bean id="paySuccessNoticeJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="paySuccessNoticeSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="paySuccessNoticeCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="paySuccessNoticeJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0/30 * * * * ?" />
+        <property name="description" value="支付成功结果通知" />
+    </bean>
+
+    <!-- 发送短信 -->
+    <!--   <bean id="flushSmsSchedService"
+            class="com.ylink.inetpay.cbs.bis.scheduler.FlushSmsSchedulerServiceImpl" />
+      <bean id="flushSmsJobDetail"
+            class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+          <property name="targetBean" value="flushSmsSchedService" />
+          <property name="targetMethod" value="execute" />
+          <property name="concurrent" value="false" />
+      </bean>
+      <bean id="flushSmsCronTrigger"
+            class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+          <property name="jobDetail" ref="flushSmsJobDetail" />
+          <property name="group" value="CBS" />
+          <property name="cronExpression" value="0 0/1 * * * ?" />
+          <property name="description" value="发送短信" />
+      </bean> -->
+    <!-- 保证金设置 -->
+    <bean id="setCashFundService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.BisSetCashFundSchederServiceImpl" />
+    <bean id="setCashFundJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="setCashFundService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="setCashFundCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="setCashFundJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 10 0 * * ?" />
+        <property name="description" value="设置保证金" />
+    </bean>
+    <!-- 保证金设置未知状态查询 -->
+    <bean id="queryUndownStatusCashFundService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.QueryUndownStatusCashFundSchederServiceImpl" />
+    <bean id="queryUndownStatusCashFundJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="queryUndownStatusCashFundService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+     <bean id="queryUndownStatusCashFundCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="queryUndownStatusCashFundJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="保证金设置未知状态查询" />
+    </bean>
+    <!-- 对外支付未知状态查询 -->
+    <bean id="queryUnDownStatusEcternalPaymentService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.QueryUnDownStatusEcternalPaymentSchederServiceImpl" />
+    <bean id="queryUnDownStatusEcternalPaymentJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="queryUnDownStatusEcternalPaymentService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+     <bean id="queryUnDownStatusEcternalPaymentCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="queryUnDownStatusEcternalPaymentJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="对外支付未知状态查询" />
+    </bean>
+    <!-- 冻结解冻未知状态查询 -->
+    <bean id="queryUnDownStatusFrozentFrozenService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.QueryUnDownStatusFrozentFrozenSchederServiceImpl" />
+    <bean id="queryUnDownStatusFrozentFrozenJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="queryUnDownStatusFrozentFrozenService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+     <bean id="queryUnDownStatusFrozentFrozenCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="queryUnDownStatusFrozentFrozenJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="冻结解冻未知状态查询" />
+    </bean>
+    <!-- 头寸调拨未知状态查询 -->
+    <bean id="queryUnDownStatusTransferHandService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.QueryUnDownStatusTransferHandleSchederServiceImpl" />
+    <bean id="queryUnDownStatusTransferHandJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="queryUnDownStatusTransferHandService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="queryUnDownStatusTransferHandCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="queryUnDownStatusTransferHandJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="头寸调拨未知状态查询" />
+    </bean>
+    <!-- 备份
+    <bean id="backupsSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.BackupsSchedulerServiceImpl" />
+    <bean id="backupsJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="backupsSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="backupsCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="backupsJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 50 0 * * ?" />
+        <property name="description" value="迁移备份" />
+    </bean> -->
+
+    <!-- 资金冻结解冻 -->
+    <bean id="frozenUnfreezeAccountTask"
+          class="com.ylink.inetpay.cbs.bis.scheduler.BisFrozenUnfreezeAccountSchedulerServiceImpl" />
+    <bean id="frozenUnfreezeAccountJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="frozenUnfreezeAccountTask" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="frozenUnfreezeAccountCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="frozenUnfreezeAccountJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 41 1 * * ?" />
+        <property name="description" value="资金冻结解冻" />
+    </bean>
+    <!-- 巨灾业务任务初始化 -->
+    <bean id="cATInitSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.CATInitSchedulerServiceImpl" />
+    <bean id="cATInitJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="cATInitSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="cATInitCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="cATInitJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0/30 * * * ?" />
+        <property name="description" value="巨灾业务任务初始化" />
+    </bean>
+    <!-- 巨灾业务清算 -->
+    <bean id="cATLiquiSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.CATLiquiSchedulerServiceImpl" />
+    <bean id="cATLiquiJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="cATLiquiSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="cATLiquiCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="cATLiquiJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="巨灾业务清算" />
+    </bean>
+    <!-- 巨灾业务清分 -->
+    <bean id="cATClearSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.CATClearSchedulerServiceImpl" />
+    <bean id="cATClearJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="cATClearSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="cATClearCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="cATClearJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="巨灾业务清分" />
+    </bean>
+    <!-- 巨灾业务结算数据生成 -->
+    <bean id="cATCreateSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.CATCreateSchedulerServiceImpl" />
+    <bean id="cATCreateJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="cATCreateSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="cATCreateCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="cATCreateJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="巨灾业务结算数据生成" />
+    </bean>
+    <!-- 巨灾业务结算 -->
+    <bean id="cATSettSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.CATSettSchedulerServiceImpl" />
+    <bean id="cATSettJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="cATSettSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="cATSettCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="cATSettJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="巨灾业务结算" />
+    </bean>
+
+    <!-- 利率生效 -->
+    <bean id="actCustRateValidSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ActCustRateValidSchedulerServiceImpl" />
+    <bean id="actCustRateValidJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="actCustRateValidSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="actCustRateValidCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="actCustRateValidJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 0 3 * * ?" />
+        <property name="description" value="利率生效 " />
+    </bean>
+    <!-- 同步信息定时任务 -->
+    <bean id="syncInfoJobDetailService"
+          class="com.ylink.inetpay.cbs.mrs.factory.SyncInfoJobDetailServiceImpl" />
+    <bean id="syncInfoJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="syncInfoJobDetailService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="syncInfoCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncInfoJobDetail" />
+        <property name="group" value="CBS" />
+        <property name="cronExpression" value="0 0/15 * * * ?" />
+        <property name="description" value="信息同步 " />
+    </bean>
+
+    <!-- 渠道签到 -->
+    <bean id="channelLoginSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ChannelLoginSchedulerServiceImpl" />
+    <bean id="channelLoginJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="channelLoginSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="channelLoginCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="channelLoginJobDetail" />
+        <property name="group" value="CHANNEL" />
+        <property name="cronExpression" value="0 50 0 * * ?" />
+        <property name="description" value="渠道签到" />
+    </bean>
+    <!-- 渠道签退 -->
+    <bean id="channelOutSchedService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ChannelOutSchedulerServiceImpl" />
+    <bean id="channelOutJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="channelOutSchedService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="channelOutCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="channelOutJobDetail" />
+        <property name="group" value="CHANNEL" />
+        <property name="cronExpression" value="0 45 0 * * ?" />
+        <property name="description" value="渠道签退" />
+    </bean>
+
+    <!-- 动账通知查询（当天） -->
+    <bean id="chlAccountChangeNotifyDayService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ChlAccountChangeNotifyDayServiceImpl" />
+    <bean id="chlAccountChangeNotifyDayJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="chlAccountChangeNotifyDayService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="chlAccountChangeNotifyDayCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="chlAccountChangeNotifyDayJobDetail" />
+        <property name="group" value="CHANNEL" />
+        <property name="cronExpression" value="0 0 0/2 * * ?" />
+        <property name="description" value="动账通知查询（当天）" />
+    </bean>
+
+    <!-- 动账通知查询（历史） -->
+    <bean id="chlAccountChangeNotifyDayEndService"
+          class="com.ylink.inetpay.cbs.bis.scheduler.ChlAccountChangeNotifyDayEndServiceImpl" />
+    <bean id="chlAccountChangeNotifyDayEndJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="chlAccountChangeNotifyDayEndService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="chlAccountChangeNotifyDayEndCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="chlAccountChangeNotifyDayEndJobDetail" />
+        <property name="group" value="CHANNEL" />
+        <property name="cronExpression" value="0 35 1 * * ?" />
+        <property name="description" value="动账通知查询（历史）" />
+    </bean>
+
+    <!-- 动账补发文件下载 -->
+    <bean id="chlAccountChangeNotifyDownloadService" class="com.ylink.inetpay.cbs.bis.scheduler.ChlAccountChangeNotifyDownloadServiceImpl"/>
+    <bean id="chlAccountChangeNotifyDownloadJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="chlAccountChangeNotifyDownloadService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="chlAccountChangeNotifyDownloadCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="chlAccountChangeNotifyDownloadJobDetail" />
+        <property name="group" value="CHANNEL" />
+        <property name="cronExpression" value="0 0 0/4 * * ?" />
+        <property name="description" value="动账补发文件下载" />
+    </bean>
+
+    <!-- 动账通知支付系统 -->
+    <bean id="chlAccountChangeNotifyPayService" class="com.ylink.inetpay.cbs.bis.scheduler.ChlAccountChangeNotifyPayServiceImpl"/>
+    <bean id="chlAccountChangeNotifyPayJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="chlAccountChangeNotifyPayService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="chlAccountChangeNotifyPayCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="chlAccountChangeNotifyPayJobDetail" />
+        <property name="group" value="CHANNEL" />
+        <property name="cronExpression" value="0 0/30 * * * ?" />
+        <property name="description" value="动账通知支付系统 " />
+    </bean>
+    <!-- 动账通知处理 -->
+    <bean id="payAccChangeDealPayService" class="com.ylink.inetpay.cbs.bis.scheduler.PayAccChangeDealSchedulerServiceImpl"/>
+    <bean id="payAccChangeDealJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="payAccChangeDealPayService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="payAccChangeDealCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="payAccChangeDealJobDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0/10 * * * ?" />
+        <property name="description" value="动账通知处理 " />
+    </bean>
+    <!-- 线下缴费到账通知处理 -->
+    <bean id="payOffPayChangeDealPayService" class="com.ylink.inetpay.cbs.bis.scheduler.PayOffPayChangeDealSchedulerServiceImpl"/>
+    <bean id="payOffPayChangeDealJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="payOffPayChangeDealPayService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="payOffPayChangeDealCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="payOffPayChangeDealJobDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0 0/4 * * ?" />
+        <property name="description" value="线下缴费到账通知处理" />
+    </bean>
+    
+    <!-- 手续费汇总处理 -->
+    <bean id="feeSummaryDealService" class="com.ylink.inetpay.cbs.bis.scheduler.PayFeeSummarySchedulerServiceImpl"/>
+    <bean id="feeSummaryDealJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="feeSummaryDealService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="feeSummaryDealCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="feeSummaryDealJobDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0 0/4 * * ?" />
+        <property name="description" value="手续费汇总处理" />
+    </bean>
+    
+    <!-- 支付手续费率生效 -->
+  <!--   <bean id="payFeeConfigSchedulerService" class="com.ylink.inetpay.cbs.bis.scheduler.PayFeeConfigSchedulerServiceImpl"/>
+    <bean id="payFeeConfigDealJobDetail"
+          class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="payFeeConfigSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="payFeeConfigCronTrigger"
+          class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="payFeeConfigDealJobDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0 0/4 * * ?" />
+        <property name="description" value="支付手续费率生效" />
+    </bean> -->
+
+    <!-- 商户对外支付审核 -->
+    <bean id="merOutPayAduitSchedulerService" class="com.ylink.inetpay.cbs.bis.scheduler.MerOutPayAduitSchedulerServiceImpl"/>
+    <bean id="merOutPayAduitJobDetail" class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="merOutPayAduitSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="merOutPayAduitCronTrigger"  class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="merOutPayAduitJobDetail" />
+        <property name="group" value="PAY" />
+        <property name="cronExpression" value="0 0/20 * * * ?" />
+        <property name="description" value="商户对外支付/退款调用CBS审核 " />
+    </bean>
+    <!-- 解锁处理中的任务 -->
+    <bean id="clsFlushJobSchedulerService" class="com.ylink.inetpay.cbs.bis.scheduler.ClsFlushJobSchedulerServiceImpl"/>
+    <bean id="clsFlushJobJobDetail" class="com.ylink.inetpay.cbs.bis.factory.BeanInvokingJobDetailFactoryBean">
+        <property name="targetBean" value="clsFlushJobSchedulerService" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="clsFlushJobCronTrigger"  class="com.ylink.inetpay.cbs.bis.factory.MyCronTriggerFactoryBean">
+        <property name="jobDetail" ref="clsFlushJobJobDetail" />
+        <property name="group" value="CLEAR" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+        <property name="description" value="解锁处理中的任务 " />
+    </bean>
+
+    <bean id="quartzScheduler"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+          lazy-init="false">
+        <property name="triggers">
+            <list>
+                <ref bean="dayEndSettlementCronTrigger" />
+                <ref bean="settlementDayEndBatchCronTrigger" />
+                <ref bean="toBankConfirmCronTrigger" />
+                <ref bean="toBankCronTrigger" />
+                <ref bean="downloadChannelBookCronTrigger" />
+                <ref bean="channelCheckCronTrigger" />
+                <ref bean="channelAutoAdjustCronTrigger" />
+                <ref bean="checkChannelUncheckCronTrigger" />
+                <ref bean="channelCheckPreDealCronTrigger" />
+                <ref bean="ucsSecUserUnlockCronTrigger" />
+                <ref bean="paySuccessNoticeCronTrigger" />
+                <!-- <ref bean="flushSmsCronTrigger" /> -->
+                <ref bean="setCashFundCronTrigger" />
+                <ref bean="syncInfoCronTrigger" />
+                <!-- <ref bean="backupsCronTrigger" /> -->
+                <ref bean="cATInitCronTrigger" />
+                <ref bean="cATLiquiCronTrigger" />
+                <ref bean="cATClearCronTrigger" />
+                <ref bean="cATCreateCronTrigger" />
+                <ref bean="cATSettCronTrigger" />
+                <ref bean="paymentOrderQueryCronTrigger" />
+                <ref bean="frozenUnfreezeAccountCronTrigger" />
+                <ref bean="actCustRateValidCronTrigger" />
+                <ref bean="channelLoginCronTrigger" />
+                <ref bean="channelOutCronTrigger" />
+                <ref bean="chlAccountChangeNotifyDayCronTrigger"/>
+                <ref bean="chlAccountChangeNotifyDayEndCronTrigger"/>
+                <ref bean="chlAccountChangeNotifyDownloadCronTrigger"/>
+                <ref bean="chlAccountChangeNotifyPayCronTrigger"/>              
+                <ref bean="payAccChangeDealCronTrigger"/>
+                <ref bean="payOffPayChangeDealCronTrigger"/>
+                <ref bean="merOutPayAduitCronTrigger" />
+                <ref bean="clsFlushJobCronTrigger" /> 
+                <ref bean="payRechangeCronTrigger" />
+                <ref bean="queryUnDownStatusFrozentFrozenCronTrigger" /> 
+                <ref bean="queryUndownStatusCashFundCronTrigger" /> 
+                <ref bean="queryUnDownStatusEcternalPaymentCronTrigger" />
+                <ref bean="queryUnDownStatusTransferHandCronTrigger"/>             
+                <ref bean="bisEcternalPaymentsConfirmCronTrigger"/>             
+				<!-- <ref bean="payFeeConfigCronTrigger" /> -->
+            </list>
+        </property>
+        <!-- cluster -->
+        <property name="dataSource" ref="ucDataSource" />
+        <property name="overwriteExistingJobs" value="true" />
+        <property name="applicationContextSchedulerContextKey" value="applicationContext" />
+        <property name="configLocation" value="classpath:properties/quartz.properties" />
+    </bean>
+
+    <bean id="schedulerManager" class="com.ylink.inetpay.cbs.bis.service.SchedulerManagerImpl">
+        <property name="quartzScheduler" ref="quartzScheduler" />
+    </bean>
+</beans>

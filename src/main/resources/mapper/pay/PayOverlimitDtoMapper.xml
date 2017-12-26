@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayOverlimitDtoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ylink.inetpay.common.project.pay.dto.PayOverlimitDto">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+		<result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+		<result column="OVER_TYPE" property="overType" jdbcType="CHAR" />
+		<result column="BUSINESS_TYPE" property="businessType"
+			jdbcType="CHAR" />
+		<result column="MONEY" property="money" jdbcType="DECIMAL" />
+		<result column="LIMIT_MONEY" property="limitMoney" jdbcType="DECIMAL" />
+		<result column="WARN_MONEY" property="warnMoney" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, CUST_ID, CUST_NAME, OVER_TYPE, BUSINESS_TYPE, MONEY, LIMIT_MONEY,
+		WARN_MONEY,
+		CREATE_TIME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_OVERLIMIT
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from TB_PAY_OVERLIMIT
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayOverlimitDto">
+		insert into TB_PAY_OVERLIMIT (ID, CUST_ID, CUST_NAME,
+		OVER_TYPE, BUSINESS_TYPE, MONEY,
+		LIMIT_MONEY, WARN_MONEY, CREATE_TIME
+		)
+		values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR},
+		#{custName,jdbcType=VARCHAR},
+		#{overType,jdbcType=CHAR}, #{businessType,jdbcType=CHAR}, #{money,jdbcType=DECIMAL},
+		#{limitMoney,jdbcType=DECIMAL}, #{warnMoney,jdbcType=DECIMAL},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayOverlimitDto">
+		insert into TB_PAY_OVERLIMIT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="custId != null">
+				CUST_ID,
+			</if>
+			<if test="custName != null">
+				CUST_NAME,
+			</if>
+			<if test="overType != null">
+				OVER_TYPE,
+			</if>
+			<if test="businessType != null">
+				BUSINESS_TYPE,
+			</if>
+			<if test="money != null">
+				MONEY,
+			</if>
+			<if test="limitMoney != null">
+				LIMIT_MONEY,
+			</if>
+			<if test="warnMoney != null">
+				WARN_MONEY,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="custName != null">
+				#{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="overType != null">
+				#{overType,jdbcType=CHAR},
+			</if>
+			<if test="businessType != null">
+				#{businessType,jdbcType=CHAR},
+			</if>
+			<if test="money != null">
+				#{money,jdbcType=DECIMAL},
+			</if>
+			<if test="limitMoney != null">
+				#{limitMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="warnMoney != null">
+				#{warnMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayOverlimitDto">
+		update TB_PAY_OVERLIMIT
+		<set>
+			<if test="custId != null">
+				CUST_ID = #{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="custName != null">
+				CUST_NAME = #{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="overType != null">
+				OVER_TYPE = #{overType,jdbcType=CHAR},
+			</if>
+			<if test="businessType != null">
+				BUSINESS_TYPE = #{businessType,jdbcType=CHAR},
+			</if>
+			<if test="money != null">
+				MONEY = #{money,jdbcType=DECIMAL},
+			</if>
+			<if test="limitMoney != null">
+				LIMIT_MONEY = #{limitMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="warnMoney != null">
+				WARN_MONEY = #{warnMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayOverlimitDto">
+		update TB_PAY_OVERLIMIT
+		set CUST_ID = #{custId,jdbcType=VARCHAR},
+		CUST_NAME = #{custName,jdbcType=VARCHAR},
+		OVER_TYPE = #{overType,jdbcType=CHAR},
+		BUSINESS_TYPE = #{businessType,jdbcType=CHAR},
+		MONEY = #{money,jdbcType=DECIMAL},
+		LIMIT_MONEY = #{limitMoney,jdbcType=DECIMAL},
+		WARN_MONEY = #{warnMoney,jdbcType=DECIMAL},
+		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="list" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayOverlimitDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_OVERLIMIT
+		<where>
+			<if test="custId != null and custId !=''">
+				and CUST_ID = #{custId,jdbcType=VARCHAR}
+			</if>
+			<if test="custName != null and custName !=''">
+				and instr(CUST_NAME, #{custName,jdbcType=VARCHAR}) > 0
+				<!-- and CUST_NAME like concat('%',concat(#{custName,jdbcType=VARCHAR},'%')) -->
+			</if>
+			<if test="overType != null and overType !=''">
+				and OVER_TYPE = #{overType,jdbcType=CHAR}
+			</if>
+			<if test="businessType != null and businessType !=''">
+				and BUSINESS_TYPE = #{businessType,jdbcType=CHAR}
+			</if>
+			<if test="money != null and money !=''">
+				and MONEY = #{money,jdbcType=DECIMAL}
+			</if>
+			<if test="limitMoney != null and limitMoney !=''">
+				and LIMIT_MONEY = #{limitMoney,jdbcType=DECIMAL}
+			</if>
+			<if test="warnMoney != null and warnMoney !=''">
+				and WARN_MONEY = #{warnMoney,jdbcType=DECIMAL}
+			</if>
+			<if test="startCreateTime != null">
+				and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startCreateTime},'%Y-%c-%d')
+			</if>
+			<if test="endCreateTime != null">
+				and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endCreateTime},'%Y-%c-%d')
+			</if>
+		</where>
+		order by CREATE_TIME desc
+	</select>
+	<select id="limitList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_OVERLIMIT
+		<where>
+			<if test="dto.custId != null and dto.custId !=''">
+				and CUST_ID = #{dto.custId,jdbcType=VARCHAR}
+			</if>
+			<if test="dto.custName != null and dto.custName !=''">
+				and instr(CUST_NAME, #{dto.custName,jdbcType=VARCHAR}) > 0
+				<!-- and CUST_NAME like concat('%',concat(#{dto.custName,jdbcType=VARCHAR},'%')) -->
+			</if>
+			<if test="dto.businessType != null and dto.businessType !=''">
+				and BUSINESS_TYPE = #{dto.businessType,jdbcType=CHAR}
+			</if>
+			<if test="dto.money != null and dto.money !=''">
+				and MONEY = #{dto.money,jdbcType=DECIMAL}
+			</if>
+			<if test="dto.limitMoney != null and dto.limitMoney !=''">
+				and LIMIT_MONEY = #{dto.limitMoney,jdbcType=DECIMAL}
+			</if>
+			<if test="dto.warnMoney != null and dto.warnMoney !=''">
+				and WARN_MONEY = #{dto.warnMoney,jdbcType=DECIMAL}
+			</if>
+			<if test="dto.overType != null and dto.overType !=''">
+				and OVER_TYPE = #{dto.overType,jdbcType=CHAR}
+			</if>
+			<if test="dto.startCreateTime != null">
+				and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{dto.startCreateTime},'%Y-%c-%d')
+			</if>
+			<if test="dto.endCreateTime != null">
+				and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{dto.endCreateTime},'%Y-%c-%d')
+			</if>
+			and (OVER_TYPE = #{limit,jdbcType=CHAR} or OVER_TYPE = #{warning,jdbcType=CHAR})
+		</where>
+		order by CREATE_TIME desc
+	</select>
+</mapper>

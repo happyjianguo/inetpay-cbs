@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsAccessCheckMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsAccessCheck" >
+    <result column="ID" property="id" jdbcType="CHAR" />
+    <result column="ACCESS_CODE" property="accessCode" jdbcType="VARCHAR" />
+    <result column="FILE_DAY" property="fileDay" jdbcType="CHAR" />
+    <result column="UPLOAD_STAUS" property="uploadStaus" jdbcType="CHAR" />
+    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+    <result column="ACCESS_FILE" property="accessFile" jdbcType="VARCHAR" />
+    <result column="FTP_URL" property="ftpUrl" jdbcType="VARCHAR" />
+    <result column="PAY_COUNT" property="payCount" jdbcType="DECIMAL" />
+    <result column="PAY_AMOUNT" property="payAmount" jdbcType="DECIMAL" />
+    <result column="REFUND_COUNT" property="refundCount" jdbcType="DECIMAL" />
+    <result column="REFUND_AMOUNT" property="refundAmount" jdbcType="DECIMAL" />
+    <result column="FEE_AMOUNT" property="feeAmount" jdbcType="DECIMAL" />
+    <result column="SETTL_AMOUT" property="settlAmout" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	 
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID ,ACCESS_CODE ,FILE_DAY ,UPLOAD_STAUS ,DEAL_STATUS ,ACCESS_FILE ,FTP_URL ,PAY_COUNT ,PAY_AMOUNT ,
+ 	REFUND_COUNT ,REFUND_AMOUNT ,FEE_AMOUNT ,SETTL_AMOUT ,CREATE_TIME ,UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CLS_ACCESS_CHECK
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.clear.dto.ClsAccessCheck">
+		select
+		<include refid="Base_Column_List" />
+		from TB_CLS_ACCESS_CHECK b where 1=1
+		<if test="accessCode != null and accessCode != ''">
+			and instr(ACCESS_CODE,#{accessCode,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="uploadStaus != null and uploadStaus != ''">
+			and UPLOAD_STAUS = #{uploadStaus,jdbcType=CHAR}
+		</if>
+		<if test="dealStatus != null and dealStatus != ''">
+			and DEAL_STATUS = #{dealStatus,jdbcType=CHAR}
+		</if>
+		<!-- <if test="amount != null and amount != ''">
+			and AMOUNT<![CDATA[   =  ]]>#{amount}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and AMOUNT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and AMOUNT<![CDATA[   <=  ]]>#{endAmt}
+		</if> -->
+		<if test="startTime !=null and startTime !=''">
+			and FILE_DAY<![CDATA[   >=  ]]>to_char(#{startTime},'YYYYMMDD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and FILE_DAY<![CDATA[   <=  ]]>to_char(#{endTime},'YYYYMMDD')
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+ 
+</mapper>

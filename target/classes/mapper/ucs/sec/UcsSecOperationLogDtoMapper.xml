@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.ucs.sec.dao.UcsSecOperationLogDtoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecOperationLogDto">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+		<result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+		<result column="OPER_TYPE" property="operType" jdbcType="CHAR" />
+		<result column="IP" property="ip" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="dName" property="dName" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, LOGIN_NAME, REAL_NAME, OPER_TYPE, IP, DESCRIPTION, CREATE_TIME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_UCS_SEC_OPERATION_LOG
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from TB_UCS_SEC_OPERATION_LOG
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecOperationLogDto">
+		insert into TB_UCS_SEC_OPERATION_LOG (ID, LOGIN_NAME, REAL_NAME,
+		OPER_TYPE, IP, DESCRIPTION,
+		CREATE_TIME)
+		values (#{identity,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR},
+		#{realName,jdbcType=VARCHAR},
+		#{operType,jdbcType=CHAR}, #{ip,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecOperationLogDto">
+		insert into TB_UCS_SEC_OPERATION_LOG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="identity != null">
+				ID,
+			</if>
+			<if test="loginName != null">
+				LOGIN_NAME,
+			</if>
+			<if test="realName != null">
+				REAL_NAME,
+			</if>
+			<if test="operType != null">
+				OPER_TYPE,
+			</if>
+			<if test="ip != null">
+				IP,
+			</if>
+			<if test="description != null">
+				DESCRIPTION,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="identity != null">
+				#{identity,jdbcType=VARCHAR},
+			</if>
+			<if test="loginName != null">
+				#{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				#{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="operType != null">
+				#{operType,jdbcType=CHAR},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecOperationLogDto">
+		update TB_UCS_SEC_OPERATION_LOG
+		<set>
+			<if test="loginName != null">
+				LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				REAL_NAME = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="operType != null">
+				OPER_TYPE = #{operType,jdbcType=CHAR},
+			</if>
+			<if test="ip != null">
+				IP = #{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecOperationLogDto">
+		update TB_UCS_SEC_OPERATION_LOG
+		set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+		REAL_NAME = #{realName,jdbcType=VARCHAR},
+		OPER_TYPE = #{operType,jdbcType=CHAR},
+		IP = #{ip,jdbcType=VARCHAR},
+		DESCRIPTION = #{description,jdbcType=VARCHAR},
+		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="list"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecOperationLogDto"
+		resultMap="BaseResultMap">
+		select
+		o.LOGIN_NAME,o.REAL_NAME,o.OPER_TYPE,o.IP,o.DESCRIPTION,o.CREATE_TIME,d.DEPARTMENT_NAME
+		as dName from TB_UCS_SEC_OPERATION_LOG o
+		left join TB_UCS_SEC_USER u on o.LOGIN_NAME=u.LOGIN_NAME
+		left join TB_UCS_SEC_DEPARTMENT d on u.DEPARTMENT_ID=d.ID
+		<where>
+			<if test="startTime!=null">
+				and to_char(o.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+			</if>
+			<if test="endTime!=null">
+				and to_char(o.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+			</if>
+			<if test="operType!=null and operType!=''">
+				and o.OPER_TYPE=#{operType,jdbcType=CHAR}
+			</if>
+			<if test="loginName!=null and loginName!=''">
+				and instr(o.LOGIN_NAME, #{loginName}) > 0
+				<!-- and o.LOGIN_NAME like concat(concat('%',#{loginName}),'%') -->
+			</if>
+			<if test="realName != null and realName!=''">
+				and o.REAL_NAME=#{realName,jdbcType=VARCHAR}
+			</if>
+			<if test="ip != null and ip!=''">
+				and IP=#{ip,jdbcType=VARCHAR}
+			</if>
+			<if test="description != null and description!=''">
+				and DESCRIPTION=#{description,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by CREATE_TIME DESC
+	</select>
+</mapper>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayFeeBillQueryMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayFeeBillDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="CHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="CHAR" />
+    <result column="MER_CODE" property="merCode" jdbcType="VARCHAR" />
+    <result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+    <result column="FEE_AMOUNT" property="feeAmount" jdbcType="DECIMAL" />
+    <result column="SEND_ADDRESS" property="sendAddress" jdbcType="VARCHAR" />
+    <result column="PROC_STATE" property="procState" jdbcType="CHAR" />
+    <result column="PAY_STATE" property="payState" jdbcType="CHAR" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="DATE" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_ID, START_DATE, END_DATE, MER_CODE, MER_NAME, FEE_TYPE, FEE_AMOUNT, SEND_ADDRESS, 
+    PROC_STATE, PAY_STATE, FAIL_REASON, COMPLETE_TIME, CREATE_TIME, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_pay_fee_bill
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_pay_fee_bill
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeBillDto" >
+    insert into tb_pay_fee_bill (ID, BUSI_ID, START_DATE, 
+      END_DATE, MER_CODE, MER_NAME, 
+      FEE_TYPE, FEE_AMOUNT, SEND_ADDRESS, 
+      PROC_STATE, PAY_STATE, FAIL_REASON, 
+      COMPLETE_TIME, CREATE_TIME, REMARK
+      )
+    values (#{id,jdbcType=VARCHAR}, #{busiId,jdbcType=CHAR}, #{startDate,jdbcType=CHAR}, 
+      #{endDate,jdbcType=CHAR}, #{merCode,jdbcType=VARCHAR}, #{merName,jdbcType=VARCHAR}, 
+      #{feeType,jdbcType=CHAR}, #{feeAmount,jdbcType=DECIMAL}, #{sendAddress,jdbcType=VARCHAR}, 
+      #{procState,jdbcType=CHAR}, #{payState,jdbcType=CHAR}, #{failReason,jdbcType=VARCHAR}, 
+      #{completeTime,jdbcType=DATE}, #{createTime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeBillDto" >
+    insert into tb_pay_fee_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="merCode != null" >
+        MER_CODE,
+      </if>
+      <if test="merName != null" >
+        MER_NAME,
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE,
+      </if>
+      <if test="feeAmount != null" >
+        FEE_AMOUNT,
+      </if>
+      <if test="sendAddress != null" >
+        SEND_ADDRESS,
+      </if>
+      <if test="procState != null" >
+        PROC_STATE,
+      </if>
+      <if test="payState != null" >
+        PAY_STATE,
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=CHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=CHAR},
+      </if>
+      <if test="merCode != null" >
+        #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merName != null" >
+        #{merName,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="feeAmount != null" >
+        #{feeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="sendAddress != null" >
+        #{sendAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="procState != null" >
+        #{procState,jdbcType=CHAR},
+      </if>
+      <if test="payState != null" >
+        #{payState,jdbcType=CHAR},
+      </if>
+      <if test="failReason != null" >
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeBillDto" >
+    update tb_pay_fee_bill
+    <set >
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate,jdbcType=CHAR},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=CHAR},
+      </if>
+      <if test="merCode != null" >
+        MER_CODE = #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merName != null" >
+        MER_NAME = #{merName,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE = #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="feeAmount != null" >
+        FEE_AMOUNT = #{feeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="sendAddress != null" >
+        SEND_ADDRESS = #{sendAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="procState != null" >
+        PROC_STATE = #{procState,jdbcType=CHAR},
+      </if>
+      <if test="payState != null" >
+        PAY_STATE = #{payState,jdbcType=CHAR},
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeBillDto" >
+    update tb_pay_fee_bill
+    set BUSI_ID = #{busiId,jdbcType=CHAR},
+      START_DATE = #{startDate,jdbcType=CHAR},
+      END_DATE = #{endDate,jdbcType=CHAR},
+      MER_CODE = #{merCode,jdbcType=VARCHAR},
+      MER_NAME = #{merName,jdbcType=VARCHAR},
+      FEE_TYPE = #{feeType,jdbcType=CHAR},
+      FEE_AMOUNT = #{feeAmount,jdbcType=DECIMAL},
+      SEND_ADDRESS = #{sendAddress,jdbcType=VARCHAR},
+      PROC_STATE = #{procState,jdbcType=CHAR},
+      PAY_STATE = #{payState,jdbcType=CHAR},
+      FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      COMPLETE_TIME = #{completeTime,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <select id="list" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeBillDto" resultMap="BaseResultMap">
+	   	select 
+	    <include refid="Base_Column_List" />
+	    from tb_pay_fee_bill
+	    <where>
+	    <if test="merName != null and merName != ''" >
+   	   		instr(MER_NAME, #{merName}) > 0
+    	</if>
+      	<if test="feeType != null and feeType != ''" >
+   	   	and	FEE_TYPE = #{feeType,jdbcType=CHAR}
+      	</if>
+      	<if test="payState != null and payState != ''" >
+   	   	and	PAY_STATE = #{payState,jdbcType=CHAR}
+      	</if>
+      	</where>
+      	order by CREATE_TIME DESC
+   </select>
+   
+    <select id="selectedById" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tb_pay_fee_bill
+		where BUSI_ID = #{busiId,jdbcType=VARCHAR}
+	</select>
+</mapper>

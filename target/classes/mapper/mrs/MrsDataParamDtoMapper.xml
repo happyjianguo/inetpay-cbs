@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsDataParamDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsDataParamDto" >
+    <result column="PARAM_CODE" property="paramCode" jdbcType="VARCHAR" />
+    <result column="PARAM_NAME" property="paramName" jdbcType="VARCHAR" />
+    <result column="PARAM_TYPE" property="paramType" jdbcType="CHAR" />
+  </resultMap>
+   <resultMap id="KeyValueMap" type="com.ylink.inetpay.common.project.portal.vo.customer.DataParamVO" >
+    <result column="PARAM_CODE" property="value" jdbcType="VARCHAR" />
+    <result column="PARAM_NAME" property="label" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PARAM_CODE, PARAM_NAME, PARAM_TYPE
+  </sql>
+  <sql id="Key_Value_List" >
+    PARAM_CODE, PARAM_NAME
+  </sql>
+  <select id="list" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_DATA_PARAM 
+    where 1 = 1
+    <if test="paramName != null and paramName != ''" >
+    	and instr(PARAM_NAME, #{paramName,jdbcType=VARCHAR}) > 0
+   		<!-- and PARAM_NAME like concat('%' ,concat(#{paramName,jdbcType=VARCHAR}, '%')) -->
+    </if>
+    <if test="paramCode != null and paramCode != ''" >
+   		and PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+    </if>
+    <if test="paramType != null and paramType != ''" >
+   		and PARAM_TYPE = #{paramType,jdbcType=CHAR}
+    </if>
+    ORDER BY PARAM_CODE ASC
+  </select>
+  <select id="findByCodeType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from 
+    	TB_MRS_DATA_PARAM 
+    where 
+    	PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+   		and PARAM_TYPE = #{paramType,jdbcType=CHAR}
+  </select>
+  <select id="findByType" resultMap="KeyValueMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Key_Value_List" />
+    from 
+    	TB_MRS_DATA_PARAM 
+    where 
+   		PARAM_TYPE = #{paramType,jdbcType=CHAR}
+  </select>
+</mapper>

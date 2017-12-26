@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActInterestDateDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActInterestDateDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NO" property="subjectNo" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+    <result column="LAST_INTEREST_DAY" property="lastInterestDay" jdbcType="CHAR" />
+    <result column="NEXT_INTEREST_DAY" property="nextInterestDay" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ACCOUNT_ID, ACCOUNT_NAME, CUST_ID, CUST_NAME, SUBJECT_NO, SUBJECT_NAME, DEAL_STATUS, 
+    LAST_INTEREST_DAY, NEXT_INTEREST_DAY, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_INTEREST_DATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_INTEREST_DATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActInterestDateDto" >
+    insert into TB_ACT_INTEREST_DATE (ID, ACCOUNT_ID, ACCOUNT_NAME, 
+      CUST_ID, CUST_NAME, SUBJECT_NO, 
+      SUBJECT_NAME, DEAL_STATUS, LAST_INTEREST_DAY, 
+      NEXT_INTEREST_DAY, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, #{subjectNo,jdbcType=VARCHAR}, 
+      #{subjectName,jdbcType=VARCHAR}, #{dealStatus,jdbcType=CHAR}, #{lastInterestDay,jdbcType=CHAR}, 
+      #{nextInterestDay,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActInterestDateDto" >
+    insert into TB_ACT_INTEREST_DATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="accountName != null" >
+        ACCOUNT_NAME,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="subjectNo != null" >
+        SUBJECT_NO,
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME,
+      </if>
+      <if test="dealStatus != null" >
+        DEAL_STATUS,
+      </if>
+      <if test="lastInterestDay != null" >
+        LAST_INTEREST_DAY,
+      </if>
+      <if test="nextInterestDay != null" >
+        NEXT_INTEREST_DAY,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null" >
+        #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealStatus != null" >
+        #{dealStatus,jdbcType=CHAR},
+      </if>
+      <if test="lastInterestDay != null" >
+        #{lastInterestDay,jdbcType=CHAR},
+      </if>
+      <if test="nextInterestDay != null" >
+        #{nextInterestDay,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActInterestDateDto" >
+    update TB_ACT_INTEREST_DATE
+    <set >
+      <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null" >
+        SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealStatus != null" >
+        DEAL_STATUS = #{dealStatus,jdbcType=CHAR},
+      </if>
+      <if test="lastInterestDay != null" >
+        LAST_INTEREST_DAY = #{lastInterestDay,jdbcType=CHAR},
+      </if>
+      <if test="nextInterestDay != null" >
+        NEXT_INTEREST_DAY = #{nextInterestDay,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActInterestDateDto" >
+    update TB_ACT_INTEREST_DATE
+    set ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      DEAL_STATUS = #{dealStatus,jdbcType=CHAR},
+      LAST_INTEREST_DAY = #{lastInterestDay,jdbcType=CHAR},
+      NEXT_INTEREST_DAY = #{nextInterestDay,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.account.dto.ActInterestDateDto" resultMap="BaseResultMap">
+  	select * from TB_ACT_INTEREST_DATE 
+  	<where>
+  		<if test="accountId != null and accountId != ''">
+  			and instr(ACCOUNT_ID, #{accountId,jdbcType=VARCHAR}) > 0
+  			<!-- ACCOUNT_ID = concat('%',concat(#{accountId,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="accountName != null and accountName != ''">
+  			and instr(ACCOUNT_NAME, #{accountName,jdbcType=VARCHAR}) > 0
+  			<!-- and ACCOUNT_NAME = concat('%',concat(#{accountName,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="custId != null and custId != ''">
+  			and instr(CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+  			<!-- and CUST_ID = concat('%',concat(#{custId,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="custName != null and custName != ''">
+  			and instr(CUST_NAME, #{custName,jdbcType=VARCHAR}) > 0
+  			<!-- and CUST_NAME = concat('%',concat(#{custName,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="subjectNo != null and subjectNo != ''">
+  			and instr(SUBJECT_NO, #{subjectNo,jdbcType=VARCHAR}) > 0
+  			<!-- and SUBJECT_NO = concat('%',concat(#{subjectNo,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="subjectName != null and subjectName != ''">
+  			and instr(SUBJECT_NAME, #{subjectName,jdbcType=VARCHAR}) > 0
+  			<!-- and SUBJECT_NAME = concat('%',concat(#{subjectName,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="dealStatus != null">
+  			and DEAL_STATUS = #{dealStatus,jdbcType=CHAR}
+  		</if>
+  		<if test="lastInterestDay != null and lastInterestDay != ''">
+  			and LAST_INTEREST_DAY = #{lastInterestDay,jdbcType=CHAR}
+  		</if>
+  		<if test="nextInterestDay != null and nextInterestDay != ''">
+  			and NEXT_INTEREST_DAY = #{nextInterestDay,jdbcType=CHAR}
+  		</if>
+  	</where>
+  </select>
+</mapper>

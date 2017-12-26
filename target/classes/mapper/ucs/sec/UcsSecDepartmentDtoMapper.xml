@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.ucs.sec.dao.UcsSecDepartmentDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecDepartmentDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT_NAME" property="departmentName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="SEQ" property="seq" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATER_NAME" property="createrName" jdbcType="VARCHAR" />
+    <result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+    <result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="BaseResultMapWithParent" extends="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecDepartmentDto" >
+    <result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, DEPARTMENT_NAME, PARENT_ID, SEQ, CREATE_TIME, REMARK, CREATER, CREATER_NAME, 
+    REVISER, REVISER_NAME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMapWithParent" parameterType="java.lang.String" >
+    select 
+    	c.* ,p.DEPARTMENT_NAME as PARENT_NAME
+    from TB_UCS_SEC_DEPARTMENT c 
+    left join TB_UCS_SEC_DEPARTMENT p on p.id = c.PARENT_ID
+    where c.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_UCS_SEC_DEPARTMENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecDepartmentDto" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+    	select sys_guid() from dual 
+    </selectKey>
+    insert into TB_UCS_SEC_DEPARTMENT (ID, DEPARTMENT_NAME, PARENT_ID, 
+      SEQ, CREATE_TIME, REMARK, 
+      CREATER, CREATER_NAME, REVISER, 
+      REVISER_NAME, UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{seq,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{creater,jdbcType=VARCHAR}, #{createrName,jdbcType=VARCHAR}, #{reviser,jdbcType=VARCHAR}, 
+      #{reviserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecDepartmentDto" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+    	select sys_guid() from dual 
+    </selectKey>
+    insert into TB_UCS_SEC_DEPARTMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="departmentName != null" >
+        DEPARTMENT_NAME,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME,
+      </if>
+      <if test="reviser != null" >
+        REVISER,
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviser != null" >
+        #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecDepartmentDto" >
+    update TB_UCS_SEC_DEPARTMENT
+    <set >
+      <if test="departmentName != null" >
+        DEPARTMENT_NAME = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        SEQ = #{seq,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviser != null" >
+        REVISER = #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecDepartmentDto" >
+    update TB_UCS_SEC_DEPARTMENT
+    set DEPARTMENT_NAME = #{departmentName,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      SEQ = #{seq,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      REVISER = #{reviser,jdbcType=VARCHAR},
+      REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getTopDepts" resultMap="BaseResultMap">
+  	select * from TB_UCS_SEC_DEPARTMENT where PARENT_ID is null or PARENT_ID = '' 
+  </select>
+  <select id="getChildrenDepts" parameterType="string" resultMap="BaseResultMapWithParent">
+  	select 
+    	c.* ,p.DEPARTMENT_NAME as PARENT_NAME
+    from TB_UCS_SEC_DEPARTMENT c 
+    left join TB_UCS_SEC_DEPARTMENT p on p.id = c.PARENT_ID
+  	where c.PARENT_ID = #{parentId,jdbcType=VARCHAR} order by c.SEQ asc 
+  </select>
+  <select id="getChildrenDeptsByPids" resultMap="BaseResultMap">
+  	select * from TB_UCS_SEC_DEPARTMENT where PARENT_ID in 
+  		<foreach collection="pids" open="(" separator="," close=")" item="item">
+  			#{item }
+  		</foreach>
+  	order by SEQ asc 
+  </select>
+</mapper>

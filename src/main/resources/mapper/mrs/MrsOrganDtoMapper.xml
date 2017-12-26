@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsOrganDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsOrganDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_SHORT_NAME" property="customerShortName" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ENAME" property="customerEname" jdbcType="VARCHAR" />
+    <result column="NATIONALITY_CODE" property="nationalityCode" jdbcType="VARCHAR" />
+    <result column="SOCIAL_CREDIT_CODE" property="socialCreditCode" jdbcType="VARCHAR" />
+    <result column="ORGANIZE_CODE" property="organizeCode" jdbcType="VARCHAR" />
+    <result column="REVENUE_CODE" property="revenueCode" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENCE" property="businessLicence" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENCE_END_DATE" property="businessLicenceEndDate" jdbcType="CHAR" />
+    <result column="SOCIAL_CREDIT_FILEPATH" property="socialCreditFilepath" jdbcType="VARCHAR" />
+    <result column="ORGANIZE_FILEPATH" property="organizeFilepath" jdbcType="VARCHAR" />
+    <result column="REVENUE_FILEPATH" property="revenueFilepath" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENCE_FILEPATH" property="businessLicenceFilepath" jdbcType="VARCHAR" />
+    <result column="BUSINESS_SORT_CODE" property="businessSortCode" jdbcType="CHAR" />
+    <result column="BUSINESS_SORT_SUB_CODE" property="businessSortSubCode" jdbcType="CHAR" />
+    <result column="REGISTERED_ADDR" property="registeredAddr" jdbcType="VARCHAR" />
+    <result column="AUTH_PERSON_NAME" property="authPersonName" jdbcType="VARCHAR" />
+    <result column="AUTH_PERSON_IDENTIFY_TYPE_CODE" property="authPersonIdentifyTypeCode" jdbcType="VARCHAR" />
+    <result column="AUTH_PERSON_IDENTIFY_NO" property="authPersonIdentifyNo" jdbcType="VARCHAR" />
+    <result column="CONTACTS_NAME" property="contactsName" jdbcType="VARCHAR" />
+    <result column="CONTACTS_MOBILE" property="contactsMobile" jdbcType="VARCHAR" />
+    <result column="CONTACTS_TEL" property="contactsTel" jdbcType="VARCHAR" />
+    <result column="CONTACTS_SPARE_TEL" property="contactsSpareTel" jdbcType="VARCHAR" />
+    <result column="CONTACTS_FAX" property="contactsFax" jdbcType="VARCHAR" />
+    <result column="CONTACTS_EMAIL" property="contactsEmail" jdbcType="VARCHAR" />
+    <result column="CONTACTS_ADDR" property="contactsAddr" jdbcType="VARCHAR" />
+    <result column="CONTACTS_ZIP" property="contactsZip" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPERATOR" property="createOperator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_OPERATOR" property="updateOperator" jdbcType="VARCHAR" />
+    <result column="OTHER_FILEPATH" property="otherFilepath" jdbcType="VARCHAR" />
+    <result column="ORGAN_OTHER_CODE" property="organOtherCode" jdbcType="VARCHAR" />
+    <result column="CREDENTIALS_TYPE" property="credentialsType" jdbcType="VARCHAR" />
+    <result column="CREDENTIALS_NUMBER" property="credentialsNumber" jdbcType="VARCHAR" />
+    <result column="INTERNET_ADDRESS" property="internetAddress" jdbcType="VARCHAR" />
+    
+    <result column="EXT_ORG_ID" property="extOrgId" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="PageBaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsOrganDto" extends="BaseResultMap">
+    <result column="AUTH_STATUS" property="authStatus" jdbcType="CHAR" />
+    <result column="ACCOUNT_SOURCE" property="accountSource" jdbcType="CHAR" />
+    <result column="ACCOUNT_STATUS" property="accountStatus" jdbcType="CHAR" />
+    <result column="auditId" property="auditId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="BaseOrganVoResultMap" type="com.ylink.inetpay.common.project.portal.vo.customer.OrganVO">
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_SHORT_NAME" property="customerShortName" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ENAME" property="customerEname" jdbcType="VARCHAR" />
+    
+    <result column="NATIONALITY_CODE" property="nationalityCode" jdbcType="VARCHAR" />
+    <result column="NATIONALITY_NAME" property="nationalityName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_SORT_CODE" property="businessSortCode" jdbcType="CHAR" />
+    <result column="BUSINESS_SORT_SUB_CODE" property="businessSortSubCode" jdbcType="CHAR" />
+    <result column="REGISTERED_ADDR" property="registeredAddr" jdbcType="VARCHAR" />
+    
+    <result column="AUTH_PERSON_NAME" property="authPersonName" jdbcType="VARCHAR" />
+    <result column="AUTH_PERSON_IDENTIFY_TYPE_CODE" property="authPersonIdentifyTypeCode" jdbcType="VARCHAR" />
+    <result column="AUTH_PERSON_IDENTIFY_NO" property="authPersonIdentifyNo" jdbcType="VARCHAR" />
+    <result column="CONTACTS_NAME" property="contactsName" jdbcType="VARCHAR" />
+    <result column="CONTACTS_MOBILE" property="contactsMobile" jdbcType="VARCHAR" />
+
+    <result column="CONTACTS_TEL" property="contactsTel" jdbcType="VARCHAR" />
+    <result column="CONTACTS_SPARE_TEL" property="contactsSpareTel" jdbcType="VARCHAR" />
+    <result column="CONTACTS_FAX" property="contactsFax" jdbcType="VARCHAR" />
+    <result column="CONTACTS_EMAIL" property="contactsEmail" jdbcType="VARCHAR" />
+    <result column="CONTACTS_ADDR" property="contactsAddr" jdbcType="VARCHAR" />
+
+    <result column="CONTACTS_ZIP" property="contactsZip" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, CUSTOMER_CODE, CUSTOMER_NAME, CUSTOMER_SHORT_NAME, CUSTOMER_ENAME, 
+    NATIONALITY_CODE, SOCIAL_CREDIT_CODE, ORGANIZE_CODE, REVENUE_CODE, BUSINESS_LICENCE, 
+    BUSINESS_LICENCE_END_DATE, SOCIAL_CREDIT_FILEPATH, ORGANIZE_FILEPATH, REVENUE_FILEPATH, BUSINESS_LICENCE_FILEPATH, 
+    BUSINESS_SORT_CODE, BUSINESS_SORT_SUB_CODE, REGISTERED_ADDR, AUTH_PERSON_NAME, AUTH_PERSON_IDENTIFY_TYPE_CODE, AUTH_PERSON_IDENTIFY_NO, 
+    CONTACTS_NAME, CONTACTS_MOBILE, CONTACTS_TEL, CONTACTS_SPARE_TEL, CONTACTS_FAX, 
+    CONTACTS_EMAIL, CONTACTS_ADDR, CONTACTS_ZIP, CREATE_TIME, CREATE_OPERATOR, 
+    UPDATE_TIME, UPDATE_OPERATOR, OTHER_FILEPATH,ORGAN_OTHER_CODE,
+    CREDENTIALS_TYPE, CREDENTIALS_NUMBER,INTERNET_ADDRESS
+  </sql>
+  <sql id="Base_Column_REL_List" >
+    O.ID, O.CUST_ID, O.CUSTOMER_CODE, O.CUSTOMER_NAME, O.CUSTOMER_SHORT_NAME, O.CUSTOMER_ENAME, 
+    O.NATIONALITY_CODE, O.SOCIAL_CREDIT_CODE, O.BUSINESS_SORT_SUB_CODE, O.ORGANIZE_CODE, O.REVENUE_CODE, O.BUSINESS_LICENCE, 
+    O.BUSINESS_LICENCE_END_DATE, O.SOCIAL_CREDIT_FILEPATH, O.ORGANIZE_FILEPATH, O.REVENUE_FILEPATH, O.BUSINESS_LICENCE_FILEPATH, O.BUSINESS_SORT_CODE, O.REGISTERED_ADDR, 
+    O.AUTH_PERSON_NAME, O.AUTH_PERSON_IDENTIFY_TYPE_CODE, O.AUTH_PERSON_IDENTIFY_NO, O.CONTACTS_NAME, 
+    O.CONTACTS_MOBILE, O.CONTACTS_TEL, O.CONTACTS_SPARE_TEL, O.CONTACTS_FAX, O.CONTACTS_EMAIL, 
+    O.CONTACTS_ADDR, O.CONTACTS_ZIP, O.CREATE_TIME, O.CREATE_OPERATOR, O.UPDATE_TIME, 
+    O.UPDATE_OPERATOR, O.CREDENTIALS_TYPE, O.CREDENTIALS_NUMBER,O.INTERNET_ADDRESS
+  </sql>
+  <sql id="Base_OrganVo_Column_List" >
+    O.ID, O.CUST_ID, O.CUSTOMER_NAME, O.CUSTOMER_SHORT_NAME, O.CUSTOMER_ENAME, 
+    O.NATIONALITY_CODE, D.PARAM_NAME AS NATIONALITY_NAME, O.BUSINESS_SORT_CODE, O.BUSINESS_SORT_SUB_CODE, 
+    O.REGISTERED_ADDR,  O.AUTH_PERSON_NAME, 
+    O.AUTH_PERSON_IDENTIFY_TYPE_CODE, O.AUTH_PERSON_IDENTIFY_NO, O.CONTACTS_NAME, O.CONTACTS_MOBILE, O.CONTACTS_TEL, 
+    O.CONTACTS_SPARE_TEL, O.CONTACTS_FAX, O.CONTACTS_EMAIL, O.CONTACTS_ADDR, O.CONTACTS_ZIP, 
+    O.CREDENTIALS_TYPE, O.CREDENTIALS_NUMBER,O.INTERNET_ADDRESS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ORGAN
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findByExOrgNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_REL_List" />
+    from TB_MRS_ORGAN O, TB_MRS_ACCOUNT A
+    where O.CUST_ID = A.CUST_ID AND A.EXT_ORG_ID = #{exOrgNo,jdbcType=VARCHAR}
+  </select>
+  <select id="findBy3Element" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ORGAN
+    where CUSTOMER_NAME = #{name,jdbcType=VARCHAR} and  
+    ( 1 = 2 
+	    <if test="socialCreditCode != null" >
+	    	OR SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="organizeCode != null" >
+	    	OR ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="revenueCode != null" >
+	    	OR REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="businessLicence != null" >
+	    	OR BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR} 
+	    </if>
+    )
+  </select>
+  <!-- 根据三要素，一户通状态查询机构信息 -->
+  <select id="findBy3ElementNoEff" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_REL_List" />
+    from TB_MRS_ORGAN O, TB_MRS_ACCOUNT A
+    where O.CUSTOMER_NAME = #{name,jdbcType=VARCHAR} and O.CUST_ID = A.CUST_ID 
+    and A.ACCOUNT_STATUS !='2' 
+     and 
+    ( 1 = 2 
+	    <if test="socialCreditCode != null" >
+	    	OR O.SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organizeCode != null" >
+	    	OR O.ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="revenueCode != null" >
+	    	OR O.REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="businessLicence != null" >
+	    	OR O.BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organOtherCode != null" >
+	    	OR O.ORGAN_OTHER_CODE = #{organOtherCode,jdbcType=VARCHAR}
+	    </if>
+    )
+  </select>
+  <!-- 根据机构要素，查询不为注销状态，且不等于传入一户通号码的机构信息 -->
+  <select id="findBy3ElementNoCustIdEff" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_REL_List" />
+    from TB_MRS_ORGAN O, TB_MRS_ACCOUNT A
+    where O.CUSTOMER_NAME = #{name,jdbcType=VARCHAR} and O.CUST_ID = A.CUST_ID 
+    and A.ACCOUNT_STATUS !='2' 
+    and A.CUST_ID != #{custId,jdbcType=VARCHAR} 
+     and 
+    ( 1 = 2 
+	    <if test="socialCreditCode != null" >
+	    	OR O.SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organizeCode != null" >
+	    	OR O.ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="revenueCode != null" >
+	    	OR O.REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="businessLicence != null" >
+	    	OR O.BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organOtherCode != null" >
+	    	OR O.ORGAN_OTHER_CODE = #{organOtherCode,jdbcType=VARCHAR}
+	    </if>
+    )
+  </select>
+  <!-- 根据三要素查询不为注销状态的机构信息 -->
+  <select id="findBy3ElementAndAcountStatus" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_REL_List" />
+    from TB_MRS_ORGAN O, TB_MRS_ACCOUNT A
+    where O.CUSTOMER_NAME = #{name,jdbcType=VARCHAR} and O.CUST_ID = A.CUST_ID 
+    and A.ACCOUNT_STATUS = #{accountStatus,jdbcType=CHAR}
+     and 
+    ( 1 = 2 
+	    <if test="socialCreditCode != null" >
+	    	OR O.SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organizeCode != null" >
+	    	OR O.ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="revenueCode != null" >
+	    	OR O.REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="businessLicence != null" >
+	    	OR O.BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organOtherCode != null" >
+	    	OR O.ORGAN_OTHER_CODE = #{organOtherCode,jdbcType=VARCHAR}
+	    </if>
+    )
+  </select>
+  
+  <select id="findByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ORGAN
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  <select id="findOrganVoByCustId" resultMap="BaseOrganVoResultMap">
+    SELECT 
+    	<include refid="Base_OrganVo_Column_List" /> 
+    FROM 
+    	TB_MRS_ORGAN O LEFT JOIN TB_MRS_DATA_PARAM D ON (O.NATIONALITY_CODE = D.PARAM_CODE AND D.PARAM_TYPE = '01')
+		WHERE 
+    		CUST_ID = #{custId,jdbcType=VARCHAR}  
+  </select>
+  <select id="findOrganByParams" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_REL_List" />
+    from TB_MRS_ORGAN O, TB_MRS_ACCOUNT A
+    where O.CUST_ID = A.CUST_ID AND 
+    	A.CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR} AND 
+    	A.ACCOUNT_STATUS = #{accountStatus,jdbcType=VARCHAR}
+  </select>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsOrganDto" resultMap="PageBaseResultMap">
+    select 
+    	<include refid="Base_Column_REL_List" />,A.ACCOUNT_SOURCE, A.AUTH_STATUS, 
+    	A.ACCOUNT_STATUS,A.EXT_ORG_ID AS EXT_ORG_ID
+    	<!-- O.ID, O.CUSTOMER_NAME, O.CUST_ID, A.ACCOUNT_SOURCE, A.AUTH_STATUS, 
+    	A.ACCOUNT_STATUS, O.CREATE_TIME ,A.EXT_ORG_ID AS EXT_ORG_ID -->
+    from TB_MRS_ORGAN O, TB_MRS_ACCOUNT A
+    where O.CUST_ID = A.CUST_ID 
+   	   <if test="customerName != null and customerName != ''" >
+   	   	and	instr(O.CUSTOMER_NAME, #{customerName,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="custId != null and custId != ''" >
+   	   	and	instr(O.CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="authStatus != null and authStatus != ''">
+        and A.AUTH_STATUS = #{authStatus,jdbcType=CHAR}
+      </if>
+      <if test="accountSource != null and accountSource != ''">
+        and A.ACCOUNT_SOURCE = #{accountSource,jdbcType=CHAR}
+      </if>
+      <if test="accountStatus != null and accountStatus != ''">
+        and A.ACCOUNT_STATUS = #{accountStatus,jdbcType=CHAR}
+      </if>
+      <if test="customerType != null and customerType != ''">
+        and A.CUSTOMER_TYPE = #{customerType,jdbcType=CHAR}
+      </if>
+      <if test="extOrgId != null and extOrgId != ''">
+        and A.EXT_ORG_ID = #{extOrgId,jdbcType=CHAR}
+      </if>
+      ORDER BY O.CREATE_TIME DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_ORGAN
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsOrganDto" >
+    insert into TB_MRS_ORGAN (ID, CUST_ID, CUSTOMER_CODE, 
+      CUSTOMER_NAME, CUSTOMER_SHORT_NAME, CUSTOMER_ENAME, 
+      NATIONALITY_CODE, SOCIAL_CREDIT_CODE, ORGANIZE_CODE, 
+      REVENUE_CODE, BUSINESS_LICENCE, BUSINESS_LICENCE_END_DATE,
+      SOCIAL_CREDIT_FILEPATH, ORGANIZE_FILEPATH, REVENUE_FILEPATH, 
+      BUSINESS_LICENCE_FILEPATH, BUSINESS_SORT_CODE, BUSINESS_SORT_SUB_CODE,
+      REGISTERED_ADDR, AUTH_PERSON_NAME, AUTH_PERSON_IDENTIFY_TYPE_CODE, 
+      AUTH_PERSON_IDENTIFY_NO, CONTACTS_NAME, CONTACTS_MOBILE, 
+      CONTACTS_TEL, CONTACTS_SPARE_TEL, CONTACTS_FAX, 
+      CONTACTS_EMAIL, CONTACTS_ADDR, CONTACTS_ZIP, 
+      CREATE_TIME, CREATE_OPERATOR, 
+      UPDATE_TIME, UPDATE_OPERATOR,OTHER_FILEPATH,ORGAN_OTHER_CODE,
+      CREDENTIALS_TYPE, CREDENTIALS_NUMBER,INTERNET_ADDRESS)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{customerCode,jdbcType=VARCHAR}, 
+      #{customerName,jdbcType=VARCHAR}, #{customerShortName,jdbcType=VARCHAR}, #{customerEname,jdbcType=VARCHAR}, 
+      #{nationalityCode,jdbcType=VARCHAR}, #{socialCreditCode,jdbcType=VARCHAR}, #{organizeCode,jdbcType=VARCHAR}, 
+      #{revenueCode,jdbcType=VARCHAR}, #{businessLicence,jdbcType=VARCHAR}, #{businessLicenceEndDate,jdbcType=CHAR}, 
+      #{socialCreditFilepath,jdbcType=VARCHAR}, #{organizeFilepath,jdbcType=VARCHAR}, 
+      #{revenueFilepath,jdbcType=VARCHAR}, 
+      #{businessLicenceFilepath,jdbcType=VARCHAR}, #{businessSortCode,jdbcType=CHAR}, #{businessSortSubCode,jdbcType=CHAR},
+      #{registeredAddr,jdbcType=VARCHAR}, #{authPersonName,jdbcType=VARCHAR}, #{authPersonIdentifyTypeCode,jdbcType=VARCHAR}, 
+      #{authPersonIdentifyNo,jdbcType=VARCHAR}, #{contactsName,jdbcType=VARCHAR}, #{contactsMobile,jdbcType=VARCHAR}, 
+      #{contactsTel,jdbcType=VARCHAR}, #{contactsSpareTel,jdbcType=VARCHAR}, #{contactsFax,jdbcType=VARCHAR}, 
+      #{contactsEmail,jdbcType=VARCHAR}, #{contactsAddr,jdbcType=VARCHAR}, #{contactsZip,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateOperator,jdbcType=VARCHAR}, #{otherFilepath,jdbcType=VARCHAR},#{organOtherCode,jdbcType=VARCHAR},
+      #{credentialsType,jdbcType=VARCHAR}, #{credentialsNumber,jdbcType=VARCHAR}, #{internetAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsOrganDto" >
+    insert into TB_MRS_ORGAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="customerCode != null" >
+        CUSTOMER_CODE,
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME,
+      </if>
+      <if test="customerShortName != null" >
+        CUSTOMER_SHORT_NAME,
+      </if>
+      <if test="customerEname != null" >
+        CUSTOMER_ENAME,
+      </if>
+      <if test="nationalityCode != null" >
+        NATIONALITY_CODE,
+      </if>
+      <if test="socialCreditCode != null" >
+        SOCIAL_CREDIT_CODE,
+      </if>
+      <if test="organizeCode != null" >
+        ORGANIZE_CODE,
+      </if>
+      <if test="revenueCode != null" >
+        REVENUE_CODE,
+      </if>
+      <if test="businessLicence != null" >
+        BUSINESS_LICENCE,
+      </if>
+      <if test="businessLicenceEndDate != null" >
+        BUSINESS_LICENCE_END_DATE,
+      </if>
+      <if test="socialCreditFilepath != null" >
+        SOCIAL_CREDIT_FILEPATH,
+      </if>
+      <if test="organizeFilepath != null" >
+        ORGANIZE_FILEPATH,
+      </if>
+      <if test="revenueFilepath != null" >
+        REVENUE_FILEPATH,
+      </if>
+      <if test="businessLicenceFilepath != null" >
+        BUSINESS_LICENCE_FILEPATH,
+      </if>
+      <if test="businessSortCode != null" >
+        BUSINESS_SORT_CODE,
+      </if>
+      <if test="businessSortSubCode != null" >
+        BUSINESS_SORT_SUB_CODE,
+      </if>
+      <if test="registeredAddr != null" >
+        REGISTERED_ADDR,
+      </if>
+      <if test="authPersonName != null" >
+        AUTH_PERSON_NAME,
+      </if>
+      <if test="authPersonIdentifyTypeCode != null" >
+        AUTH_PERSON_IDENTIFY_TYPE_CODE,
+      </if>
+      <if test="authPersonIdentifyNo != null" >
+        AUTH_PERSON_IDENTIFY_NO,
+      </if>
+      <if test="contactsName != null" >
+        CONTACTS_NAME,
+      </if>
+      <if test="contactsMobile != null" >
+        CONTACTS_MOBILE,
+      </if>
+      <if test="contactsTel != null" >
+        CONTACTS_TEL,
+      </if>
+      <if test="contactsSpareTel != null" >
+        CONTACTS_SPARE_TEL,
+      </if>
+      <if test="contactsFax != null" >
+        CONTACTS_FAX,
+      </if>
+      <if test="contactsEmail != null" >
+        CONTACTS_EMAIL,
+      </if>
+      <if test="contactsAddr != null" >
+        CONTACTS_ADDR,
+      </if>
+      <if test="contactsZip != null" >
+        CONTACTS_ZIP,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateOperator != null" >
+        UPDATE_OPERATOR,
+      </if>
+      <if test="otherFilepath != null" >
+        OTHER_FILEPATH,
+      </if>
+      <if test="credentialsType != null" >
+        CREDENTIALS_TYPE,
+      </if>
+      <if test="credentialsNumber != null" >
+        CREDENTIALS_NUMBER,
+      </if>
+      <if test="internetAddress != null" >
+        INTERNET_ADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCode != null" >
+        #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerShortName != null" >
+        #{customerShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerEname != null" >
+        #{customerEname,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityCode != null" >
+        #{nationalityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="socialCreditCode != null" >
+        #{socialCreditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeCode != null" >
+        #{organizeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueCode != null" >
+        #{revenueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicence != null" >
+        #{businessLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceEndDate != null" >
+        #{businessLicenceEndDate,jdbcType=CHAR},
+      </if>
+      <if test="socialCreditFilepath != null" >
+        #{socialCreditFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeFilepath != null" >
+        #{organizeFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueFilepath != null" >
+        #{revenueFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceFilepath != null" >
+        #{businessLicenceFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="businessSortCode != null" >
+        #{businessSortCode,jdbcType=CHAR},
+      </if>
+      <if test="businessSortSubCode != null" >
+        #{businessSortSubCode,jdbcType=CHAR},
+      </if>
+      <if test="registeredAddr != null" >
+        #{registeredAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="authPersonName != null" >
+        #{authPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="authPersonIdentifyTypeCode != null" >
+        #{authPersonIdentifyTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authPersonIdentifyNo != null" >
+        #{authPersonIdentifyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsName != null" >
+        #{contactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsMobile != null" >
+        #{contactsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsTel != null" >
+        #{contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsSpareTel != null" >
+        #{contactsSpareTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsFax != null" >
+        #{contactsFax,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsEmail != null" >
+        #{contactsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsAddr != null" >
+        #{contactsAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsZip != null" >
+        #{contactsZip,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFilepath != null" >
+        #{otherFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsType != null" >
+        #{credentialsType,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsNumber != null" >
+        #{credentialsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="internetAddress != null" >
+        #{internetAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsOrganDto" >
+    update TB_MRS_ORGAN
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCode != null" >
+        CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerShortName != null" >
+        CUSTOMER_SHORT_NAME = #{customerShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerEname != null" >
+        CUSTOMER_ENAME = #{customerEname,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityCode != null" >
+        NATIONALITY_CODE = #{nationalityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="socialCreditCode != null" >
+        SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeCode != null" >
+        ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueCode != null" >
+        REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicence != null" >
+        BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceEndDate != null" >
+        BUSINESS_LICENCE_END_DATE = #{businessLicenceEndDate,jdbcType=CHAR},
+      </if>
+      <if test="socialCreditFilepath != null" >
+        SOCIAL_CREDIT_FILEPATH = #{socialCreditFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeFilepath != null" >
+        ORGANIZE_FILEPATH = #{organizeFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueFilepath != null" >
+        REVENUE_FILEPATH = #{revenueFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceFilepath != null" >
+        BUSINESS_LICENCE_FILEPATH = #{businessLicenceFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="businessSortCode != null" >
+        BUSINESS_SORT_CODE = #{businessSortCode,jdbcType=CHAR},
+      </if>
+      <if test="businessSortSubCode != null" >
+        BUSINESS_SORT_SUB_CODE = #{businessSortSubCode,jdbcType=CHAR},
+      </if>
+      <if test="registeredAddr != null" >
+        REGISTERED_ADDR = #{registeredAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="authPersonName != null" >
+        AUTH_PERSON_NAME = #{authPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="authPersonIdentifyTypeCode != null" >
+        AUTH_PERSON_IDENTIFY_TYPE_CODE = #{authPersonIdentifyTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authPersonIdentifyNo != null" >
+        AUTH_PERSON_IDENTIFY_NO = #{authPersonIdentifyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsName != null" >
+        CONTACTS_NAME = #{contactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsMobile != null" >
+        CONTACTS_MOBILE = #{contactsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsTel != null" >
+        CONTACTS_TEL = #{contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsSpareTel != null" >
+        CONTACTS_SPARE_TEL = #{contactsSpareTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsFax != null" >
+        CONTACTS_FAX = #{contactsFax,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsEmail != null" >
+        CONTACTS_EMAIL = #{contactsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsAddr != null" >
+        CONTACTS_ADDR = #{contactsAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsZip != null" >
+        CONTACTS_ZIP = #{contactsZip,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFilepath != null" >
+        OTHER_FILEPATH = #{otherFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="organOtherCode != null" >
+        ORGAN_OTHER_CODE = #{organOtherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsType != null" >
+        CREDENTIALS_TYPE = #{credentialsType,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsNumber != null" >
+        CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="internetAddress != null" >
+        INTERNET_ADDRESS = #{internetAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsOrganDto" >
+    update TB_MRS_ORGAN
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      CUSTOMER_SHORT_NAME = #{customerShortName,jdbcType=VARCHAR},
+      CUSTOMER_ENAME = #{customerEname,jdbcType=VARCHAR},
+      NATIONALITY_CODE = #{nationalityCode,jdbcType=VARCHAR},
+      SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR},
+      ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR},
+      REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR},
+      BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR},
+      BUSINESS_LICENCE_END_DATE = #{businessLicenceEndDate,jdbcType=CHAR},
+      SOCIAL_CREDIT_FILEPATH = #{socialCreditFilepath,jdbcType=VARCHAR},
+      ORGANIZE_FILEPATH = #{organizeFilepath,jdbcType=VARCHAR},
+      REVENUE_FILEPATH = #{revenueFilepath,jdbcType=VARCHAR},
+      BUSINESS_LICENCE_FILEPATH = #{businessLicenceFilepath,jdbcType=VARCHAR},
+      BUSINESS_SORT_CODE = #{businessSortCode,jdbcType=CHAR},
+      BUSINESS_SORT_SUB_CODE = #{businessSortSubCode,jdbcType=CHAR},
+      REGISTERED_ADDR = #{registeredAddr,jdbcType=VARCHAR},
+      AUTH_PERSON_NAME = #{authPersonName,jdbcType=VARCHAR},
+      AUTH_PERSON_IDENTIFY_TYPE_CODE = #{authPersonIdentifyTypeCode,jdbcType=VARCHAR},
+      AUTH_PERSON_IDENTIFY_NO = #{authPersonIdentifyNo,jdbcType=VARCHAR},
+      CONTACTS_NAME = #{contactsName,jdbcType=VARCHAR},
+      CONTACTS_MOBILE = #{contactsMobile,jdbcType=VARCHAR},
+      CONTACTS_TEL = #{contactsTel,jdbcType=VARCHAR},
+      CONTACTS_SPARE_TEL = #{contactsSpareTel,jdbcType=VARCHAR},
+      CONTACTS_FAX = #{contactsFax,jdbcType=VARCHAR},
+      CONTACTS_EMAIL = #{contactsEmail,jdbcType=VARCHAR},
+      CONTACTS_ADDR = #{contactsAddr,jdbcType=VARCHAR},
+      CONTACTS_ZIP = #{contactsZip,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      OTHER_FILEPATH = #{otherFilepath,jdbcType=VARCHAR},
+      ORGAN_OTHER_CODE = #{organOtherCode,jdbcType=VARCHAR},
+      CREDENTIALS_TYPE = #{credentialsType,jdbcType=VARCHAR},
+      INTERNET_ADDRESS = #{internetAddress,jdbcType=VARCHAR},
+      CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateFileId">
+    update TB_MRS_ORGAN
+      set 
+      <if test="businessLicenceFileId != null and businessLicenceFileId != ''" >
+        BUSINESS_LICENCE_FILEPATH = #{businessLicenceFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeCodeFileId != null and organizeCodeFileId != ''" >
+        ORGANIZE_FILEPATH = #{organizeCodeFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueCodeFileId != null and revenueCodeFileId != ''" >
+        REVENUE_FILEPATH = #{revenueCodeFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="socialcreditCodeFileId != null and socialcreditCodeFileId != ''" >
+        SOCIAL_CREDIT_FILEPATH = #{socialcreditCodeFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFileId != null and otherFileId != ''" >
+       	OTHER_FILEPATH = #{otherFileId,jdbcType=VARCHAR},
+      </if>
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+  
+   <select id="updateAuditList" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsOrganDto" resultMap="PageBaseResultMap">
+    select 
+    	O.ID, O.CUSTOMER_NAME, O.CUST_ID, A.ACCOUNT_SOURCE, A.AUTH_STATUS, 
+    	A.ACCOUNT_STATUS, O.CREATE_TIME ,ad.id as auditId
+    from TB_MRS_ORGAN O, TB_MRS_ACCOUNT A,TB_MRS_DATA_AUDIT_CHANGE ad
+    where O.CUST_ID = A.CUST_ID 
+   		 and ad.ref_id = o.id
+    	 and ad.audit_status ='0'
+    	 and ad.user_type ='1'
+   	   <if test="customerName != null and customerName != ''" >
+   	   	and	instr(O.CUSTOMER_NAME, #{customerName,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="custId != null and custId != ''" >
+   	   	and	instr(O.CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="authStatus != null and authStatus != ''">
+        and A.AUTH_STATUS = #{authStatus,jdbcType=CHAR}
+      </if>
+      <if test="accountSource != null and accountSource != ''">
+        and A.ACCOUNT_SOURCE = #{accountSource,jdbcType=CHAR}
+      </if>
+      <if test="accountStatus != null and accountStatus != ''">
+        and A.ACCOUNT_STATUS = #{accountStatus,jdbcType=CHAR}
+      </if>
+      <if test="customerType != null and customerType != ''">
+        and A.CUSTOMER_TYPE = #{customerType,jdbcType=CHAR}
+      </if>
+      ORDER BY O.CREATE_TIME DESC
+  </select>
+  
+  <update id="updateCustomerCodeByCustId" >
+    update TB_MRS_ORGAN
+    set 
+      CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR}, UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

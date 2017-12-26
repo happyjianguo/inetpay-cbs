@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisFeeTypeParamDtoMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisFeeTypeParamDto">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="FEE_TYPE_CODE" jdbcType="VARCHAR" property="feeTypeCode" />
+    <result column="FEE_TYPE_NAME" jdbcType="VARCHAR" property="feeTypeName" />
+    <result column="AMT_FLAG" jdbcType="DECIMAL" property="amtFlag" />
+    <result column="CLEAR_FLAG" jdbcType="CHAR" property="clearFlag" />
+    <result column="SETTLE_FLAG" jdbcType="CHAR" property="settleFlag" />
+    <result column="ACT_TRADE_TYPE" jdbcType="CHAR" property="actTradeType" />
+    <result column="EDITABLE" jdbcType="CHAR" property="editable" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, FEE_TYPE_CODE, FEE_TYPE_NAME, AMT_FLAG, CLEAR_FLAG, SETTLE_FLAG, ACT_TRADE_TYPE, 
+    EDITABLE
+  </sql>
+  
+    <!-- 模糊查询 -->
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisFeeTypeParamDto"
+		resultMap="BaseResultMap">
+		select * from  TB_BIS_FEE_TYPE_PARAM
+		 <where>
+			<if test=" feeTypeCode  != null and  feeTypeCode  != ''">
+				and instr(FEE_TYPE_CODE, #{feeTypeCode ,jdbcType=VARCHAR}) > 0 
+			</if>
+			<if test="  feeTypeName  != null and  feeTypeName  != ''">
+				and instr(FEE_TYPE_NAME , #{feeTypeName ,jdbcType=VARCHAR}) > 0 
+			</if>
+			<if test=" clearFlag  != null and  clearFlag  != ''">
+				and instr(CLEAR_FLAG , #{clearFlag ,jdbcType=CHAR}) > 0 
+			</if>
+			<if test=" settleFlag  != null and settleFlag   != ''">
+				and instr(SETTLE_FLAG , #{settleFlag ,jdbcType=CHAR}) > 0 
+			</if>
+			<if test=" actTradeType  != null and  actTradeType  != ''">
+				and instr( ACT_TRADE_TYPE, #{actTradeType ,jdbcType=CHAR}) > 0 
+			</if>
+			<if test="editable   != null and editable   != ''">
+				and instr( EDITABLE, #{editable ,jdbcType=CHAR}) > 0 
+			</if>
+		 	 
+		 </where>  
+	 </select>
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_FEE_TYPE_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TB_BIS_FEE_TYPE_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisFeeTypeParamDto">
+    insert into TB_BIS_FEE_TYPE_PARAM (ID, FEE_TYPE_CODE, FEE_TYPE_NAME, 
+      AMT_FLAG, CLEAR_FLAG, SETTLE_FLAG, 
+      ACT_TRADE_TYPE, EDITABLE)
+    values (#{id,jdbcType=VARCHAR}, #{feeTypeCode,jdbcType=VARCHAR}, #{feeTypeName,jdbcType=VARCHAR}, 
+      #{amtFlag,jdbcType=DECIMAL}, #{clearFlag,jdbcType=CHAR}, #{settleFlag,jdbcType=CHAR}, 
+      #{actTradeType,jdbcType=CHAR}, #{editable,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisFeeTypeParamDto">
+    insert into TB_BIS_FEE_TYPE_PARAM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="feeTypeCode != null">
+        FEE_TYPE_CODE,
+      </if>
+      <if test="feeTypeName != null">
+        FEE_TYPE_NAME,
+      </if>
+      <if test="amtFlag != null">
+        AMT_FLAG,
+      </if>
+      <if test="clearFlag != null">
+        CLEAR_FLAG,
+      </if>
+      <if test="settleFlag != null">
+        SETTLE_FLAG,
+      </if>
+      <if test="actTradeType != null">
+        ACT_TRADE_TYPE,
+      </if>
+      <if test="editable != null">
+        EDITABLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="feeTypeCode != null">
+        #{feeTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feeTypeName != null">
+        #{feeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="amtFlag != null">
+        #{amtFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="clearFlag != null">
+        #{clearFlag,jdbcType=CHAR},
+      </if>
+      <if test="settleFlag != null">
+        #{settleFlag,jdbcType=CHAR},
+      </if>
+      <if test="actTradeType != null">
+        #{actTradeType,jdbcType=CHAR},
+      </if>
+      <if test="editable != null">
+        #{editable,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisFeeTypeParamDto">
+    update TB_BIS_FEE_TYPE_PARAM
+    <set>
+      <if test="feeTypeCode != null">
+        FEE_TYPE_CODE = #{feeTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feeTypeName != null">
+        FEE_TYPE_NAME = #{feeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="amtFlag != null">
+        AMT_FLAG = #{amtFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="clearFlag != null">
+        CLEAR_FLAG = #{clearFlag,jdbcType=CHAR},
+      </if>
+      <if test="settleFlag != null">
+        SETTLE_FLAG = #{settleFlag,jdbcType=CHAR},
+      </if>
+      <if test="actTradeType != null">
+        ACT_TRADE_TYPE = #{actTradeType,jdbcType=CHAR},
+      </if>
+      <if test="editable != null">
+        EDITABLE = #{editable,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisFeeTypeParamDto">
+    update TB_BIS_FEE_TYPE_PARAM
+    set FEE_TYPE_CODE = #{feeTypeCode,jdbcType=VARCHAR},
+      FEE_TYPE_NAME = #{feeTypeName,jdbcType=VARCHAR},
+      AMT_FLAG = #{amtFlag,jdbcType=DECIMAL},
+      CLEAR_FLAG = #{clearFlag,jdbcType=CHAR},
+      SETTLE_FLAG = #{settleFlag,jdbcType=CHAR},
+      ACT_TRADE_TYPE = #{actTradeType,jdbcType=CHAR},
+      EDITABLE = #{editable,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisEcternalPaymentsMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisEcternalPayments">
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="INNER_BANK" jdbcType="CHAR" property="innerBank" />
+    <result column="INNER_ACC" jdbcType="VARCHAR" property="innerAcc" />
+    <result column="INNER_NAME" jdbcType="VARCHAR" property="innerName" />
+    <result column="INNER_ACCOUNT_ID" jdbcType="VARCHAR" property="innerAccountId" />
+    <result column="INNER_ACCOUNT_TYPE" jdbcType="CHAR" property="innerAccountType" />
+    <result column="INNER_ACCOUNT_CITYCODE" jdbcType="CHAR" property="innerAccountCitycode" />
+    <result column="INNER_ACCOUNT__BANKCODE" jdbcType="VARCHAR" property="innerAccountBankcode" />
+    <result column="OUTER_BANK" jdbcType="CHAR" property="outerBank" />
+    <result column="OUTER_ACCT" jdbcType="VARCHAR" property="outerAcct" />
+    <result column="OUTER_BANKNAME" jdbcType="VARCHAR" property="outerBankname" />
+    <result column="OUTER_SUBJECT" jdbcType="VARCHAR" property="outerSubject" />
+    <result column="BATCH" jdbcType="VARCHAR" property="batch" />
+    <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+    <result column="CURRENCY" jdbcType="CHAR" property="currency" />
+    <result column="ABSTRACTS" jdbcType="VARCHAR" property="abstracts" />
+    <result column="N_CHECK_NUM" jdbcType="DECIMAL" property="nCheckNum" />
+    <result column="A_CHECK_NUM" jdbcType="DECIMAL" property="aCheckNum" />
+    <result column="HandLE" jdbcType="VARCHAR" property="handle" />
+    <result column="HandLE_NAME" jdbcType="VARCHAR" property="handleName" />
+    <result column="HandLE_TIME" jdbcType="TIMESTAMP" property="handleTime" />
+    <result column="CHECK_STATUS" jdbcType="CHAR" property="checkStatus" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="OUTER_ACCOUNT_BANKCODE" jdbcType="VARCHAR" property="outerAccountBankcode" />
+    <result column="BANK_NAME_O" jdbcType="VARCHAR" property="bankNameO" />
+    <result column="BANK_NAME_I" jdbcType="VARCHAR" property="bankNameI" />
+    <result column="PAY_STATUS" jdbcType="CHAR" property="payStatus" />
+    <result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+    <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName" />
+    <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName" />
+    <result column="ALLOCATE_TYPE" jdbcType="CHAR" property="allocateType" />
+    <result column="MER_CODE" jdbcType="VARCHAR" property="merCode" />
+    <result column="MER_NAME" jdbcType="VARCHAR" property="merName" />
+    <!-- <result column="MER_ORDER_ID" jdbcType="VARCHAR" property="merOrderId" /> -->
+    <result column="BUST_ID" jdbcType="VARCHAR" property="bustId" />
+    <result column="APPLE_TYPE" jdbcType="CHAR" property="appleType" />
+    <result column="BATCH_NO" jdbcType="VARCHAR" property="batchNo" />
+    <result column="IS_SYS_AUTO" jdbcType="VARCHAR" property="isSysAuto" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEcternalPayments">
+    insert into TB_BIS_ECTERNAL_PAYMENTS (ID, INNER_BANK, INNER_ACC, 
+      INNER_NAME, INNER_ACCOUNT_ID, INNER_ACCOUNT_TYPE, 
+      INNER_ACCOUNT_CITYCODE, INNER_ACCOUNT__BANKCODE, 
+      OUTER_BANK, OUTER_ACCT, OUTER_BANKNAME, 
+      OUTER_SUBJECT, BATCH, AMOUNT, 
+      CURRENCY, ABSTRACTS, N_CHECK_NUM, 
+      A_CHECK_NUM, HandLE, HandLE_NAME,
+      HandLE_TIME, CHECK_STATUS, MEMO,
+      OUTER_ACCOUNT_BANKCODE,BANK_NAME_O,
+      BANK_NAME_I,PAY_STATUS,PROVINCE,
+      PROVINCE_NAME,CITY_NAME,ALLOCATE_TYPE,
+      MER_CODE,MER_NAME<!-- ,MER_ORDER_ID -->,BUST_ID,
+      BATCH_NO,APPLE_TYPE,IS_SYS_AUTO
+      )
+    values (#{id,jdbcType=VARCHAR}, #{innerBank,jdbcType=CHAR}, #{innerAcc,jdbcType=VARCHAR}, 
+      #{innerName,jdbcType=VARCHAR}, #{innerAccountId,jdbcType=VARCHAR}, #{innerAccountType,jdbcType=CHAR}, 
+      #{innerAccountCitycode,jdbcType=CHAR}, #{innerAccountBankcode,jdbcType=VARCHAR}, 
+      #{outerBank,jdbcType=CHAR}, #{outerAcct,jdbcType=VARCHAR}, #{outerBankname,jdbcType=VARCHAR}, 
+      #{outerSubject,jdbcType=VARCHAR}, #{batch,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
+      #{currency,jdbcType=CHAR}, #{abstracts,jdbcType=VARCHAR}, #{nCheckNum,jdbcType=DECIMAL}, 
+      #{aCheckNum,jdbcType=DECIMAL}, #{handle,jdbcType=VARCHAR}, #{handleName,jdbcType=VARCHAR}, 
+      #{handleTime,jdbcType=TIMESTAMP}, #{checkStatus,jdbcType=CHAR}, #{memo,jdbcType=VARCHAR},
+      #{outerAccountBankcode,jdbcType=VARCHAR},#{bankNameO,jdbcType=VARCHAR},#{bankNameI,jdbcType=VARCHAR},
+      #{payStatus,jdbcType=CHAR}, #{province,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR},
+      #{cityName,jdbcType=VARCHAR},#{allocateType,jdbcType=CHAR},#{merCode,jdbcType=VARCHAR},
+      #{merName,jdbcType=VARCHAR}<!-- ,#{merOrderId,jdbcType=VARCHAR} -->,#{bustId,jdbcType=VARCHAR},
+      #{batchNo,jdbcType=VARCHAR},#{appleType,jdbcType=CHAR},#{isSysAuto,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEcternalPayments">
+    insert into TB_BIS_ECTERNAL_PAYMENTS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="innerBank != null">
+        INNER_BANK,
+      </if>
+      <if test="innerAcc != null">
+        INNER_ACC,
+      </if>
+      <if test="innerName != null">
+        INNER_NAME,
+      </if>
+      <if test="innerAccountId != null">
+        INNER_ACCOUNT_ID,
+      </if>
+      <if test="innerAccountType != null">
+        INNER_ACCOUNT_TYPE,
+      </if>
+      <if test="innerAccountCitycode != null">
+        INNER_ACCOUNT_CITYCODE,
+      </if>
+      <if test="innerAccountBankcode != null">
+        INNER_ACCOUNT__BANKCODE,
+      </if>
+      <if test="outerBank != null">
+        OUTER_BANK,
+      </if>
+      <if test="outerAcct != null">
+        OUTER_ACCT,
+      </if>
+      <if test="outerBankname != null">
+        OUTER_BANKNAME,
+      </if>
+      <if test="outerSubject != null">
+        OUTER_SUBJECT,
+      </if>
+      <if test="batch != null">
+        BATCH,
+      </if>
+      <if test="amount != null">
+        AMOUNT,
+      </if>
+      <if test="currency != null">
+        CURRENCY,
+      </if>
+      <if test="abstracts != null">
+        ABSTRACTS,
+      </if>
+      <if test="nCheckNum != null">
+        N_CHECK_NUM,
+      </if>
+      <if test="aCheckNum != null">
+        A_CHECK_NUM,
+      </if>
+      <if test="handle != null">
+        HandLE,
+      </if>
+      <if test="handleName != null">
+        HandLE_NAME,
+      </if>
+      <if test="handleTime != null">
+        HandLE_TIME,
+      </if>
+      <if test="checkStatus != null">
+        CHECK_STATUS,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="outerAccountBankcode != null">
+        OUTER_ACCOUNT_BANKCODE,
+      </if>
+      <if test="bankNameO != null">
+        BANK_NAME_O,
+      </if>
+      <if test="bankNameI != null">
+        BANK_NAME_I,
+      </if>
+      <if test="payStatus != null">
+        PAY_STATUS,
+      </if>
+      <if test="province != null">
+        PROVINCE,
+      </if>
+      <if test="provinceName != null">
+        PROVINCE_NAME,
+      </if>
+      <if test="cityName != null">
+        CITY_NAME,
+      </if>
+      <if test="allocateType != null">
+        ALLOCATE_TYPE,
+      </if>
+      <if test="merCode != null">
+        MER_CODE,
+      </if>
+      <if test="merName != null">
+        MER_NAME,
+      </if>
+     <!--  <if test="merOrderId != null">
+        MER_ORDER_ID,
+      </if> -->
+      <if test="bustId != null">
+        BUST_ID,
+      </if>
+      <if test="batchNo != null">
+        BATCH_NO,
+      </if>
+      <if test="appleType != null">
+        APPLE_TYPE,
+      </if>
+      <if test="isSysAuto != null">
+        IS_SYS_AUTO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="innerBank != null">
+        #{innerBank,jdbcType=CHAR},
+      </if>
+      <if test="innerAcc != null">
+        #{innerAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="innerName != null">
+        #{innerName,jdbcType=VARCHAR},
+      </if>
+      <if test="innerAccountId != null">
+        #{innerAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="innerAccountType != null">
+        #{innerAccountType,jdbcType=CHAR},
+      </if>
+      <if test="innerAccountCitycode != null">
+        #{innerAccountCitycode,jdbcType=CHAR},
+      </if>
+      <if test="innerAccountBankcode != null">
+        #{innerAccountBankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="outerBank != null">
+        #{outerBank,jdbcType=CHAR},
+      </if>
+      <if test="outerAcct != null">
+        #{outerAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="outerBankname != null">
+        #{outerBankname,jdbcType=VARCHAR},
+      </if>
+      <if test="outerSubject != null">
+        #{outerSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="batch != null">
+        #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=CHAR},
+      </if>
+      <if test="abstracts != null">
+        #{abstracts,jdbcType=VARCHAR},
+      </if>
+      <if test="nCheckNum != null">
+        #{nCheckNum,jdbcType=DECIMAL},
+      </if>
+      <if test="aCheckNum != null">
+        #{aCheckNum,jdbcType=DECIMAL},
+      </if>
+      <if test="handle != null">
+        #{handle,jdbcType=VARCHAR},
+      </if>
+      <if test="handleName != null">
+        #{handleName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null">
+        #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="outerAccountBankcode != null">
+        #{outerAccountBankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameO != null">
+        #{bankNameO,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameI != null">
+        #{bankNameI,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null">
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="allocateType != null">
+        #{allocateType,jdbcType=CHAR},
+      </if>
+      <if test="merCode != null">
+        #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merName != null">
+        #{merName,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="merOrderId != null">
+        #{merOrderId,jdbcType=VARCHAR},
+      </if> -->
+      <if test="bustId != null">
+        #{bustId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="appleType != null">
+        #{appleType,jdbcType=CHAR},
+      </if>
+      <if test="isSysAuto != null">
+        #{isSysAuto,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <sql id="Base_Column_List">
+    ID, INNER_BANK, INNER_ACC, INNER_NAME, INNER_ACCOUNT_ID, INNER_ACCOUNT_TYPE,INNER_ACCOUNT_CITYCODE,
+    INNER_ACCOUNT__BANKCODE, OUTER_BANK, OUTER_ACCT, OUTER_BANKNAME, OUTER_SUBJECT, BATCH,AMOUNT,
+    CURRENCY, ABSTRACTS, N_CHECK_NUM, A_CHECK_NUM, HandLE, HandLE_NAME,HandLE_TIME,CHECK_STATUS,MEMO,
+    OUTER_ACCOUNT_BANKCODE,BANK_NAME_O,BANK_NAME_I,PAY_STATUS,PROVINCE,PROVINCE_NAME,CITY_NAME,ALLOCATE_TYPE,
+    MER_CODE,MER_NAME<!-- ,MER_ORDER_ID -->,BUST_ID,BATCH_NO,APPLE_TYPE,IS_SYS_AUTO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ECTERNAL_PAYMENTS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findEcternalPaymentsListByBatchNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ECTERNAL_PAYMENTS
+    where BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+  </select>
+  <select id="findBeanByBustId" parameterType="java.lang.String" resultType="long">
+    select count(ID)
+    from TB_BIS_ECTERNAL_PAYMENTS
+    where BUST_ID = #{bustId,jdbcType=VARCHAR}
+  </select>
+  <select id="getUnDownStatusDtos" parameterType="com.ylink.inetpay.common.core.constant.PayStatusEnum" resultMap="BaseResultMap">
+    select *
+    from TB_BIS_ECTERNAL_PAYMENTS
+    where PAY_STATUS = #{payStatus,jdbcType=CHAR}
+  </select>
+  
+  <delete id="deleteEcternalPaymentsId" parameterType="java.lang.String">
+    delete from TB_BIS_ECTERNAL_PAYMENTS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <update id="updateEcternalPaymentsById" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEcternalPayments">
+    update TB_BIS_ECTERNAL_PAYMENTS
+    <set>
+      <if test="innerBank != null">
+        INNER_BANK = #{innerBank,jdbcType=CHAR},
+      </if>
+      <if test="innerAcc != null">
+        INNER_ACC = #{innerAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="innerName != null">
+        INNER_NAME = #{innerName,jdbcType=VARCHAR},
+      </if>
+      <if test="innerAccountId != null">
+        INNER_ACCOUNT_ID = #{innerAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="innerAccountType != null">
+        INNER_ACCOUNT_TYPE = #{innerAccountType,jdbcType=CHAR},
+      </if>
+      <if test="innerAccountCitycode != null">
+        INNER_ACCOUNT_CITYCODE = #{innerAccountCitycode,jdbcType=CHAR},
+      </if>
+      <if test="innerAccountBankcode != null">
+        INNER_ACCOUNT__BANKCODE = #{innerAccountBankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="outerBank != null">
+        OUTER_BANK = #{outerBank,jdbcType=CHAR},
+      </if>
+      <if test="outerAcct != null">
+        OUTER_ACCT = #{outerAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="outerBankname != null">
+        OUTER_BANKNAME = #{outerBankname,jdbcType=VARCHAR},
+      </if>
+      <if test="outerSubject != null">
+        OUTER_SUBJECT = #{outerSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="batch != null">
+        BATCH = #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        AMOUNT = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="currency != null">
+        CURRENCY = #{currency,jdbcType=CHAR},
+      </if>
+      <if test="abstracts != null">
+        ABSTRACTS = #{abstracts,jdbcType=VARCHAR},
+      </if>
+      <if test="nCheckNum != null">
+        N_CHECK_NUM = #{nCheckNum,jdbcType=DECIMAL},
+      </if>
+      <if test="aCheckNum != null">
+        A_CHECK_NUM = #{aCheckNum,jdbcType=DECIMAL},
+      </if>
+      <if test="handle != null">
+        HandLE = #{handle,jdbcType=VARCHAR},
+      </if>
+      <if test="handleName != null">
+        HandLE_NAME = #{handleName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null">
+        HandLE_TIME = #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkStatus != null">
+        CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="memo != null">
+       MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="outerAccountBankcode != null">
+       OUTER_ACCOUNT_BANKCODE = #{outerAccountBankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameO != null">
+       BANK_NAME_O = #{bankNameO,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameI != null">
+       BANK_NAME_I = #{bankNameI,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null">
+       PAY_STATUS = #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="province != null">
+       PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null">
+       PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+       CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="allocateType != null">
+       ALLOCATE_TYPE = #{allocateType,jdbcType=CHAR},
+      </if>
+      <if test="merCode != null">
+       MER_CODE = #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merName != null">
+       MER_NAME = #{merName,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="merOrderId != null">
+       MER_ORDER_ID = #{merOrderId,jdbcType=VARCHAR},
+      </if> -->
+      <if test="bustId != null">
+       BUST_ID = #{bustId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+       BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="appleType != null">
+       APPLE_TYPE = #{appleType,jdbcType=CHAR},
+      </if>
+       <if test="isSysAuto != null">
+       IS_SYS_AUTO = #{isSysAuto,jdbcType=BIT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisCheckEmailDto">
+    update TB_BIS_ECTERNAL_PAYMENTS
+    set 
+        INNER_BANK = #{innerBank,jdbcType=CHAR},
+        INNER_ACC = #{innerAcc,jdbcType=VARCHAR},
+        INNER_NAME = #{innerName,jdbcType=VARCHAR},
+        INNER_ACCOUNT_ID = #{innerAccountId,jdbcType=VARCHAR},
+        INNER_ACCOUNT_TYPE = #{innerAccountType,jdbcType=CHAR},
+        INNER_ACCOUNT_CITYCODE = #{innerAccountCitycode,jdbcType=CHAR},
+        INNER_ACCOUNT__BANKCODE = #{innerAccountBankcode,jdbcType=VARCHAR},
+        OUTER_BANK = #{outerBank,jdbcType=CHAR},
+        OUTER_ACCT = #{outerAcct,jdbcType=VARCHAR},
+        OUTER_BANKNAME = #{outerBankname,jdbcType=VARCHAR},
+        OUTER_SUBJECT = #{outerSubject,jdbcType=VARCHAR},
+        BATCH = #{batch,jdbcType=VARCHAR},
+        AMOUNT = #{amount,jdbcType=DECIMAL},
+        CURRENCY = #{currency,jdbcType=CHAR},
+        ABSTRACTS = #{abstracts,jdbcType=VARCHAR},
+        N_CHECK_NUM = #{nCheckNum,jdbcType=DECIMAL},
+        A_CHECK_NUM = #{aCheckNum,jdbcType=DECIMAL},
+        HandLE = #{handle,jdbcType=VARCHAR},
+        HandLE_NAME = #{handleName,jdbcType=VARCHAR},
+        HandLE_TIME = #{handleTime,jdbcType=TIMESTAMP},
+        CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+        OUTER_ACCOUNT_BANKCODE = #{outerAccountBankcode,jdbcType=VARCHAR},
+        BANK_NAME_O = #{bankNameO,jdbcType=VARCHAR},
+        BANK_NAME_I = #{bankNameI,jdbcType=VARCHAR},
+        MEMO = #{memo,jdbcType=VARCHAR},
+        PAY_STATUS=#{payStatus,jdbcType=CHAR},
+        PROVINCE_NAME=#{provinceName,jdbcType=VARCHAR},
+        CITY_NAME=#{cityName,jdbcType=VARCHAR},
+        PROVINCE=#{province,jdbcType=VARCHAR},
+        MER_CODE=#{merCode,jdbcType=VARCHAR},
+        MER_NAME=#{merName,jdbcType=VARCHAR},
+        <!-- MER_ORDER_ID=#{merOrderId,jdbcType=VARCHAR}, -->
+        ALLOCATE_TYPE=#{allocateType,jdbcType=CHAR},
+        BUST_ID=#{bustId,jdbcType=VARCHAR},
+        BATCH_NO=#{batchNo,jdbcType=VARCHAR},
+        APPLE_TYPE=#{appleType,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+   <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisEcternalPayments" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ECTERNAL_PAYMENTS
+    where 1=1
+    <if test="innerBank != null and innerBank != ''">
+       and INNER_BANK = #{innerBank,jdbcType=CHAR}
+      </if>
+      <if test="innerAcc != null and innerAcc != ''">
+       and instr(INNER_ACC, #{innerAcc,jdbcType=VARCHAR}) > 0
+       <!-- and INNER_ACC like concat('%',concat(#{innerAcc,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="innerName != null and innerName != ''">
+       and instr(INNER_NAME, #{innerName,jdbcType=VARCHAR}) > 0
+       <!-- and INNER_NAME like concat('%',concat(#{innerName,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="innerAccountId != null and innerAccountId != ''">
+       and instr(INNER_ACCOUNT_ID, #{innerAccountId,jdbcType=VARCHAR}) > 0
+       <!-- and INNER_ACCOUNT_ID like concat('%',concat(#{innerAccountId,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="innerAccountType != null and innerAccountType != ''">
+       and INNER_ACCOUNT_TYPE = #{innerAccountType,jdbcType=CHAR}
+      </if>
+      <if test="innerAccountCitycode != null and innerAccountCitycode != ''">
+       and INNER_ACCOUNT_CITYCODE = #{innerAccountCitycode,jdbcType=CHAR}
+      </if>
+      <if test="innerAccountBankcode != null and innerAccountBankcode != ''">
+       and instr(INNER_ACCOUNT_BANKCODE, #{innerAccountBankcode,jdbcType=VARCHAR}}) > 0
+       <!-- and INNER_ACCOUNT__BANKCODE like concat('%',concat(#{innerAccountBankcode,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="outerBank != null and outerBank != ''">
+       and instr(OUTER_BANK,#{outerBank,jdbcType=CHAR}) > 0
+      </if>
+      <if test="outerAcct != null and outerAcct != ''">
+       and instr(OUTER_ACCT, #{outerAcct,jdbcType=VARCHAR}) > 0
+       <!-- and OUTER_ACCT like concat('%',concat(#{outerAcct,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="outerBankname != null and outerBankname != ''">
+       and instr(OUTER_BANKNAME, #{outerBankname,jdbcType=VARCHAR}) > 0
+       <!-- and OUTER_BANKNAME like concat('%',concat(#{outerBankname,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="outerSubject != null and outerSubject != ''">
+       and OUTER_SUBJECT = #{outerSubject,jdbcType=VARCHAR}
+      </if>
+      <if test="batch != null and batch != ''">
+       and BATCH = #{batch,jdbcType=VARCHAR}
+      </if>
+      <if test="minAmount != null and minAmount != ''">
+       and AMOUNT <![CDATA[   >=  ]]> #{minAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="maxAmount != null and maxAmount != ''">
+       and AMOUNT <![CDATA[   <=  ]]>#{maxAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="currency != null and currency != ''">
+       and CURRENCY = #{currency,jdbcType=CHAR}
+      </if>
+      <if test="abstracts != null and abstracts != ''">
+       and ABSTRACTS = #{abstracts,jdbcType=VARCHAR}
+      </if>
+      <if test="nCheckNum != null and nCheckNum != ''">
+       and N_CHECK_NUM = #{nCheckNum,jdbcType=DECIMAL}
+      </if>
+      <if test="aCheckNum != null and aCheckNum != ''">
+       and A_CHECK_NUM = #{aCheckNum,jdbcType=DECIMAL}
+      </if>
+      <if test="handle != null and handle != ''">
+       and instr(HandLE, #{handle,jdbcType=VARCHAR}) > 0
+       <!-- and HandLE like concat('%',concat(#{handle,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="startHandleTime != null and startHandleTime != ''">
+       and to_char(HandLE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>#{startHandleTime}
+      </if>
+      <if test="endHandleTime != null and endHandleTime != ''">
+       and to_char(HandLE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>#{endHandleTime}
+      </if>
+      <if test="handleName != null and handleName != ''">
+       and instr(HandLE_NAME, #{handleName,jdbcType=VARCHAR}) > 0
+       <!-- and HandLE_NAME like concat('%',concat(#{handleName,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="bankNameI != null and bankNameI != ''">
+       and instr(BANK_NAME_I, #{bankNameI,jdbcType=VARCHAR}) > 0
+       <!-- and BANK_NAME_I like concat('%',concat(#{bankNameI,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="bankNameO != null and bankNameO != ''">
+       and instr(BANK_NAME_O, #{bankNameO,jdbcType=VARCHAR}) > 0
+       <!-- and BANK_NAME_O like concat('%',concat(#{bankNameO,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="checkStatus != null and checkStatus != ''">
+        and CHECK_STATUS = #{checkStatus,jdbcType=CHAR}
+      </if>
+      <if test="memo != null and memo != ''">
+       <!-- and MEMO = #{memo,jdbcType=VARCHAR} -->
+       and instr(MEMO, #{memo,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="payStatus != null and payStatus != ''">
+       and PAY_STATUS = #{payStatus,jdbcType=CHAR}
+      </if>
+      <if test="province != null and province != ''">
+       and PROVINCE = #{province,jdbcType=VARCHAR}
+      </if>
+      <if test="provinceName != null and provinceName != ''">
+       and PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR}
+      </if>
+      <if test="province != null and province != ''">
+       and CITY_NAME = #{cityName,jdbcType=VARCHAR}
+      </if>
+      <if test="allocateType != null and allocateType != ''">
+       and ALLOCATE_TYPE = #{allocateType,jdbcType=CHAR}
+      </if>
+      <if test="outerAccountBankcode != null and outerAccountBankcode != ''">
+       and instr(OUTER_ACCOUNT_BANKCODE, #{outerAccountBankcode,jdbcType=VARCHAR}) > 0
+       <!-- and OUTER_ACCOUNT_BANKCODE like concat('%',concat(#{outerAccountBankcode,jdbcType=VARCHAR},'%')) -->
+      </if>
+      <if test="merCode != null and merCode != ''">
+       and instr(MER_CODE, #{merCode,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="merName != null and merName != ''">
+       and instr(MER_NAME, #{merName,jdbcType=VARCHAR}) > 0
+      </if>
+      <!-- <if test="merOrderId != null and merOrderId != ''">
+      and instr(MER_ORDER_ID, #{merOrderId,jdbcType=VARCHAR}) > 0
+      </if> -->
+      <if test="bustId != null and bustId != ''">
+      and instr(BUST_ID, #{bustId,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="batchNo != null and batchNo != ''">
+      and instr(BATCH_NO, #{batchNo,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="appleType != null and appleType != ''">
+      and APPLE_TYPE = #{appleType,jdbcType=CHAR}
+      </if>
+      order by HandLE_TIME DESC
+  </select>
+  
+  <insert id="batchEcternalPayExp" parameterType="list" >
+     insert into TB_BIS_ECTERNAL_PAYMENTS (ID, INNER_BANK, INNER_ACC, 
+      INNER_NAME, INNER_ACCOUNT_ID, INNER_ACCOUNT_TYPE, 
+      INNER_ACCOUNT_CITYCODE, INNER_ACCOUNT__BANKCODE, 
+      OUTER_BANK, OUTER_ACCT, OUTER_BANKNAME, 
+      OUTER_SUBJECT, BATCH, AMOUNT, 
+      CURRENCY, ABSTRACTS, N_CHECK_NUM, 
+      A_CHECK_NUM, HandLE, HandLE_NAME,
+      HandLE_TIME, CHECK_STATUS, MEMO,
+      OUTER_ACCOUNT_BANKCODE,BANK_NAME_O,
+      BANK_NAME_I,PAY_STATUS,PROVINCE,
+      PROVINCE_NAME,CITY_NAME,ALLOCATE_TYPE,
+      MER_CODE,MER_NAME<!-- ,MER_ORDER_ID -->,BUST_ID,
+      BATCH_NO,APPLE_TYPE,IS_SYS_AUTO)
+	<foreach collection="batchDtos" index="index" item="item" separator=" union all ">
+		select 
+	    #{item.id,jdbcType=VARCHAR}, #{item.innerBank,jdbcType=CHAR}, #{item.innerAcc,jdbcType=VARCHAR}, 
+        #{item.innerName,jdbcType=VARCHAR}, #{item.innerAccountId,jdbcType=VARCHAR}, #{item.innerAccountType,jdbcType=CHAR}, 
+        #{item.innerAccountCitycode,jdbcType=CHAR}, #{item.innerAccountBankcode,jdbcType=VARCHAR}, 
+        #{item.outerBank,jdbcType=CHAR}, #{item.outerAcct,jdbcType=VARCHAR}, #{item.outerBankname,jdbcType=VARCHAR}, 
+        #{item.outerSubject,jdbcType=VARCHAR}, #{item.batch,jdbcType=VARCHAR}, #{item.amount,jdbcType=DECIMAL}, 
+        #{item.currency,jdbcType=CHAR}, #{item.abstracts,jdbcType=VARCHAR}, #{item.nCheckNum,jdbcType=DECIMAL}, 
+        #{item.aCheckNum,jdbcType=DECIMAL}, #{item.handle,jdbcType=VARCHAR}, #{item.handleName,jdbcType=VARCHAR}, 
+        #{item.handleTime,jdbcType=TIMESTAMP}, #{item.checkStatus,jdbcType=CHAR}, #{item.memo,jdbcType=VARCHAR},
+        #{item.outerAccountBankcode,jdbcType=VARCHAR},#{item.bankNameO,jdbcType=VARCHAR},#{item.bankNameI,jdbcType=VARCHAR},
+        #{item.payStatus,jdbcType=CHAR}, #{item.province,jdbcType=VARCHAR}, #{item.provinceName,jdbcType=VARCHAR},
+        #{item.cityName,jdbcType=VARCHAR},#{item.allocateType,jdbcType=CHAR},#{item.merCode,jdbcType=VARCHAR},
+        #{item.merName,jdbcType=VARCHAR}<!-- ,#{merOrderId,jdbcType=VARCHAR} -->,#{item.bustId,jdbcType=VARCHAR},
+        #{item.batchNo,jdbcType=VARCHAR},#{item.appleType,jdbcType=CHAR},#{item.isSysAuto,jdbcType=BIT}
+		from dual
+	</foreach>
+  </insert>
+	<select id="findListByBatchNo" resultMap="BaseResultMap">
+		select * from TB_BIS_ECTERNAL_PAYMENTS
+		where BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+	</select>
+	<update id="updateAuditStatusByBatchNo" >
+	    update TB_BIS_ECTERNAL_PAYMENTS
+	    set CHECK_STATUS = #{checkStatus,jdbcType=CHAR}
+	    where BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+	</update>
+	<select id="getAuditPassWaitPay" resultMap="BaseResultMap">
+		select * from TB_BIS_ECTERNAL_PAYMENTS
+		where CHECK_STATUS = #{auditPass,jdbcType=CHAR}
+		and PAY_STATUS= #{waitPay,jdbcType=CHAR}
+	</select>
+</mapper>

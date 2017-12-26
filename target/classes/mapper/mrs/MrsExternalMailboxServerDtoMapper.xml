@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.ylink.inetpay.cbs.mrs.dao.MrsExternalMailboxServerDtoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsExternalMailboxServerDto">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="SUFFI" property="suffi" jdbcType="VARCHAR" />
+		<result column="SERVER_URL" property="serverUrl" jdbcType="VARCHAR" />
+		<result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+		<result column="CREATER" property="creater" jdbcType="VARCHAR" />
+		<result column="CREATER_NAME" property="createrName" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+		<result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, SUFFI, SERVER_URL, REMARKS, CREATER, CREATER_NAME,
+		CREATE_TIME,
+		REVISER, REVISER_NAME,
+		UPDATE_TIME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_EXTERNAL_MAILBOX_SERVER
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		TB_MRS_EXTERNAL_MAILBOX_SERVER
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsExternalMailboxServerDto">
+		insert into TB_MRS_EXTERNAL_MAILBOX_SERVER (ID, SUFFI,
+		SERVER_URL,
+		REMARKS, CREATER, CREATER_NAME,
+		CREATE_TIME, REVISER,
+		REVISER_NAME,
+		UPDATE_TIME)
+		values (#{id,jdbcType=VARCHAR},
+		#{suffi,jdbcType=VARCHAR},
+		#{serverUrl,jdbcType=VARCHAR},
+		#{remarks,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR},
+		#{createrName,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{reviser,jdbcType=VARCHAR},
+		#{reviserName,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsExternalMailboxServerDto">
+		insert into TB_MRS_EXTERNAL_MAILBOX_SERVER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="suffi != null">
+				SUFFI,
+			</if>
+			<if test="serverUrl != null">
+				SERVER_URL,
+			</if>
+			<if test="remarks != null">
+				REMARKS,
+			</if>
+			<if test="creater != null">
+				CREATER,
+			</if>
+			<if test="createrName != null">
+				CREATER_NAME,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="reviser != null">
+				REVISER,
+			</if>
+			<if test="reviserName != null">
+				REVISER_NAME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="suffi != null">
+				#{suffi,jdbcType=VARCHAR},
+			</if>
+			<if test="serverUrl != null">
+				#{serverUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="creater != null">
+				#{creater,jdbcType=VARCHAR},
+			</if>
+			<if test="createrName != null">
+				#{createrName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reviser != null">
+				#{reviser,jdbcType=VARCHAR},
+			</if>
+			<if test="reviserName != null">
+				#{reviserName,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsExternalMailboxServerDto">
+		update TB_MRS_EXTERNAL_MAILBOX_SERVER
+		<set>
+			<if test="suffi != null">
+				SUFFI = #{suffi,jdbcType=VARCHAR},
+			</if>
+			<if test="serverUrl != null">
+				SERVER_URL = #{serverUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				REMARKS = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="creater != null">
+				CREATER = #{creater,jdbcType=VARCHAR},
+			</if>
+			<if test="createrName != null">
+				CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reviser != null">
+				REVISER = #{reviser,jdbcType=VARCHAR},
+			</if>
+			<if test="reviserName != null">
+				REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsExternalMailboxServerDto">
+		update TB_MRS_EXTERNAL_MAILBOX_SERVER
+		set SUFFI =
+		#{suffi,jdbcType=VARCHAR},
+		SERVER_URL = #{serverUrl,jdbcType=VARCHAR},
+		REMARKS = #{remarks,jdbcType=VARCHAR},
+		CREATER =
+		#{creater,jdbcType=VARCHAR},
+		CREATER_NAME =
+		#{createrName,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		REVISER =
+		#{reviser,jdbcType=VARCHAR},
+		REVISER_NAME =
+		#{reviserName,jdbcType=VARCHAR},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="getServerPath" resultType="String" parameterType="java.lang.String">
+		select
+		SERVER_URL
+		from TB_MRS_EXTERNAL_MAILBOX_SERVER
+		where SUFFI =
+		#{suffi,jdbcType=VARCHAR}
+	</select>
+	<select id="list" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsExternalMailboxServerDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_EXTERNAL_MAILBOX_SERVER
+		<where>
+			<if test="suffi != null and suffi !=''">
+				and SUFFI = #{suffi,jdbcType=VARCHAR}
+			</if>
+			<if test="serverUrl != null and serverUrl !=''">
+				and instr(SERVER_URL, #{serverUrl,jdbcType=VARCHAR}) > 0
+				<!-- and SERVER_URL like concat('%',concat(#{serverUrl,jdbcType=VARCHAR},'%')) -->
+			</if>
+			<if test="remarks != null and remarks !=''">
+				and REMARKS = #{remarks,jdbcType=VARCHAR}
+			</if>
+			<if test="creater != null and creater !=''">
+				and CREATER = #{creater,jdbcType=VARCHAR}
+			</if>
+			<if test="createrName != null and createrName !=''">
+				and CREATER_NAME = #{createrName,jdbcType=VARCHAR}
+			</if>
+			<if test="startCreateTime != null">
+				and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startCreateTime},'YYYY-MM-DD')
+			</if>
+			<if test="endCreateTime != null">
+				and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endCreateTime},'YYYY-MM-DD')
+			</if>
+			<if test="reviser != null and reviser !=''">
+				and REVISER = #{reviser,jdbcType=VARCHAR}
+			</if>
+			<if test="reviserName != null and reviserName !=''">
+				and REVISER_NAME = #{reviserName,jdbcType=VARCHAR}
+			</if>
+			<if test="startUpdateTime != null">
+				and to_char(UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startUpdateTime},'YYYY-MM-DD')
+			</if>
+			<if test="endUpdateTime != null">
+				and to_char(UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endUpdateTime},'YYYY-MM-DD')
+			</if>
+		</where>
+		order by CREATE_TIME desc
+	</select>
+</mapper>

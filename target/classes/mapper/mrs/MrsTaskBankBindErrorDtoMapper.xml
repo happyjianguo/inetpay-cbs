@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsTaskBankBindErrorDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsTaskBankBindErrorDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="BANK_CARD_ID" property="bankCardId" jdbcType="VARCHAR" />
+    <result column="ERROR_NUM" property="errorNum" jdbcType="DECIMAL" />
+    <result column="ERROR_TYPE" property="errorType" jdbcType="CHAR" />
+    <result column="ERROR_REMARK" property="errorRemark" jdbcType="VARCHAR" />
+    <result column="HANDLE_STATUS" property="handleStatus" jdbcType="CHAR" />
+    <result column="REQUEST_TIME" property="requestTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, BANK_CARD_ID, ERROR_NUM, ERROR_TYPE, ERROR_REMARK, HANDLE_STATUS, REQUEST_TIME, 
+    COMPLETE_TIME, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_TASK_BANK_BIND_ERROR
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_TASK_BANK_BIND_ERROR
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsTaskBankBindErrorDto" >
+    insert into TB_MRS_TASK_BANK_BIND_ERROR (ID, CUST_ID, BANK_CARD_ID, 
+      ERROR_NUM, ERROR_TYPE, ERROR_REMARK, 
+      HANDLE_STATUS, REQUEST_TIME, COMPLETE_TIME, 
+      CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{bankCardId,jdbcType=VARCHAR}, 
+      #{errorNum,jdbcType=DECIMAL}, #{errorType,jdbcType=CHAR}, #{errorRemark,jdbcType=VARCHAR}, 
+      #{handleStatus,jdbcType=CHAR}, #{requestTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsTaskBankBindErrorDto" >
+    insert into TB_MRS_TASK_BANK_BIND_ERROR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="bankCardId != null" >
+        BANK_CARD_ID,
+      </if>
+      <if test="errorNum != null" >
+        ERROR_NUM,
+      </if>
+      <if test="errorType != null" >
+        ERROR_TYPE,
+      </if>
+      <if test="errorRemark != null" >
+        ERROR_REMARK,
+      </if>
+      <if test="handleStatus != null" >
+        HANDLE_STATUS,
+      </if>
+      <if test="requestTime != null" >
+        REQUEST_TIME,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardId != null" >
+        #{bankCardId,jdbcType=VARCHAR},
+      </if>
+      <if test="errorNum != null" >
+        #{errorNum,jdbcType=DECIMAL},
+      </if>
+      <if test="errorType != null" >
+        #{errorType,jdbcType=CHAR},
+      </if>
+      <if test="errorRemark != null" >
+        #{errorRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="handleStatus != null" >
+        #{handleStatus,jdbcType=CHAR},
+      </if>
+      <if test="requestTime != null" >
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsTaskBankBindErrorDto" >
+    update TB_MRS_TASK_BANK_BIND_ERROR
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardId != null" >
+        BANK_CARD_ID = #{bankCardId,jdbcType=VARCHAR},
+      </if>
+      <if test="errorNum != null" >
+        ERROR_NUM = #{errorNum,jdbcType=DECIMAL},
+      </if>
+      <if test="errorType != null" >
+        ERROR_TYPE = #{errorType,jdbcType=CHAR},
+      </if>
+      <if test="errorRemark != null" >
+        ERROR_REMARK = #{errorRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="handleStatus != null" >
+        HANDLE_STATUS = #{handleStatus,jdbcType=CHAR},
+      </if>
+      <if test="requestTime != null" >
+        REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsTaskBankBindErrorDto" >
+    update TB_MRS_TASK_BANK_BIND_ERROR
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      BANK_CARD_ID = #{bankCardId,jdbcType=VARCHAR},
+      ERROR_NUM = #{errorNum,jdbcType=DECIMAL},
+      ERROR_TYPE = #{errorType,jdbcType=CHAR},
+      ERROR_REMARK = #{errorRemark,jdbcType=VARCHAR},
+      HANDLE_STATUS = #{handleStatus,jdbcType=CHAR},
+      REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

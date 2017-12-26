@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisAccessorDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccessorDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCESS_CODE" property="accessCode" jdbcType="VARCHAR" />
+    <result column="ACCESS_NAME" property="accessName" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="CREATER_REVISER_NAME" property="createrReviserName" jdbcType="VARCHAR" />
+    <result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ACCESS_CODE, ACCESS_NAME, CUST_ID, CUST_NAME, CREATER_REVISER_NAME, REVISER_NAME, 
+    CREATE_DATE, MODIFY_DATE
+  </sql>
+  <select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCESSOR
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 获取序列 -->
+  <select id="getAccessorQuence" resultType="long">
+    select seq_newsid.nextval from sys.dual
+  </select>
+  
+  <!-- 模糊查询 -->
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccessorDto"
+		resultMap="BaseResultMap">
+		select * from  TB_BIS_ACCESSOR
+		<where>
+			<if test="custId != null and custId != ''">
+				and instr(CUST_ID, #{custId,jdbcType=VARCHAR}) > 0 
+			</if>
+		 	<if test="accessName != null and accessName != ''">
+				and instr(ACCESS_NAME, #{accessName,jdbcType=VARCHAR}) > 0
+			</if>
+			<if test="accessCode != null and accessCode != ''">
+				and instr(ACCESS_CODE, #{accessCode,jdbcType=VARCHAR}) > 0
+			</if>
+			<if test="custName != null and custName != ''">
+				and instr(CUST_NAME, #{custName,jdbcType=VARCHAR}) > 0
+			</if>
+		 </where>
+	 </select>
+	 <!-- 查询接入方下的所有一户通编号 -->
+  	<select  id="queryCustId"  resultMap="BaseResultMap" >
+  			select t.CUST_ID from TB_BIS_ACCESSOR t
+   	</select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_ACCESSOR
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccessorDto" >
+    insert into TB_BIS_ACCESSOR (ID, ACCESS_CODE, ACCESS_NAME, 
+      CUST_ID, CUST_NAME, CREATER_REVISER_NAME, 
+      REVISER_NAME, CREATE_DATE, MODIFY_DATE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{accessCode,jdbcType=VARCHAR}, #{accessName,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, #{createrReviserName,jdbcType=VARCHAR}, 
+      #{reviserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccessorDto" >
+    insert into TB_BIS_ACCESSOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="accessCode != null" >
+        ACCESS_CODE,
+      </if>
+      <if test="accessName != null" >
+        ACCESS_NAME,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="createrReviserName != null" >
+        CREATER_REVISER_NAME,
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="accessCode != null" >
+        #{accessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accessName != null" >
+        #{accessName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="createrReviserName != null" >
+        #{createrReviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccessorDto" >
+    update TB_BIS_ACCESSOR
+    <set >
+      <if test="accessCode != null" >
+        ACCESS_CODE = #{accessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accessName != null" >
+        ACCESS_NAME = #{accessName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="createrReviserName != null" >
+        CREATER_REVISER_NAME = #{createrReviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccessorDto" >
+    update TB_BIS_ACCESSOR
+    set ACCESS_CODE = #{accessCode,jdbcType=VARCHAR},
+      ACCESS_NAME = #{accessName,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      CREATER_REVISER_NAME = #{createrReviserName,jdbcType=VARCHAR},
+      REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

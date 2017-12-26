@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.chl.dao.ChlChlFeeMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ylink.inetpay.common.project.channel.dto.ChlChlFeeDto">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="CHANNEL_CODE" property="channelCode" jdbcType="CHAR" />
+		<result column="CHANNEL_NAME" property="channelName" jdbcType="VARCHAR" />
+		<result column="FEE_MODE" property="feeMode" jdbcType="CHAR" />
+		<result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+		<result column="FEE_VALUE" property="feeValue" jdbcType="DECIMAL" />
+		<result column="LOW_VALUE" property="lowValue" jdbcType="DECIMAL" />
+		<result column="UP_VALUE" property="upValue" jdbcType="DECIMAL" />
+		<result column="IS_REFUND_FEE" property="isRefundFee" jdbcType="CHAR" />
+		<result column="CALCUE_TYPE" property="calcueType" jdbcType="CHAR" />
+		<result column="STATUS" property="status" jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, CHANNEL_CODE, FEE_MODE, FEE_TYPE, FEE_VALUE, LOW_VALUE, UP_VALUE,
+		IS_REFUND_FEE,
+		CALCUE_TYPE, STATUS, CREATE_TIME, UPDATE_TIME,CHANNEL_NAME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_CHL_CHL_FEE
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByChlCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_CHL_CHL_FEE
+		where
+		STATUS = #{status,jdbcType=CHAR} and
+		CHANNEL_CODE = #{chlCode,jdbcType=CHAR}
+	</select>
+	<select id="selectByStatus" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_CHL_CHL_FEE
+		where STATUS = #{status,jdbcType=CHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from TB_CHL_CHL_FEE
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.ylink.inetpay.common.project.channel.dto.ChlChlFeeDto">
+		insert into TB_CHL_CHL_FEE (ID, CHANNEL_CODE, FEE_MODE,
+		FEE_TYPE, FEE_VALUE, LOW_VALUE,
+		UP_VALUE, IS_REFUND_FEE, CALCUE_TYPE,
+		STATUS, CREATE_TIME, UPDATE_TIME,CHANNEL_NAME
+		)
+		values (#{id,jdbcType=VARCHAR}, #{channelCode,jdbcType=CHAR},
+		#{feeMode,jdbcType=CHAR},
+		#{feeType,jdbcType=CHAR}, #{feeValue,jdbcType=DECIMAL}, #{lowValue,jdbcType=DECIMAL},
+		#{upValue,jdbcType=DECIMAL}, #{isRefundFee,jdbcType=CHAR},
+		#{calcueType,jdbcType=CHAR},
+		#{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP},#{channelName,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ylink.inetpay.common.project.channel.dto.ChlChlFeeDto">
+		insert into TB_CHL_CHL_FEE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="channelCode != null">
+				CHANNEL_CODE,
+			</if>
+			<if test="feeMode != null">
+				FEE_MODE,
+			</if>
+			<if test="feeType != null">
+				FEE_TYPE,
+			</if>
+			<if test="feeValue != null">
+				FEE_VALUE,
+			</if>
+			<if test="lowValue != null">
+				LOW_VALUE,
+			</if>
+			<if test="upValue != null">
+				UP_VALUE,
+			</if>
+			<if test="isRefundFee != null">
+				IS_REFUND_FEE,
+			</if>
+			<if test="calcueType != null">
+				CALCUE_TYPE,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			<if test="channelName != null">
+				channelName,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="channelCode != null">
+				#{channelCode,jdbcType=CHAR},
+			</if>
+			<if test="feeMode != null">
+				#{feeMode,jdbcType=CHAR},
+			</if>
+			<if test="feeType != null">
+				#{feeType,jdbcType=CHAR},
+			</if>
+			<if test="feeValue != null">
+				#{feeValue,jdbcType=DECIMAL},
+			</if>
+			<if test="lowValue != null">
+				#{lowValue,jdbcType=DECIMAL},
+			</if>
+			<if test="upValue != null">
+				#{upValue,jdbcType=DECIMAL},
+			</if>
+			<if test="isRefundFee != null">
+				#{isRefundFee,jdbcType=CHAR},
+			</if>
+			<if test="calcueType != null">
+				#{calcueType,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="channelName != null">
+				#{channelName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ylink.inetpay.common.project.channel.dto.ChlChlFeeDto">
+		update TB_CHL_CHL_FEE
+		<set>
+			<if test="channelCode != null">
+				CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+			</if>
+			<if test="feeMode != null">
+				FEE_MODE = #{feeMode,jdbcType=CHAR},
+			</if>
+			<if test="feeType != null">
+				FEE_TYPE = #{feeType,jdbcType=CHAR},
+			</if>
+			<if test="feeValue != null">
+				FEE_VALUE = #{feeValue,jdbcType=DECIMAL},
+			</if>
+			<if test="lowValue != null">
+				LOW_VALUE = #{lowValue,jdbcType=DECIMAL},
+			</if>
+			<if test="upValue != null">
+				UP_VALUE = #{upValue,jdbcType=DECIMAL},
+			</if>
+			<if test="isRefundFee != null">
+				IS_REFUND_FEE = #{isRefundFee,jdbcType=CHAR},
+			</if>
+			<if test="calcueType != null">
+				CALCUE_TYPE = #{calcueType,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="channelName != null">
+				CHANNEL_NAME = #{channelName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ylink.inetpay.common.project.channel.dto.ChlChlFeeDto">
+		update TB_CHL_CHL_FEE
+		set CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+		FEE_MODE = #{feeMode,jdbcType=CHAR},
+		FEE_TYPE = #{feeType,jdbcType=CHAR},
+		FEE_VALUE = #{feeValue,jdbcType=DECIMAL},
+		LOW_VALUE = #{lowValue,jdbcType=DECIMAL},
+		UP_VALUE = #{upValue,jdbcType=DECIMAL},
+		IS_REFUND_FEE = #{isRefundFee,jdbcType=CHAR},
+		CALCUE_TYPE = #{calcueType,jdbcType=CHAR},
+		STATUS = #{status,jdbcType=CHAR},
+		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+		CHANNEL_NAME = #{channelName,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="findAll" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.channel.dto.ChlChlFeeDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_CHL_CHL_FEE
+		<where>
+			<if test="channelCode != null and channelCode!=''">
+				and instr(CHANNEL_CODE,#{channelCode,jdbcType=VARCHAR})
+			</if>
+			<if test="feeType != null and feeType!=''">
+				and FEE_TYPE = #{feeType,jdbcType=CHAR}
+			</if>
+			<if test="feeValue != null and feeValue!=''">
+				and FEE_VALUE = #{feeValue,jdbcType=DECIMAL}
+			</if>
+			<if test="lowValue != null and lowValue!=''">
+				and LOW_VALUE = #{lowValue,jdbcType=DECIMAL}
+			</if>
+			<if test="upValue != null and upValue!=''">
+				and UP_VALUE = #{upValue,jdbcType=DECIMAL}
+			</if>
+			<if test="isRefundFee != null and isRefundFee!=''">
+				and IS_REFUND_FEE = #{isRefundFee,jdbcType=CHAR}
+			</if>
+			<if test="calcueType != null and calcueType!=''">
+				and CALCUE_TYPE = #{calcueType,jdbcType=CHAR}
+			</if>
+			<if test="status != null and status!=''">
+				and STATUS = #{status,jdbcType=CHAR}
+			</if>
+			<if test="channelName != null and channelName!=''">
+				and instr(CHANNEL_NAME,#{channelName,jdbcType=VARCHAR})
+			</if>
+			<if test="feeMode != null and feeMode!=''">
+				and instr(FEE_MODE,#{feeMode,jdbcType=CHAR})
+			</if>
+			<if test="startCreateTime != null and startCreateTime!=''">
+				and
+				to_char(CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startCreateTime},'yyyyMMdd')
+			</if>
+			<if test="endCreateTime != null and endCreateTime!=''">
+				and
+				to_char(CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endCreateTime},'yyyyMMdd')
+			</if>
+			<if test="startUpdateTime != null and startUpdateTime!=''">
+				and
+				to_char(UPDATE_TIME,'yyyyMMdd')&gt;=to_char(#{startUpdateTime},'yyyyMMdd')
+			</if>
+			<if test="endUpdateTime != null and endUpdateTime!=''">
+				and
+				to_char(UPDATE_TIME,'yyyyMMdd')&lt;=to_char(#{endUpdateTime},'yyyyMMdd')
+			</if>
+		</where>
+		order by CREATE_TIME desc
+	</select>
+
+	<select id="queryAllChannels" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.channel.dto.ChlChlFeeDto">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		tb_chl_chl_fee
+		GROUP BY
+		CHANNEL_NAME
+	</select>
+</mapper>

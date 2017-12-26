@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisTransferHandleDao" >
+  
+	<resultMap id="resultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisTransferHandleDto" >
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="INNER_BANK_TYPE" property="innerBankType" jdbcType="CHAR" />
+		<result column="INNER_BANK_NAME" property="innerBankName" jdbcType="VARCHAR" />
+		<result column="INNER_ACCT" property="innerAcct" jdbcType="VARCHAR" />
+		<result column="INNER_CUST_ID" property="innerCustId" jdbcType="VARCHAR" />
+		<result column="OUTER_BANK_TYPE" property="outerBankType" jdbcType="CHAR" />
+		<result column="OUTER_BANK_NAME" property="outerBankName" jdbcType="VARCHAR" />
+		<result column="OUTER_ACCT" property="outerAcct" jdbcType="VARCHAR" />
+		<result column="OUTER_CUST_ID" property="outerCustId" jdbcType="VARCHAR" />
+		<result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+		<result column="TRADE_ID" property="tradeId" jdbcType="VARCHAR" />
+		<result column="N_CHECK_NUM" property="nCheckNum" jdbcType="DECIMAL" />
+		<result column="A_CHECK_NUM" property="aCheckNum" jdbcType="DECIMAL" />
+		<result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+		<result column="PAY_STATUS" property="payStatus" jdbcType="CHAR" />
+		<result column="HANDLE" property="handle" jdbcType="VARCHAR" />
+		<result column="MEMO" property="memo" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+		<result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+		<result column="PAY_MEMO" property="payMemo" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--查询-->
+	<select id="getByCond"  parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTransferHandleDto"  resultType="java.util.List" resultMap="resultMap">
+ 		select 
+ 		ID ,
+ 		INNER_BANK_TYPE,INNER_ACCT , INNER_CUST_ID ,OUTER_BANK_TYPE,OUTER_ACCT ,
+		OUTER_CUST_ID ,AMOUNT ,TRADE_ID,N_CHECK_NUM ,A_CHECK_NUM ,CHECK_STATUS ,
+		PAY_STATUS,HANDLE ,MEMO ,CREATE_DATE,CREATOR ,MODIFY_DATE ,REVISER,INNER_BANK_NAME,
+		OUTER_BANK_NAME,PAY_MEMO
+ 		from TB_BIS_TRANSFER_HANDLE
+		   <where>
+		 	  <if test="innerBankType != null and innerBankType!=''">
+			       AND INNER_BANK_TYPE = #{innerBankType,jdbcType=CHAR}
+			  </if>
+			  <if test="outerBankType != null and outerBankType!=''">
+			       AND OUTER_BANK_TYPE = #{outerBankType,jdbcType=CHAR}
+			  </if>
+			  <if test="innerCustId != null and innerCustId!=''">
+			       AND INNER_CUST_ID = #{innerCustId}
+			  </if>
+			  <if test="innerAcct != null and innerAcct!=''">
+			       AND INNER_ACCT = #{innerAcct}
+			  </if>
+			  <if test="outerCustId != null and outerCustId!=''">
+			       AND OUTER_CUST_ID = #{outerCustId}
+			  </if>
+			  <if test="outerAcct != null and outerAcct!=''">
+			       AND OUTER_ACCT = #{outerAcct}
+			  </if>
+			  <if test="handle != null and handle!=''">
+			       and instr(HANDLE, #{handle}) > 0
+			  </if>
+			  <if test="checkStatus != null and checkStatus!=''">
+			       AND CHECK_STATUS = #{checkStatus,jdbcType=CHAR}
+			  </if>
+			  <if test="startDate != null" >
+		    	  and to_char(CREATE_DATE,'YYYY-MM-DD') &gt;= to_char(#{startDate},'YYYY-MM-DD')
+		      </if>
+		      <if test="endDate != null" >
+		      	  and  to_char(CREATE_DATE,'YYYY-MM-DD') &lt;= to_char(#{endDate},'YYYY-MM-DD')
+		      </if>
+		      <if test="payStatus != null and payStatus!=''" >
+		      	  and  PAY_STATUS = #{payStatus,jdbcType=CHAR} 
+		      </if>
+		      <if test="tradeId != null and tradeId!=''" >
+		      	  and  instr(TRADE_ID,#{tradeId,jdbcType=VARCHAR})>0 
+		      </if>
+		  </where>
+		  order by CREATE_DATE desc
+	</select>
+ 
+	<!--插入-->
+	<insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTransferHandleDto">
+		 insert into TB_BIS_TRANSFER_HANDLE
+			 (
+			  ID ,
+	 		  INNER_BANK_TYPE,
+			  INNER_ACCT ,
+			  INNER_CUST_ID ,
+			  OUTER_BANK_TYPE,
+			  OUTER_ACCT ,
+			  OUTER_CUST_ID ,
+			  AMOUNT ,
+			  TRADE_ID,
+			  N_CHECK_NUM ,
+			  A_CHECK_NUM ,
+			  CHECK_STATUS ,
+			  HANDLE ,
+			  MEMO ,
+			  CREATE_DATE,
+			  CREATOR ,
+			  MODIFY_DATE ,
+			  REVISER,
+			  PAY_STATUS,
+			 INNER_BANK_NAME,
+		  	 OUTER_BANK_NAME
+			  )
+			  values(
+			  	#{id,jdbcType=VARCHAR} ,
+			  	#{innerBankType,jdbcType=CHAR} ,
+			  	#{innerAcct,jdbcType=VARCHAR} ,
+			  	#{innerCustId,jdbcType=VARCHAR} ,
+			  	#{outerBankType,jdbcType=CHAR} ,
+			  	#{outerAcct,jdbcType=VARCHAR} ,
+			  	#{outerCustId,jdbcType=VARCHAR} ,
+			  	#{amount,jdbcType=DECIMAL} ,
+			  	#{tradeId,jdbcType=VARCHAR} ,
+			  	#{nCheckNum,jdbcType=DECIMAL} ,
+			  	#{aCheckNum,jdbcType=DECIMAL} ,
+			  	#{checkStatus,jdbcType=CHAR} ,
+			  	#{handle,jdbcType=VARCHAR} ,
+			  	#{memo,jdbcType=VARCHAR} ,
+			  	#{createDate,jdbcType=TIMESTAMP} ,
+			  	#{creator,jdbcType=VARCHAR} ,
+			  	#{modifyDate,jdbcType=TIMESTAMP} ,
+			  	#{reviser,jdbcType=VARCHAR},
+			  	#{payStatus,jdbcType=CHAR} ,
+			  	#{innerBankName,jdbcType=VARCHAR} ,
+			  	#{outerBankName,jdbcType=VARCHAR} 
+			  )
+	</insert>
+	<update id="update" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTransferHandleDto">
+		update TB_BIS_TRANSFER_HANDLE
+			<set>
+			 <if test="aCheckNum != null">
+                     A_CHECK_NUM = #{aCheckNum,jdbcType=DECIMAL},
+             </if>
+             <if test="reviser != null and reviser!=''">
+                     REVISER = #{reviser,jdbcType=VARCHAR},
+             </if>
+             <if test="modifyDate != null and modifyDate!=''">
+                     MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+             </if>
+              <if test="checkStatus != null and checkStatus!=''">
+                     CHECK_STATUS  = #{checkStatus,jdbcType=CHAR},
+             </if>
+              <if test="payStatus != null and payStatus!=''">
+                     PAY_STATUS  = #{payStatus,jdbcType=CHAR}
+             </if>
+			</set>
+			<where>
+				ID = #{id}
+			</where>
+	</update>
+	<select id="details"  parameterType="String" resultMap="resultMap">
+		 select 
+		ID ,
+	 		  INNER_BANK_TYPE,
+			  INNER_ACCT ,
+			  INNER_CUST_ID ,
+			  OUTER_BANK_TYPE,
+			  OUTER_ACCT ,
+			  OUTER_CUST_ID ,
+			  AMOUNT ,
+			  TRADE_ID,
+			  N_CHECK_NUM ,
+			  A_CHECK_NUM ,
+			  CHECK_STATUS ,
+			  HANDLE ,
+			  MEMO ,
+			  CREATE_DATE,
+			  CREATOR ,
+			  MODIFY_DATE ,
+			  REVISER,
+			  PAY_STATUS,
+			   INNER_BANK_NAME,
+		  OUTER_BANK_NAME,
+		  PAY_MEMO
+		 from TB_BIS_TRANSFER_HANDLE
+		 where ID=#{id}
+	</select>
+	<select id="getUnDownStatusDtos" resultMap="resultMap">
+		 select 
+		 ID ,INNER_BANK_TYPE,INNER_ACCT ,INNER_CUST_ID , OUTER_BANK_TYPE,OUTER_ACCT ,OUTER_CUST_ID ,
+		 AMOUNT ,TRADE_ID,N_CHECK_NUM ,A_CHECK_NUM ,CHECK_STATUS ,HANDLE ,MEMO ,CREATE_DATE,CREATOR ,
+		 MODIFY_DATE , REVISER,PAY_STATUS,INNER_BANK_NAME,OUTER_BANK_NAME,PAY_MEMO
+		 from TB_BIS_TRANSFER_HANDLE
+		 where PAY_STATUS=#{unknown,jdbcType=CHAR}
+	</select>
+	
+	<!-- 加锁 -->
+	<select id="getById"  parameterType="String" resultMap="resultMap">
+		 select 
+		ID ,
+	 		  INNER_BANK_TYPE,
+			  INNER_ACCT ,
+			  INNER_CUST_ID ,
+			  OUTER_BANK_TYPE,
+			  OUTER_ACCT ,
+			  OUTER_CUST_ID ,
+			  AMOUNT ,
+			  TRADE_ID,
+			  N_CHECK_NUM ,
+			  A_CHECK_NUM ,
+			  CHECK_STATUS ,
+			  HANDLE ,
+			  MEMO ,
+			  CREATE_DATE,
+			  CREATOR ,
+			  MODIFY_DATE ,
+			  REVISER,
+			  PAY_STATUS,
+			   INNER_BANK_NAME,
+		  OUTER_BANK_NAME,
+		  PAY_MEMO
+		 from TB_BIS_TRANSFER_HANDLE
+		 where ID=#{id} for update
+	</select>
+	
+	
+	<!-- <update id="updateAll" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsCallAcctHandle">
+		update TB_BIS_TRANSFER_HANDLE
+			<set>
+			<if test="innerBank != null">
+                     INNER_BANK = #{innerBank,jdbcType=VARCHAR},
+             </if>
+             <if test="innerAcct != null">
+                     INNER_ACCT = #{innerAcct,jdbcType=VARCHAR},
+             </if>
+             <if test="outerBank != null">
+                     OUTER_BANK = #{outerBank,jdbcType=VARCHAR},
+             </if>
+             <if test="outerAcct != null">
+                     OUTER_ACCT = #{outerAcct,jdbcType=VARCHAR},
+             </if>
+             <if test="amount != null">
+                     AMOUNT = #{amount,jdbcType=DECIMAL},
+             </if>
+              <if test="memo != null">
+                     MEMO = #{memo,jdbcType=VARCHAR},
+             </if>
+              <if test="nCheckNum != null">
+                     N_CHECK_NUM = #{nCheckNum,jdbcType=VARCHAR},
+             </if>
+             
+			 <if test="aCheckNum != null">
+                     A_CHECK_NUM = #{aCheckNum,jdbcType=VARCHAR},
+             </if>
+             <if test="reviser != null and reviser!=''">
+                     REVISER = #{reviser,jdbcType=VARCHAR},
+             </if>
+             <if test="modifyDate != null and modifyDate!=''">
+                     MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+             </if>
+              <if test="checkStatus != null and checkStatus!=''">
+                     CHECK_STATUS  = #{checkStatus,jdbcType=CHAR}
+             </if>
+			</set>
+			<where>
+				ID = #{id}
+			</where>
+	</update> -->
+	<select id="getSeqenceVals" resultType="String" flushCache="true" useCache="false" >
+		select MRS_BIS_TRANSFER_AUDIT_SEQ.nextval from dual
+	</select>
+	<update id="updatePayStatus" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisTransferHandleDto">
+		update TB_BIS_TRANSFER_HANDLE
+			<set>
+	             <if test="payStatus != null and payStatus!=''">
+	              	   PAY_STATUS = #{payStatus,jdbcType=CHAR},
+	             </if>
+	             <if test="payMemo != null and payMemo!=''">
+	                   PAY_MEMO = #{payMemo,jdbcType=VARCHAR},
+	             </if>
+			</set>
+			<where>
+				ID = #{id}
+			</where>
+	</update>
+</mapper>

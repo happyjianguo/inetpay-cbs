@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayHistoryPaymentEleDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayHistoryPaymentEleDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="SEQ_NO" property="seqNo" jdbcType="DECIMAL" />
+    <result column="ELE_NAME" property="eleName" jdbcType="VARCHAR" />
+    <result column="ELE_CON" property="eleCon" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="CLEAR_DATE" property="clearDate" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_ID, SEQ_NO, ELE_NAME, ELE_CON, ACCOUNT_DATE, CLEAR_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_HISTORY_PAYMENT_ELE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_HISTORY_PAYMENT_ELE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryPaymentEleDto" >
+    insert into TB_PAY_HISTORY_PAYMENT_ELE (ID, BUSI_ID, SEQ_NO, 
+      ELE_NAME, ELE_CON, ACCOUNT_DATE, 
+      CLEAR_DATE)
+    values (#{id,jdbcType=VARCHAR}, #{busiId,jdbcType=CHAR}, #{seqNo,jdbcType=DECIMAL}, 
+      #{eleName,jdbcType=VARCHAR}, #{eleCon,jdbcType=VARCHAR}, #{accountDate,jdbcType=CHAR}, 
+      #{clearDate,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryPaymentEleDto" >
+    insert into TB_PAY_HISTORY_PAYMENT_ELE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="seqNo != null" >
+        SEQ_NO,
+      </if>
+      <if test="eleName != null" >
+        ELE_NAME,
+      </if>
+      <if test="eleCon != null" >
+        ELE_CON,
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE,
+      </if>
+      <if test="clearDate != null" >
+        CLEAR_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo,jdbcType=DECIMAL},
+      </if>
+      <if test="eleName != null" >
+        #{eleName,jdbcType=VARCHAR},
+      </if>
+      <if test="eleCon != null" >
+        #{eleCon,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="clearDate != null" >
+        #{clearDate,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryPaymentEleDto" >
+    update TB_PAY_HISTORY_PAYMENT_ELE
+    <set >
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="seqNo != null" >
+        SEQ_NO = #{seqNo,jdbcType=DECIMAL},
+      </if>
+      <if test="eleName != null" >
+        ELE_NAME = #{eleName,jdbcType=VARCHAR},
+      </if>
+      <if test="eleCon != null" >
+        ELE_CON = #{eleCon,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="clearDate != null" >
+        CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryPaymentEleDto" >
+    update TB_PAY_HISTORY_PAYMENT_ELE
+    set BUSI_ID = #{busiId,jdbcType=CHAR},
+      SEQ_NO = #{seqNo,jdbcType=DECIMAL},
+      ELE_NAME = #{eleName,jdbcType=VARCHAR},
+      ELE_CON = #{eleCon,jdbcType=VARCHAR},
+      ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      CLEAR_DATE = #{clearDate,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getAttachs" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_HISTORY_PAYMENT_ELE
+    where BUSI_ID = #{busiId,jdbcType=CHAR}
+  </select>
+</mapper>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsCertFileDtoMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsCertFileDto">
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CUST_ID" jdbcType="VARCHAR" property="custId" />
+    <result column="CUSTOMER_TYPE" jdbcType="CHAR" property="customerType" />
+    <result column="CERT_TYPE" jdbcType="CHAR" property="certType" />
+    <result column="FILE_TYPE" jdbcType="VARCHAR" property="fileType" />
+    <result column="FILE_ID" jdbcType="VARCHAR" property="fileId" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_OPERATOR" jdbcType="VARCHAR" property="createOperator" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_OPERATOR" jdbcType="VARCHAR" property="updateOperator" />
+    <result column="FILE_REMARK" jdbcType="VARCHAR" property="fileRemark" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, CUSTOMER_TYPE, CERT_TYPE, FILE_TYPE, FILE_ID, CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, 
+    UPDATE_OPERATOR,FILE_REMARK
+  </sql>
+   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CERT_FILE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsCertFileDto">
+    insert into TB_MRS_CERT_FILE (ID, CUST_ID, CUSTOMER_TYPE, 
+      CERT_TYPE, FILE_TYPE, FILE_ID, 
+      CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, 
+      UPDATE_OPERATOR,FILE_REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{customerType,jdbcType=CHAR}, 
+      #{certType,jdbcType=CHAR}, #{fileType,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateOperator,jdbcType=VARCHAR}, #{fileRemark,jdbcType=VARCHAR})
+  </insert>
+  <!-- 批量插入 -->
+  <insert id="batchInsert">
+    insert into TB_MRS_CERT_FILE (ID, CUST_ID, CUSTOMER_TYPE, 
+      CERT_TYPE, FILE_TYPE, FILE_ID, 
+      CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, 
+      UPDATE_OPERATOR,FILE_REMARK)
+    <foreach collection="batchList" index="index" item="item" separator="union all">
+		select #{item.id,jdbcType=VARCHAR},
+		#{item.custId,jdbcType=VARCHAR},
+		#{item.customerType,jdbcType=CHAR},
+		#{item.certType,jdbcType=CHAR},
+		#{item.fileType,jdbcType=VARCHAR},
+		#{item.fileId,jdbcType=VARCHAR},
+		#{item.createTime,jdbcType=TIMESTAMP},
+		#{item.createOperator,jdbcType=VARCHAR},
+		#{item.updateTime,jdbcType=TIMESTAMP},
+		#{item.updateOperator,jdbcType=VARCHAR},
+		#{item.fileRemark,jdbcType=VARCHAR}from dual
+	</foreach>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsCertFileDto">
+    insert into TB_MRS_CERT_FILE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="custId != null">
+        CUST_ID,
+      </if>
+      <if test="customerType != null">
+        CUSTOMER_TYPE,
+      </if>
+      <if test="certType != null">
+        CERT_TYPE,
+      </if>
+      <if test="fileType != null">
+        FILE_TYPE,
+      </if>
+      <if test="fileId != null">
+        FILE_ID,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createOperator != null">
+        CREATE_OPERATOR,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateOperator != null">
+        UPDATE_OPERATOR,
+      </if>
+       <if test="fileRemark != null">
+        FILE_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null">
+        #{customerType,jdbcType=CHAR},
+      </if>
+      <if test="certType != null">
+        #{certType,jdbcType=CHAR},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null">
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null">
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="fileRemark != null">
+        #{FILE_REMARK,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteById" parameterType="java.lang.String" >
+    delete from TB_MRS_CERT_FILE
+    where ID = #{id}
+  </delete>
+  <delete id="deleteByCustId" parameterType="java.lang.String" >
+    delete from TB_MRS_CERT_FILE
+    where CUST_ID = #{custId}
+  </delete>
+  <select id="queryCertFile" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsCertFileDto" >
+    select 
+     ID, CUST_ID, CUSTOMER_TYPE, 
+      CERT_TYPE, FILE_TYPE, FILE_ID, 
+      CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, 
+      UPDATE_OPERATOR,FILE_REMARK
+    from TB_MRS_CERT_FILE
+    where 1=1
+     <if test="custId != null" >
+        and CUST_ID = #{custId,jdbcType=VARCHAR}
+      </if>
+	 <if test="customerType != null" >
+	     and CUSTOMER_TYPE != #{customerType,jdbcType=CHAR}
+	 </if>
+	 <if test="fileType != null" >
+	     and  FILE_TYPE = #{fileType,jdbcType=CHAR}
+	 </if> 
+	<if test="fileId != null" >
+	      and FILE_ID = #{fileId,jdbcType=VARCHAR}
+	 </if>
+  </select>
+   <!-- 根据一户通号码查询附件信息 -->
+  <select id="findByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CERT_FILE
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+</mapper>

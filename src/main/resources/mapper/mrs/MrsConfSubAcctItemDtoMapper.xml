@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsConfSubAcctItemDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctItemDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SUB_ACCT_ID" property="subAcctId" jdbcType="VARCHAR" />
+    <result column="SUBJECT2_PAY_NO" property="subject2PayNo" jdbcType="VARCHAR" />
+    <result column="SUBJECT2_PAY_NAME" property="subject2PayName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SUB_ACCT_ID, SUBJECT2_PAY_NO, SUBJECT2_PAY_NAME, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CONF_SUB_ACCT_ITEM
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_CONF_SUB_ACCT_ITEM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctItemDto" >
+    insert into TB_MRS_CONF_SUB_ACCT_ITEM (ID, SUB_ACCT_ID, SUBJECT2_PAY_NO, 
+      SUBJECT2_PAY_NAME, CREATE_DATE)
+    values (#{id,jdbcType=VARCHAR}, #{subAcctId,jdbcType=VARCHAR}, #{subject2PayNo,jdbcType=VARCHAR}, 
+      #{subject2PayName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctItemDto" >
+    insert into TB_MRS_CONF_SUB_ACCT_ITEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="subAcctId != null" >
+        SUB_ACCT_ID,
+      </if>
+      <if test="subject2PayNo != null" >
+        SUBJECT2_PAY_NO,
+      </if>
+      <if test="subject2PayName != null" >
+        SUBJECT2_PAY_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="subAcctId != null" >
+        #{subAcctId,jdbcType=VARCHAR},
+      </if>
+      <if test="subject2PayNo != null" >
+        #{subject2PayNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subject2PayName != null" >
+        #{subject2PayName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctItemDto" >
+    update TB_MRS_CONF_SUB_ACCT_ITEM
+    <set >
+      <if test="subAcctId != null" >
+        SUB_ACCT_ID = #{subAcctId,jdbcType=VARCHAR},
+      </if>
+      <if test="subject2PayNo != null" >
+        SUBJECT2_PAY_NO = #{subject2PayNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subject2PayName != null" >
+        SUBJECT2_PAY_NAME = #{subject2PayName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctItemDto" >
+    update TB_MRS_CONF_SUB_ACCT_ITEM
+    set SUB_ACCT_ID = #{subAcctId,jdbcType=VARCHAR},
+      SUBJECT2_PAY_NO = #{subject2PayNo,jdbcType=VARCHAR},
+      SUBJECT2_PAY_NAME = #{subject2PayName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

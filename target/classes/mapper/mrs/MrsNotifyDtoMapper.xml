@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsNotifyDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsNotifyDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="REQ_JSON" property="reqJson" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="NOTIFY_NUM" property="notifyNum" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPERATOR" property="createOperator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_OPERATOR" property="updateOperator" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_TYPE, CUST_ID, REQ_JSON, STATUS, NOTIFY_NUM, CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, CUSTOMER_CODE, 
+    UPDATE_OPERATOR
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_NOTIFY
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_NOTIFY
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsNotifyDto" >
+    insert into TB_MRS_NOTIFY (ID, BUSI_TYPE, CUST_ID, 
+      REQ_JSON, STATUS, NOTIFY_NUM,CREATE_TIME, 
+      CREATE_OPERATOR, UPDATE_TIME, UPDATE_OPERATOR
+      )
+    values (#{id,jdbcType=VARCHAR}, #{busiType,jdbcType=CHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{reqJson,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{notifyNum,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createOperator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateOperator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsNotifyDto" >
+    insert into TB_MRS_NOTIFY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="reqJson != null" >
+        REQ_JSON,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="status != null" >
+        NOTIFY_NUM,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateOperator != null" >
+        UPDATE_OPERATOR,
+      </if>
+       <if test="customerCode != null" >
+        CUSTOMER_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="reqJson != null" >
+        #{reqJson,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="notifyNum != null" >
+        #{notifyNum,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+       <if test="customerCode != null" >
+        #{customerCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsNotifyDto" >
+    update TB_MRS_NOTIFY
+    <set >
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="reqJson != null" >
+        REQ_JSON = #{reqJson,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="notifyNum != null" >
+        NOTIFY_NUM = #{notifyNum,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCode != null" >
+        CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsNotifyDto" >
+    update TB_MRS_NOTIFY
+    set BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      REQ_JSON = #{reqJson,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      NOTIFY_NUM = #{notifyNum,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="findByStatusAndMaxNotifyNum" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_NOTIFY
+	where
+    	 NOTIFY_NUM <![CDATA[ <= ]]> #{notifyNum,jdbcType=DECIMAL}
+    and STATUS in 
+    	<foreach collection="statusList" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+    and ROWNUM <![CDATA[ <= ]]>  100 ORDER BY CREATE_TIME ASC
+  </select>
+  <select id="findByCustIdStatus" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_NOTIFY
+	where
+    	 CUST_ID = #{custId,jdbcType=DECIMAL}
+    	 and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+    	and STATUS in 
+    	<foreach collection="statusList" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+  </select>
+  <update id="updateStatusById" >
+    update TB_MRS_NOTIFY
+    set 
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      NOTIFY_NUM = #{notifyNum,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="findByCustIdForCustomerCode" resultMap="BaseResultMap" >
+    select * from TB_MRS_NOTIFY
+    where CUST_ID = #{custId,jdbcType=VARCHAR} and STATUS in ('0','2') and BUSI_TYPE = #{busiType,jdbcType=CHAR} and (CUSTOMER_CODE is null or CUSTOMER_CODE='')
+  </select>
+  <select id="findByCustIdAndBusiType" resultMap="BaseResultMap" >
+    select * from TB_MRS_NOTIFY
+    where CUST_ID = #{custId,jdbcType=VARCHAR} and STATUS in ('0','2') and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+  </select>
+</mapper>

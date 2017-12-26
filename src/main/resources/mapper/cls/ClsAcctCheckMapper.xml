@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsAcctCheckDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsAcctCheck" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="CHECK_DAY" property="checkDay" jdbcType="CHAR" />
+	    <result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="ERR_DETAIL" property="errDetail" jdbcType="VARCHAR" />
+	    <result column="HANDLE_COUNT" property="handleCount" jdbcType="INTEGER" />
+	    <result column="PAY_FILE" property="payFile" jdbcType="VARCHAR" />
+	    <result column="ACCT_FILE" property="acctFile" jdbcType="VARCHAR" />
+	    <result column="FTP_URL" property="ftpUrl" jdbcType="VARCHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+ 
+<!--查询-->
+ <select id="queryClsAcctCheckById"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	CHECK_DAY ,
+ 	CHECK_STATUS ,
+ 	DEAL_STATUS ,
+ 	ERR_DETAIL ,
+ 	HANDLE_COUNT ,
+ 	PAY_FILE ,
+ 	ACCT_FILE ,
+ 	FTP_URL ,
+ 	CREATE_TIME ,
+ 	UPDATE_TIME  
+ from TB_CLS_ACCT_CHECK
+ where ID=#{id,jdbcType=CHAR}
+ </select>
+ 
+ <!--查询-->
+ <select id="queryClsAcctCheck"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsAcctCheck" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	CHECK_DAY ,
+ 	CHECK_STATUS ,
+ 	DEAL_STATUS ,
+ 	ERR_DETAIL ,
+ 	HANDLE_COUNT ,
+ 	PAY_FILE ,
+ 	ACCT_FILE ,
+ 	FTP_URL ,
+ 	CREATE_TIME ,
+ 	UPDATE_TIME  
+ from TB_CLS_ACCT_CHECK
+ where 1=1
+<if test="checkStatus!=null and checkStatus!=''">
+	and CHECK_STATUS=#{checkStatus,jdbcType=CHAR}
+</if>
+<if test="dealStatus!=null and dealStatus!=''">
+	and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+</if>
+ <if test="endTime!=null">
+	and CHECK_DAY <![CDATA[   <=  ]]>to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and CHECK_DAY <![CDATA[   >=  ]]>to_char(#{startTime},'yyyyMMdd')
+</if>
+ order by CHECK_DAY desc,ID desc
+ </select>
+  
+  
+<update id="updateDealStatusToUnProcess"  parameterType="java.lang.String" >
+update TB_CLS_ACCT_CHECK
+set DEAL_STATUS='1'
+ where ID=#{id,jdbcType=CHAR}
+</update>
+<select id="queryByCheckDay"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	CHECK_DAY ,
+ 	CHECK_STATUS ,
+ 	DEAL_STATUS ,
+ 	ERR_DETAIL ,
+ 	HANDLE_COUNT ,
+ 	PAY_FILE ,
+ 	ACCT_FILE ,
+ 	FTP_URL ,
+ 	CREATE_TIME ,
+ 	UPDATE_TIME  
+ from TB_CLS_ACCT_CHECK
+ where CHECK_DAY=#{checkDay,jdbcType=CHAR}
+ </select>
+</mapper>

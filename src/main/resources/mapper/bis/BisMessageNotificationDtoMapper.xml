@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisMessageNotificationDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisMessageNotificationDto" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="MESSAGE_TYPE" property="messageType" jdbcType="CHAR" />
+    <result column="MESSAGE_CONTENT" property="messageContent" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List">
+  	ID,MESSAGE_TYPE,MESSAGE_CONTENT,CREATE_TIME
+  </sql>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisMessageNotificationDto" >
+    insert into TB_BIS_MESSAGE_NOTIFICATION (ID, MESSAGE_TYPE, MESSAGE_CONTENT, 
+      CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{messageType,jdbcType=CHAR}, #{messageContent,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisMessageNotificationDto" >
+    insert into TB_BIS_MESSAGE_NOTIFICATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="messageType != null" >
+        MESSAGE_TYPE,
+      </if>
+      <if test="messageContent != null" >
+        MESSAGE_CONTENT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=CHAR},
+      </if>
+      <if test="messageContent != null" >
+        #{messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from TB_BIS_MESSAGE_NOTIFICATION
+  	where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisMessageNotificationDto" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_MESSAGE_NOTIFICATION
+    <where>
+    <if test="messageType != null and messageType !=''">
+      and  MESSAGE_TYPE = #{messageType.value,jdbcType=CHAR}
+      </if>
+      <if test="messageContent != null and messageContent !=''">
+      and  instr(MESSAGE_CONTENT,#{messageContent,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="startCreateTime != null">
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startCreateTime},'YYYY-MM-DD')
+      </if>
+      <if test="endCreateTime != null">
+      and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endCreateTime},'YYYY-MM-DD')
+      </if>
+    </where>
+    order by CREATE_TIME DESC
+  </select>
+</mapper>

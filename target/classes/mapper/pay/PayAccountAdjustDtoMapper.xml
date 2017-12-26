@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayAccountAdjustDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayAccountAdjustDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="DR_ACCOUNT_ID" property="drAccountId" jdbcType="VARCHAR" />
+    <result column="CR_ACCOUNT_ID" property="crAccountId" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="OPER_DATE" property="operDate" jdbcType="TIMESTAMP" />
+    <result column="OPER_REASON" property="operReason" jdbcType="VARCHAR" />
+    <result column="AUDIT_LOGIN_NAME" property="auditLoginName" jdbcType="VARCHAR" />
+    <result column="AUDIT_REAL_NAME" property="auditRealName" jdbcType="VARCHAR" />
+    <result column="AUDIT_DATE" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="AUDIT_RESULT" property="auditResult" jdbcType="CHAR" />
+    <result column="AUDIT_REMARK" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="ADJUST_RESULT" property="adjustResult" jdbcType="CHAR" />
+    <result column="ADJUST_REASON" property="adjustReason" jdbcType="VARCHAR" />
+    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_NAME" property="payeeCustName" jdbcType="VARCHAR" />
+    <result column="DR_ACCOUNT_NAME" property="drAccountName" jdbcType="VARCHAR" />
+    <result column="CR_ACCOUNT_NAME" property="crAccountName" jdbcType="VARCHAR" />
+    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="CHAR" />
+     <result column="DR_ACCT_SUB" property="drAcctSub" jdbcType="VARCHAR" />
+    <result column="CR_ACCT_SUB" property="crAcctSub" jdbcType="VARCHAR" />
+    <result column="CURRENOY" property="currenoy" jdbcType="CHAR" />
+    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+     <result column="ACCT_TYPE_NO" property="acctTypeNo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="export" type="com.ylink.inetpay.common.core.dto.ExportDto" >
+  	<id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="successAmt" property="successAmt" jdbcType="VARCHAR" />
+    <result column="successNumber" property="successNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_ID, DR_ACCOUNT_ID, CR_ACCOUNT_ID, AMOUNT, LOGIN_NAME, REAL_NAME, OPER_DATE, 
+    OPER_REASON, AUDIT_LOGIN_NAME, AUDIT_REAL_NAME, AUDIT_DATE, AUDIT_RESULT, AUDIT_REMARK, 
+    ADJUST_RESULT, ADJUST_REASON,PAYER_CUST_ID,PAYER_CUST_NAME,PAYEE_CUST_ID,PAYEE_CUST_NAME,DR_ACCOUNT_NAME,CR_ACCOUNT_NAME,TYPE,MER_ORDER_ID
+  </sql>
+  <select id="queryAdjustCountByAdjust" resultType="java.lang.Integer">
+ 	 select count(*) from TB_PAY_ACCOUNT_ADJUST where AUDIT_RESULT='01' and  TYPE='2'
+  </select>
+  <select id="queryAdjustCountByRecover" resultType="java.lang.Integer">
+ 	 select count(*) from TB_PAY_ACCOUNT_ADJUST where AUDIT_RESULT='01' and  TYPE='1'
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_ACCOUNT_ADJUST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_ACCOUNT_ADJUST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAccountAdjustDto" >
+    insert into TB_PAY_ACCOUNT_ADJUST (ID, BUSI_ID, DR_ACCOUNT_ID, 
+      CR_ACCOUNT_ID, AMOUNT, LOGIN_NAME, 
+      REAL_NAME, OPER_DATE, OPER_REASON, 
+      AUDIT_LOGIN_NAME, AUDIT_REAL_NAME, AUDIT_DATE, 
+      AUDIT_RESULT, AUDIT_REMARK, ADJUST_RESULT, 
+      ADJUST_REASON,DR_ACCOUNT_NAME,CR_ACCOUNT_NAME,TYPE)
+    values (#{id,jdbcType=VARCHAR}, #{busiId,jdbcType=CHAR}, #{drAccountId,jdbcType=VARCHAR}, 
+      #{crAccountId,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{loginName,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{operDate,jdbcType=TIMESTAMP}, #{operReason,jdbcType=VARCHAR}, 
+      #{auditLoginName,jdbcType=VARCHAR}, #{auditRealName,jdbcType=VARCHAR}, #{auditDate,jdbcType=TIMESTAMP}, 
+      #{auditResult,jdbcType=CHAR}, #{auditRemark,jdbcType=VARCHAR}, #{adjustResult,jdbcType=CHAR}, 
+      #{adjustReason,jdbcType=VARCHAR},#{drAccountName,jdbcType=VARCHAR},#{crAccountName,jdbcType=VARCHAR},#{type,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAccountAdjustDto" >
+    insert into TB_PAY_ACCOUNT_ADJUST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="drAccountId != null" >
+        DR_ACCOUNT_ID,
+      </if>
+      <if test="crAccountId != null" >
+        CR_ACCOUNT_ID,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="realName != null" >
+        REAL_NAME,
+      </if>
+      <if test="operDate != null" >
+        OPER_DATE,
+      </if>
+      <if test="operReason != null" >
+        OPER_REASON,
+      </if>
+      <if test="auditLoginName != null" >
+        AUDIT_LOGIN_NAME,
+      </if>
+      <if test="auditRealName != null" >
+        AUDIT_REAL_NAME,
+      </if>
+      <if test="auditDate != null" >
+        AUDIT_DATE,
+      </if>
+      <if test="auditResult != null" >
+        AUDIT_RESULT,
+      </if>
+      <if test="auditRemark != null" >
+        AUDIT_REMARK,
+      </if>
+      <if test="adjustResult != null" >
+        ADJUST_RESULT,
+      </if>
+      <if test="adjustReason != null" >
+        ADJUST_REASON,
+      </if>
+       <if test="drAccountName != null" >
+        DR_ACCOUNT_NAME,
+      </if>
+       <if test="crAccountName != null" >
+        CR_ACCOUNT_NAME,
+      </if>
+      <if test="crAccountName != null" >
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="drAccountId != null" >
+        #{drAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountId != null" >
+        #{crAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="operDate != null" >
+        #{operDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operReason != null" >
+        #{operReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditLoginName != null" >
+        #{auditLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRealName != null" >
+        #{auditRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditResult != null" >
+        #{auditResult,jdbcType=CHAR},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustResult != null" >
+        #{adjustResult,jdbcType=CHAR},
+      </if>
+      <if test="adjustReason != null" >
+        #{adjustReason,jdbcType=VARCHAR},
+      </if>
+       <if test="drAccountName != null" >
+        #{drAccountName,jdbcType=VARCHAR},
+      </if>
+       <if test="crAccountName != null" >
+        #{crAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountName != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAccountAdjustDto" >
+    update TB_PAY_ACCOUNT_ADJUST
+    <set >
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="drAccountId != null" >
+        DR_ACCOUNT_ID = #{drAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountId != null" >
+        CR_ACCOUNT_ID = #{crAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        REAL_NAME = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="operDate != null" >
+        OPER_DATE = #{operDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operReason != null" >
+        OPER_REASON = #{operReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditLoginName != null" >
+        AUDIT_LOGIN_NAME = #{auditLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRealName != null" >
+        AUDIT_REAL_NAME = #{auditRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        AUDIT_DATE = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditResult != null" >
+        AUDIT_RESULT = #{auditResult,jdbcType=CHAR},
+      </if>
+      <if test="auditRemark != null" >
+        AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustResult != null" >
+        ADJUST_RESULT = #{adjustResult,jdbcType=CHAR},
+      </if>
+      <if test="adjustReason != null" >
+        ADJUST_REASON = #{adjustReason,jdbcType=VARCHAR},
+      </if>
+       <if test="drAccountName != null" >
+        DR_ACCOUNT_NAME = #{drAccountName,jdbcType=VARCHAR},
+      </if>
+       <if test="crAccountName != null" >
+        CR_ACCOUNT_NAME = #{crAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountName != null" >
+        TYPE = #{type,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAccountAdjustDto" >
+    update TB_PAY_ACCOUNT_ADJUST
+    set BUSI_ID = #{busiId,jdbcType=CHAR},
+      DR_ACCOUNT_ID = #{drAccountId,jdbcType=VARCHAR},
+      CR_ACCOUNT_ID = #{crAccountId,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=DECIMAL},
+      LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      REAL_NAME = #{realName,jdbcType=VARCHAR},
+      OPER_DATE = #{operDate,jdbcType=TIMESTAMP},
+      OPER_REASON = #{operReason,jdbcType=VARCHAR},
+      AUDIT_LOGIN_NAME = #{auditLoginName,jdbcType=VARCHAR},
+      AUDIT_REAL_NAME = #{auditRealName,jdbcType=VARCHAR},
+      AUDIT_DATE = #{auditDate,jdbcType=TIMESTAMP},
+      AUDIT_RESULT = #{auditResult,jdbcType=CHAR},
+      AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},
+      ADJUST_RESULT = #{adjustResult,jdbcType=CHAR},
+      ADJUST_REASON = #{adjustReason,jdbcType=VARCHAR},
+      DR_ACCOUNT_NAME = #{drAccountName,jdbcType=VARCHAR},
+      CR_ACCOUNT_NAME = #{crAccountName,jdbcType=VARCHAR},
+      Type = #{type,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="pageList" resultMap="BaseResultMap"  resultType="java.util.List" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAccountAdjustDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_ACCOUNT_ADJUST
+    <where> 1 = 1
+      <if test="busiId != null and busiId !=''" >
+      and  instr(BUSI_ID, #{busiId}) > 0
+      </if>
+      <if test="merOrderId != null and merOrderId !=''" >
+     	 and   instr(MER_ORDER_ID, #{merOrderId}) > 0
+      </if>
+      <if test="payerCustId != null and payerCustId !=''" >
+     	 and   instr(PAYER_CUST_ID, #{payerCustId}) > 0
+      </if>
+      <if test="payerCustName != null and payerCustName !=''" >
+     	 and   instr(PAYER_CUST_NAME, #{payerCustName}) > 0
+      </if>
+      <if test="drAcctSub != null and drAcctSub !=''" >
+     	 and   instr(DR_ACCT_SUB, #{drAcctSub}) > 0
+      </if>
+      <if test="drAccountId != null and drAccountId !=''" >
+      and  instr(DR_ACCOUNT_ID, #{drAccountId}) > 0
+      </if>
+      <if test="crAccountId != null and crAccountId !=''" >
+      and  instr(CR_ACCOUNT_ID, #{crAccountId}) > 0
+      </if>
+      <if test="payeeCustName != null and payeeCustName !=''" >
+      and  instr(PAYEE_CUST_NAME, #{payeeCustName}) > 0
+      </if>
+      <if test="crAcctSub != null and crAcctSub !=''" >
+      and  instr(CR_ACCT_SUB, #{crAcctSub}) > 0
+      </if>
+      <if test="minAmt != null" >
+      and  AMOUNT <![CDATA[   >=  ]]> #{minAmt}
+      </if>
+      <if test="maxAmt != null" >
+      and  AMOUNT <![CDATA[   <=  ]]> #{maxAmt}
+      </if>
+      <if test="loginName != null and loginName !=''" >
+      and  LOGIN_NAME = #{loginName,jdbcType=VARCHAR}
+      </if>
+      <if test="realName != null and realName !=''" >
+      and  REAL_NAME = #{realName,jdbcType=VARCHAR}
+      </if>
+      <if test="startOperDate != null" >
+      and  date_format(OPER_DATE,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startOperDate},'%Y-%c-%d')
+      </if>
+      <if test="endOperDate != null" >
+      and date_format(OPER_DATE,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endOperDate},'%Y-%c-%d')
+      </if>
+      <if test="operReason != null and operReason !=''" >
+      and  OPER_REASON = #{operReason,jdbcType=VARCHAR}
+      </if>
+      <if test="auditLoginName != null and auditLoginName !=''" >
+      and  AUDIT_LOGIN_NAME = #{auditLoginName,jdbcType=VARCHAR}
+      </if>
+      <if test="auditRealName != null and auditRealName !=''" >
+      and  AUDIT_REAL_NAME = #{auditRealName,jdbcType=VARCHAR}
+      </if>
+      <if test="startAuditDate != null" >
+      and date_format(AUDIT_DATE,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startAuditDate},'%Y-%c-%d')
+      </if>
+       <if test="endAuditDate != null" >
+      and date_format(AUDIT_DATE,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{endAuditDate},'%Y-%c-%d')
+      </if>
+      <if test="auditResult != null and auditResult !=''" >
+      and  AUDIT_RESULT = #{auditResult,jdbcType=CHAR}
+      </if>
+      <if test="auditRemark != null and auditRemark !=''" >
+      and  AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="adjustResult != null and adjustResult !=''" >
+      and  ADJUST_RESULT = #{adjustResult,jdbcType=CHAR}
+      </if>
+      <if test="adjustReason != null and adjustReason !=''" >
+      and  ADJUST_REASON = #{adjustReason,jdbcType=VARCHAR}
+      </if>
+       <if test="drAccountName != null and drAccountName !=''" >
+      and  instr(DR_ACCOUNT_NAME, #{drAccountName}) > 0
+      </if>
+      <if test="crAccountName != null and crAccountName !=''" >
+      and   instr(CR_ACCOUNT_NAME, #{crAccountName}) > 0
+      </if>
+      <if test="type != null and type !=''" >
+      and  TYPE = #{type,jdbcType=CHAR}
+      </if>
+      <if test="queryTypes !=null and queryTypes!=''"> 
+       and TYPE in
+       <foreach collection="queryTypes " index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+      </if>
+    </where>
+     <!-- and TYPE in(#{all_type},#{an_type}) order by OPER_DATE desc -->
+     order by OPER_DATE desc
+  </select>
+   <select id="pageResultList" resultMap="BaseResultMap" >
+    select 
+     ID, BUSI_ID, DR_ACCOUNT_ID, CR_ACCOUNT_ID, AMOUNT, LOGIN_NAME, REAL_NAME, OPER_DATE, 
+    OPER_REASON, AUDIT_LOGIN_NAME, AUDIT_REAL_NAME, AUDIT_DATE, AUDIT_RESULT, AUDIT_REMARK, 
+    ADJUST_RESULT, ADJUST_REASON,PAYER_CUST_ID,PAYER_CUST_NAME,PAYEE_CUST_ID,PAYEE_CUST_NAME,DR_ACCOUNT_NAME,CR_ACCOUNT_NAME,TYPE
+    from TB_PAY_ACCOUNT_ADJUST
+    <where>
+      <if test="aDto.busiId != null and aDto.busiId !=''" >
+      and  BUSI_ID = #{aDto.busiId,jdbcType=CHAR}
+      </if>
+      <if test="aDto.drAccountId != null and drAccountId !=''" >
+      and  DR_ACCOUNT_ID = #{aDto.drAccountId,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.crAccountId != null and aDto.drAccountId !=''" >
+      and  CR_ACCOUNT_ID = #{aDto.crAccountId,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.minAmt != null" >
+      and  AMOUNT <![CDATA[   >=  ]]> #{aDto.minAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="aDto.maxAmt != null" >
+      and  AMOUNT <![CDATA[   <=  ]]> #{aDto.maxAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="aDto.loginName != null and aDto.loginName !=''" >
+      and  LOGIN_NAME = #{aDto.loginName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.realName != null and aDto.realName !=''" >
+      and  REAL_NAME = #{aDto.realName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.startOperDate != null" >
+      and date_format(OPER_DATE,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{aDto.startOperDate},'%Y-%c-%d')
+      </if>
+      <if test="aDto.endOperDate != null" >
+      and date_format(OPER_DATE,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{aDto.endOperDate},'%Y-%c-%d')
+      </if>
+      <if test="aDto.operReason != null and aDto.operReason !=''" >
+      and  OPER_REASON = #{aDto.operReason,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.auditLoginName != null and aDto.auditLoginName !=''" >
+      and  AUDIT_LOGIN_NAME = #{aDto.auditLoginName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.auditRealName != null and aDto.auditRealName !=''" >
+      and  AUDIT_REAL_NAME = #{aDto.auditRealName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.startAuditDate != null" >
+      and date_format(AUDIT_DATE,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{aDto.startAuditDate},'%Y-%c-%d')
+      </if>
+       <if test="aDto.endAuditDate != null" >
+      and date_format(AUDIT_DATE,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{aDto.endAuditDate},'%Y-%c-%d')
+      </if>
+      <if test="aDto.adjustResult != null and aDto.adjustResult !=''" >
+      and  ADJUST_RESULT = #{aDto.adjustResult,jdbcType=CHAR}
+      </if>
+      <if test="aDto.auditRemark != null and aDto.auditRemark !=''" >
+      and  AUDIT_REMARK = #{aDto.auditRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.adjustResult != null and aDto.adjustResult !=''" >
+      and  ADJUST_RESULT = #{aDto.adjustResult,jdbcType=CHAR}
+      </if>
+      <if test="aDto.adjustReason != null and aDto.adjustReason !=''" >
+      and  ADJUST_REASON = #{aDto.adjustReason,jdbcType=VARCHAR}
+      </if>
+       <if test="aDto.drAccountName != null and aDto.drAccountName !=''" >
+      and  DR_ACCOUNT_NAME = #{aDto.drAccountName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.crAccountName != null and aDto.crAccountName !=''" >
+      and  CR_ACCOUNT_NAME = #{aDto.crAccountName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.type != null and aDto.type !=''" >
+      and  TYPE = #{aDto.type,jdbcType=CHAR}
+      </if>
+      and  (AUDIT_RESULT = #{auditPass,jdbcType=CHAR}  or  AUDIT_RESULT = #{auditReject,jdbcType=CHAR}) 
+    </where>
+     order by OPER_DATE desc
+  </select>
+  <select id="export" resultMap="export">
+    select 
+    count(BUSI_ID) as successNumber,sum(AMOUNT) as successAmt from TB_PAY_ACCOUNT_ADJUST
+    <where>
+      <if test="aDto.busiId != null and aDto.busiId !=''" >
+      and  BUSI_ID = #{aDto.busiId,jdbcType=CHAR}
+      </if>
+      <if test="aDto.drAccountId != null and aDto.drAccountId !=''" >
+      and  DR_ACCOUNT_ID = #{aDto.drAccountId,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.crAccountId != null and aDto.drAccountId !=''" >
+      and  CR_ACCOUNT_ID = #{aDto.crAccountId,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.minAmt != null" >
+      and  AMOUNT <![CDATA[   >=  ]]> #{aDto.minAmt}
+      </if>
+      <if test="aDto.maxAmt != null" >
+      and  AMOUNT <![CDATA[   <=  ]]> #{aDto.maxAmt}
+      </if>
+      <if test="aDto.loginName != null and aDto.loginName !=''" >
+      and  LOGIN_NAME = #{aDto.loginName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.realName != null and aDto.realName !=''" >
+      and  REAL_NAME = #{aDto.realName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.startOperDate != null" >
+      and date_format(OPER_DATE,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{aDto.startOperDate},'%Y-%c-%d')
+      </if>
+      <if test="aDto.endOperDate != null" >
+      and date_format(OPER_DATE,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{aDto.endOperDate},'%Y-%c-%d')
+      </if>
+      <if test="aDto.operReason != null and aDto.operReason !=''" >
+      and  OPER_REASON = #{aDto.operReason,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.auditLoginName != null and aDto.auditLoginName !=''" >
+      and  AUDIT_LOGIN_NAME = #{aDto.auditLoginName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.auditRealName != null and aDto.auditRealName !=''" >
+      and  AUDIT_REAL_NAME = #{aDto.auditRealName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.startAuditDate != null" >
+      and date_format(AUDIT_DATE,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{aDto.startAuditDate},'%Y-%c-%d')
+      </if>
+       <if test="aDto.endAuditDate != null" >
+      and date_format(AUDIT_DATE,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{aDto.endAuditDate},'%Y-%c-%d')
+      </if>
+      <if test="aDto.auditResult != null and aDto.auditResult !=''" >
+      and  AUDIT_RESULT = #{aDto.auditResult,jdbcType=CHAR}
+      </if>
+      <if test="aDto.auditRemark != null and aDto.auditRemark !=''" >
+      and  AUDIT_REMARK = #{aDto.auditRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.adjustResult != null and aDto.adjustResult !=''" >
+      and  ADJUST_RESULT = #{aDto.adjustResult,jdbcType=CHAR}
+      </if>
+      <if test="aDto.adjustReason != null and aDto.adjustReason !=''" >
+      and  ADJUST_REASON = #{aDto.adjustReason,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.drAccountName != null and aDto.drAccountName !=''" >
+      and  DR_ACCOUNT_NAME = #{aDto.drAccountName,jdbcType=VARCHAR}
+      </if>
+      <if test="aDto.crAccountName != null and aDto.crAccountName !=''" >
+      and  DR_ACCOUNT_NAME = #{aDto.crAccountName,jdbcType=VARCHAR}
+      </if>
+       <if test="aDto.type != null and aDto.type !=''" >
+      and  TYPE = #{aDto.type,jdbcType=CHAR}
+      </if>
+      and  AUDIT_RESULT = #{auditPass,jdbcType=CHAR}
+    </where>
+  </select>
+  
+  
+  
+  <select id="getById" resultMap="BaseResultMap"  parameterType="String" >
+    select 
+    *
+    from TB_PAY_ACCOUNT_ADJUST
+   	where ID =  #{id,jdbcType=VARCHAR}
+  </select>
+</mapper>

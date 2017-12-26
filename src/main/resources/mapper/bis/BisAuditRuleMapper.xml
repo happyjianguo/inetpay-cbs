@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisAuditRuleMapper" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditRule" >
+	    <result column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="AUDIT_TYPE" property="auditType" jdbcType="CHAR" />
+	    <result column="START_AUDIT" property="startAudit" jdbcType="DECIMAL" />
+	    <result column="END_AUDIT" property="endAudit" jdbcType="DECIMAL" />
+	    <result column="CHECK_NUM" property="checkNum" jdbcType="DECIMAL" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+	    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+	    <result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+	 
+  </resultMap>
+ 
+<!--查询-->
+ <select id="queryBisAuditRule"  parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditRule" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	AUDIT_TYPE ,
+ 	START_AUDIT ,
+ 	END_AUDIT ,
+ 	CHECK_NUM ,
+ 	CREATE_DATE ,
+ 	CREATOR ,
+ 	MODIFY_DATE ,
+ 	REVISER 
+ from TB_BIS_AUDIT_RULE
+ <where>
+ 	  <if test="auditType != null and auditType!=''">
+	       AND AUDIT_TYPE = #{auditType,jdbcType=CHAR}
+	 </if>
+	 <if test="delId != null and delId!=''">
+	       AND ID != #{delId,jdbcType=CHAR}
+	 </if>
+	  <if test="startAmt != null and startAmt !=''">
+      and START_AUDIT &gt; =#{startAmt}
+      </if>
+      <if test="endAmt != null and endAmt !=''" >
+      and  START_AUDIT &lt; = #{endAmt}
+      </if>
+       <if test="startCmt != null and startCmt !=''">
+      and  END_AUDIT &gt; =#{startCmt}
+      </if>
+      <if test="endCmt != null and endCmt !=''" >
+      and  END_AUDIT &lt; = #{endCmt}
+      </if>
+ </where>
+  order by CREATE_DATE desc
+ </select>
+ 
+<!--更新-->
+ <update id="updateBisAuditRule" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditRule">
+ update TB_BIS_AUDIT_RULE 
+ 	<set>
+ 	 <if test="startAudit != null" >
+        START_AUDIT = #{startAudit,jdbcType=DECIMAL},
+      </if>
+       <if test="endAudit != null" >
+        END_AUDIT = #{endAudit,jdbcType=DECIMAL},
+      </if>
+       <if test="checkNum != null" >
+        CHECK_NUM = #{checkNum,jdbcType=DECIMAL},
+      </if>
+       <if test="modifyDate != null" >
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="reviser != null" >
+        REVISER = #{reviser,jdbcType=DECIMAL}
+      </if>
+     </set>
+ where 
+ 	ID=#{id,jdbcType=VARCHAR}  
+ </update>
+ 
+<!--插入-->
+ <insert id="addBisAuditRule" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditRule">
+ insert into TB_BIS_AUDIT_RULE
+ (
+  ID ,
+  AUDIT_TYPE ,
+  START_AUDIT ,
+  END_AUDIT ,
+  CHECK_NUM ,
+  CREATE_DATE ,
+  CREATOR ,
+  MODIFY_DATE ,
+  REVISER 
+  )
+  values(
+  	#{id,jdbcType=VARCHAR} ,
+  	#{auditType,jdbcType=CHAR} ,
+  	#{startAudit,jdbcType=DECIMAL} ,
+  	#{endAudit,jdbcType=DECIMAL} ,
+  	#{checkNum,jdbcType=DECIMAL} ,
+  	#{createDate,jdbcType=TIMESTAMP} ,
+  	#{creator,jdbcType=VARCHAR} ,
+  	#{modifyDate,jdbcType=TIMESTAMP} ,
+  	#{reviser,jdbcType=VARCHAR} 
+  )
+ </insert>
+ 
+ <!--删除-->
+ <delete id="deleteBisAuditRule">
+ delete from TB_BIS_AUDIT_RULE 
+ where
+  ID  in
+   <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+        #{item}  
+    </foreach>  
+ </delete>
+ 
+  <!--删除-->
+ <delete id="delete">
+ delete from TB_BIS_AUDIT_RULE 
+ where ID=#{id}
+ </delete>
+ <select id="details"  parameterType="String" resultMap="resultMap">
+		 select 
+		  ID ,
+		  AUDIT_TYPE ,
+		  START_AUDIT ,
+		  END_AUDIT ,
+		  CHECK_NUM ,
+		  CREATE_DATE ,
+		  CREATOR ,
+		  MODIFY_DATE ,
+		  REVISER 
+		 from TB_BIS_AUDIT_RULE
+		 where ID=#{id}
+	</select>
+    <select id="isExistAcross"  parameterType="String" resultType="long">
+		 select count(*) from TB_BIS_AUDIT_RULE
+		 where ((START_AUDIT &lt;#{startRuleAmt} and END_AUDIT &gt;#{startRuleAmt})
+		 or (START_AUDIT &lt;#{endRuleAmt} and END_AUDIT &gt;#{endRuleAmt})
+		 or (START_AUDIT &gt;=#{startRuleAmt} and END_AUDIT &lt;=#{endRuleAmt}))
+		 and AUDIT_TYPE=#{auditType,jdbcType=CHAR}
+		 <if test="id != null and id!=''" >
+        	and ID != #{id,jdbcType=VARCHAR}
+         </if>
+	</select>
+ 
+</mapper>

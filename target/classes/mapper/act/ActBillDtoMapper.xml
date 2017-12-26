@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActBillDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActBillDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BILL_ID" property="billId" jdbcType="CHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="PAY_ACCOUNT_DATE" property="payAccountDate" jdbcType="CHAR" />
+    <result column="PAY_ID" property="payId" jdbcType="CHAR" />
+    <result column="BOOK_ID" property="bookId" jdbcType="CHAR" />
+    <result column="RULE_ID" property="ruleId" jdbcType="VARCHAR" />
+    <result column="DR_CR_FLAG" property="drCrFlag" jdbcType="CHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_AMOUNT" property="accountAmount" jdbcType="DECIMAL" />
+    <result column="CHANNEL_NAME" property="channelName" jdbcType="VARCHAR" />
+    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="SUBJECT_NO" property="subjectNo" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="CURRENOY" property="currenoy" jdbcType="CHAR" />
+    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+    <result column="ACCOUNT_DR_CR_FLAG" property="accountDrCrFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BILL_ID, ACCOUNT_DATE, BUSI_TYPE, PAY_ACCOUNT_DATE, PAY_ID, BOOK_ID, RULE_ID, 
+    DR_CR_FLAG, AMOUNT, CUST_ID, CUST_NAME, ACCOUNT_ID, ACCOUNT_AMOUNT, CHANNEL_NAME, 
+    TRADE_NAME, REMARK, CREATE_TIME,CURRENOY,BOOK_TYPE
+  </sql>
+  <resultMap id="ReportResultMap" type="com.ylink.inetpay.common.core.dto.ReporHeadDto" >
+ 	  <result column="allNum" property="allNum" jdbcType="DECIMAL" />
+ 	  <result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+  </resultMap>
+  	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TB_ACT_BILL
+		where 1=1
+	  	<if test="actAccountDtoList != null and actAccountDtoList.size() > 0">
+		 	 and ACCOUNT_ID IN
+		  	<foreach collection="actAccountDtoList" item="item" open="(" close=")" separator=",">
+    			#{item.accountId}
+   		 	</foreach>
+		</if>
+		 <if test="queryParam.payId != null and queryParam.payId != ''">
+			and PAY_ID = #{queryParam.payId,jdbcType=CHAR}
+		</if>
+		<if test="queryParam.bookId != null and queryParam.bookId != ''">
+			and BOOK_ID = #{queryParam.bookId,jdbcType=CHAR}
+		</if>
+		<if test="queryParam.drCrFlag != null and queryParam.drCrFlag != ''">
+			and DR_CR_FLAG = #{queryParam.drCrFlag,jdbcType=CHAR}
+		</if>
+		<if test="queryParam.amount != null and queryParam.amount != ''">
+			and AMOUNT<![CDATA[   =  ]]>#{amount}
+		</if>
+		<if test="queryParam.startTime !=null and queryParam.startTime !=''">
+			and ACCOUNT_DATE<![CDATA[   >=  ]]>to_char(#{queryParam.startTime},'YYYYMMDD')
+		</if>
+		<if test="queryParam.endTime !=null and queryParam.endTime !=''">
+			and ACCOUNT_DATE<![CDATA[   <=  ]]>to_char(#{queryParam.endTime},'YYYYMMDD')
+		</if>
+  	</select>
+   <select id="reportSumData" resultMap="ReportResultMap" parameterType="com.ylink.inetpay.common.project.account.dto.ActBillDto" >
+   	select  count(1) as allNum, nvl(sum(AMOUNT),0) as allAmt from TB_ACT_BILL 
+		where 1=1
+		<if test="payId != null and payId != ''">
+			and PAY_ID  = #{payId,jdbcType=CHAR}
+		</if>
+		<if test="bookId != null and bookId != ''">
+			and BOOK_ID = #{bookId,jdbcType=CHAR}
+		</if>
+		<if test="drCrFlag != null and drCrFlag != ''">
+			and DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR}
+		</if>
+		<if test="accountId != null and accountId != ''">
+			and ACCOUNT_ID = #{accountId,jdbcType=VARCHAR}
+		</if>
+		<if test="amount != null and amount != ''">
+			and AMOUNT<![CDATA[   =  ]]>#{amount}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and AMOUNT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and AMOUNT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_BILL
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByBillId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_ACT_BILL
+		where BILL_ID = #{billId,jdbcType=CHAR}
+	</select>
+	<select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActBillDto">
+		select
+		b.ID, b.BILL_ID, b.ACCOUNT_DATE, b.BUSI_TYPE, b.PAY_ACCOUNT_DATE, b.PAY_ID, b.BOOK_ID, b.RULE_ID, 
+   		b.DR_CR_FLAG, b.AMOUNT, b.CUST_ID, b.CUST_NAME, b.ACCOUNT_ID, b.ACCOUNT_AMOUNT, b.CHANNEL_NAME, 
+   		b.TRADE_NAME, b.REMARK, b.CREATE_TIME,b.CURRENOY,b.BOOK_TYPE
+   		<!-- s.SUBJECT_NO,s.SUBJECT_NAME -->
+		<!-- from TB_ACT_BILL b left join TB_ACT_SUBJECT s on SUBSTR(b.ACCOUNT_ID,0,7)=s.SUBJECT_NO or SUBSTR(b.ACCOUNT_ID,0,6)=s.SUBJECT_NO -->
+		from TB_ACT_BILL b where 1=1
+		<if test="custId != null and custId != ''">
+			and instr(b.CUST_ID,#{custId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="payId != null and payId != ''">
+			and instr(b.PAY_ID,#{payId,jdbcType=CHAR}) > 0
+		</if>
+		<if test="bookId != null and bookId != ''">
+			and instr(b.BOOK_ID,#{bookId,jdbcType=CHAR}) > 0
+		</if>
+		<if test="drCrFlag != null and drCrFlag != ''">
+			and b.DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR}
+		</if>
+		<if test="bookType != null and bookType != ''">
+			and b.BOOK_TYPE = #{bookType,jdbcType=CHAR}
+		</if>
+		<if test="busiType != null and busiType != ''">
+			and b.BUSI_TYPE = #{busiType,jdbcType=CHAR}
+		</if>
+		<if test="accountId != null and accountId != ''">
+			and instr(b.ACCOUNT_ID,#{accountId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="amount != null and amount != ''">
+			and b.AMOUNT<![CDATA[   =  ]]>#{amount}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and b.AMOUNT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and b.AMOUNT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and to_char(b.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and to_char(b.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+		<if test="accountDate!=null and accountDate!=''">
+		    and b.ACCOUNT_DATE = #{accountDate}
+		</if>
+		order by b.CREATE_TIME DESC,b.BILL_ID DESC
+	</select>
+	
+	<select id="queryAllDataByPortal" resultMap="BaseResultMap">
+		select
+		b.ID, b.BILL_ID, b.ACCOUNT_DATE, b.BUSI_TYPE, b.PAY_ACCOUNT_DATE, b.PAY_ID, b.BOOK_ID, b.RULE_ID, 
+   		b.DR_CR_FLAG, b.AMOUNT, b.CUST_ID, b.CUST_NAME, b.ACCOUNT_ID, b.ACCOUNT_AMOUNT, b.CHANNEL_NAME, 
+   		b.TRADE_NAME, b.REMARK, b.CREATE_TIME,b.CURRENOY,b.BOOK_TYPE,a.DR_CR_FLAG account_dr_cr_flag
+		from TB_ACT_BILL b 
+		left join TB_ACT_ACCOUNT a
+	    	on b.account_id=a.account_id
+	    where a.subject_no_2 in 
+		  	<foreach collection="subjectNoList" item="subjectNo" open="(" separator="," close=")">
+		  		#{subjectNo}
+		  	</foreach>
+		<if test="actBillDto.custId != null and actBillDto.custId != ''">
+			and instr(b.CUST_ID,#{actBillDto.custId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="actBillDto.payId != null and actBillDto.payId != ''">
+			and instr(b.PAY_ID,#{actBillDto.payId,jdbcType=CHAR}) > 0
+		</if>
+		<if test="actBillDto.bookId != null and actBillDto.bookId != ''">
+			and instr(b.BOOK_ID,#{actBillDto.bookId,jdbcType=CHAR}) > 0
+		</if>
+		<if test="actBillDto.drCrFlag != null and actBillDto.drCrFlag != '' and actBillDto.drCrFlagStr == 'CR'">
+			and b.DR_CR_FLAG = 'CR' and ((b.DR_CR_FLAG = 'CR'  and a.DR_CR_FLAG = 'CR') or (b.DR_CR_FLAG = 'DR'  and a.DR_CR_FLAG = 'DR'))
+		</if>
+		<if test="actBillDto.drCrFlag != null and actBillDto.drCrFlag != '' and actBillDto.drCrFlagStr == 'DR'">
+			and b.DR_CR_FLAG = 'DR' and ((b.DR_CR_FLAG = 'DR'  and a.DR_CR_FLAG = 'CR') or (b.DR_CR_FLAG = 'CR'  and a.DR_CR_FLAG = 'DR'))
+		</if>
+		<if test="actBillDto.bookType != null and actBillDto.bookType != ''">
+			and b.BOOK_TYPE = #{actBillDto.bookType,jdbcType=CHAR}
+		</if>
+		<if test="actBillDto.busiType != null and actBillDto.busiType != ''">
+			and b.BUSI_TYPE = #{actBillDto.busiType,jdbcType=CHAR}
+		</if>
+		<if test="actBillDto.accountId != null and actBillDto.accountId != ''">
+			and instr(b.ACCOUNT_ID,#{actBillDto.accountId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="actBillDto.amount != null and actBillDto.amount != ''">
+			and b.AMOUNT<![CDATA[   =  ]]>#{actBillDto.amount}
+		</if>
+		<if test="actBillDto.startAmt != null and actBillDto.startAmt != ''">
+			and b.AMOUNT<![CDATA[   >=  ]]>#{actBillDto.startAmt}
+		</if>
+		<if test="actBillDto.endAmt != null and actBillDto.endAmt != ''">
+			and b.AMOUNT<![CDATA[   <=  ]]>#{actBillDto.endAmt}
+		</if>
+		<if test="actBillDto.startTime !=null and actBillDto.startTime !=''">
+			and to_char(b.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{actBillDto.startTime},'YYYY-MM-DD')
+		</if>
+		<if test="actBillDto.endTime !=null and actBillDto.endTime !=''">
+			and to_char(b.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{actBillDto.endTime},'YYYY-MM-DD')
+		</if>
+		<if test="actBillDto.accountDate!=null and actBillDto.accountDate!=''">
+		    and b.ACCOUNT_DATE = #{actBillDto.accountDate}
+		</if>
+		order by b.CREATE_TIME DESC,b.BILL_ID DESC
+	</select>
+	
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_BILL
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActBillDto" >
+    insert into TB_ACT_BILL (ID, BILL_ID, ACCOUNT_DATE, 
+      BUSI_TYPE, PAY_ACCOUNT_DATE, PAY_ID, 
+      BOOK_ID, RULE_ID, DR_CR_FLAG, 
+      AMOUNT, CUST_ID, CUST_NAME, 
+      ACCOUNT_ID, ACCOUNT_AMOUNT, CHANNEL_NAME, 
+      TRADE_NAME, REMARK, CREATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{billId,jdbcType=CHAR}, #{accountDate,jdbcType=CHAR}, 
+      #{busiType,jdbcType=CHAR}, #{payAccountDate,jdbcType=CHAR}, #{payId,jdbcType=CHAR}, 
+      #{bookId,jdbcType=CHAR}, #{ruleId,jdbcType=VARCHAR}, #{drCrFlag,jdbcType=CHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{custId,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, 
+      #{accountId,jdbcType=VARCHAR}, #{accountAmount,jdbcType=DECIMAL}, #{channelName,jdbcType=VARCHAR}, 
+      #{tradeName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActBillDto" >
+    insert into TB_ACT_BILL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="billId != null" >
+        BILL_ID,
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="payAccountDate != null" >
+        PAY_ACCOUNT_DATE,
+      </if>
+      <if test="payId != null" >
+        PAY_ID,
+      </if>
+      <if test="bookId != null" >
+        BOOK_ID,
+      </if>
+      <if test="ruleId != null" >
+        RULE_ID,
+      </if>
+      <if test="drCrFlag != null" >
+        DR_CR_FLAG,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="accountAmount != null" >
+        ACCOUNT_AMOUNT,
+      </if>
+      <if test="channelName != null" >
+        CHANNEL_NAME,
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        #{billId,jdbcType=CHAR},
+      </if>
+      <if test="accountDate != null" >
+        #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="payAccountDate != null" >
+        #{payAccountDate,jdbcType=CHAR},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=CHAR},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="ruleId != null" >
+        #{ruleId,jdbcType=VARCHAR},
+      </if>
+      <if test="drCrFlag != null" >
+        #{drCrFlag,jdbcType=CHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAmount != null" >
+        #{accountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="channelName != null" >
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeName != null" >
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActBillDto" >
+    update TB_ACT_BILL
+    <set >
+      <if test="billId != null" >
+        BILL_ID = #{billId,jdbcType=CHAR},
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="payAccountDate != null" >
+        PAY_ACCOUNT_DATE = #{payAccountDate,jdbcType=CHAR},
+      </if>
+      <if test="payId != null" >
+        PAY_ID = #{payId,jdbcType=CHAR},
+      </if>
+      <if test="bookId != null" >
+        BOOK_ID = #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="ruleId != null" >
+        RULE_ID = #{ruleId,jdbcType=VARCHAR},
+      </if>
+      <if test="drCrFlag != null" >
+        DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR},
+      </if>
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAmount != null" >
+        ACCOUNT_AMOUNT = #{accountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="channelName != null" >
+        CHANNEL_NAME = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActBillDto" >
+    update TB_ACT_BILL
+    set BILL_ID = #{billId,jdbcType=CHAR},
+      ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      PAY_ACCOUNT_DATE = #{payAccountDate,jdbcType=CHAR},
+      PAY_ID = #{payId,jdbcType=CHAR},
+      BOOK_ID = #{bookId,jdbcType=CHAR},
+      RULE_ID = #{ruleId,jdbcType=VARCHAR},
+      DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR},
+      AMOUNT = #{amount,jdbcType=DECIMAL},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      ACCOUNT_AMOUNT = #{accountAmount,jdbcType=DECIMAL},
+      CHANNEL_NAME = #{channelName,jdbcType=VARCHAR},
+      TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

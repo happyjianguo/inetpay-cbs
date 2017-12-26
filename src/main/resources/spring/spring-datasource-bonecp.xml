@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!--用于连接boneCp数据源 -->
+	<bean id="commonDataSourceConfig" class="com.jolbox.bonecp.BoneCPDataSource" abstract="true" destroy-method="close">
+        <!-- 每个分区最大的连接数 -->  
+        <property name="maxConnectionsPerPartition" value="50" />  
+        <!-- 每个分区最小的连接数 -->  
+        <property name="minConnectionsPerPartition" value="10" />  
+        <!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定-->  
+        <property name="partitionCount" value="2" />  
+        <!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->  
+        <property name="acquireIncrement" value="2" />
+        <!-- 测试连接有效性的间隔时间，单位分钟   -->
+        <!--<property name="idleConnectionTestPeriodInMinutes" value="5" />-->
+		<!-- 连接最大空闲时间 -->
+		<property name="idleMaxAgeInSeconds" value="300" />
+        <!-- 连接超时时间 毫秒-->
+		<property name="connectionTimeoutInMs" value="10000"/>
+        <!-- 空闲存活时间 分钟
+        <property name="idleMaxAge" value="1"/>-->
+	</bean>
+
+	<util:properties id="dataSourceProps" location="classpath*:comm/config/database.properties"/>
+ 
+	<!-- pay数据源配置 -->
+	<bean id="payDataSource" parent="commonDataSourceConfig">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="#{dataSourceProps['pay.db.host']}" />
+		<property name="username" value="#{dataSourceProps['pay.db.login.name']}"/>
+		<property name="password" value="#{dataSourceProps['pay.db.login.password']}"/>
+	</bean>
+	
+	<!-- account数据源配置 -->
+	<bean id="accountDataSource" parent="commonDataSourceConfig">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="#{dataSourceProps['act.db.host']}" />
+		<property name="username" value="#{dataSourceProps['act.db.login.name']}"/>
+		<property name="password" value="#{dataSourceProps['act.db.login.password']}"/>
+	</bean>
+	
+	<!-- clear数据源配置 -->
+	<bean id="clearDataSource" parent="commonDataSourceConfig">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="#{dataSourceProps['cls.db.host']}" />
+		<property name="username" value="#{dataSourceProps['cls.db.login.name']}"/>
+		<property name="password" value="#{dataSourceProps['cls.db.login.password']}"/>
+	</bean>
+	
+	<!-- channel数据源配置  -->
+	<bean id="channelDataSource" parent="commonDataSourceConfig">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="#{dataSourceProps['chl.db.host']}" />
+		<property name="username" value="#{dataSourceProps['chl.db.login.name']}"/>
+		<property name="password" value="#{dataSourceProps['chl.db.login.password']}"/>
+	</bean>
+	
+	<!-- mr数据源配置 -->
+	<bean id="mrDataSource" parent="commonDataSourceConfig">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="#{dataSourceProps['mrs.db.host']}" />
+		<property name="username" value="#{dataSourceProps['mrs.db.login.name']}"/>
+		<property name="password" value="#{dataSourceProps['mrs.db.login.password']}"/>
+	</bean>
+	
+	<!-- uc数据源配置 -->
+	<bean id="ucDataSource" parent="commonDataSourceConfig">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="#{dataSourceProps['ucs.db.host']}" />
+		<property name="username" value="#{dataSourceProps['ucs.db.login.name']}"/>
+		<property name="password" value="#{dataSourceProps['ucs.db.login.password']}"/>
+	</bean>
+	
+	<!-- paySqlSessionFactory --> 
+  	<bean id="paySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+    	<property name="dataSource" ref="payDataSource" />
+    	<property name="configLocation" value="classpath:/mapper/mybatis-config.xml" />
+    	<property name="mapperLocations" value="classpath*:/mapper/pay/**/*Mapper.xml" />
+  	</bean>
+	<bean class="com.ylink.inetpay.cbs.util.MyMapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="paySqlSessionFactory"/>
+		<property name="basePackage" value="com.ylink.inetpay.cbs.pay.**.dao" />
+	</bean>
+	
+	<!-- accountSqlSessionFactory  -->
+  	<bean id="accountSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+    	<property name="dataSource" ref="accountDataSource" />
+    	<property name="configLocation" value="classpath:/mapper/mybatis-config.xml" />
+    	<property name="mapperLocations" value="classpath*:/mapper/act/**/*Mapper.xml" />
+  	</bean>
+	<bean class="com.ylink.inetpay.cbs.util.MyMapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="accountSqlSessionFactory"/>
+		<property name="basePackage" value="com.ylink.inetpay.cbs.act.**.dao" />
+	</bean>
+	
+	<!-- clearSqlSessionFactory --> 
+  	<bean id="clearSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+    	<property name="dataSource" ref="clearDataSource" />
+    	<property name="configLocation" value="classpath:/mapper/mybatis-config.xml" />
+    	<property name="mapperLocations" value="classpath*:/mapper/cls/**/*Mapper.xml" />
+  	</bean>
+	<bean class="com.ylink.inetpay.cbs.util.MyMapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="clearSqlSessionFactory"/>
+		<property name="basePackage" value="com.ylink.inetpay.cbs.cls.**.dao" />
+	</bean>
+	
+	<!-- channelSqlSessionFactory --> 
+  	<bean id="channelSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+    	<property name="dataSource" ref="channelDataSource" />
+    	<property name="configLocation" value="classpath:/mapper/mybatis-config.xml" />
+    	<property name="mapperLocations" value="classpath*:/mapper/chl/**/*Mapper.xml" />
+  	</bean>
+	<bean class="com.ylink.inetpay.cbs.util.MyMapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="channelSqlSessionFactory"/>
+		<property name="basePackage" value="com.ylink.inetpay.cbs.chl.**.dao" />
+	</bean>
+	
+	<!-- mrSqlSessionFactory --> 
+  	<bean id="mrSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+    	<property name="dataSource" ref="mrDataSource" />
+    	<property name="configLocation" value="classpath:/mapper/mybatis-config.xml" />
+    	<property name="mapperLocations" value="classpath*:/mapper/mrs/**/*Mapper.xml" />
+  	</bean>
+	<bean class="com.ylink.inetpay.cbs.util.MyMapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="mrSqlSessionFactory"/>
+		<property name="basePackage" value="com.ylink.inetpay.cbs.mrs.**.dao" />
+	</bean>
+	
+	<!-- ucSqlSessionFactory --> 
+  	<bean id="ucSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+    	<property name="dataSource" ref="ucDataSource" />
+    	<property name="configLocation" value="classpath:/mapper/mybatis-config.xml" />
+    	<property name="mapperLocations">
+    		<array >
+    			<value>classpath*:/mapper/ucs/**/*Mapper.xml</value>
+    			<value>classpath*:/mapper/bis/**/*Mapper.xml</value>
+    		</array>
+    	</property>
+  	</bean>
+	<bean class="com.ylink.inetpay.cbs.util.MyMapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="ucSqlSessionFactory"/>
+		<property name="basePackage" value="com.ylink.inetpay.cbs.ucs.**.dao,com.ylink.inetpay.cbs.bis.**.dao" />
+	</bean>
+	
+	<!-- mrTxManager -->
+	<bean id="mrTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		p:dataSource-ref="mrDataSource">
+		<qualifier value="mrTxManager" />
+	</bean>
+	<!-- ucTxManager -->
+	<bean id="ucTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		p:dataSource-ref="ucDataSource">
+		<qualifier value="ucTxManager" />
+	</bean>
+	
+	<!-- 开启事务 -->
+	<tx:annotation-driven proxy-target-class="true" order="200" />
+</beans>

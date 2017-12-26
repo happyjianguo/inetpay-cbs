@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsMerChannelIdDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsMerChannelIdDto" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="MER_CHANNEL_ID" property="merChannelId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsMerChannelIdDto" >
+    insert into TB_MRS_MERCHANNEL_ID (ID, CUST_ID, MER_CHANNEL_ID, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{merChannelId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsMerChannelIdDto" >
+    insert into TB_MRS_MERCHANNEL_ID
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="merChannelId != null" >
+        MER_CHANNEL_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="merChannelId != null" >
+        #{merChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="getMerChannelIdByCustId" resultType="java.lang.String" parameterType="java.lang.String" >
+    select 
+    MER_CHANNEL_ID
+    from TB_MRS_MERCHANNEL_ID
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updateMerChannelId" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsMerChannelIdDto" >
+    update TB_MRS_MERCHANNEL_ID
+    <set >
+      <if test="merChannelId != null and merChannelId !=''" >
+        MER_CHANNEL_ID = #{merChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime !=''" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+</mapper>

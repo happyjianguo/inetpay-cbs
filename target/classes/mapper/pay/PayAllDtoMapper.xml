@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayAllDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayAllDto" >
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="CHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="PAYEE_NAME" property="payeeName" jdbcType="VARCHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="TRADE_NAME" property="tradeName" jdbcType="CHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    BUSI_ID,CUST_ID,BUSI_TYPE,PAYEE_NAME,ORDER_AMT,FEE,ORDER_STATUS,CREATE_TIME	,TRADE_NAME,	REMARK,FAIL_REASON,PAYEE_CUST_ID
+  </sql>
+  <select id="selectByBusiId" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_ALL
+		where BUSI_ID = #{busiId,jdbcType=CHAR}
+  </select>
+	<select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayAllDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_ALL
+		where 1=1
+		<if test="busiId != null and busiId != ''">
+			and instr(BUSI_ID,#{busiId,jdbcType=VARCHAR})<!-- like concat('%',concat(#{busiId,jdbcType=VARCHAR},'%')) -->
+		</if>
+		<if test="custId != null and custId != ''">
+			and (CUST_ID = #{custId,jdbcType=VARCHAR} or PAYEE_CUST_ID = #{custId,jdbcType=VARCHAR})
+		</if>
+		<if test="busiType != null and busiType != ''">
+			and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+		</if>
+		<if test="payeeName != null and payeeName !=''">
+			and PAYEE_NAME = #{payeeName,jdbcType=VARCHAR}
+		</if>
+		<if test="orderStatus != null and orderStatus != ''">
+			and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+		</if>
+		<if test="orderStatusList != null and orderStatusList != ''">
+    		 and ORDER_STATUS in
+    	<foreach collection="orderStatusList" item="item" index="index" open="(" separator="," close=")">#{item.value}</foreach>
+    	</if>
+		<if test="startTime !=null">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+		</if>
+		<if test="endTime !=null">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+		</if>
+		<if test="lowAmt != null and lowAmt != ''">
+			and ORDER_AMT <![CDATA[   >=  ]]> #{lowAmtLong}
+		</if>
+		<if test="highAmt != null and highAmt != ''">
+			and ORDER_AMT <![CDATA[   <=  ]]> #{highAmtLong}
+		</if>
+	</select>
+ 
+</mapper>

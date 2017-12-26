@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.chl.dao.TbChlBankAccountMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.channel.dto.TbChlBankAccount" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+     <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+     <result column="CUST_TYPE" property="custType" jdbcType="CHAR" />
+     <result column="CERT_TYPE" property="certType" jdbcType="CHAR" />
+     <result column="CERT_NO" property="certNo" jdbcType="VARCHAR" />
+    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_ACC_NO" property="bankAccNo" jdbcType="VARCHAR" />
+    <result column="BANK_ACC_NAME" property="bankAccName" jdbcType="VARCHAR" />
+    <result column="CURRENCY" property="currency" jdbcType="CHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+  </resultMap>
+   <resultMap id="BankTypeResultMap" type="com.ylink.inetpay.common.project.channel.dto.TbChlBankAccount" >
+    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, CUST_ID,CUST_NAME, CUST_TYPE,CERT_TYPE,CERT_NO,BANK_TYPE, BANK_CODE, BANK_ACC_NO, BANK_ACC_NAME, CURRENCY, CREATE_USER, 
+    CREATE_TIME, MODIFY_USER, MODIFY_TIME,CITY_CODE
+  </sql>
+   <sql id="PAGE_Column_List" >
+    a.ID, a.CUST_ID,a.CUST_NAME, a.CUST_TYPE,a.CERT_TYPE,a.CERT_NO,a.BANK_TYPE, a.BANK_CODE, a.BANK_ACC_NO, a.BANK_ACC_NAME, a.CURRENCY, a.CREATE_USER, 
+    a.CREATE_TIME, a.MODIFY_USER, a.MODIFY_TIME,b.BANK_NAME,a.CITY_CODE
+  </sql>
+  <sql id="User_Bank_List" >
+    DISTINCT a.BANK_TYPE, a.BANK_CODE,b.BANK_NAME
+  </sql>
+  <sql id="Bank_Type_List" >
+    DISTINCT b.BANK_TYPE,b.BANK_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="PAGE_Column_List" />
+    from TB_CHL_BANK_ACCOUNT a left join TB_CHL_BANK b on a.BANK_TYPE = b.BANK_TYPE
+    where a.ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="getUserBankAccList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="User_Bank_List" />
+    from TB_CHL_BANK_ACCOUNT a left join TB_CHL_BANKCODE b on a.BANK_CODE = b.BANK_CODE WHERE a.BANK_TYPE NOT in ('002','003')
+  </select>
+   <select id="getBankTypes" resultMap="BankTypeResultMap">
+    select 
+    <include refid="Bank_Type_List" />
+    from TB_CHL_BANK_ACCOUNT a inner join TB_CHL_BANK b on a.BANK_TYPE = b.BANK_TYPE
+  </select>
+   <select id="findByBankAccNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CHL_BANK_ACCOUNT
+     where BANK_ACC_NO = #{bankAccNo,jdbcType=VARCHAR}
+  </select>
+   <select id="getBankAccNoList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CHL_BANK_ACCOUNT
+  </select>
+   <select id="getChlBankAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CHL_BANK_ACCOUNT where BANK_ACC_NO=#{goldBankAccNo,jdbcType=VARCHAR}
+  </select>
+   <select id="chlBankService" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CHL_BANK_ACCOUNT where BANK_TYPE =#{goldBankType,jdbcType=VARCHAR}
+  </select>
+  <select id="findByChannelCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   SELECT
+	 <include refid="Base_Column_List" />
+	FROM
+		TB_CHL_BANK_ACCOUNT
+	WHERE
+		ID = (
+			SELECT
+				b.ACCOUNT_ID
+			FROM
+				TB_CHL_CHANNEL b
+			WHERE
+				b.channel_code = #{channelCode}
+			LIMIT 0,1
+		)
+  </select>
+  <select id="findListPage" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="PAGE_Column_List" />
+    from TB_CHL_BANK_ACCOUNT a left join TB_CHL_BANK b on a.BANK_TYPE = b.BANK_TYPE
+    where 1=1 and a.BANK_TYPE NOT IN('002','003')
+     <if test="id != null and id != ''" >
+       and a.ID = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="custId != null and custId != ''" >
+       and a.CUST_ID = #{custId,jdbcType=VARCHAR}
+      </if>
+      <if test="bankType != null and bankType != ''" >
+      	and  a.BANK_TYPE = #{bankType,jdbcType=CHAR}
+      </if>
+      <if test="bankName != null and bankName != ''" >
+      	and  instr(b.BANK_NAME,#{bankName,jdbcType=CHAR}) > 0
+      </if>
+      <if test="bankCode != null and bankCode != ''" >
+       and instr(a.BANK_CODE, #{bankCode,jdbcType=VARCHAR}) > 0
+       <!-- and a.BANK_CODE like concat('%',concat(#{bankCode,jdbcType=VARCHAR}),'%') -->
+      </if>
+      <if test="bankAccNo != null and bankAccNo != ''" >
+       and instr(a.BANK_ACC_NO, #{bankAccNo,jdbcType=VARCHAR}) > 0
+       <!-- and a.BANK_ACC_NO like concat('%',concat(#{bankAccNo,jdbcType=VARCHAR}),'%') -->
+
+      </if>
+      <if test="bankAccName != null and bankAccName != ''" >
+       and a.BANK_ACC_NAME = #{bankAccName,jdbcType=VARCHAR}
+      </if>
+      <if test="custName != null and custName != ''" >
+       and a.CUST_NAME = #{custName,jdbcType=VARCHAR}
+      </if>
+      <if test="custType != null and custType != ''" >
+       and a.CUST_TYPE = #{custType,jdbcType=CHAR}
+      </if>
+      <if test="certNo != null and certNo != ''" >
+       and a.CERT_NO = #{certNo,jdbcType=VARCHAR}
+      </if>
+      order by a.MODIFY_TIME desc
+  </select>
+  <select id="findTbChlBankAccount"  resultMap="BaseResultMap" >
+  	SELECT
+  	 <include refid="Base_Column_List" />
+  	 FROM TB_CHL_BANK_ACCOUNT  order by BANK_TYPE desc;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_CHL_BANK_ACCOUNT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlBankAccount" >
+    insert into TB_CHL_BANK_ACCOUNT (ID, CUST_ID, CUST_NAME,CUST_TYPE,CERT_TYPE,CERT_NO,BANK_TYPE, 
+      BANK_CODE, BANK_ACC_NO, BANK_ACC_NAME, 
+      CURRENCY, CREATE_USER, CREATE_TIME, 
+      MODIFY_USER, MODIFY_TIME,CITY_CODE)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, #{custType,jdbcType=CHAR}, #{certType,jdbcType=CHAR}, #{certNo,jdbcType=VARCHAR}, #{bankType,jdbcType=CHAR}, 
+      #{bankCode,jdbcType=VARCHAR}, #{bankAccNo,jdbcType=VARCHAR}, #{bankAccName,jdbcType=VARCHAR}, 
+      #{currency,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyUser,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{cityCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlBankAccount" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Sat Nov 12 11:25:23 CST 2016.
+    -->
+    insert into TB_CHL_BANK_ACCOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if> 
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="custType != null" >
+        CUST_TYPE,
+      </if>
+      <if test="certType != null" >
+        CERT_TYPE,
+      </if>
+      <if test="certNo != null" >
+        CERT_NO,
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE,
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE,
+      </if>
+      <if test="bankAccNo != null" >
+        BANK_ACC_NO,
+      </if>
+      <if test="bankAccName != null" >
+        BANK_ACC_NAME,
+      </if>
+      <if test="currency != null" >
+        CURRENCY,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="modifyUser != null" >
+        MODIFY_USER,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+       <if test="custName != null" >
+         #{custName,jdbcType=VARCHAR},,
+      </if>
+      <if test="custType != null" >
+         #{custType,jdbcType=CHAR},,
+      </if>
+      <if test="certType != null" >
+         #{certType,jdbcType=CHAR},,
+      </if>
+      <if test="certNo != null" >
+         #{certNo,jdbcType=VARCHAR},,
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccNo != null" >
+        #{bankAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccName != null" >
+        #{bankAccName,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityCode != null" >
+        #{CITY_CODE,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlBankAccount" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Sat Nov 12 11:25:23 CST 2016.
+    -->
+    update TB_CHL_BANK_ACCOUNT
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE = #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccNo != null" >
+        BANK_ACC_NO = #{bankAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccName != null" >
+        BANK_ACC_NAME = #{bankAccName,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        CURRENCY = #{currency,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlBankAccount" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Sat Nov 12 11:25:23 CST 2016.
+    -->
+    update TB_CHL_BANK_ACCOUNT
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      BANK_TYPE = #{bankType,jdbcType=CHAR},
+      BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      BANK_ACC_NO = #{bankAccNo,jdbcType=VARCHAR},
+      BANK_ACC_NAME = #{bankAccName,jdbcType=VARCHAR},
+      CURRENCY = #{currency,jdbcType=CHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getBatchExpBankAccount" resultMap="BaseResultMap">
+    select 
+    a.*,b.BANK_NAME
+    from TB_CHL_BANK_ACCOUNT a left join TB_CHL_BANKCODE b on a.BANK_CODE = b.BANK_CODE WHERE a.BANK_TYPE NOT in ('002','003')
+  </select>
+</mapper>

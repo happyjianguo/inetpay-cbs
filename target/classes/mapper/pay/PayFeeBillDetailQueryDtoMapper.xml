@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayFeeBillDetailQueryDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayFeeBillDetailDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+    <result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="VARCHAR" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="FEE_AMOUNT" property="feeAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_ID, MER_ORDER_ID, MER_NAME, ACCOUNT_DATE, FEE_TYPE, ORDER_AMT, FEE_AMOUNT
+  </sql>
+  
+   <select id="list" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeBillDetailDto" resultMap="BaseResultMap">
+	 (SELECT 
+	  a.ID,     
+      a.BUSI_ID,     
+      a.MER_ORDER_ID,     
+      a.MER_NAME,     
+      a.ACCOUNT_DATE,     
+      a.ORDER_AMT,    
+      b.FEE_TYPE,    
+      b.FEE_AMOUNT
+	FROM tb_pay_payment as a , tb_pay_fee_bill as b
+	WHERE
+	a.BUSI_ID = b.BUSI_ID
+	 <if test="merName != null and merName != ''" >
+   	   and	instr(a.MER_NAME, #{merName}) > 0
+    </if>
+	 <if test="busiId != null and busiId != ''" >
+   	   	and	instr(a.BUSI_ID, #{busiId}) > 0
+     </if>
+      <if test="merOrderId != null and merOrderId != ''" >
+   	   	and	instr(a.MER_ORDER_ID, #{merOrderId}) > 0
+     </if>
+      <if test="feeType != null and feeType != ''" >
+   	   	and b.FEE_TYPE = #{feeType,jdbcType=CHAR}
+     </if>
+     <if test="startTime !=null and startTime !=''">
+		and date_format(a.CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+	</if>
+	<if test="endTime !=null and endTime !=''">
+		and date_format(a.CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+	</if>
+	)
+	Union ALL
+	(SELECT 
+	  a.ID, 
+	  a.BUSI_ID, 
+	  a.MER_ORDER_ID, 
+	  a.MER_NAME, 
+	  a.ACCOUNT_DATE, 
+	  a.ORDER_AMT,
+	  b.FEE_TYPE,
+	  b.FEE_AMOUNT
+	FROM tb_pay_amt_allocate as a , tb_pay_fee_bill as b
+	WHERE
+	a.BUSI_ID = b.BUSI_ID
+	<if test="merName != null and merName != ''" >
+   	   and	instr(a.MER_NAME, #{merName}) > 0
+    </if>
+	 <if test="busiId != null and busiId != ''" >
+   	   	and	instr(a.BUSI_ID, #{busiId}) > 0
+     </if>
+      <if test="merOrderId != null and merOrderId != ''" >
+   	   	and	instr(a.MER_ORDER_ID, #{merOrderId}) > 0
+     </if>
+      <if test="feeType != null and feeType != ''" >
+   	   	and b.FEE_TYPE = #{feeType,jdbcType=CHAR}
+     </if>
+     <if test="startTime !=null and startTime !=''">
+		and date_format(a.CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+	</if>
+	<if test="endTime !=null and endTime !=''">
+		and date_format(a.CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+	</if>
+	)   
+   </select>
+   
+</mapper>

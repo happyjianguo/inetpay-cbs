@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsShareDetailDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsShareDetail" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="SHARE_ID" property="shareId" jdbcType="CHAR" />
+	    <result column="ORG_ID" property="orgId" jdbcType="CHAR" />
+	    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+	    <result column="PERCENT" property="percent" jdbcType="DECIMAL" />
+	    <result column="SHARE_DAY" property="shareDay" jdbcType="CHAR" />
+	    <result column="SHARE_AMOUNT" property="shareAmount" jdbcType="DECIMAL" />
+	    <result column="SHARE_COUNT" property="shareCount" jdbcType="DECIMAL" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="FEE_AMT" property="feeAmt" jdbcType="INTEGER" />
+	 
+  </resultMap>
+ 
+ <select id="queryClsShareDetail" resultMap="resultMap">
+ select 
+ d.*,
+ (select s.SHARE_AMT from TB_CLS_SHARE s where s.ID=d.SHARE_ID) as FEE_AMT
+  from TB_CLS_SHARE_DETAIL  d
+ where
+ d.ORG_ID=#{orgId,jdbcType=CHAR}  
+ and d.SHARE_DAY=#{shareDay,jdbcType=CHAR}
+ order by   d.SHARE_DAY desc 
+ </select> 
+  
+ 
+ <select id="queryShareDetailSummary"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsShareReport" 
+ resultType="com.ylink.inetpay.common.core.dto.ReporHeadDto">
+select 
+	nvl(sum(SHARE_COUNT),0) as allNum,
+ 	nvl(sum(SHARE_AMOUNT),0) as allAmt
+ from TB_CLS_SHARE_DETAIL 
+ where
+ ORG_ID=#{orgId,jdbcType=CHAR}  
+ and SHARE_DAY=#{shareDay,jdbcType=CHAR}  
+ </select>
+</mapper>

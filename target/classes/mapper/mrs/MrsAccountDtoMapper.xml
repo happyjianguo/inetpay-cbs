@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsAccountDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="CHAR" />
+    <result column="EXT_ORG_ID" property="extOrgId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_SOURCE" property="accountSource" jdbcType="CHAR" />
+    <result column="ACCOUNT_STATUS" property="accountStatus" jdbcType="CHAR" />
+    <result column="AUTH_STATUS" property="authStatus" jdbcType="CHAR" />
+    <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_TYPE" property="customerType" jdbcType="CHAR" />
+    <result column="PLATFORM_CODE" property="platformCode" jdbcType="VARCHAR" />
+    <result column="OPEN_TIME" property="openTime" jdbcType="TIMESTAMP" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="CHAR" />
+    <result column="CLOSE_TIME" property="closeTime" jdbcType="TIMESTAMP" />
+    <result column="CLOSE_OPERATOR" property="closeOperator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPERATOR" property="createOperator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_OPERATOR" property="updateOperator" jdbcType="VARCHAR" />
+    <result column="IS_ACCESS_PARTY" property="isAccessParty" jdbcType="CHAR" />
+     <result column="subAcctType" property="subAcctType" jdbcType="VARCHAR" />
+    <result column="busiType" property="busiType" jdbcType="VARCHAR" />
+    <result column="subjectNo2" property="subjectNo2" jdbcType="VARCHAR" />
+    <result column="userInfoId" property="userInfoId" jdbcType="VARCHAR" />
+    <result column="customerName" property="customerName" jdbcType="VARCHAR" />
+    <result column="credentialsType" property="credentialsType" jdbcType="VARCHAR" />
+    <result column="credentialsNumber" property="credentialsNumber" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <resultMap id="BasePersonAccountMsgMap" type="com.ylink.inetpay.common.project.portal.dto.AccountMsg" >
+   <!--  <result column="CUST_ID" property="custId" jdbcType="VARCHAR" /> -->
+    <result column="AUTH_STATUS" property="isAuth" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_STATUS" property="accountStatus" jdbcType="CHAR" />
+    <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="CREDENTIALS_TYPE" property="credentialsType" jdbcType="CHAR" />
+    <result column="CREDENTIALS_NUMBER" property="credentialsNumber" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="CHAR" />
+    <result column="CUSTOMER_TYPE" property="customerType" jdbcType="CHAR" />
+    <result column="PLATFORM_CODE" property="platformCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseOrganAccountMsgMap" type="com.ylink.inetpay.common.project.portal.dto.AccountMsg" >
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="AUTH_STATUS" property="isAuth" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_STATUS" property="accountStatus" jdbcType="CHAR" />
+    <result column="SOCIAL_CREDIT_CODE" property="socialCreditCode" jdbcType="VARCHAR" />
+    <result column="ORGANIZE_CODE" property="organizeCode" jdbcType="VARCHAR" />
+    <result column="REVENUE_CODE" property="revenueCode" jdbcType="VARCHAR" />
+    <result column="ORGAN_OTHER_CODE" property="organOtherCode" jdbcType="VARCHAR" />
+    <result column="BUSINESS_LICENCE" property="businessLicence" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="CHAR" />
+    <result column="CUSTOMER_TYPE" property="customerType" jdbcType="CHAR" />
+    <result column="PLATFORM_CODE" property="platformCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, ACCOUNT_NAME, ACCOUNT_TYPE, EXT_ORG_ID, ACCOUNT_SOURCE, ACCOUNT_STATUS, 
+    AUTH_STATUS, CUSTOMER_CODE, CUSTOMER_TYPE, PLATFORM_CODE, OPEN_TIME, IS_DELETE, 
+    CLOSE_TIME, CLOSE_OPERATOR, CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, UPDATE_OPERATOR,IS_ACCESS_PARTY
+  </sql>
+  <sql id="Base_Account_Column_List" >
+    A.ID, A.CUST_ID, A.ACCOUNT_NAME, A.ACCOUNT_TYPE, A.EXT_ORG_ID, A.ACCOUNT_SOURCE, A.ACCOUNT_STATUS, 
+    A.AUTH_STATUS, A.CUSTOMER_CODE, A.CUSTOMER_TYPE, A.PLATFORM_CODE, A.OPEN_TIME, A.IS_DELETE, 
+    A.CLOSE_TIME, A.CLOSE_OPERATOR, A.CREATE_TIME, A.CREATE_OPERATOR, A.UPDATE_TIME, A.UPDATE_OPERATOR
+  </sql>
+  <sql id="Base_Account_User_Column_List" >
+    A.ID, A.CUST_ID, A.ACCOUNT_NAME, A.ACCOUNT_TYPE, A.EXT_ORG_ID, A.ACCOUNT_SOURCE, A.ACCOUNT_STATUS, 
+    A.AUTH_STATUS, A.CUSTOMER_CODE, A.CUSTOMER_TYPE, A.PLATFORM_CODE, A.OPEN_TIME, A.IS_DELETE, 
+    A.CLOSE_TIME, A.CLOSE_OPERATOR, A.CREATE_TIME, A.CREATE_OPERATOR, A.UPDATE_TIME, A.UPDATE_OPERATOR,
+    U.id as userInfoId,U.CUSTOMER_NAME as customerName ,
+    U.CREDENTIALS_TYPE as credentialsType , U.CREDENTIALS_NUMBER as credentialsNumber
+  </sql>
+  <sql id="Base_Account_Product_Column_List" >
+    A.ID, A.CUST_ID, A.ACCOUNT_NAME, A.ACCOUNT_TYPE, A.EXT_ORG_ID, A.ACCOUNT_SOURCE, A.ACCOUNT_STATUS, 
+    A.AUTH_STATUS, A.CUSTOMER_CODE, A.CUSTOMER_TYPE, A.PLATFORM_CODE, A.OPEN_TIME, A.IS_DELETE, 
+    A.CLOSE_TIME, A.CLOSE_OPERATOR, A.CREATE_TIME, A.CREATE_OPERATOR, A.UPDATE_TIME, A.UPDATE_OPERATOR,
+    U.id as userInfoId,U.PRODUCT_NAME as customerName ,
+    U.CREDENTIALS_TYPE as credentialsType , U.CREDENTIALS_NUMBER as credentialsNumber
+  </sql>
+   <sql id="Base_Account_Organ_Column_List" >
+    A.ID, A.CUST_ID, A.ACCOUNT_NAME, A.ACCOUNT_TYPE, A.EXT_ORG_ID, A.ACCOUNT_SOURCE, A.ACCOUNT_STATUS, 
+    A.AUTH_STATUS, A.CUSTOMER_CODE, A.CUSTOMER_TYPE, A.PLATFORM_CODE, A.OPEN_TIME, A.IS_DELETE, 
+    A.CLOSE_TIME, A.CLOSE_OPERATOR, A.CREATE_TIME, A.CREATE_OPERATOR, A.UPDATE_TIME, A.UPDATE_OPERATOR,
+    U.id as userInfoId,U.CUSTOMER_NAME as customerName,
+    U.CREDENTIALS_TYPE as credentialsType , U.CREDENTIALS_NUMBER as credentialsNumber,
+    U.SOCIAL_CREDIT_CODE as socialCreditCode ,
+    U.ORGANIZE_CODE as organizeCode ,
+    U.REVENUE_CODE as revenueCode ,
+    U.BUSINESS_LICENCE as businessLicence     
+  </sql>
+  <sql id="Base_Person_Account_Msg_List" >
+   A.PLATFORM_CODE,  A.CUST_ID, A.AUTH_STATUS, A.ACCOUNT_STATUS, A.CUSTOMER_CODE, A.ACCOUNT_TYPE,A.CUSTOMER_TYPE, P.CUSTOMER_NAME, P.CREDENTIALS_TYPE, P.CREDENTIALS_NUMBER 
+  </sql>
+  <sql id="Base_Organ_Account_Msg_List" >
+    A.PLATFORM_CODE, A.CUST_ID, A.AUTH_STATUS, A.ACCOUNT_STATUS, A.CUSTOMER_CODE, A.ACCOUNT_TYPE,A.CUSTOMER_TYPE, O.CUSTOMER_NAME, 
+    O.SOCIAL_CREDIT_CODE, O.BUSINESS_LICENCE, O.ORGANIZE_CODE, O.REVENUE_CODE, O.ORGAN_OTHER_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ACCOUNT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findByLoginUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+        A.*
+        from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+        where U.ID = UA.LOGIN_ID AND A.ID = UA.ACCOUNT_ID
+        AND U.ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByDto" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ACCOUNT
+    where 1=1
+     <if test="accountType != null" >
+        and ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+      </if>
+	 <if test="accountStatus != null" >
+	     and ACCOUNT_STATUS != #{accountStatus,jdbcType=CHAR}
+	 </if>
+	 <if test="authStatus != null" >
+	     and  AUTH_STATUS = #{authStatus,jdbcType=CHAR}
+	 </if> 
+	<if test="customerType != null" >
+	      and CUSTOMER_TYPE = #{customerType,jdbcType=CHAR}
+	 </if>
+     <if test="isAccessParty != null" >
+       and IS_ACCESS_PARTY = #{isAccessParty,jdbcType=CHAR}
+     </if>
+  </select>
+  <select id="findOrgListByName" resultMap="BaseResultMap">
+  	 select 
+    	<include refid="Base_Column_List" />
+    	from  TB_MRS_ACCOUNT
+  	where 1=1
+  	 <if test="orgName != null and orgName !='' " >
+        	AND instr(ACCOUNT_NAME,#{orgName,jdbcType=VARCHAR}) > 0
+     </if>
+  </select>
+  <select id="findByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ACCOUNT
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  <select id="findByExOrgNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ACCOUNT
+    where EXT_ORG_ID = #{exOrgNo,jdbcType=VARCHAR}
+  </select>
+  <select id="pageCust" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto" >
+    select 
+	    U.ID, U.CUST_ID, U.ACCOUNT_NAME, U.ACCOUNT_TYPE, U.EXT_ORG_ID, U.ACCOUNT_SOURCE, U.ACCOUNT_STATUS, 
+	    U.AUTH_STATUS, U.CUSTOMER_CODE, U.CUSTOMER_TYPE, U.PLATFORM_CODE, U.OPEN_TIME, U.IS_DELETE, 
+	    U.CLOSE_TIME, U.CLOSE_OPERATOR, U.CREATE_TIME, U.CREATE_OPERATOR, U.UPDATE_TIME, U.UPDATE_OPERATOR
+    from TB_MRS_ACCOUNT U
+    where 1 = 1 AND U.ACCOUNT_STATUS in ('0','9')
+    <if test="custId != null and custId != '' " >
+		AND instr(U.CUST_ID, #{custId,jdbcType=VARCHAR}) > 0  
+    </if>
+    <if test="accountName != null and accountName != '' " >
+		AND instr(U.ACCOUNT_NAME, #{accountName,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="customerType != null and customerType != '' " >
+		AND CUSTOMER_TYPE  = '${customerType}'   
+    </if>
+  </select>
+  <select id="findNameByCode" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ACCOUNT where EXT_ORG_ID in
+    <if test="merCodes !=null and merCodes != ''">
+    <foreach collection="merCodes" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+    </foreach>
+    </if>
+  </select>
+  <select id="findPersonAccountMsgByLoginUserId" resultMap="BasePersonAccountMsgMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Person_Account_Msg_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PERSON P, TB_MRS_USER_ACCOUNT UA
+    where A.ID = UA.ACCOUNT_ID AND A.CUST_ID = P.CUST_ID AND UA.LOGIN_ID = #{loginId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCustIdAndStatus" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+     from TB_MRS_ACCOUNT where CUST_ID = #{custId,jdbcType=VARCHAR} and ACCOUNT_STATUS = #{accountStatus,jdbcType=CHAR} 
+  </select>
+  <select id="findOrganAccountMsgByLoginUserId" resultMap="BaseOrganAccountMsgMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Organ_Account_Msg_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_ORGAN O, TB_MRS_USER_ACCOUNT UA
+    where A.ID = UA.ACCOUNT_ID AND A.CUST_ID = O.CUST_ID AND UA.LOGIN_ID = #{loginId,jdbcType=VARCHAR}
+  </select>
+  <select id="findMrsAccountByLoginUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Account_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+    where A.ID = UA.ACCOUNT_ID AND UA.LOGIN_ID = #{loginId,jdbcType=VARCHAR}
+  </select>
+  <select id="findByUpdatePerson3Element" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_User_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PERSON U
+    where A.CUST_ID = U.CUST_ID 
+    AND A.CUST_ID  = #{custId}
+    AND A.ACCOUNT_STATUS!='2'
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+   <select id="findByUpdateOrgan3Element" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_Organ_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_ORGAN U
+    where 
+     U.CUST_ID = A.CUST_ID 
+     AND A.CUST_ID  = #{custId}
+    and A.ACCOUNT_STATUS !='2' 
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+   <select id="findByUpdateProduct3Element" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_Product_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PRODUCT U
+    where A.CUST_ID = U.CUST_ID 
+       AND A.CUST_ID  = #{custId}
+    AND A.ACCOUNT_STATUS!='2'
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="findByPerson3Element" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_User_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PERSON U
+    where A.CUST_ID = U.CUST_ID 
+    AND U.CUSTOMER_NAME = #{customerName}
+    AND U.CREDENTIALS_TYPE = #{credentialsType}
+    AND U.CREDENTIALS_NUMBER = #{credentialsNumber}
+    AND A.ACCOUNT_STATUS!='2'
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="findByPerson3ElementLast" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_User_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PERSON U
+    where A.CUST_ID = U.CUST_ID 
+    AND U.CUSTOMER_NAME = #{customerName}
+    AND U.CREDENTIALS_TYPE = #{credentialsType}
+    AND U.CREDENTIALS_NUMBER = #{credentialsNumber}
+    AND (A.AUTH_STATUS='2' OR A.AUTH_STATUS='9')
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  
+  <select id="findByOrganAsset3Element" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_User_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PERSON U
+    where A.CUST_ID = U.CUST_ID 
+    AND U.CUSTOMER_NAME = #{customerName}
+    AND U.CREDENTIALS_TYPE = #{credentialsType}
+    AND U.CREDENTIALS_NUMBER = #{credentialsNumber}
+    AND A.ACCOUNT_STATUS!='2'
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="findByOrganAsset3ElementLast" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_User_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PERSON U
+    where A.CUST_ID = U.CUST_ID 
+    AND U.CUSTOMER_NAME = #{customerName}
+    AND U.CREDENTIALS_TYPE = #{credentialsType}
+    AND U.CREDENTIALS_NUMBER = #{credentialsNumber}
+    AND (A.AUTH_STATUS='2' OR A.AUTH_STATUS='9')
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="findByProduct3Element" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_Product_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PRODUCT U
+    where A.CUST_ID = U.CUST_ID 
+    AND U.PRODUCT_NAME = #{customerName}
+    AND U.CREDENTIALS_TYPE = #{credentialsType}
+    AND U.CREDENTIALS_NUMBER = #{credentialsNumber}
+    AND A.ACCOUNT_STATUS!='2'
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="findByProduct3ElementLast" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_Product_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_PRODUCT U
+    where A.CUST_ID = U.CUST_ID 
+    AND U.PRODUCT_NAME = #{customerName}
+    AND U.CREDENTIALS_TYPE = #{credentialsType}
+    AND U.CREDENTIALS_NUMBER = #{credentialsNumber}
+    AND (A.AUTH_STATUS='2' OR A.AUTH_STATUS='9')
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="findByOrgan3Element" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_Organ_Column_List" />
+    from TB_MRS_ACCOUNT A, TB_MRS_ORGAN U
+    where U.CUSTOMER_NAME = #{name,jdbcType=VARCHAR} 
+    and U.CUST_ID = A.CUST_ID 
+    and A.ACCOUNT_STATUS !='2' 
+     and 
+    ( 1 = 2 
+	    <if test="socialCreditCode != null" >
+	    	OR U.SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organizeCode != null" >
+	    	OR U.ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="revenueCode != null" >
+	    	OR U.REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="businessLicence != null" >
+	    	OR U.BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organOtherCode != null" >
+	    	OR U.ORGAN_OTHER_CODE = #{organOtherCode,jdbcType=VARCHAR}
+	    </if>
+    )
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="findByOrgan3ElementLast" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Account_Organ_Column_List" />
+     from TB_MRS_ACCOUNT A, TB_MRS_ORGAN U
+    where U.CUSTOMER_NAME = #{name,jdbcType=VARCHAR} 
+    and U.CUST_ID = A.CUST_ID 
+    and (A.AUTH_STATUS='2' OR A.AUTH_STATUS='9')
+     and 
+    ( 1 = 2 
+	    <if test="socialCreditCode != null" >
+	    	OR U.SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organizeCode != null" >
+	    	OR U.ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="revenueCode != null" >
+	    	OR U.REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="businessLicence != null" >
+	    	OR U.BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organOtherCode != null" >
+	    	OR U.ORGAN_OTHER_CODE = #{organOtherCode,jdbcType=VARCHAR}
+	    </if>
+    )
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <!-- 获取非个人一户通账号的序列 -->
+  <!-- <select id="getMrsNonPersonSeqVal" resultType="String">
+	select MRS_NON_PERSON_ACNT_SEQ.nextval from dual
+  </select> -->
+  <select id="getMrsNonPersonSeqVal" resultType="String" flushCache="true" useCache="false" >
+		select MRS_NON_PERSON_ACNT_SEQ.nextval from dual
+  </select>
+  <!-- 获取个人一户通账号的序列 -->
+  <select id="getMrsPersonSeqVal" resultType="String" flushCache="true" useCache="false" >
+		select MRS_PERSON_ACNT_SEQ.nextval from dual
+  </select>
+  <!-- <select id="getMrsPersonSeqVal" resultType="String">
+	select MRS_PERSON_ACNT_SEQ.nextval from dual
+  </select> -->
+  <!-- 获取参与人一户通账号的序列 -->
+  <select id="getMrsOrganAffSeqVal" resultType="String" flushCache="true" useCache="false" >
+		select MRS_ORGAN_AFF_ACNT_SEQ.nextval from dual
+  </select>
+  <!-- 获取个人用户的子序列号 -->
+  <select id="getMrsSubInsureSeqVal" resultType="String">
+	select MRS_SUB_INSURE_ACNT_SEQ.nextval from dual
+  </select>
+  <!-- 获取机构用户的子序列序列号 -->
+  <select id="getMrsSubInsurantSeqVal" resultType="String">
+	select MRS_SUB_INSURANT_ACNT_SEQ.nextval from dual
+  </select>
+  
+   <!-- 根据三要素一户通状态查询个人一户通信息 -->
+   <select id="findPersonBy3EleAndStatus" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Account_Column_List" />
+    from TB_MRS_PERSON O, TB_MRS_ACCOUNT A
+    where O.CUSTOMER_NAME = #{name,jdbcType=VARCHAR} and O.CUST_ID = A.CUST_ID 
+     and  
+    	O.CREDENTIALS_TYPE = #{certType,jdbcType=CHAR} and 
+    	O.CREDENTIALS_NUMBER = #{certNo,jdbcType=VARCHAR} and
+    	A.ACCOUNT_STATUS = #{accountStatus,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_ACCOUNT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto" >
+    insert into TB_MRS_ACCOUNT (ID, CUST_ID, ACCOUNT_NAME, 
+      ACCOUNT_TYPE, EXT_ORG_ID, ACCOUNT_SOURCE, 
+      ACCOUNT_STATUS, AUTH_STATUS, 
+      CUSTOMER_CODE, CUSTOMER_TYPE, PLATFORM_CODE, 
+      OPEN_TIME, IS_DELETE, CLOSE_TIME, 
+      CLOSE_OPERATOR, CREATE_TIME, CREATE_OPERATOR, 
+      UPDATE_TIME, UPDATE_OPERATOR,IS_ACCESS_PARTY)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=CHAR}, #{extOrgId,jdbcType=VARCHAR}, #{accountSource,jdbcType=CHAR}, 
+      #{accountStatus,jdbcType=CHAR}, #{authStatus,jdbcType=CHAR}, 
+      #{customerCode,jdbcType=VARCHAR}, #{customerType,jdbcType=CHAR}, #{platformCode,jdbcType=VARCHAR}, 
+      #{openTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=CHAR}, #{closeTime,jdbcType=TIMESTAMP}, 
+      #{closeOperator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateOperator,jdbcType=VARCHAR},#{isAccessParty,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto" >
+    insert into TB_MRS_ACCOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="accountName != null" >
+        ACCOUNT_NAME,
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE,
+      </if>
+      <if test="extOrgId != null" >
+        EXT_ORG_ID,
+      </if>
+      <if test="accountSource != null" >
+        ACCOUNT_SOURCE,
+      </if>
+      <if test="accountStatus != null" >
+        ACCOUNT_STATUS,
+      </if>
+      <if test="authStatus != null" >
+        AUTH_STATUS,
+      </if>
+      <if test="customerCode != null" >
+        CUSTOMER_CODE,
+      </if>
+      <if test="customerType != null" >
+        CUSTOMER_TYPE,
+      </if>
+      <if test="platformCode != null" >
+        PLATFORM_CODE,
+      </if>
+      <if test="openTime != null" >
+        OPEN_TIME,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+      <if test="closeTime != null" >
+        CLOSE_TIME,
+      </if>
+      <if test="closeOperator != null" >
+        CLOSE_OPERATOR,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateOperator != null" >
+        UPDATE_OPERATOR,
+      </if>
+      <if test="isAccessParty != null" >
+        IS_ACCESS_PARTY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=CHAR},
+      </if>
+      <if test="extOrgId != null" >
+        #{extOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountSource != null" >
+        #{accountSource,jdbcType=CHAR},
+      </if>
+      <if test="accountStatus != null" >
+        #{accountStatus,jdbcType=CHAR},
+      </if>
+      <if test="authStatus != null" >
+        #{authStatus,jdbcType=CHAR},
+      </if>
+      <if test="customerCode != null" >
+        #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        #{customerType,jdbcType=CHAR},
+      </if>
+      <if test="platformCode != null" >
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null" >
+        #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeOperator != null" >
+        #{closeOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="isAccessParty != null" >
+        #{isAccessParty,jdbcType=CHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto" >
+    update TB_MRS_ACCOUNT
+    <set >
+      <if test="custId != null and custId !=''" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null and accountName !=''" >
+        ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null and accountType !=''" >
+        ACCOUNT_TYPE = #{accountType,jdbcType=CHAR},
+      </if>
+      <if test="extOrgId != null and extOrgId !=''" >
+        EXT_ORG_ID = #{extOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountSource != null and accountSource !=''" >
+        ACCOUNT_SOURCE = #{accountSource,jdbcType=CHAR},
+      </if>
+      <if test="accountStatus != null and accountStatus !=''" >
+        ACCOUNT_STATUS = #{accountStatus,jdbcType=CHAR},
+      </if>
+      <if test="authStatus != null and authStatus !=''" >
+        AUTH_STATUS = #{authStatus,jdbcType=CHAR},
+      </if>
+      <if test="customerCode != null and customerCode !=''" >
+        CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null and customerType !=''" >
+        CUSTOMER_TYPE = #{customerType,jdbcType=CHAR},
+      </if>
+      <if test="platformCode != null and platformCode !=''" >
+        PLATFORM_CODE = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null and openTime !=''" >
+        OPEN_TIME = #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null and isDelete !=''" >
+        IS_DELETE = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="closeTime != null and closeTime !=''" >
+        CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeOperator != null and closeOperator !=''" >
+        CLOSE_OPERATOR = #{closeOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime !=''" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null and createOperator !=''" >
+        CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime !=''" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null and updateOperator !=''" >
+        UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      </if>
+       <if test="isAccessParty != null and isAccessParty !=''" >
+        IS_ACCESS_PARTY = #{isAccessParty,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto" >
+    update TB_MRS_ACCOUNT
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      ACCOUNT_TYPE = #{accountType,jdbcType=CHAR},
+      EXT_ORG_ID = #{extOrgId,jdbcType=VARCHAR},
+      ACCOUNT_SOURCE = #{accountSource,jdbcType=CHAR},
+      ACCOUNT_STATUS = #{accountStatus,jdbcType=CHAR},
+      AUTH_STATUS = #{authStatus,jdbcType=CHAR},
+      CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      CUSTOMER_TYPE = #{customerType,jdbcType=CHAR},
+      PLATFORM_CODE = #{platformCode,jdbcType=VARCHAR},
+      OPEN_TIME = #{openTime,jdbcType=TIMESTAMP},
+      IS_DELETE = #{isDelete,jdbcType=CHAR},
+      CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+      CLOSE_OPERATOR = #{closeOperator,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      IS_ACCESS_PARTY = #{isAccessParty,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateAcntStatusByCustId" >
+    update TB_MRS_ACCOUNT
+    set 
+      ACCOUNT_STATUS = #{accountStatus,jdbcType=CHAR}, AUTH_STATUS = #{authStatus,jdbcType=CHAR}, UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateAuthStatus" >
+    update TB_MRS_ACCOUNT
+    set 
+      AUTH_STATUS = #{authStatus,jdbcType=CHAR}, UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findByCustIds" resultMap="BaseResultMap">
+  	select * from TB_MRS_ACCOUNT where CUST_ID in 
+  	<foreach collection="custIds" item="custId" open="(" separator="," close=")">
+  		#{custId,jdbcType=VARCHAR}
+  	</foreach>
+  	order by UPDATE_TIME DESC
+  </select>
+  <select id="findByWeChatId" resultMap="BaseResultMap">
+  	select 
+    A.*
+    from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+    where U.ID = UA.LOGIN_ID AND A.ID = UA.ACCOUNT_ID AND A.CUSTOMER_TYPE = '0'    
+    AND U.WECHATID = #{weChatId,jdbcType=VARCHAR}
+  </select>
+  <update id="updateCustomerCodeByCustId" >
+    update TB_MRS_ACCOUNT
+    set 
+      CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR}, UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+   <select id="findByCustIdAnd3Element" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	select 
+      <include refid="Base_Account_Column_List"/> 
+    from TB_MRS_ACCOUNT A,
+    (select * from TB_MRS_PERSON where 
+         CUSTOMER_NAME = #{name,jdbcType=VARCHAR}  
+        and CREDENTIALS_TYPE = #{type,jdbcType=CHAR}  
+        and CREDENTIALS_NUMBER = #{number,jdbcType=VARCHAR} 
+    ) P 
+    where P.CUST_ID = A.CUST_ID 
+  </select>
+  <select id="findByCustIdAnd3Elements" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Account_Column_List" />
+    from TB_MRS_ACCOUNT A 
+    left join TB_MRS_PERSON P on P.CUST_ID = A.CUST_ID 
+    left join TB_MRS_USER_ACCOUNT B on B.ACCOUNT_ID = A.id where 
+    P.CUSTOMER_NAME = #{name,jdbcType=VARCHAR}
+    and P.CREDENTIALS_TYPE = #{type,jdbcType=CHAR}
+    and P.CREDENTIALS_NUMBER = #{number,jdbcType=VARCHAR} and B.IS_MAIN = '0' order by A.CREATE_TIME desc
+  </select>
+  <!-- 根据机构三要素查询机构一户通信息 -->
+  <select id="findOganBy3Element" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Account_Column_List" />
+    from  TB_MRS_ACCOUNT A, TB_MRS_ORGAN B
+    where B.CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR} and A.CUST_ID = B.CUST_ID 
+     and 
+    ( 1 = 2 
+	    <if test="socialCreditCode != null" >
+	    	OR B.SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organizeCode != null" >
+	    	OR B.ORGANIZE_CODE = #{organizeCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="revenueCode != null" >
+	    	OR B.REVENUE_CODE = #{revenueCode,jdbcType=VARCHAR}
+	    </if>
+	    <if test="businessLicence != null" >
+	    	OR B.BUSINESS_LICENCE = #{businessLicence,jdbcType=VARCHAR}
+	    </if>
+	    <if test="organOtherCode != null" >
+	    	OR B.ORGAN_OTHER_CODE = #{organOtherCode,jdbcType=VARCHAR}
+	    </if>
+    )
+  </select>
+  <!-- <select id="findAccountDtoBySbjNo2" resultMap="BaseResultMap" >
+ 	select distinct  t1.busi_type as busiType,
+	 	t3.sub_acct_type as subAcctType,t1.subject_no as subjectNo2
+	from  TB_MRS_SUB_PAY_BUSI t1
+	left join TB_MRS_CONF_SUB_ACCT_ITEM  t2 on t1.id=t2.subject2_pay_no
+	left join TB_MRS_CONF_SUB_ACCT t3 ON t2.sub_acct_id=t3.id
+	where t1.subject_no in 
+		    	<foreach collection="subjectNoList" item="subject_no_2" open="(" separator="," close=")">
+					#{subject_no_2 }
+				</foreach>
+  </select> -->
+  <!-- 根据二级科目 一户通编号 获取子账户配置  -->
+ <!--  <select id="findAccountDtoBySbjNo2AndCustId" resultMap="BaseResultMap" >
+ 	select distinct  t1.busi_type as busiType,
+	 	t3.sub_acct_type as subAcctType,t1.subject_no as subjectNo2
+	from  TB_MRS_SUB_PAY_BUSI t1
+	left join TB_MRS_CONF_SUB_ACCT_ITEM  t2 on t1.id=t2.subject2_pay_no
+	left join TB_MRS_CONF_SUB_ACCT t3 ON t2.sub_acct_id=t3.id,
+	tb_mrs_sub_account t4
+	where t1.subject_no in 
+    	<foreach collection="subjectNoList" item="subject_no_2" open="(" separator="," close=")">
+			#{subject_no_2 }
+		</foreach>
+	and t4.cust_id = #{custId} and t4.sub_account_type = t3.sub_account_code 
+  </select> -->
+  
+ <!--  <select id="findAccountDtoBySubAcctTypeAndBusiType" resultMap="BaseResultMap" >
+ 	select distinct  t1.subject_no as subjectNo2
+	from  TB_MRS_SUB_PAY_BUSI t1
+	left join TB_MRS_CONF_SUB_ACCT_ITEM  t2 on t1.id=t2.subject2_pay_no
+	left join TB_MRS_CONF_SUB_ACCT t3 ON t2.sub_acct_id=t3.id
+	where t1.busi_type = #{busiType}
+		and t3.sub_acct_type = #{subAcctType}
+  </select> -->
+  <!--  <select id="findAccountDtoBySubAcctType" resultMap="BaseResultMap" >
+ 	select distinct  t1.subject_no as subjectNo2
+	from  TB_MRS_SUB_PAY_BUSI t1
+	left join TB_MRS_CONF_SUB_ACCT_ITEM  t2 on t1.id=t2.subject2_pay_no
+	left join TB_MRS_CONF_SUB_ACCT t3 ON t2.sub_acct_id=t3.id
+	where t3.sub_acct_type = #{subAcctType}
+  </select> -->
+  <!-- 根据 一户通类别 1 客户类型 1 2 9查询 -->
+  <select id="list"  resultMap="BaseResultMap"   parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto">
+  		select 
+  			<include refid="Base_Column_List" />
+  		 from TB_MRS_ACCOUNT t
+  		 <where>
+  		 	   t.ACCOUNT_TYPE ='1'  and t .CUSTOMER_TYPE in ('1','2','9')
+  		 	<if test="custId != null and custId != ''">
+				and instr(CUST_ID, #{custId,jdbcType=VARCHAR}) > 0 
+			</if>
+		 	<if test="accountName != null and accountName != ''">
+				and instr(ACCOUNT_NAME, #{accountName,jdbcType=VARCHAR}) > 0
+			</if>
+			
+	 		  <if test="listCustId !=null and listCustId.size() >0 ">
+	 	 		and t.CUST_ID not in
+    			<foreach collection="listCustId" index="index" item="item" open="(" separator="," close=")">
+            			#{item}
+    			</foreach>
+   			 </if>  
+	 	  </where> 
+  		
+  </select>
+  <select id="payMrsAccountListPage" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAccountDto" >
+    select 
+	    U.ID, U.CUST_ID, U.ACCOUNT_NAME, U.ACCOUNT_TYPE, U.EXT_ORG_ID, U.ACCOUNT_SOURCE, U.ACCOUNT_STATUS, 
+	    U.AUTH_STATUS, U.CUSTOMER_CODE, U.CUSTOMER_TYPE, U.PLATFORM_CODE, U.OPEN_TIME, U.IS_DELETE, 
+	    U.CLOSE_TIME, U.CLOSE_OPERATOR, U.CREATE_TIME, U.CREATE_OPERATOR, U.UPDATE_TIME, U.UPDATE_OPERATOR
+    from TB_MRS_ACCOUNT U
+    where 1 = 1 AND U.ACCOUNT_STATUS in ('0','9') AND CUSTOMER_TYPE !=0
+    <if test="custId != null and custId != '' " >
+		AND instr(U.CUST_ID, #{custId,jdbcType=VARCHAR}) > 0  
+    </if>
+    <if test="accountName != null and accountName != '' " >
+		AND instr(U.ACCOUNT_NAME, #{accountName,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="customerType != null and customerType != '' " >
+		AND CUSTOMER_TYPE  = '${customerType}'   
+    </if>
+  </select>
+</mapper>

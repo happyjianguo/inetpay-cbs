@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<!-- 用户信息服务类 -->
+	<bean name="/ucsSecUserAppService" parent="hessianServer">
+		<property name="service" ref="ucsSecUserAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.UcsSecUserAppService" />
+	</bean>
+
+	<!-- 角色信息服务类 -->
+	<bean name="/ucsSecRoleAppService" parent="hessianServer">
+		<property name="service" ref="ucsSecRoleAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.UcsSecRoleAppService" />
+	</bean>
+
+	<!-- 权限信息服务类 -->
+	<bean name="/ucsSecPermissionAppService" parent="hessianServer">
+		<property name="service" ref="ucsSecPermissionAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.UcsSecPermissionAppService" />
+	</bean>
+
+	<!-- 部门机构服务类 -->
+	<bean name="/ucsSecDepartmentAppService" parent="hessianServer">
+		<property name="service" ref="ucsSecDepartmentAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.UcsSecDepartmentAppService" />
+	</bean>
+	<!-- 操作日志服务类 -->
+	<bean name="/ucsSecOperationLogAppService" parent="hessianServer">
+		<property name="service" ref="ucsSecOpertionLogAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.UcsSecOperationLogAppService" />
+	</bean>
+	<!-- 系统参数服务类 -->
+	<bean name="/bisSysParamAppService" parent="hessianServer">
+		<property name="service" ref="bisSysParamAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisSysParamAppService" />
+	</bean>
+	
+	<!-- 订单管理服务类 -->
+	<bean name="/cbsPayPaymentAppService" parent="hessianServer">
+		<property name="service" ref="cbsPayPaymentAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsPayPaymentAppService" />
+	</bean>
+	<!-- 充值管理服务类 -->
+	<bean name="/cbsPayRechargeAppService" parent="hessianServer">
+		<property name="service" ref="cbsPayRechargeAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsPayRechargeAppService" />
+	</bean>
+	<!-- 提现管理服务类 -->
+	<bean name="/cbsPayWithdrawAppService" parent="hessianServer">
+		<property name="service" ref="cbsPayWithdrawAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsPayWithdrawAppService" />
+	</bean>
+	<!-- 转账管理服务类 -->
+	<bean name="/cbsPayTransferAppService" parent="hessianServer">
+		<property name="service" ref="cbsPayTransferAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsPayTransferAppService" />
+	</bean>
+	<!-- 退款管理服务类 -->
+	<bean name="/cbsPayRefundAppService" parent="hessianServer">
+		<property name="service" ref="cbsPayRefundAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsPayRefundAppService" />
+	</bean>
+	<!-- 支付流水管理服务类 -->
+	<bean name="/cbsPayBookAppService" parent="hessianServer">
+		<property name="service" ref="cbsPayBookAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsPayBookAppService" />
+	</bean>
+	
+	<!-- 账务汇总管理服务类 -->
+	<bean name="/cbsActSubjectAppService" parent="hessianServer">
+		<property name="service" ref="cbsActSubjectAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsActSubjectAppService" />
+	</bean>
+	<!-- 记账规则管理服务类 -->
+	<bean name="/cbsActRuleAppService" parent="hessianServer">
+		<property name="service" ref="cbsActRuleAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsActRuleAppService" />
+	</bean>
+	<!-- 记账规则管理服务类 -->
+	<bean name="/actRuleAppService" parent="hessianServer">
+		<property name="service" ref="actRuleAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.account.app.ActRuleAppService" />
+	</bean>
+	<!-- 记账交易流水管理服务类 -->
+	<bean name="/cbsActBookAppService" parent="hessianServer">
+		<property name="service" ref="cbsActBookAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsActBookAppService" />
+	</bean>
+	<!-- 记账分录管理服务类 -->
+	<bean name="/cbsActBillAppService" parent="hessianServer">
+		<property name="service" ref="cbsActBillAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsActBillAppService" />
+	</bean>
+	<!-- 账户资金管理服务类 -->
+	<bean name="/cbsActAccountAppService" parent="hessianServer">
+		<property name="service" ref="cbsActAccountAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsActAccountAppService" />
+	</bean>
+	<!-- 银行信息服务 -->
+	<bean name="/chlBankAppService" parent="hessianServer">
+		<property name="service" ref="chlBankAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ChlBankAppService" />
+	</bean>
+	
+	<!-- 计费模板 -->
+	<bean name="/bisBillingTemplateAppService" parent="hessianServer">
+		<property name="service" ref="bisBillingTemplateAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisBillingTemplateAppService" />
+	</bean>
+	
+	<!-- 邮件校验 -->
+	<bean name="/bisCheckEmailAppService" parent="hessianServer">
+		<property name="service" ref="bisCheckEmailAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisCheckEmailAppService" />
+	</bean>
+	
+	<!-- 邮件发送记录 -->
+	<bean name="/bisEmailAppService" parent="hessianServer">
+		<property name="service" ref="bisEmailAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisEmailAppService" />
+	</bean>
+	
+	<!-- 邮件发送模板 -->
+	<bean name="/bisEmailTemplateAppService" parent="hessianServer">
+		<property name="service" ref="bisEmailTemplateAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisEmailTemplateAppService" />
+	</bean>
+	
+	<!-- 异常日志 -->
+	<bean name="/bisExceptionLogAppService" parent="hessianServer">
+		<property name="service" ref="bisExceptionLogAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisExceptionLogAppService" />
+	</bean>
+		
+	<!-- 邮件发送记录-->
+	<bean name="/bisSmsAppService" parent="hessianServer">
+		<property name="service" ref="bisSmsAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisSmsAppService" />
+	</bean>
+	
+	<!-- 邮件发送模板-->
+	<bean name="/bisSmsTemplateAppService" parent="hessianServer">
+		<property name="service" ref="bisSmsTemplateAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisSmsTemplateAppService" />
+	</bean>
+	
+	<!-- 渠道信息 -->
+	<bean name="/chlChannelAppService" parent="hessianServer">
+		<property name="service" ref="chlChannelAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ChlChannelAppService" />
+	</bean>
+	
+	<!-- 渠道参数 -->
+	<bean name="/chlParamAppService" parent="hessianServer">
+		<property name="service" ref="chlParamAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ChlParamAppService" />
+	</bean>
+
+	
+	<!-- 外部邮箱服务器 -->
+	<bean name="/mrsExternalMailboxServerAppService" parent="hessianServer">
+		<property name="service" ref="mrsExternalMailboxServerAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.MrsExternalMailboxServerAppService" />
+	</bean>
+	
+	<!-- 会员用户操作日志 -->
+	<bean name="/mrsOperationLogAppService" parent="hessianServer">
+		<property name="service" ref="mrsOperationLogAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.MrsOperationLogAppService" />
+	</bean>
+		
+	<!-- 用户黑白名单 -->
+	<bean name="/payBwlistAppService" parent="hessianServer">
+		<property name="service" ref="payBwlistAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.PayBwlistAppService" />
+	</bean>
+	
+	<!-- 用户支付限额 -->
+	<bean name="/payLimitAppService" parent="hessianServer">
+		<property name="service" ref="payLimitAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.PayLimitAppService" />
+	</bean>
+	
+	<!-- 支付订单超限记录-->
+	<bean name="/payOverlimitAppService" parent="hessianServer">
+		<property name="service" ref="payOverlimitAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.PayOverlimitAppService" />
+	</bean>
+	<!-- 账户调账-->
+	<bean name="/payAccountAdjustAppService" parent="hessianServer">
+		<property name="service" ref="payAccountAdjustAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.PayAccountAdjustAppService" />
+	</bean>
+	
+	<!--内部对账管理-->
+	<bean name="/clsCheckInnerAppService" parent="hessianServer">
+		<property name="service" ref="clsCheckInnerAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsCheckInnerAppService" />
+	</bean>
+	<!--分润结算管理管理-->
+	<bean name="/clsShareSettleAppService" parent="hessianServer">
+		<property name="service" ref="clsShareSettleAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsShareSettleAppService" />
+	</bean>
+	<!-- 商户结算管理管理-->
+	<bean name="/clsMerchantSettleAppService" parent="hessianServer">
+		<property name="service" ref="clsMerchantSettleAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsMerchantSettleAppService" />
+	</bean>
+	<!--备付金支付-->
+	<bean name="/clsCallAcctAppService" parent="hessianServer">
+		<property name="service" ref="clsCallAcctAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsCallAcctAppService" />
+	</bean>
+	<!--渠道对账管理-->
+	<bean name="/clsCheckChannelAppService" parent="hessianServer">
+		<property name="service" ref="clsCheckChannelAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsCheckChannelAppService" />
+	</bean>
+	
+	<!--支付监控查询-->
+	<bean name="/payCheckStatusAppService" parent="hessianServer">
+		<property name="service" ref="payCheckStatusAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.PayCheckStatusAppService" />
+	</bean>
+ 
+	
+	<!--渠道对账文件监控管理-->
+	<bean name="/clsBankCheckAppService" parent="hessianServer">
+		<property name="service" ref="clsBankCheckAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsBankCheckAppService" />
+	</bean>
+ 
+	
+	<!--账务监控查询-->
+	<bean name="/actCheckStatusAppService" parent="hessianServer">
+		<property name="service" ref="actCheckStatusAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ActCheckStatusAppService" />
+	</bean>
+	
+	<!--内部对账服务-->
+	<bean name="/clsAcctCheckAppService" parent="hessianServer">
+		<property name="service" ref="clsAcctCheckAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsAcctCheckAppService" />
+	</bean>
+ 
+	<!--渠道对账监控服务-->
+	<bean name="/chlCheckStatusAppService" parent="hessianServer">
+		<property name="service" ref="chlCheckStatusAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ChlCheckStatusAppService" />
+	</bean>
+	
+	<!--商户对账文件监控服务-->
+	<bean name="/clsMerCheckStatusAppService" parent="hessianServer">
+		<property name="service" ref="clsMerCheckStatusAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsMerCheckStatusAppService" />
+	</bean>
+	
+	<!--商户对账文件监控服务-->
+	<bean name="/clsReportAppService" parent="hessianServer">
+		<property name="service" ref="clsReportAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsReportAppService" />
+	</bean>
+	<!--商户对账文件监控服务-->
+	<bean name="/clsReviewCountAppService" parent="hessianServer">
+		<property name="service" ref="clsReviewCountAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ClsReviewCountAppService" />
+	</bean>
+	<!-- 定时任务服务类 
+ 	<bean name="/bisSchedulerAppService" parent="hessianServer">
+		<property name="service" ref="bisSchedulerAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.BisSchedulerAppService" />
+	</bean>-->
+	<!--账务日期服务类-->
+	<bean name="/actAccountDateAppService" parent="hessianServer">
+		<property name="service" ref="actAccountDateAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.account.app.ActAccountDateAppService" />
+	</bean>
+	<!--资金划拨服务类-->
+	<bean name="/payAmtAllocateAppService" parent="hessianServer">
+		<property name="service" ref="payAmtAllocateAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.pay.app.PayAmtAllocateAppService" />
+	</bean>
+	<!--红包发放服务类-->
+	<bean name="/payRedAppService" parent="hessianServer">
+		<property name="service" ref="payRedAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.pay.app.PayRedAppService" />
+	</bean>
+	<!--渠道支付订单服务类-->
+	<bean name="/chlPaymentAppService" parent="hessianServer">
+		<property name="service" ref="chlPaymentAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.channel.app.ChlPaymentAppService" />
+	</bean>
+	<!--渠道退款服务类-->
+	<bean name="/chlRefundAppService" parent="hessianServer">
+		<property name="service" ref="chlRefundAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.channel.app.ChlRefundAppService" />
+	</bean>
+	<!--渠道代付服务类-->
+	<bean name="/chlReplaceAppService" parent="hessianServer">
+		<property name="service" ref="chlReplaceAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.channel.app.ChlReplaceAppService" />
+	</bean>
+	<!--备份-->
+	<bean name="/cbsBackupsAppService" parent="hessianServer">
+		<property name="service" ref="cbsBackupsAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsBackupsAppService" />
+	</bean>
+	<!--绑定银行-->
+	<bean name="/chlUserBindBankAppService" parent="hessianServer">
+		<property name="service" ref="chlUserBindBankAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.ChlUserBindBankAppService" />
+	</bean>
+	<!--绑定银行-->
+	<bean name="/cbsChlCardBinAppService" parent="hessianServer">
+		<property name="service" ref="cbsChlCardBinAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.cbs.app.CbsChlCardBinAppService" />
+	</bean>
+</beans>

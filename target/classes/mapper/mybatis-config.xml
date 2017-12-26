@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 -->
+
+        <setting name="lazyLoadingEnabled" value="false"/>
+    </settings>
+    <typeHandlers>
+        <!-- <package name="com.ylink.inetpay.common.core.constant"/> -->
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EUcsSecUserStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EIsDefault"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ENormalDisabledStatus"
+                     jdbcType="CHAR"/>
+        <!--管理员操作日志，操作类型枚举 -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EUcsSecOperationLogType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisBillingType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisBusinessType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisEmailChectStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisEmailTemplateCode"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.SubAcctType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlTradeState"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisExceptionLogNlevel"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisExceptionLogType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisSendStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlRefundState"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisSmsSystem"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisTemplateCode"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EMrsCarBusi"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EMrsCarinfoStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EMrsOperationLogType"
+                     jdbcType="CHAR"/>
+
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EMrsUserAppealType"
+                     jdbcType="CHAR"/>
+
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EMrsUserRealStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EMrsUserType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EUcsSecOperationLogType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EUcsSecPermissionOuterSystem"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayLimitBusinessType"
+                     jdbcType="CHAR"/>
+        <!-- 20160506 by yuqingjun add paysystem dto START -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EOrderStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ETransferType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayStyle" jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBusiType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ERefundSource"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAccountType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBankCardType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ETradeType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EFeeType" 
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAdjustStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ECheckStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EActRuleType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ESubjectType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAccountDrCr"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ESubjectLevel"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EEffectiveFrozenStatus"
+                     jdbcType="CHAR"/>
+        <!-- 20160506 by yuqingjun add paysystem dto END -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayBwType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayOverrBusinessType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EDcFlag" 
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlBankProp"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlChannelCode"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlCorrectTradeState"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlChannelType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlOrCheckFile"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlOneRecord"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSCheckStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSShareSettleStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSSettleStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSMerSettStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAuditResult"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSBusinessType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSReviewStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EProcessStatus"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSPayType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSExceptionReason"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSBusinessType"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.PayCheckStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSBankCheckStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSAcctCheckStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSMerFileUploadStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlCheckState"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EChlProcessState"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBalanceFlag"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ESchedPlanType"
+                     jdbcType="VARCHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ESchedJobQueueStatus"
+                     jdbcType="VARCHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EIsFinished"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EIsEnabled"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EProfitType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAccountParentType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAutoManual"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EsendChannel"
+                     jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EmessType" jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EsendType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ECardType" jdbcType="CHAR"/>
+
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAdjustType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSChannelCheckStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayAdjustType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CLSLiquidation"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ClearStep" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ClearType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ClsSettStep"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.HandleCheckStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.HandlePayStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.BISAuditType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.BISAuditStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBookType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ECurrenoy" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAccountStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAmountFlag"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EYesNo" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ERateType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EOperateType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ECertType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ECustType" jdbcType="CHAR"/>
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EAuditChangeType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EAuditStatus"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EAuditUserType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EPocessStatusEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EBisBusinessSettleMode"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EAduitTypeEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EOperaTypeEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EStartSystemEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EDistributTypeEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EStatusEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.MrsCustTypeEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EOperateTypeEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.AaccountType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.MrsAccountAuthStatus"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EProductTypeEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EIdCardType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.AcctBusiType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.MrsCredentialsType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EFeeMode" 
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EIsRefundFee"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.ECalcueType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EStatus" 
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.project.cbs.constant.mrs.BankAduitType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EBisMsgNotificationMsgType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EBatchHandleStatus"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EBatchPayStatusEnum"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EBatchBusiType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EAppleType"
+			jdbcType="CHAR" />
+		<typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+			javaType="com.ylink.inetpay.common.core.constant.EAppleType"
+			jdbcType="CHAR" />
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EIsCrossBank"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ESupportMode"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBusiMode" 
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPubOrPriv"
+                     jdbcType="CHAR"/>
+        <!--对公对私枚举 -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CHLIsPublic"
+                     jdbcType="CHAR"/>
+        <!--同城异地枚举 -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CHLIsSameCity"
+                     jdbcType="CHAR"/>
+        <!--渠道转账方式枚举 -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CHLTransferMethod"
+                     jdbcType="CHAR"/>
+        <!--渠道本行他行枚举 -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CHLIsSameBank"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EUnfreezeType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EActBusiRefSubBusiType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EJobType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EFrozenStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EffectiveStatusEnum"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ERateType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EActCustRateStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ECustInterestStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EInterestStatus"
+                     jdbcType="CHAR"/>
+        <!-- start adding -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAccChangeType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAccChangeStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAllocateType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.PayStatusEnum"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EAccChangeNoticeStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.CHLDrCrEnum"
+                     jdbcType="CHAR"/>
+        <!--end by zhl -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EActInterestDealStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EInterestType"
+                     jdbcType="CHAR"/>
+       <!--  <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.FeeType"
+                     jdbcType="CHAR"/> -->
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.PayState"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ESchedJobQueueStatus"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayFeeType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayBusiType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisBusinessSettleCycleType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayDateEnum"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EPayFeeState"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.ConfAuditBusiType"
+                     jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EFeeStyle" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.WorkDayTypeEnum" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.EEditable" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.ESettleFlag" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.EAccountFlag" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.EFeeMode" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.ESettleDayType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.EOffsetStyle" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.EAssuranceStyle" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.ETnSettle" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.core.constant.EBisBusinessSettleType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.EMessageType" jdbcType="CHAR"/>
+        <typeHandler handler="com.ylink.inetpay.common.core.handler.BaseEnumHandler"
+                     javaType="com.ylink.inetpay.common.project.cbs.constant.bis.EIsSend" jdbcType="CHAR"/>
+
+    </typeHandlers>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="autoRuntimeDialect" value="true"/>
+            <!-- <property name="dialect" value="oracle"/> -->
+            <!-- 该参数默认为false -->
+            <!-- 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 -->
+            <!-- 和startPage中的pageNum效果一样 -->
+            <property name="offsetAsPageNum" value="true"/>
+            <!-- 该参数默认为false -->
+            <!-- 设置为true时，使用RowBounds分页会进行count查询 -->
+            <property name="rowBoundsWithCount" value="true"/>
+            <!-- 设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果 -->
+            <!-- （相当于没有执行分页查询，但是返回结果仍然是Page类型） -->
+            <property name="pageSizeZero" value="true"/>
+            <!-- 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页 -->
+            <!-- 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据 -->
+            <!-- <property name="reasonable" value="true"/> -->
+            <!-- 增加了一个`params`参数来配置参数映射，用于从Map或ServletRequest中取值 -->
+            <!-- 可以配置pageNum,pageSize,count,pageSizeZero,reasonable,不配置映射的用默认值 -->
+            <!-- <property name="params" value="pageNum=start;pageSize=limit;pageSizeZero=zero;reasonable=heli;count=contsql"/> -->
+        </plugin>
+    </plugins>
+</configuration>

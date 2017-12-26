@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayFeeSummaryDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayFeeSummaryDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="MER_CODE" property="merCode" jdbcType="VARCHAR" />
+    <result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+    <result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="TOTAL_NUM" property="totalNum" jdbcType="DECIMAL" />
+    <result column="FEE_AMOUNT" property="feeAmount" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="PROC_STATE" property="procState" jdbcType="CHAR" />
+    <result column="HAS_BILL" property="hasBill" jdbcType="CHAR" />
+ 
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ACCOUNT_DATE, MER_CODE, MER_NAME, FEE_TYPE, TOTAL_AMOUNT, TOTAL_NUM, 
+    FEE_AMOUNT, CREATE_TIME, REMARK,PROC_STATE,HAS_BILL
+  </sql>
+   <resultMap id="ReportResultMap" type="com.ylink.inetpay.common.core.dto.ReporHeadDto" >
+ 	  <result column="allNum" property="allNum" jdbcType="DECIMAL" />
+ 	  <result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+  </resultMap>
+   <select id="reportSumData" resultMap="ReportResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeSummaryDto" >
+   		select  count(1) as allNum, nvl(sum(order_amt),0) as allAmt from TB_PAY_FEE_SUMMARY 
+		where 1=1
+		<if test="merCode != null and merCode != ''">
+			and MER_CODE = #{merCode,jdbcType=CHAR}
+		</if>
+		<if test="merName != null and merName != ''">
+			and	instr(MER_NAME, #{merName}) > 0
+		</if>
+		<if test="feeType != null and feeType != ''">
+			and	instr(FEE_TYPE, #{feeType}) > 0
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+		</if>
+  </select>
+   <select id="list" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeSummaryDto" resultMap="BaseResultMap">
+	   	select 
+	    <include refid="Base_Column_List" />
+	    from tb_pay_fee_summary
+	    where 1=1
+	    <if test="feeType != null and feeType != ''" >
+   	   		and FEE_TYPE = #{feeType,jdbcType=CHAR}
+    	</if>
+	    <if test="merName != null and merName != ''" >
+   	   		and	instr(MER_NAME, #{merName}) > 0
+    	</if>
+      	<if test="startTime !=null and startTime !=''">
+			<!-- and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d') -->
+			 and to_char(ACCOUNT_DATE,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			<!-- and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d') -->
+			and to_char(ACCOUNT_DATE,'YYYY-MM-DD')<![CDATA[  <= ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+		order by ACCOUNT_DATE DESC
+   </select>
+   
+    <select id="queryList" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeSummaryDto" resultMap="BaseResultMap">
+	   	select 
+	    <include refid="Base_Column_List" />
+	    from  TB_PAY_FEE_SUMMARY where 1=1
+	 	<if test="accountDate != null and accountDate != ''" >
+   	   		and	instr(ACCOUNT_DATE, #{accountDate}) > 0
+    	</if>  
+    	 <if test="merName != null and merName != ''" >
+   	   		and	instr(MER_NAME, #{merName}) > 0
+    	</if>
+    	<if test=" feeType  != null and feeType  != ''" >
+   	   		and	instr(FEE_TYPE, #{feeType,jdbcType=CHAR}) > 0
+    	</if>
+    	   <if test="merCode  != null and   merCode!= ''" >
+   	   		and	instr(MER_CODE , #{merCode}) > 0
+    	</if>
+    	  
+    	 <if test=" procState  != null and procState  != ''" >
+   	   		and	instr(PROC_STATE , #{procState}) > 0
+    	</if>
+    	 <if test=" hasBill != null and hasBill  != ''" >
+   	   		and	instr(HAS_BILL, #{hasBill}) > 0
+    	</if>  
+    	 order by CREATE_TIME DESC
+   </select>
+   
+   <!--  <select id="selectById" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tb_pay_fee_summary
+		where ID = #{id,jdbcType=VARCHAR}
+	</select> -->
+	<!-- 业务收支明细查询 -->
+	<select id="queryAll" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeSummaryDto" >
+		select
+		 MER_CODE ,
+		 MER_NAME ,
+		 sum(total_amount) as TOTAL_AMOUNT ,
+		 sum(fee_amount) as  FEE_AMOUNT   
+		 from TB_PAY_FEE_SUMMARY
+	  where 1=1
+	 	<if test="startTime !=null and startTime !=''">
+			 and ACCOUNT_DATE &gt;=date_format(#{startTime},'%Y%m%d')
+		</if>
+		<if test="EndTime !=null and EndTime !=''">
+			 and ACCOUNT_DATE&lt;=date_format(#{EndTime},'%Y%m%d')
+		</if>   
+		GROUP BY MER_CODE
+	</select>
+	<select id="findSumPayAmount"  resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayFeeSummaryDto" >
+			select sum(total_amount) as  TOTAL_AMOUNT ,
+			sum(fee_amount) as  FEE_AMOUNT  
+			from TB_PAY_FEE_SUMMARY 
+			where 1=1
+		 	<if test="startTime !=null and startTime !=''">
+				 and ACCOUNT_DATE &gt;=date_format(#{startTime},'%Y%m%d')
+			</if>
+			<if test="EndTime !=null and EndTime !=''">
+				 and ACCOUNT_DATE&lt;=date_format(#{EndTime},'%Y%m%d')
+			</if>   
+	</select>
+	
+	<!-- 详情 -->  
+	 <select id="detail" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select 
+			t.ID,
+			t.ACCOUNT_DATE,
+			t.MER_CODE,
+			t.MER_NAME,
+			t.FEE_TYPE,
+			t.TOTAL_NUM,
+			t.TOTAL_AMOUNT,
+			t.FEE_AMOUNT,
+			t.CREATE_TIME,
+			t.REMARK,
+			t.PROC_STATE,
+			t.HAS_BILL 
+			from TB_PAY_FEE_SUMMARY  t 
+			where t.ID = #{id}
+	</select>
+	
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActaccountDateDtoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ylink.inetpay.common.project.account.dto.ActaccountDateDto">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="LAST_ACCOUNT_DATE" property="lastAccountDate" jdbcType="CHAR" />
+		<result column="CUR_ACCOUNT_DATE" property="curAccountDate" jdbcType="CHAR" />
+		<result column="NEXT_INTEREST_DATE" property="nextInterestDate" jdbcType="CHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, LAST_ACCOUNT_DATE, CUR_ACCOUNT_DATE, NEXT_INTEREST_DATE,UPDATE_TIME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_ACT_ACCOUNT_DATE
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from TB_ACT_ACCOUNT_DATE
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActaccountDateDto">
+		insert into TB_ACT_ACCOUNT_DATE (ID, LAST_ACCOUNT_DATE,
+		CUR_ACCOUNT_DATE,NEXT_INTEREST_DATE,
+		UPDATE_TIME)
+		values (#{id,jdbcType=VARCHAR}, #{lastAccountDate,jdbcType=CHAR},
+		#{curAccountDate,jdbcType=CHAR},#{nextInterestDate,jdbcType=CHAR},
+		#{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActaccountDateDto">
+		insert into TB_ACT_ACCOUNT_DATE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="lastAccountDate != null">
+				LAST_ACCOUNT_DATE,
+			</if>
+			<if test="curAccountDate != null">
+				CUR_ACCOUNT_DATE,
+			</if>
+			<if test="nextInterestDate != null">
+				NEXT_INTEREST_DATE,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="lastAccountDate != null">
+				#{lastAccountDate,jdbcType=CHAR},
+			</if>
+			<if test="curAccountDate != null">
+				#{curAccountDate,jdbcType=CHAR},
+			</if>
+			<if test="nextInterestDate != null">
+				#{nextInterestDate,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActaccountDateDto">
+		update TB_ACT_ACCOUNT_DATE
+		<set>
+			<if test="lastAccountDate != null">
+				LAST_ACCOUNT_DATE = #{lastAccountDate,jdbcType=CHAR},
+			</if>
+			<if test="curAccountDate != null">
+				CUR_ACCOUNT_DATE = #{curAccountDate,jdbcType=CHAR},
+			</if>
+			<if test="nextInterestDate != null">
+				NEXT_INTEREST_DATE = #{nextInterestDate,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActaccountDateDto">
+		update TB_ACT_ACCOUNT_DATE
+		set LAST_ACCOUNT_DATE = #{lastAccountDate,jdbcType=CHAR},
+		CUR_ACCOUNT_DATE = #{curAccountDate,jdbcType=CHAR},
+		NEXT_INTEREST_DATE = #{nextInterestDate,jdbcType=CHAR},
+		UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="getAccountDate" resultType="String">
+		select
+		CUR_ACCOUNT_DATE
+		from
+		TB_ACT_ACCOUNT_DATE
+	</select>
+</mapper>

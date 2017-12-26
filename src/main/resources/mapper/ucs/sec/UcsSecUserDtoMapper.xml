@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.ucs.sec.dao.UcsSecUserDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecUserDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT_ID" property="departmentId" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT_NAME" property="departmentName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="LOGIN_FAIL_NUM" property="loginFailNum" jdbcType="DECIMAL" />
+    <result column="LAST_UPDATE_PASSWORD_TIME" property="lastUpdatePasswordTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_LOGIN_LOCK_TIME" property="lastLoginLockTime" jdbcType="TIMESTAMP" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATER_NAME" property="createrName" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+    <result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="UserRoleMap" extends="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecUserDto">
+		<collection property="roles" ofType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecRoleDto" notNullColumn="ROLE_ID">
+			<id column="ROLE_ID" property="id" jdbcType="VARCHAR" />
+   			<result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+   			<result column="ROLE_STATUS" property="status" jdbcType="CHAR" />
+   			<result column="ROLE_REMARK" property="remark" jdbcType="VARCHAR" />
+		</collection>
+   </resultMap>
+  <sql id="Base_Column_List" >
+    ID, REAL_NAME, LOGIN_NAME, PASSWORD, MOBILE, EMAIL, DEPARTMENT_ID, STATUS, LOGIN_FAIL_NUM, 
+    LAST_UPDATE_PASSWORD_TIME, LAST_LOGIN_LOCK_TIME, CREATER,CREATER_NAME, CREATE_TIME, REVISER,REVISER_NAME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select u.*,d.DEPARTMENT_NAME from TB_UCS_SEC_USER u 
+    left join TB_UCS_SEC_DEPARTMENT d on d.id = u.DEPARTMENT_ID 
+    where u.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_UCS_SEC_USER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecUserDto" >
+    insert into TB_UCS_SEC_USER (ID, REAL_NAME, LOGIN_NAME, 
+      PASSWORD, MOBILE, EMAIL, 
+      DEPARTMENT_ID, STATUS, LOGIN_FAIL_NUM, 
+      LAST_UPDATE_PASSWORD_TIME, LAST_LOGIN_LOCK_TIME, 
+      CREATER,CREATER_NAME, CREATE_TIME, REVISER,REVISER_NAME, 
+      UPDATE_TIME) 
+    values (#{identity,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{loginFailNum,jdbcType=DECIMAL}, 
+      #{lastUpdatePasswordTime,jdbcType=TIMESTAMP}, #{lastLoginLockTime,jdbcType=TIMESTAMP}, 
+      #{creater,jdbcType=VARCHAR},#{createrName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{reviser,jdbcType=VARCHAR}, 
+      #{reviserName,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecUserDto" >
+    insert into TB_UCS_SEC_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="identity != null" >
+        ID,
+      </if>
+      <if test="realName != null" >
+        REAL_NAME,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="departmentId != null" >
+        DEPARTMENT_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="loginFailNum != null" >
+        LOGIN_FAIL_NUM,
+      </if>
+      <if test="lastUpdatePasswordTime != null" >
+        LAST_UPDATE_PASSWORD_TIME,
+      </if>
+      <if test="lastLoginLockTime != null" >
+        LAST_LOGIN_LOCK_TIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="reviser != null" >
+        REVISER,
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="identity != null" >
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="loginFailNum != null" >
+        #{loginFailNum,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdatePasswordTime != null" >
+        #{lastUpdatePasswordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginLockTime != null" >
+        #{lastLoginLockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviser != null" >
+        #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecUserDto" >
+    update TB_UCS_SEC_USER
+    <set >
+      <if test="realName != null" >
+        REAL_NAME = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        DEPARTMENT_ID = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="loginFailNum != null" >
+        LOGIN_FAIL_NUM = #{loginFailNum,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdatePasswordTime != null" >
+        LAST_UPDATE_PASSWORD_TIME = #{lastUpdatePasswordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginLockTime != null" >
+        LAST_LOGIN_LOCK_TIME = #{lastLoginLockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviser != null" >
+        REVISER = #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecUserDto" >
+    update TB_UCS_SEC_USER
+    set REAL_NAME = #{realName,jdbcType=VARCHAR},
+      LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      DEPARTMENT_ID = #{departmentId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      LOGIN_FAIL_NUM = #{loginFailNum,jdbcType=DECIMAL},
+      LAST_UPDATE_PASSWORD_TIME = #{lastUpdatePasswordTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_LOCK_TIME = #{lastLoginLockTime,jdbcType=TIMESTAMP},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REVISER = #{reviser,jdbcType=VARCHAR},
+      REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getByLoginName" parameterType="string" resultMap="BaseResultMap">
+  	select u.*,d.DEPARTMENT_NAME from TB_UCS_SEC_USER u 
+    left join TB_UCS_SEC_DEPARTMENT d on d.id = u.DEPARTMENT_ID 
+    where u.LOGIN_NAME = #{loginName,jdbcType=VARCHAR} 
+  </select>
+  <select id="checkLoginName" resultType="int">
+	select count(*) from TB_UCS_SEC_USER  
+	<where>
+		<if test="id != null and id !=''">
+			ID != #{id} 
+		</if>
+		<if test="loginName != null and loginName != ''">
+			and LOGIN_NAME = #{loginName} 
+		</if>
+	</where>
+  </select>
+  <select id="checkEmail" resultType="int">
+	select count(*) from TB_UCS_SEC_USER  
+	<where>
+		<if test="id != null">
+			id != #{id}
+		</if>
+		<if test="email != null and email != ''">
+			and EMAIL = #{email}
+		</if>
+	</where>
+  </select>
+  <select id="getWithRoles" parameterType="string" resultMap="UserRoleMap">
+		select 
+			la.*,d.DEPARTMENT_NAME,
+			role.ID as ROLE_ID,
+			role.ROLE_NAME as ROLE_NAME, 
+			role.STATUS as ROLE_STATUS,
+			role.REMARK as ROLE_REMARK
+		from TB_UCS_SEC_USER la 
+		left join TB_UCS_SEC_DEPARTMENT d on d.id = la.DEPARTMENT_ID 
+		left join TB_UCS_SEC_USER_ROLE lr on la.id = lr.USER_ID
+		left join TB_UCS_SEC_ROLE role on role.id = lr.ROLE_ID
+		where la.id = #{id}
+  </select>
+  <select id="getWithRolesByLoginName" parameterType="string" resultMap="UserRoleMap">
+		select 
+			la.*,d.DEPARTMENT_NAME,
+			role.ID as ROLE_ID,
+			role.ROLE_NAME as ROLE_NAME, 
+			role.STATUS as ROLE_STATUS,
+			role.REMARK as ROLE_REMARK
+		from TB_UCS_SEC_USER la 
+		left join TB_UCS_SEC_DEPARTMENT d on d.id = la.DEPARTMENT_ID 
+		left join TB_UCS_SEC_USER_ROLE lr on la.id = lr.USER_ID
+		left join TB_UCS_SEC_ROLE role on role.id = lr.ROLE_ID
+		where la.LOGIN_NAME = #{loginName}
+  </select>
+  <sql id="whereSql">
+  		<where>
+			<if test="queryParam.loginName != null and queryParam.loginName != ''">
+				and instr(u.LOGIN_NAME, #{queryParam.loginName}) > 0
+				<!-- u.LOGIN_NAME like concat('%',concat(#{queryParam.loginName},'%'))  -->
+			</if>
+			<if test="queryParam.realName != null and queryParam.realName != ''">
+				and instr(u.REAL_NAME, #{queryParam.realName}) > 0
+				<!-- and u.REAL_NAME like concat('%',concat(#{queryParam.realName},'%'))  -->
+			</if>
+			<if test="queryParam.mobile != null and queryParam.mobile != ''">
+				and instr(u.MOBILE, #{queryParam.mobile}) > 0
+				<!-- and u.MOBILE like concat('%',concat(#{queryParam.mobile},'%'))  -->
+			</if>
+			<if test="queryParam.email != null and queryParam.email != ''">
+				and instr(u.EMAIL, #{queryParam.email}) > 0
+				<!-- and u.EMAIL like concat('%',concat(#{queryParam.email},'%'))   -->
+			</if>
+			<if test="queryParam.status != null">
+				and u.STATUS = #{queryParam.status,jdbcType=CHAR}
+			</if>
+		</where>
+  </sql>
+  <select id="listWidthRoles" resultMap="UserRoleMap">
+		select 
+			la.*,
+			role.ID as ROLE_ID,
+			role.ROLE_NAME as ROLE_NAME, 
+			role.STATUS as ROLE_STATUS,
+			role.REMARK as ROLE_REMARK
+		from (
+			select u.*,d.DEPARTMENT_NAME from TB_UCS_SEC_USER u 
+			left join TB_UCS_SEC_DEPARTMENT d on d.id = u.DEPARTMENT_ID 
+			<include refid="whereSql" />
+		) la 
+		left join TB_UCS_SEC_USER_ROLE lr on la.id = lr.USER_ID
+		left join TB_UCS_SEC_ROLE role on role.id = lr.ROLE_ID
+		order by la.CREATE_TIME desc
+  </select>
+  <select id="listWidthRolesPage"  resultMap="UserRoleMap">
+		select 
+			la.*,
+			role.ID as ROLE_ID,
+			role.ROLE_NAME as ROLE_NAME, 
+			role.STATUS as ROLE_STATUS,
+			role.REMARK as ROLE_REMARK 
+		from (
+			select * from (
+				select tb1.* , rownum as rn from (
+					select u.*,d.DEPARTMENT_NAME from TB_UCS_SEC_USER u 
+					left join TB_UCS_SEC_DEPARTMENT d on d.id = u.DEPARTMENT_ID 
+					<include refid="whereSql" /> 
+					order by u.CREATE_TIME desc 
+				) tb1 where rownum &lt;=#{endIndex } 
+			) tb2 where tb2.rn &gt;=#{beginIndex }
+		) la  
+		left join TB_UCS_SEC_USER_ROLE lr on la.id = lr.USER_ID
+		left join TB_UCS_SEC_ROLE role on role.id = lr.ROLE_ID
+		order by la.CREATE_TIME desc  
+  </select>
+  <select id="listWidthRolesPageCount" resultType="long">
+  		select count(*) from TB_UCS_SEC_USER u <include refid="whereSql" />
+  </select>
+  <insert id="addUserRoles">
+  	insert into TB_UCS_SEC_USER_ROLE(ID,USER_ID,ROLE_ID) 
+  	<foreach collection="roleIdList" index="index" item="item" separator=" union all ">
+  		select sys_guid(),#{userId},#{item,jdbcType=VARCHAR} from dual 
+  	</foreach>
+  </insert>
+  <delete id="deleteUserRoles" parameterType="string">
+	delete from TB_UCS_SEC_USER_ROLE where USER_ID = #{userId }
+  </delete>
+  <update id="updateLockTime">
+	update TB_UCS_SEC_USER set LOGIN_FAIL_NUM=0,LAST_LOGIN_LOCK_TIME=#{lockDate} where id = #{userId}
+  </update>
+  <update id="updateStatus">
+  	update TB_UCS_SEC_USER set STATUS=#{status,jdbcType=CHAR} where id = #{userId}
+  </update>
+  <select id="listByDeptId" parameterType="string" resultMap="BaseResultMap">
+  	select * from TB_UCS_SEC_USER where DEPARTMENT_ID = #{deptId}
+  </select>
+  <select id="allNomalUser" parameterType="string" resultMap="BaseResultMap">
+  	select * from TB_UCS_SEC_USER where STATUS = #{status,jdbcType=CHAR}
+  </select>
+  <update id="clearLoginFailInfo">
+  	update TB_UCS_SEC_USER set LAST_LOGIN_LOCK_TIME = null, LOGIN_FAIL_NUM = 0 
+  </update>
+</mapper>

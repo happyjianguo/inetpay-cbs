@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+  
+	<!-- 邮件发送服务器接口 
+	<bean id="emailSendManagerAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${portal_url}/emailSendManagerAppService" />
+		<property name="serviceInterface"
+			value="com.unionpay.epsp.common.project.portal.email.app.EmailSendManagerAppService" />
+	</bean>
+	-->
+	<bean id="emailManageAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${access_url}/emailManageAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.access.app.EmailManageAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<bean id="smsManageAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${access_url}/smsManageAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.access.app.SmsManageAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<bean id="paySystemPayBwlistAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${pay_url}/payBwlistAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.pay.app.PayBwlistAppService" />	
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />	   
+	</bean>
+	<bean id="paySystemPayLimitAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${pay_url}/payLimitAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.pay.app.PayLimitAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<bean id="paySystemPayAccountAdjustAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${pay_url}/payAccountAdjustAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.pay.app.PayAccountAdjustAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 账务业务 -->
+	<bean id="actBookAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${account_url}/actBookAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.account.app.ActBookAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="240000" />
+	</bean>
+	
+	<!-- 对账文件上传 -->
+	<bean id="actFileAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${account_url}/actFileAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.account.app.ActFileAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	
+	<!--渠道服务 -->
+	<bean id="clearChannelCheckAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${clear_url}/clearChannelCheckAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.clear.app.ClearChannelCheckAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	
+	<!--内部对账服务 -->
+	<bean id="clearInnerCheckAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${clear_url}/clearInnerCheckAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.clear.app.ClearInnerCheckAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	
+	<!--支付系统-对账任务监控管理 -->
+	<bean id="payMerchantAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${pay_url}/payMerchantAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.pay.app.PayMerchantAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	
+	<!--资金渠道-文件下载解析上传服务-->
+	<bean id="CheckFileTaskAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${channel_url}/checkFileTaskAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.channel.app.CheckFileTaskAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!--清结算系统，资金渠道-文件下载解析服务-->
+	<bean id="clearMerchantAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${clear_url}/clearMerchantAppService" />
+		<property name="serviceInterface"
+			value="com.ylink.inetpay.common.project.clear.app.ClearMerchantAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 提现服务类 -->
+	<bean id="payWithdrawAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${pay_url}/payWithdrawAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.pay.app.PayWithdrawAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+    <!-- 转账服务类 -->
+    <bean id="payTransferAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${pay_url}/payTransferAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.pay.app.PayTransferAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+    <!-- 退款服务类 -->
+    <bean id="payRefundAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${pay_url}/payRefundAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.pay.app.PayRefundAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 支付服务接口 -->
+	<bean id="payPaymentAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${pay_url}/payPaymentAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.pay.app.PayPaymentAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 清结算监控记录的初始化服务接口 -->
+	<bean id="clearInitAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${clear_url}/clearInitAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.clear.app.ClearInitAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 分润统计 -->
+	<bean id="clearShareAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${clear_url}/clearShareAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.clear.app.ClearShareAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 资金调拨 -->
+	<bean id="clearTransferFundAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${clear_url}/clearTransferFundAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.clear.app.ClearTransferFundAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 发送微信 -->
+	<bean id="weixinMobileAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${access_url}/weixinMobileAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.access.app.WeixinMobileAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 开通快捷-->
+	<bean id="fastPayAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${channel_url}/fastPayAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.channel.app.FastPayAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 报表服务类 -->
+	<bean id="clearReportAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${clear_url}/clearReportAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.clear.app.ClearReportAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 渠道信息服务类 -->
+	<bean id="chlSystemChlChannelAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${channel_url}/chlChannelAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.channel.app.ChlChannelAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 银行账户服务类 -->
+	<bean id="chlSystemBankAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${channel_url}/chlBankAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.channel.app.ChlBankAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 渠道信息参数服务类 -->
+	<bean id="chlSystemChlParamAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${channel_url}/chlParamAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.channel.app.ChlParamAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="60000" />
+	</bean>
+	<!-- 清洁算系统备份定时任务 -->
+	<bean id="clearBackupsAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${clear_url}/clearBackupsAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.clear.app.ClearBackupsAppService" />
+		<property name="connectTimeOut" value="15000" />
+		<property name="readTimeOut" value="600000" />
+	</bean>
+	<!-- 银行卡Bin -->
+	<bean id="chlCardBinAppService" parent="hessianClient">
+		<property name="serviceUrl" value="${channel_url}/chlCardBinAppService" />
+		<property name="serviceInterface" value="com.ylink.inetpay.common.project.channel.app.ChlCardBinAppService" />
+		<property name="connectTimeOut" value="1500" />
+		<property name="readTimeOut" value="6000" />
+	</bean>
+</beans>

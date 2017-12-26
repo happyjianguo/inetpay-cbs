@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsRecordCheckDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsRecordCheck" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+	    <result column="REPORT_ID" property="reportId" jdbcType="CHAR" />
+	    <result column="APPLICANT" property="applicant" jdbcType="VARCHAR" />
+	    <result column="APPLICANT_NAME" property="applicantName" jdbcType="VARCHAR" />
+	    <result column="APPLY_SUGG" property="applySugg" jdbcType="VARCHAR" />
+	    <result column="APPLY_TIME" property="applyTime" jdbcType="TIMESTAMP" />
+	    <result column="REVIEW_STATUS" property="reviewStatus" jdbcType="CHAR" />
+	    <result column="AUDITER" property="auditer" jdbcType="VARCHAR" />
+	    <result column="AUDITER_NAME" property="auditerName" jdbcType="VARCHAR" />
+	    <result column="REVIEW_TIME" property="reviewTime" jdbcType="TIMESTAMP" />
+	    <result column="CHECK_SUGG" property="checkSugg" jdbcType="VARCHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+<sql id="Base_Column_List">
+	ID,BUSI_TYPE,APPLICANT,APPLICANT_NAME,APPLY_SUGG,APPLY_TIME,REVIEW_STATUS,
+	AUDITER,AUDITER_NAME,REVIEW_TIME,CHECK_SUGG,CREATE_TIME,UPDATE_TIME
+</sql>
+<select id="queryReviewCount" resultType="com.ylink.inetpay.common.project.clear.dto.ClsReviewVo">
+ select (select  count(c.id)
+from TB_CLS_RECORD_CHECK c
+where c.REVIEW_STATUS='1' and c.BUSI_TYPE='01') as merSettCount,
+(select  count(c.id)
+from TB_CLS_RECORD_CHECK c
+where c.REVIEW_STATUS='1' and c.BUSI_TYPE='03') as reserveCount,
+(select count(id) from  TB_CLS_RECORD_CHECK where BUSI_TYPE='04' and REVIEW_STATUS='1'  and  report_id in (select id from TB_CLS_EXCEPTION_ORDER where check_type='1' and adjust_status='1')) as innerCheckCount,
+(select count(id) from  TB_CLS_RECORD_CHECK where BUSI_TYPE='04' and REVIEW_STATUS='1'  and  report_id in (select id from TB_CLS_EXCEPTION_ORDER where check_type='2' and adjust_status='1')) as channelCheckCount
+FROM dual
+ </select> 
+<!--插入-->
+ <insert id="insertShareSettleRecord" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsRecordCheck">
+ insert into TB_CLS_RECORD_CHECK
+ (
+  ID ,
+  BUSI_TYPE ,
+  REPORT_ID ,
+  APPLICANT ,
+  APPLICANT_NAME ,
+  APPLY_SUGG ,
+  REVIEW_STATUS,
+  APPLY_TIME ,
+  CREATE_TIME 
+  )
+  values(
+  	#{id,jdbcType=CHAR} ,
+  	#{busiType,jdbcType=CHAR} ,
+  	#{reportId,jdbcType=CHAR} ,
+  	#{applicant,jdbcType=VARCHAR} ,
+  	#{applicantName,jdbcType=VARCHAR} ,
+  	#{applySugg,jdbcType=VARCHAR} ,
+  	#{reviewStatus,jdbcType=CHAR} ,
+  	sysdate ,
+  	sysdate 
+  )
+ </insert>
+  
+ 
+<!--审核-->
+ <update id="updateRecord" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsRecordCheck">
+ update TB_CLS_RECORD_CHECK set
+ 	REVIEW_STATUS=#{reviewStatus,jdbcType=CHAR}  ,
+ 	AUDITER=#{auditer,jdbcType=VARCHAR}  ,
+ 	AUDITER_NAME=#{auditerName,jdbcType=VARCHAR}  ,
+ 	REVIEW_TIME=sysdate,
+ 	CHECK_SUGG=#{checkSugg,jdbcType=VARCHAR}  ,
+ 	UPDATE_TIME=sysdate  
+ where 
+ 	REPORT_ID=#{reportId,jdbcType=CHAR}  
+ 	and BUSI_TYPE=#{busiType,jdbcType=CHAR}  
+ </update>
+ 
+ <select id="getRecordChecks" resultMap="resultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CLS_RECORD_CHECK
+    where REPORT_ID = #{busId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="isEqual"  resultType="java.lang.String">
+ 	select count(REPORT_ID) from TB_CLS_RECORD_CHECK 
+ 	where REPORT_ID=#{id} 
+ 	and APPLICANT=#{applicant,jdbcType=VARCHAR} 
+ 	and REVIEW_STATUS=#{auditStatus,jdbcType=CHAR}
+ </select>	  
+</mapper>

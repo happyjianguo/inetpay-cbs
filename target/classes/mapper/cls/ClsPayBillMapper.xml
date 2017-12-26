@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsPayBillDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="PAY_ID" property="payId" jdbcType="CHAR" />
+	    <result column="BOOK_ID" property="bookId" jdbcType="CHAR" />
+	    <result column="ACCT_CHECK_DAY" property="acctCheckDay" jdbcType="TIMESTAMP" />
+	    <result column="CHECK_DAY" property="checkDay" jdbcType="CHAR" />
+	    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+	    <result column="ACCOUNT_AMT" property="accountAmt" jdbcType="DECIMAL" />
+	    <result column="ACCT_CHECK_STATUS" property="acctCheckStatus" jdbcType="CHAR" />
+	    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+	    <result column="REVIEW_STATUS" property="reviewStatus" jdbcType="CHAR" />
+	    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+	    <result column="APPLICANT_NAME" property="applicatiName" jdbcType="CHAR" />
+	    <result column="APPLICANT" property="applicat" jdbcType="VARCHAR" />
+	    <result column="APPLY_TIME" property="applyDate" jdbcType="DATE" />
+	    <result column="APPLY_SUGG" property="applySugg" jdbcType="CHAR" />
+	    <result column="AUDITER_NAME" property="auditerName" jdbcType="CHAR" />
+	    <result column="REVIEW_TIME" property="reviewDate" jdbcType="DATE" />
+	    <result column="CHECK_SUGG" property="checkSugg" jdbcType="CHAR" />
+	    <result column="EXCEPTION_TYPE" property="exceptionReason" jdbcType="CHAR" />
+	    <result column="ADJUST_TYPE" property="adjustType" jdbcType="CHAR" />
+	    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+  </resultMap>
+ <resultMap id="clsPayBill" type="com.ylink.inetpay.common.project.clear.dto.ClsPayBill" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="ACCT_CHECK_ID" property="acctCheckId" jdbcType="CHAR" />
+	    <result column="PAY_ID" property="payId" jdbcType="CHAR" />
+	    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+	    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+	    <result column="ORDER_TYPE" property="orderType" jdbcType="CHAR" />
+	    <result column="TRADE_TYPE" property="tradeType" jdbcType="CHAR" />
+	    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+	    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+	    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+	    <result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+	    <result column="FEE_RATE" property="feeRate" jdbcType="DECIMAL" />
+	    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+	    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+	    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+	    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+	    <result column="PAYEE_CUST_NAME" property="payeeCustName" jdbcType="VARCHAR" />
+	    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+	    <result column="MER_ORDER_DATE" property="merOrderDate" jdbcType="CHAR" />
+	    <result column="MER_CODE" property="merCode" jdbcType="CHAR" />
+	    <result column="MER_NAME" property="merName" jdbcType="CHAR" />
+	    <result column="EXT_ORG_ID" property="extOrgId" jdbcType="CHAR" />
+	    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+	    <result column="CLEAR_DATE" property="clearDate" jdbcType="CHAR" />
+	    <result column="CHANNEL_CODE" property="channelCode" jdbcType="VARCHAR" />
+	    <result column="PAY_CREATE_TIME" property="payCreateTime" jdbcType="TIMESTAMP" />
+	    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+	    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+	    <result column="BOOK_ID" property="bookId" jdbcType="CHAR" />
+	    <result column="CHANNEL_ID" property="channelId" jdbcType="CHAR" />
+	    <result column="ACCT_CHECK_STATUS" property="acctCheckStatus" jdbcType="CHAR" />
+	    <result column="ACCT_CHECK_DAY" property="acctCheckDay" jdbcType="TIMESTAMP" />
+	    <result column="BANK_CHECK_STATUS" property="bankCheckStatus" jdbcType="CHAR" />
+	    <result column="BANK_CHECK_DAY" property="bankCheckDay" jdbcType="TIMESTAMP" />
+	    <result column="CHANNEL_AMT" property="channelAmt" jdbcType="DECIMAL" />
+	    <result column="ACCOUNT_AMT" property="accountAmt" jdbcType="DECIMAL" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="BANK_BATCH" property="bankBatch" jdbcType="CHAR" />
+	    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+	    <result column="IS_SHARED" property="isShared" jdbcType="BIT" />
+	    <result column="ACCESS_CODE" property="accessCode" jdbcType="VARCHAR" />
+  </resultMap>
+	<resultMap id="resultMap2" type="com.ylink.inetpay.common.project.clear.dto.ClsTradeDetailVo" >
+		    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+		    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+		    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+		    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+		    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+		    <result column="MER_CODE" property="merCode" jdbcType="CHAR" />
+		    <result column="MER_NAME" property="merName" jdbcType="CHAR" />
+		    <result column="PLAN_DAY" property="planDay" jdbcType="CHAR" />
+		    <result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+		    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+		    <result column="EXCEPT_REASON" property="exceptReason" jdbcType="VARCHAR" />
+	  </resultMap>	 
+	  <resultMap id="resultMap3" type="com.ylink.inetpay.common.core.dto.ReporHeadDto" >
+		    <result column="succAllNum" property="succNum" jdbcType="VARCHAR" />
+		    <result column="succAllAmt" property="succAmt" jdbcType="VARCHAR" />
+	  </resultMap>	 
+ 
+ <resultMap id="station"  type="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo" >
+		<result column="busiType" property="busiType" jdbcType="CHAR" />
+		<result column="tradeType" property="tradeType" jdbcType="CHAR" />
+		<result column="allCount" property="allCount" jdbcType="CHAR" />
+		<result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+		<result column="successCount" property="succCount" jdbcType="INTEGER" />
+		<result column="successAmt" property="succAmt" jdbcType="DECIMAL" />
+		<result column="failCount" property="failCount" jdbcType="INTEGER" />
+		<result column="failAmt" property="failAmt" jdbcType="DECIMAL" />
+		<result column="rate" property="rate" jdbcType="DOUBLE" />
+		<result column="payerCustId" property="payerCustId" jdbcType="CHAR" />
+		<result column="payerCustName" property="payerCustName" jdbcType="CHAR" />
+		<result column="merCode" property="merCode" jdbcType="CHAR" />
+		<result column="merName" property="merName" jdbcType="CHAR" />
+		<result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+</resultMap>
+ <select id="queryMerTradeDetailSummaryAll" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeDetailVo"
+ resultType="com.ylink.inetpay.common.core.dto.ReporHeadDto">
+ select 
+ count(bill.id) as allNum,
+ nvl(sum(bill.order_amt),0) as allAmt
+ from TB_CLS_PAY_BILL bill left join TB_CLS_MER_SETT mer on mer.mer_code=bill.mer_code 
+ where bill.TRADE_TYPE IN ('08','09','11','12')
+ <if test="merCode!=null and merCode!=''">
+ 	and bill.MER_CODE=#{merCode,jdbcType=CHAR}
+ </if>
+ <if test="tradeEndTime!=null and tradeEndTime!=''">
+	and to_char(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{tradeEndTime},'yyyyMMdd')
+</if>
+<if test="tradeStartTime!=null and tradeStartTime!=''">
+	and to_char(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{tradeStartTime},'yyyyMMdd')
+</if>
+<if test="settleEndTime!=null and settleEndTime!=''">
+	and bill.CLEAR_DATE&lt;=to_char(#{settleEndTime},'yyyyMMdd')
+</if>
+<if test="settleStartTime!=null and settleStartTime!=''">
+	and bill.CLEAR_DATE&gt;=to_char(#{settleStartTime},'yyyyMMdd')
+</if>
+group by null
+ </select>
+ 
+ <select id="queryMerTradeDetailSummarySuccess" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeDetailVo"
+ resultType="com.ylink.inetpay.common.core.dto.ReporHeadDto">
+ select 
+ count(bill.id) as succNum,
+ nvl(sum(bill.order_amt),0) as succAmt
+ from TB_CLS_PAY_BILL bill left join TB_CLS_MER_SETT mer on mer.mer_code=bill.mer_code 
+ where   bill.ORDER_STATUS='04'
+	and bill.TRADE_TYPE IN ('08','09','11','12','14')
+ <if test="merCode!=null and merCode!=''">
+	and bill.MER_CODE=#{merCode,jdbcType=CHAR}
+ </if>
+ <if test="tradeEndTime!=null and tradeEndTime!=''">
+	and to_char(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{tradeEndTime},'yyyyMMdd')
+</if>
+<if test="tradeStartTime!=null and tradeStartTime!=''">
+	and to_char(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{tradeStartTime},'yyyyMMdd')
+</if>
+<if test="settleEndTime!=null and settleEndTime!=''">
+	and bill.CLEAR_DATE&lt;=to_char(#{settleEndTime},'yyyyMMdd')
+</if>
+<if test="settleStartTime!=null and settleStartTime!=''">
+	and bill.CLEAR_DATE&gt;=to_char(#{settleStartTime},'yyyyMMdd')
+</if>
+group by null
+ </select>
+ 
+ 
+ 
+ <select id="queryMerTradeDetail" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeDetailVo" resultMap="resultMap2">
+ select 
+ bill.TRADE_NAME,
+ bill.ORDER_AMT,
+ bill.FEE,
+ decode(bill.BUSI_TYPE,'05',bill.PAYEE_CUST_NAME,bill.PAYER_CUST_NAME) as PAYER_CUST_NAME,
+ bill.ORDER_STATUS,
+ bill.MER_CODE,
+ bill.COMPLETE_TIME,
+(select m.MER_NAME FROM TB_CLS_MER_SETT m WHERE m.MER_CODE=bill.MER_CODE and ROWNUM=1) as MER_NAME,
+bill.CLEAR_DATE as PLAN_DAY,
+bill.CLEAR_DATE as REAL_DAY,
+null as EXCEPT_REASON
+ from TB_CLS_PAY_BILL bill
+ where
+  bill.TRADE_TYPE IN ('08','09','11','12')
+ <if test="merCode!=null and merCode!=''">
+ 	and bill.MER_CODE=#{merCode,jdbcType=CHAR}
+ </if>
+ <if test="orderStatus!=null and orderStatus!=''">
+ 	and bill.ORDER_STATUS=#{orderStatus,jdbcType=CHAR}
+ </if>
+ <if test="tradeEndTime!=null and tradeEndTime!=''">
+	and to_char(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{tradeEndTime},'yyyyMMdd')
+</if>
+<if test="tradeStartTime!=null and tradeStartTime!=''">
+	and to_char(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{tradeStartTime},'yyyyMMdd')
+</if>
+<if test="settleEndTime!=null">
+	and bill.CLEAR_DATE&lt;=to_char(#{settleEndTime},'yyyyMMdd')
+</if>
+<if test="settleStartTime!=null">
+	and bill.CLEAR_DATE&gt;=to_char(#{settleStartTime},'yyyyMMdd')
+</if>
+order by  bill.COMPLETE_TIME desc,bill.id desc
+ </select>
+
+<!-- 
+1）支付有，账务无
+2）账务有，支付无
+ --> 
+<select id="queryPayBill" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap">
+select * from (
+select 
+BILL.ID,
+bill.PAY_ID,
+bill.BOOK_ID,
+bill.ACCT_CHECK_DAY,
+bill.ORDER_AMT,
+bill.ACCOUNT_AMT,
+bill.ACCT_CHECK_STATUS,
+bill.ACCOUNT_DATE,
+bill.BANK_TYPE,
+bill.ORDER_STATUS,
+tb.EXCEPTION_TYPE,
+tb.ADJUST_TYPE
+from TB_CLS_PAY_BILL bill left join TB_CLS_EXCEPTION_ORDER tb on tb.PAY_ID=bill.PAY_ID and  tb.CHECK_TYPE='1'
+
+where 1=1
+<if test="acctCheckStatus!=null and acctCheckStatus!=''">
+	and bill.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+<if test="adjustType!=null and adjustType.value != 3">
+	and tb.ADJUST_TYPE=#{adjustType,jdbcType=CHAR}
+</if>
+<if test="adjustType!=null and adjustType.value == 3">
+	and tb.ADJUST_TYPE in ('1','2')
+</if>
+<if test="payId!=null and payId !=''">
+	and  instr(bill.PAY_ID,#{payId})>0
+</if>
+
+union 
+
+select 
+tb_act.ID,
+tb_act.PAY_ID,
+tb_act.BOOK_ID,
+to_date(tb.check_day,'yyyyMMdd') as ACCT_CHECK_DAY,
+bill.ORDER_AMT,
+tb_act.ORDER_AMOUNT,
+decode(tb.adjust_status,'1','3','3','2',tb.adjust_status) AS ACCT_CHECK_STATUS,
+TB.CHECK_DAY AS ACCOUNT_DATE,
+null AS BANK_TYPE,
+bill.ORDER_STATUS as ORDER_STATUS,
+tb.EXCEPTION_TYPE,
+tb.ADJUST_TYPE		
+from TB_CLS_ACCT_BOOK tb_act left join TB_CLS_PAY_BILL bill on tb_act.PAY_ID=bill.PAY_ID  
+left join  TB_CLS_EXCEPTION_ORDER tb  ON  tb_act.PAY_ID=tb.PAY_ID and  tb.CHECK_TYPE='1' and  tb.EXCEPTION_TYPE='03'
+where  bill.id is null 
+<if test="acctCheckStatus!=null and acctCheckStatus.value==1">
+	and tb.adjust_status is null
+</if>
+<if test="acctCheckStatus!=null and acctCheckStatus.value==4">
+	and tb.adjust_status is null
+</if>
+<if test="acctCheckStatus!=null and acctCheckStatus.value==3">
+	and tb.adjust_status='1'
+</if>
+<if test="acctCheckStatus!=null and acctCheckStatus.value==2">
+	and tb.adjust_status='3'
+</if>
+<if test="endTime!=null">
+	and TB.CHECK_DAY &lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and TB.CHECK_DAY &gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+<if test="adjustType!=null  and adjustType.value != 3">
+	and tb.ADJUST_TYPE=#{adjustType,jdbcType=CHAR}
+</if>
+<if test="adjustType!=null and adjustType.value == 3">
+	and tb.ADJUST_TYPE in ('1','2')
+</if>
+)
+order by ACCT_CHECK_DAY desc,id desc
+</select>
+<!--
+ 查询出需要调账的据
+ -->
+<select id="queryPayBillAdjust" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap">
+	SELECT
+		tb.ID,
+		tb.PAY_ID,
+		tb.CHECK_ORDER_ID 	 as BOOK_ID,
+		to_date(tb.check_day,'yyyyMMdd') as ACCT_CHECK_DAY,
+		tb.ORDER_AMT,
+		tb.CHECK_ORDER_MONEY as ACCOUNT_AMT,
+		nvl(bill.ACCT_CHECK_STATUS,'3') as ACCT_CHECK_STATUS,
+		tb.CHECK_DAY 		 as ACCOUNT_DATE,
+		tb.EXCEPTION_TYPE,
+		BILL.BANK_TYPE,
+		tb.ADJUST_TYPE
+		from TB_CLS_EXCEPTION_ORDER tb left join TB_CLS_PAY_BILL bill on tb.pay_id=bill.pay_id
+		left join TB_CLS_ACCT_BOOK book on tb.pay_id=book.pay_id
+	where  tb.CHECK_TYPE='1'
+	and tb.ADJUST_STATUS='1' 
+	<if test="acctCheckStatus != null and acctCheckStatus.value == 3 ">
+		 and (BILL.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+		 or BILL.id is null)
+	</if>
+	<if test="acctCheckStatus != null and acctCheckStatus.value == 4 ">
+		 and (BILL.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR})
+	</if>
+	<if test="endTime!=null">
+		and tb.check_day&lt;=to_char(#{endTime},'yyyyMMdd')
+	</if>
+	<if test="startTime!=null">
+		and tb.check_day&gt;=to_char(#{startTime},'yyyyMMdd')
+	</if>
+	<if test="payId!=null and payId !=''">
+		and  instr(tb.PAY_ID,#{payId})>0
+	</if>
+ 	order by tb.CREATE_TIME desc,tb.PAY_ID desc
+</select>
+
+
+<select id="queryPayBillReview" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap">
+select 
+c.id,
+nvl(bill.PAY_ID,book.pay_id) as PAY_ID,
+nvl(bill.BOOK_ID,book.BOOK_ID) as BOOK_ID,
+BILL.ACCT_CHECK_DAY,
+bill.ORDER_AMT,
+book.ORDER_AMOUNT AS ACCOUNT_AMT,
+decode(BILL.ACCT_CHECK_STATUS,null,'3',BILL.ACCT_CHECK_STATUS)		 as ACCT_CHECK_STATUS,
+BOOK.PAY_ACCOUNT_DATE as ACCOUNT_DATE,
+BILL.BANK_TYPE,
+tb.EXCEPTION_TYPE,
+TB.ADJUST_TYPE,
+c.REVIEW_STATUS,
+c.APPLICANT_NAME,
+c.APPLICANT,
+c.APPLY_TIME,
+c.APPLY_SUGG,
+c.AUDITER_NAME,
+c.REVIEW_TIME,
+c.CHECK_SUGG
+from TB_CLS_RECORD_CHECK c ,TB_CLS_EXCEPTION_ORDER tb 
+LEFT JOIN TB_CLS_PAY_BILL bill  on  tb.pay_id=bill.pay_id 
+LEFT JOIN TB_CLS_ACCT_BOOK book  on  tb.pay_id=book.pay_id
+where c.report_id=tb.id
+and c.REVIEW_STATUS='1'
+and c.BUSI_TYPE='04'
+and tb.CHECK_TYPE='1'
+<if test="endTime!=null">
+	and to_char(c.APPLY_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(c.APPLY_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+<if test="payId!=null and payId !=''">
+	and  instr(nvl(bill.PAY_ID,book.pay_id),#{payId})>0
+</if>
+order by c.APPLY_TIME desc,c.ID desc
+</select>
+
+<select id="queryPayBillReviewResult" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap">
+select 
+c.id,
+nvl(bill.PAY_ID,book.pay_id) as PAY_ID,
+nvl(bill.BOOK_ID,book.BOOK_ID) as BOOK_ID,
+BILL.ACCT_CHECK_DAY,
+bill.ORDER_AMT,
+book.ORDER_AMOUNT as ACCOUNT_AMT,
+decode(BILL.ACCT_CHECK_STATUS,null,'3',BILL.ACCT_CHECK_STATUS)		 as ACCT_CHECK_STATUS,
+BOOK.PAY_ACCOUNT_DATE as ACCOUNT_DATE,
+BILL.BANK_TYPE,
+tb.EXCEPTION_TYPE,
+TB.ADJUST_TYPE,
+c.REVIEW_STATUS,
+c.APPLICANT_NAME,
+c.APPLICANT,
+c.APPLY_TIME,
+c.APPLY_SUGG,
+c.AUDITER_NAME,
+c.REVIEW_TIME,
+c.CHECK_SUGG
+from TB_CLS_RECORD_CHECK c ,TB_CLS_EXCEPTION_ORDER tb 
+LEFT JOIN TB_CLS_PAY_BILL bill  on  tb.pay_id=bill.pay_id 
+LEFT JOIN TB_CLS_ACCT_BOOK book  on  tb.pay_id=book.pay_id
+where c.report_id=tb.id
+and c.REVIEW_STATUS!='1'
+and c.BUSI_TYPE='04'
+and tb.CHECK_TYPE='1'
+<if test="acctCheckStatus!=null and acctCheckStatus!=''">
+	and bill.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	<!-- and to_char(c.REVIEW_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd') -->
+    and to_char(c.REVIEW_TIME,'yyyyMMdd')<![CDATA[   <=  ]]>to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	<!-- and to_char(c.REVIEW_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd') -->
+    and to_char(c.REVIEW_TIME,'yyyyMMdd')<![CDATA[   >=  ]]>to_char(#{startTime},'yyyyMMdd')
+</if>
+<if test="payId!=null and payId !=''">
+	and  instr(nvl(bill.PAY_ID,book.pay_id),#{payId})>0
+</if>
+order by c.REVIEW_TIME desc,c.id desc
+</select>
+
+<select id="queryPayBillSumarry" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" 
+resultType="com.ylink.inetpay.common.core.dto.ReporHeadDto">
+select 
+(count(bill.id)+
+(
+select count(tb.id)  from TB_CLS_EXCEPTION_ORDER tb 
+where  tb.EXCEPTION_TYPE='03'
+<if test="endTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)) as allNum ,
+(nvl(sum(bill.ORDER_AMT),0)+
+(
+select nvl(sum(tb.CHECK_ORDER_MONEY),0)  from TB_CLS_EXCEPTION_ORDER tb 
+where  tb.EXCEPTION_TYPE='03'
+<if test="endTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+))
+ as allAmt,
+((select   count(bill.id)
+from TB_CLS_PAY_BILL bill left join TB_CLS_EXCEPTION_ORDER tb on tb.CHECK_BATCH=bill.ID and  tb.CHECK_TYPE='1'
+left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=tb.ID and  c.BUSI_TYPE='04'
+where 
+	 bill.ACCT_CHECK_STATUS='2'
+<if test="endTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)+
+(
+select count(tb.id)  from TB_CLS_EXCEPTION_ORDER tb 
+where  tb.EXCEPTION_TYPE='03' and tb.ADJUST_STATUS='3'
+<if test="endTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)
+) as succNum,
+((select   
+nvl(sum(bill.ORDER_AMT),0)
+from TB_CLS_PAY_BILL bill left join TB_CLS_EXCEPTION_ORDER tb on tb.CHECK_BATCH=bill.ID and  tb.CHECK_TYPE='1'
+left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=tb.ID and  c.BUSI_TYPE='04'
+where 
+	 bill.ACCT_CHECK_STATUS='2'
+<if test="endTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)+
+(
+select nvl(sum(tb.CHECK_ORDER_MONEY),0)   from TB_CLS_EXCEPTION_ORDER tb 
+where  tb.EXCEPTION_TYPE='03' and tb.ADJUST_STATUS='3'
+<if test="endTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)
+) as succAmt,
+((select   count(bill.id)
+from TB_CLS_PAY_BILL bill left join TB_CLS_EXCEPTION_ORDER tb on tb.CHECK_BATCH=bill.ID and  tb.CHECK_TYPE='1'
+left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=tb.ID and  c.BUSI_TYPE='04'
+where 
+	 bill.ACCT_CHECK_STATUS='3'
+<if test="endTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)+
+(
+select count(tb.id)   from TB_CLS_EXCEPTION_ORDER tb 
+where  tb.EXCEPTION_TYPE='03' and tb.ADJUST_STATUS='1'
+<if test="endTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)
+) as allDrNum,
+((select   
+nvl(sum(bill.ORDER_AMT),0)
+from TB_CLS_PAY_BILL bill left join TB_CLS_EXCEPTION_ORDER tb on tb.CHECK_BATCH=bill.ID and  tb.CHECK_TYPE='1'
+left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=tb.ID and  c.BUSI_TYPE='04'
+where 
+	 bill.ACCT_CHECK_STATUS='3'
+<if test="endTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)+
+(
+select  nvl(sum(tb.CHECK_ORDER_MONEY),0)   from TB_CLS_EXCEPTION_ORDER tb 
+where  tb.EXCEPTION_TYPE='03' and tb.ADJUST_STATUS='1'
+<if test="endTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(TB.CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+)
+) as allDrAmt
+ 
+from TB_CLS_PAY_BILL bill 
+where 1=1
+<if test="acctCheckStatus!=null and acctCheckStatus!=''">
+	and bill.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+GROUP BY null
+</select>
+
+
+
+<select id="queryById" parameterType="java.lang.String" resultMap="resultMap">
+select 
+c.id,
+nvl(bill.PAY_ID,book.pay_id) as PAY_ID,
+nvl(bill.BOOK_ID,book.BOOK_ID) as BOOK_ID,
+BILL.ACCT_CHECK_DAY,
+bill.ORDER_AMT,
+book.ORDER_AMOUNT as ACCOUNT_AMT,
+BILL.ACCT_CHECK_STATUS,
+BOOK.PAY_ACCOUNT_DATE as ACCOUNT_DATE,
+BILL.BANK_TYPE,
+tb.EXCEPTION_TYPE,
+TB.ADJUST_TYPE,
+c.REVIEW_STATUS,
+c.APPLICANT_NAME,
+c.APPLY_TIME,
+c.APPLY_SUGG,
+c.AUDITER_NAME,
+c.REVIEW_TIME,
+c.CHECK_SUGG
+from TB_CLS_RECORD_CHECK c ,TB_CLS_EXCEPTION_ORDER tb 
+LEFT JOIN TB_CLS_PAY_BILL bill  on  tb.pay_id=bill.pay_id 
+LEFT JOIN TB_CLS_ACCT_BOOK book  on  tb.pay_id=book.pay_id
+where c.report_id=tb.id
+and c.id=#{id,jdbcType=CHAR}
+</select>
+
+
+
+<select id="queryStation" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo"
+resultMap="station" >
+select 
+c.busi_type as busiType,
+count(c.id) as allCount,
+nvl(sum(c.order_amt),0) allAmt,
+(select count(b.id)  from TB_CLS_PAY_BILL b where   b.order_status='04' and c.busi_type=b.busi_type
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+ <if test="endTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')</if>
+ <if test="startTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>) as successCount,
+ 
+(select nvl(sum(order_amt),0)  from TB_CLS_PAY_BILL b where   b.order_status='04'  and c.busi_type=b.busi_type
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+<if test="endTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>) as successAmt,
+
+(select count(b.id)  from TB_CLS_PAY_BILL b where  b.order_status='05'  and c.busi_type=b.busi_type
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+<if test="endTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>) as failCount,
+
+(select nvl(sum(order_amt),0)  from TB_CLS_PAY_BILL b where b.order_status='05'  and c.busi_type=b.busi_type
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+<if test="endTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>) as failAmt,
+
+((select count(b.id)  from TB_CLS_PAY_BILL b where b.order_status='04' and c.busi_type=b.busi_type
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+<if test="endTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>)/(count(c.id)) )as rate
+
+from TB_CLS_PAY_BILL c
+where c.busi_type=#{busiType,jdbcType=CHAR}
+and c.order_status in ('04','05') 
+and c.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+<if test="endTime!=null">
+	and to_char(c.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(c.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+group by c.busi_type
+</select>
+ 
+ 
+ 
+ 
+ 
+ <select id="queryActiveUser" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo"
+resultMap="station">
+select 
+c.PAYER_CUST_ID as payerCustId,
+c.PAYER_CUST_NAME as payerCustName,
+c.busi_type as busiType,
+count(c.id) as allCount,
+nvl(sum(c.order_amt),0) allAmt,
+(select count(b.id)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='04' and c.PAYER_CUST_ID=b.PAYER_CUST_ID and c.PAYER_CUST_NAME=b.PAYER_CUST_NAME
+<if test="endTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+) as successCount,
+(select nvl(sum(order_amt),0)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='04' and c.PAYER_CUST_ID=b.PAYER_CUST_ID and c.PAYER_CUST_NAME=b.PAYER_CUST_NAME
+<if test="endTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+) as successAmt,
+(select count(b.id)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='05' and c.PAYER_CUST_ID=b.PAYER_CUST_ID and c.PAYER_CUST_NAME=b.PAYER_CUST_NAME
+<if test="endTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+) as failCount,
+(select nvl(sum(order_amt),0)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='05' and c.PAYER_CUST_ID=b.PAYER_CUST_ID and c.PAYER_CUST_NAME=b.PAYER_CUST_NAME
+<if test="endTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+) as failAmt,
+((select count(b.id)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='04' and c.PAYER_CUST_ID=b.PAYER_CUST_ID and c.PAYER_CUST_NAME=b.PAYER_CUST_NAME
+<if test="endTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+ and b.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+)/(count(c.id)) )as rate
+from TB_CLS_PAY_BILL c
+where c.order_status in ('04','05')
+ and c.trade_type in
+ <foreach  collection="tradeTypes" item="item" index="index"  open="("  separator=","  close=")"> 
+ 	#{item,jdbcType=CHAR}
+ </foreach>
+<if test="endTime!=null">
+	and to_char(c.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(c.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+<if test="payerCustId != null and payerCustId !=''">
+	and c.PAYER_CUST_ID=#{payerCustId,jdbcType=CHAR}
+</if>
+<if test="payerCustName != null and payerCustName != ''">
+	and c.PAYER_CUST_NAME=#{payerCustName,jdbcType=CHAR}
+</if>
+<if test="busiType !=null and busiType !=''">
+	and c.busi_type=#{busiType,jdbcType=CHAR}
+</if>
+group by c.PAYER_CUST_ID ,c.PAYER_CUST_NAME,c.busi_type
+ </select>
+ 
+ <select id="queryActiveMer" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo"
+resultMap="station">
+select 
+c.MER_CODE as merCode,
+(select mer_name from tb_cls_mer_sett where c.mer_code=mer_code and rownum=1) as merName,
+c.busi_type as busiType,
+count(c.id) as allCount,
+nvl(sum(c.order_amt),0) allAmt,
+(select count(b.id)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='04' and c.MER_CODE=b.MER_CODE  and b.TRADE_TYPE IN ('08','09','11','12')
+<if test="endTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>
+) as successCount,
+(select nvl(sum(b.order_amt),0)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='04' and c.MER_CODE=b.MER_CODE  and b.TRADE_TYPE IN ('08','09','11','12')
+<if test="endTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+(select count(b.id)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='05' and c.MER_CODE=b.MER_CODE  and b.TRADE_TYPE IN ('08','09','11','12')
+<if test="endTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>
+) as failCount,
+(select nvl(sum(b.order_amt),0)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='05' and c.MER_CODE=b.MER_CODE  and b.TRADE_TYPE IN ('08','09','11','12')
+<if test="endTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>
+) as failAmt,
+((select count(b.id)  from TB_CLS_PAY_BILL b where c.busi_type=b.busi_type and b.order_status='04' and c.MER_CODE=b.MER_CODE and b.TRADE_TYPE IN ('08','09','11','12')
+<if test="endTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and to_char(b.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')</if>
+)/(count(c.id)) )as rate
+from TB_CLS_PAY_BILL c
+where c.TRADE_TYPE IN ('08','09','11','12')
+and c.order_status in ('04','05')
+<if test="endTime!=null">
+	and to_char(c.COMPLETE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(c.COMPLETE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+<if test="merCode!=null and merCode!=''">
+	and c.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+<if test="merName!=null and merName!=''">
+	and instr(c.mer_name, #{merName}) > 0
+	<!-- and c.mer_name LIKE concat('%',concat(#{merName},'%')) -->
+</if>
+group by c.MER_CODE,c.busi_type
+order by MER_CODE DESC,busi_type DESC
+ </select>
+ <!-- 内部对账的导出的表头数据 -->
+ <select id="CheckInnerDetail" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap3">
+SELECT nvl(sum(temp.ACCOUNT_AMT),0) as succAllAmt,count(temp.ID) as succAllNum FROM (
+	SELECT bill.ACCOUNT_AMT,bill.ID FROM TB_CLS_PAY_BILL bill WHERE 1=1 
+	and bill.TRADE_TYPE not in ('15','16','17','18','19','20')
+	<if test="acctCheckStatus!=null and acctCheckStatus!=''">
+		and bill.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+	</if>
+	<if test="endTime!=null">
+		and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+	</if>
+	<if test="startTime!=null">
+		and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+	</if>
+	UNION
+	select 
+	TB.CHECK_ORDER_MONEY as ACCOUNT_AMT,TB.ID
+	from TB_CLS_EXCEPTION_ORDER tb left join TB_CLS_PAY_BILL bill on tb.PAY_ID=bill.PAY_ID and  tb.CHECK_TYPE='1'
+	where  tb.EXCEPTION_TYPE='03'
+	and tb.adjust_status='1'
+	<if test="endTime!=null">
+		and tb.CHECK_DAY&lt;=to_char(#{endTime},'yyyyMMdd')
+	</if>
+	<if test="startTime!=null">
+		and tb.CHECK_DAY&gt;=to_char(#{startTime},'yyyyMMdd')
+	</if>
+) temp
+</select>
+
+
+<select id="CheckInnerDetail2" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap3">
+select  nvl(sum(o.CHECK_ORDER_MONEY),0)  as succAllAmt,
+count(o.ID) as succAllNum  
+from  TB_CLS_EXCEPTION_ORDER o 
+where o.EXCEPTION_TYPE='03'
+<if test="endTime!=null">
+	and to_char(o.CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and to_char(o.CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+</if>
+</select>
+
+<select id="InnerDetailAdjust" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap3">
+	select sum(vie.ACCOUNT_AMT) as succAllAmt,count(vie.BOOK_ID) as succAllNum from 
+		(select
+		bill.BOOK_ID as BOOK_ID,
+		bill.ACCOUNT_AMT as ACCOUNT_AMT,
+		bill.ACCT_CHECK_STATUS AS ACCT_CHECK_STATUS
+		from TB_CLS_PAY_BILL bill left join TB_CLS_EXCEPTION_ORDER tb on tb.PAY_ID=bill.PAY_ID 
+		left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=tb.ID and c.REVIEW_STATUS!='2' and c.BUSI_TYPE='04' 
+		where   c.id is null
+		 and tb.CHECK_TYPE='1'
+		<if test="acctCheckStatus!=null and acctCheckStatus!=''">
+			and bill.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+		</if>
+		<if test="endTime!=null">
+			and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+		</if>
+		<if test="startTime!=null">
+			and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+		</if>
+		UNION 
+		SELECT 
+		tb.CHECK_ORDER_ID    as BOOK_ID,
+		tb.CHECK_ORDER_MONEY as ACCOUNT_AMT,
+		'3'					 as ACCT_CHECK_STATUS
+		from TB_CLS_EXCEPTION_ORDER tb  left join TB_CLS_PAY_BILL bill  on tb.CHECK_BATCH=bill.ID 
+		left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=tb.ID and c.REVIEW_STATUS!='2' and c.BUSI_TYPE='04' 
+		where c.id is null
+		and  bill.id is null 
+		and  tb.CHECK_TYPE='1' 
+		<if test="endTime!=null">
+			and to_char(tb.CREATE_TIME,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+		</if>
+		<if test="startTime!=null">
+			and to_char(tb.CREATE_TIME,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+		</if>
+		and tb.ADJUST_STATUS!='3') vie
+		<where>
+			<if test="acctCheckStatus!=null and acctCheckStatus!=''">
+				and vie.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+			</if>
+		</where>
+</select>
+
+<select id="InnerDetailReview" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap3">
+	select sum(bill.ACCOUNT_AMT) as succAllAmt,count(bill.ID) as succAllNum
+	from TB_CLS_PAY_BILL bill left join TB_CLS_EXCEPTION_ORDER tb on tb.CHECK_BATCH=bill.ID and  tb.CHECK_TYPE='1'
+	left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=TB.ID and  c.BUSI_TYPE='04'
+	where c.REVIEW_STATUS='1'
+	<if test="acctCheckStatus!=null and acctCheckStatus!=''">
+		and bill.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+	</if>
+	<if test="endTime!=null">
+		and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+	</if>
+	<if test="startTime!=null">
+		and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+	</if>
+</select>
+
+<select id="CheckInnerDetailReviewResult" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBillVo" resultMap="resultMap3">
+		select sum(bill.ACCOUNT_AMT) as succAllAmt,count(bill.ID) as succAllNum
+		from TB_CLS_PAY_BILL bill left join TB_CLS_EXCEPTION_ORDER tb on tb.CHECK_BATCH=bill.ID and  tb.CHECK_TYPE='1'
+		left join TB_CLS_RECORD_CHECK c on c.REPORT_ID=tb.ID and  c.BUSI_TYPE='04'
+		where (c.REVIEW_STATUS='2' or c.REVIEW_STATUS='3' )
+		<if test="acctCheckStatus!=null and acctCheckStatus!=''">
+			and bill.ACCT_CHECK_STATUS=#{acctCheckStatus,jdbcType=CHAR}
+		</if>
+		<if test="endTime!=null">
+			and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&lt;=to_char(#{endTime},'yyyyMMdd')
+		</if>
+		<if test="startTime!=null">
+			and to_char(bill.ACCT_CHECK_DAY,'yyyyMMdd')&gt;=to_char(#{startTime},'yyyyMMdd')
+		</if>
+</select>
+<select id="queryOrderByMerchantAndDate" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBill" resultMap="clsPayBill">
+select * from TB_CLS_PAY_BILL bill
+where bill.MER_CODE=#{merCode,jdbcType=CHAR}
+<if test="accountDate!=null and accountDate!=''">
+and bill.CLEAR_DATE=#{accountDate,jdbcType=CHAR}
+</if>
+<if test="endAccountDate!=null and endAccountDate!=''">
+and bill.CLEAR_DATE <![CDATA[   <=  ]]> #{endAccountDate,jdbcType=CHAR}
+</if>
+<if test="startAccountDate!=null and startAccountDate!=''">
+and bill.CLEAR_DATE <![CDATA[   >=  ]]> #{startAccountDate,jdbcType=CHAR}
+</if>
+and ACCT_CHECK_STATUS='2'
+and (TRADE_TYPE='09' or TRADE_TYPE='08' or TRADE_TYPE='11' or TRADE_TYPE='12')
+order by CLEAR_DATE desc,CREATE_TIME desc
+</select>
+</mapper>

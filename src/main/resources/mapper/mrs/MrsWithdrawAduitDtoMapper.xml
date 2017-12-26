@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsWithdrawAduitDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsWithdrawAduitDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="BANK_ID" property="bankId" jdbcType="VARCHAR" />
+    <result column="BANK_TYPE" property="bankType" jdbcType="VARCHAR" />
+    <result column="CERT_NO" property="certNo" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+    <result column="ACCT_TYPE" property="acctType" jdbcType="CHAR" />
+    <result column="ACCT_NO" property="acctNo" jdbcType="VARCHAR" />
+    <result column="ADUIT_STATUS" property="aduitStatus" jdbcType="CHAR" />
+    <result column="WITHDRAW_STATUS" property="withdrawStatus" jdbcType="CHAR" />
+    <result column="ERROR_CODE" property="errorCode" jdbcType="VARCHAR" />
+    <result column="ERROR_REMARK" property="errorRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="WITHDRAW_ID" property="withdrawId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ExtBaseResultMap" extends="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsWithdrawAduitDto" >
+  	<result column="CREATE_USER_NO" property="createUserNo" jdbcType="VARCHAR" />
+  	<result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="queryAllData" resultMap="ExtBaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsWithdrawAduitDto">
+		select
+			a.ID, a.CUST_ID, a.BANK_ID, a.BANK_TYPE, a.CERT_NO, a.AMOUNT, a.ACCT_TYPE, 
+			a.ACCT_NO, a.ADUIT_STATUS, a.WITHDRAW_STATUS, a.ERROR_CODE, a.ERROR_REMARK, 
+			a.CREATE_TIME,a.BANK_NAME,a.WITHDRAW_ID,
+			b.CREATE_USER_NO,b.CREATE_USER_NAME
+		from TB_MRS_WITHDRAW_ADUIT a 
+		left join TB_MRS_PORTAL_REVIEW_ADUIT b on a.id = b.busi_no 
+		where 1=1
+		<if test="certNo != null and certNo != ''">
+			and instr(a.CERT_NO,#{certNo,jdbcType=VARCHAR})>0 
+		</if>
+		<if test="aduitStatus != null and aduitStatus != ''">
+			and a.ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR}
+		</if>
+		<if test="withdrawStatus != null and withdrawStatus != ''">
+			and a.WITHDRAW_STATUS = #{withdrawStatus,jdbcType=CHAR}
+		</if>
+		<if test="custId != null and custId != ''">
+			and instr(a.CUST_ID,#{custId,jdbcType=VARCHAR})>0
+		</if>
+		<if test="acctNo != null and acctNo != ''">
+			and instr(a.ACCT_NO,#{acctNo,jdbcType=VARCHAR})>0 
+		</if>
+		<if test="amount != null and amount != ''">
+			and a.AMOUNT<![CDATA[   =  ]]>#{amount}
+		</if>
+		<if test="startAmt != null">
+			and a.AMOUNT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null">
+			and a.AMOUNT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and to_char(a.CREATE_TIME,'yyyyMMdd')<![CDATA[   >=  ]]>to_char(#{startTime},'yyyyMMdd')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and to_char(a.CREATE_TIME,'yyyyMMdd')<![CDATA[   <=  ]]>to_char(#{endTime},'yyyyMMdd')
+		</if>
+		order by a.CREATE_TIME DESC
+	</select>
+  
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, BANK_ID, BANK_TYPE, CERT_NO, AMOUNT, ACCT_TYPE, ACCT_NO, ADUIT_STATUS, 
+    WITHDRAW_STATUS, ERROR_CODE, ERROR_REMARK, CREATE_TIME,BANK_NAME,WITHDRAW_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_WITHDRAW_ADUIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_WITHDRAW_ADUIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsWithdrawAduitDto" >
+    insert into TB_MRS_WITHDRAW_ADUIT (ID, CUST_ID, BANK_ID, 
+      BANK_TYPE, CERT_NO, AMOUNT, 
+      ACCT_TYPE, ACCT_NO, ADUIT_STATUS, 
+      WITHDRAW_STATUS, ERROR_CODE, ERROR_REMARK, 
+      CREATE_TIME,BANK_NAME)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{bankId,jdbcType=VARCHAR}, 
+      #{bankType,jdbcType=VARCHAR}, #{certNo,jdbcType=VARCHAR}, #{amount,jdbcType=VARCHAR}, 
+      #{acctType,jdbcType=CHAR}, #{acctNo,jdbcType=VARCHAR}, #{aduitStatus,jdbcType=CHAR}, 
+      #{withdrawStatus,jdbcType=CHAR}, #{errorCode,jdbcType=VARCHAR}, #{errorRemark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{bankName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsWithdrawAduitDto" >
+    insert into TB_MRS_WITHDRAW_ADUIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="bankId != null" >
+        BANK_ID,
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE,
+      </if>
+      <if test="certNo != null" >
+        CERT_NO,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="acctType != null" >
+        ACCT_TYPE,
+      </if>
+      <if test="acctNo != null" >
+        ACCT_NO,
+      </if>
+      <if test="aduitStatus != null" >
+        ADUIT_STATUS,
+      </if>
+      <if test="withdrawStatus != null" >
+        WITHDRAW_STATUS,
+      </if>
+      <if test="errorCode != null" >
+        ERROR_CODE,
+      </if>
+      <if test="errorRemark != null" >
+        ERROR_REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankId != null" >
+        #{bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="acctType != null" >
+        #{acctType,jdbcType=CHAR},
+      </if>
+      <if test="acctNo != null" >
+        #{acctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitStatus != null" >
+        #{aduitStatus,jdbcType=CHAR},
+      </if>
+      <if test="withdrawStatus != null" >
+        #{withdrawStatus,jdbcType=CHAR},
+      </if>
+      <if test="errorCode != null" >
+        #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRemark != null" >
+        #{errorRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsWithdrawAduitDto" >
+    update TB_MRS_WITHDRAW_ADUIT
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankId != null" >
+        BANK_ID = #{bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE = #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+        CERT_NO = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="acctType != null" >
+        ACCT_TYPE = #{acctType,jdbcType=CHAR},
+      </if>
+      <if test="acctNo != null" >
+        ACCT_NO = #{acctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitStatus != null" >
+        ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR},
+      </if>
+      <if test="withdrawStatus != null" >
+        WITHDRAW_STATUS = #{withdrawStatus,jdbcType=CHAR},
+      </if>
+      <if test="errorCode != null" >
+        ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRemark != null" >
+        ERROR_REMARK = #{errorRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="withdrawId != null" >
+        WITHDRAW_ID = #{withdrawId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsWithdrawAduitDto" >
+    update TB_MRS_WITHDRAW_ADUIT
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      BANK_ID = #{bankId,jdbcType=VARCHAR},
+      BANK_TYPE = #{bankType,jdbcType=VARCHAR},
+      CERT_NO = #{certNo,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=VARCHAR},
+      ACCT_TYPE = #{acctType,jdbcType=CHAR},
+      ACCT_NO = #{acctNo,jdbcType=VARCHAR},
+      ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR},
+      WITHDRAW_STATUS = #{withdrawStatus,jdbcType=CHAR},
+      ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      ERROR_REMARK = #{errorRemark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      WITHDRAW_ID = #{withdrawId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+     <select id="getMrsAuditOrderNosVal" resultType="String">
+	select MRS_AUDIT_ORDER_SEQ.nextval from dual
+  </select>
+</mapper>

@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayWithdrawDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayWithdrawDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="ACT_BUSI_TYPE" property="actBusiType" jdbcType="VARCHAR" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="FEE_REMARK" property="feeRemark" jdbcType="VARCHAR" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+    <result column="CHANNEL_NAME" property="channelName" jdbcType="VARCHAR" />
+    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+    <result column="CURRENOY" property="currenoy" jdbcType="CHAR" />
+    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NO" property="accountNo" jdbcType="VARCHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="PUB_PRIV" property="pubPriv" jdbcType="CHAR" />
+    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+    <result column="CITY" property="city" jdbcType="VARCHAR" />
+    <result column="CENTRAL_BK" property="centralBk" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_CUST_NAME" property="payeeBankCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_BANK_CARD_NO" property="payeeBankCardNo" jdbcType="VARCHAR" />
+    <result column="PAYER_BANK_TYPE" property="payerBankType" jdbcType="CHAR" />
+    <result column="PAYER_BANK_CUST_NAME" property="payerBankCustName" jdbcType="VARCHAR" />
+    <result column="PAYER_BANK_CARD_NO" property="payerBankCardNo" jdbcType="VARCHAR" />
+    <result column="PAYER_CENTRAL_BK" property="payerCentralBk" jdbcType="VARCHAR" />
+    <result column="SAME_BANK" property="sameBank" jdbcType="VARCHAR" />
+    <result column="PAYER_BANK_CUST_ID" property="payerBankCustId" jdbcType="VARCHAR" />
+  </resultMap>
+   <resultMap id="station"  type="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo" >
+		<result column="busiType" property="busiType" jdbcType="CHAR" />
+		<result column="tradeType" property="tradeType" jdbcType="CHAR" />
+		<result column="allCount" property="allCount" jdbcType="CHAR" />
+		<result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+		<result column="successCount" property="succCount" jdbcType="INTEGER" />
+		<result column="successAmt" property="succAmt" jdbcType="DECIMAL" />
+		<result column="failCount" property="failCount" jdbcType="INTEGER" />
+		<result column="failAmt" property="failAmt" jdbcType="DECIMAL" />
+		<result column="rate" property="rate" jdbcType="DOUBLE" />
+		<result column="payerCustId" property="payerCustId" jdbcType="CHAR" />
+		<result column="payerCustName" property="payerCustName" jdbcType="CHAR" />
+		<result column="merCode" property="merCode" jdbcType="CHAR" />
+		<result column="merName" property="merName" jdbcType="CHAR" />
+		<result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+        ID, BUSI_ID, CUST_ID, CUST_NAME, ORDER_AMT,ACT_BUSI_TYPE, FEE, FEE_REMARK, ORDER_STATUS, CHANNEL_NAME,
+        TRADE_NAME, BANK_TYPE, REMARK, ACCOUNT_DATE, CREATE_TIME, COMPLETE_TIME, DEAL_STATUS,
+        FAIL_REASON, CURRENOY, MER_ORDER_ID, ACCOUNT_NO, CHANNEL_CODE, BANK_NAME, PUB_PRIV,
+        PROVINCE, CITY, CENTRAL_BK, PAYEE_BANK_CUST_NAME, PAYEE_BANK_CARD_NO, PAYER_BANK_TYPE,
+        PAYER_BANK_CUST_NAME, PAYER_BANK_CARD_NO, PAYER_CENTRAL_BK, SAME_BANK,PAYER_BANK_CUST_ID
+    </sql>
+   <resultMap id="ReportResultMap" type="com.ylink.inetpay.common.core.dto.ReporHeadDto" >
+ 	  <result column="allNum" property="allNum" jdbcType="DECIMAL" />
+ 	  <result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+  </resultMap>
+   <select id="reportSumData" resultMap="ReportResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayWithdrawDto" >
+   		select  count(1) as allNum, nvl(sum(order_amt),0) as allAmt from TB_PAY_WITHDRAW 
+		where 1=1
+		<if test="busiId != null and busiId != ''">
+			and instr(BUSI_ID,#{busiId,jdbcType=CHAR})>0 
+		</if>
+		<if test="orderStatus != null and orderStatus != ''">
+			and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+		</if>
+		<if test="custId != null and custId != ''">
+			and CUST_ID = #{custId,jdbcType=VARCHAR}
+		</if>
+		<if test="custName != null and custName != ''">
+			and	instr(CUST_NAME, #{custName}) > 0
+		</if>
+		<if test="orderAmt != null and orderAmt != ''">
+			and ORDER_AMT<![CDATA[   =  ]]>#{orderAmt}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and ORDER_AMT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and ORDER_AMT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+		</if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_WITHDRAW
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByBusiId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_WITHDRAW
+		where BUSI_ID = #{busiId,jdbcType=CHAR}
+	</select>
+	<select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayWithdrawDto">
+		select
+		 <include refid="Base_Column_List" />
+		from TB_PAY_WITHDRAW
+		where 1=1
+		<if test="orderStatus != null and orderStatus != ''">
+			and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+		</if>
+		<if test="custId != null and custId != ''">
+			and CUST_ID = #{custId,jdbcType=VARCHAR}
+		</if>
+		<if test="busiId != null and busiId != ''">
+			and instr(BUSI_ID,#{busiId,jdbcType=CHAR})>0 
+		</if>
+		<if test="custName != null and custName != ''">
+			and	instr(CUST_NAME, #{custName}) > 0
+		</if>
+		<if test="orderAmt != null and orderAmt != ''">
+			and ORDER_AMT<![CDATA[   =  ]]>#{orderAmt}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and ORDER_AMT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and ORDER_AMT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+		<if test="accountDate != null and accountDate != ''">
+			and ACCOUNT_DATE = #{accountDate,jdbcType=CHAR}
+		</if>
+        <if test="dealStatus != null and dealStatus != ''">
+            and DEAL_STATUS = #{dealStatus,jdbcType=CHAR}
+        </if>
+		order by CREATE_TIME DESC
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_WITHDRAW
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayWithdrawDto" >
+    insert into tb_pay_withdraw (ID, BUSI_ID, CUST_ID,
+    CUST_NAME, ORDER_AMT, FEE,
+    FEE_REMARK, ORDER_STATUS, CHANNEL_NAME,
+    TRADE_NAME, BANK_TYPE, REMARK,
+    ACCOUNT_DATE, CREATE_TIME, COMPLETE_TIME,
+    DEAL_STATUS, FAIL_REASON, CURRENOY,
+    MER_ORDER_ID, ACCOUNT_NO, CHANNEL_CODE,
+    BANK_NAME, PUB_PRIV, PROVINCE,
+    CITY, CENTRAL_BK, PAYEE_BANK_CUST_NAME,
+    PAYEE_BANK_CARD_NO, PAYER_BANK_TYPE, PAYER_BANK_CUST_NAME,
+    PAYER_BANK_CARD_NO, PAYER_CENTRAL_BK, SAME_BANK,PAYER_BANK_CUST_ID
+    )
+    values (#{id,jdbcType=VARCHAR}, #{busiId,jdbcType=CHAR}, #{custId,jdbcType=VARCHAR},
+    #{custName,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL}, #{fee,jdbcType=DECIMAL},
+    #{feeRemark,jdbcType=VARCHAR}, #{orderStatus,jdbcType=CHAR}, #{channelName,jdbcType=VARCHAR},
+    #{tradeName,jdbcType=VARCHAR}, #{bankType,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR},
+    #{accountDate,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP},
+    #{dealStatus,jdbcType=CHAR}, #{failReason,jdbcType=VARCHAR}, #{currenoy,jdbcType=CHAR},
+    #{merOrderId,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR},
+    #{bankName,jdbcType=VARCHAR}, #{pubPriv,jdbcType=CHAR}, #{province,jdbcType=VARCHAR},
+    #{city,jdbcType=VARCHAR}, #{centralBk,jdbcType=VARCHAR}, #{payeeBankCustName,jdbcType=VARCHAR},
+    #{payeeBankCardNo,jdbcType=VARCHAR}, #{payerBankType,jdbcType=CHAR}, #{payerBankCustName,jdbcType=VARCHAR},
+    #{payerBankCardNo,jdbcType=VARCHAR}, #{payerCentralBk,jdbcType=VARCHAR}, #{sameBank,jdbcType=VARCHAR}, #{payerBankCustId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayWithdrawDto" >
+    insert into tb_pay_withdraw
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+            ID,
+        </if>
+        <if test="busiId != null" >
+            BUSI_ID,
+        </if>
+        <if test="custId != null" >
+            CUST_ID,
+        </if>
+        <if test="custName != null" >
+            CUST_NAME,
+        </if>
+        <if test="orderAmt != null" >
+            ORDER_AMT,
+        </if>
+        <if test="fee != null" >
+            FEE,
+        </if>
+        <if test="feeRemark != null" >
+            FEE_REMARK,
+        </if>
+        <if test="orderStatus != null" >
+            ORDER_STATUS,
+        </if>
+        <if test="channelName != null" >
+            CHANNEL_NAME,
+        </if>
+        <if test="tradeName != null" >
+            TRADE_NAME,
+        </if>
+        <if test="bankType != null" >
+            BANK_TYPE,
+        </if>
+        <if test="remark != null" >
+            REMARK,
+        </if>
+        <if test="accountDate != null" >
+            ACCOUNT_DATE,
+        </if>
+        <if test="createTime != null" >
+            CREATE_TIME,
+        </if>
+        <if test="completeTime != null" >
+            COMPLETE_TIME,
+        </if>
+        <if test="dealStatus != null" >
+            DEAL_STATUS,
+        </if>
+        <if test="failReason != null" >
+            FAIL_REASON,
+        </if>
+        <if test="currenoy != null" >
+            CURRENOY,
+        </if>
+        <if test="merOrderId != null" >
+            MER_ORDER_ID,
+        </if>
+        <if test="accountNo != null" >
+            ACCOUNT_NO,
+        </if>
+        <if test="channelCode != null" >
+            CHANNEL_CODE,
+        </if>
+        <if test="bankName != null" >
+            BANK_NAME,
+        </if>
+        <if test="pubPriv != null" >
+            PUB_PRIV,
+        </if>
+        <if test="province != null" >
+            PROVINCE,
+        </if>
+        <if test="city != null" >
+            CITY,
+        </if>
+        <if test="centralBk != null" >
+            CENTRAL_BK,
+        </if>
+        <if test="payeeBankCustName != null" >
+            PAYEE_BANK_CUST_NAME,
+        </if>
+        <if test="payeeBankCardNo != null" >
+            PAYEE_BANK_CARD_NO,
+        </if>
+        <if test="payerBankType != null" >
+            PAYER_BANK_TYPE,
+        </if>
+        <if test="payerBankCustName != null" >
+            PAYER_BANK_CUST_NAME,
+        </if>
+        <if test="payerBankCardNo != null" >
+            PAYER_BANK_CARD_NO,
+        </if>
+        <if test="payerCentralBk != null" >
+            PAYER_CENTRAL_BK,
+        </if>
+        <if test="sameBank != null" >
+            SAME_BANK,
+        </if>
+        <if test="payerBankCustId != null" >
+            PAYER_BANK_CUST_ID,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+            #{id,jdbcType=VARCHAR},
+        </if>
+        <if test="busiId != null" >
+            #{busiId,jdbcType=CHAR},
+        </if>
+        <if test="custId != null" >
+            #{custId,jdbcType=VARCHAR},
+        </if>
+        <if test="custName != null" >
+            #{custName,jdbcType=VARCHAR},
+        </if>
+        <if test="orderAmt != null" >
+            #{orderAmt,jdbcType=DECIMAL},
+        </if>
+        <if test="fee != null" >
+            #{fee,jdbcType=DECIMAL},
+        </if>
+        <if test="feeRemark != null" >
+            #{feeRemark,jdbcType=VARCHAR},
+        </if>
+        <if test="orderStatus != null" >
+            #{orderStatus,jdbcType=CHAR},
+        </if>
+        <if test="channelName != null" >
+            #{channelName,jdbcType=VARCHAR},
+        </if>
+        <if test="tradeName != null" >
+            #{tradeName,jdbcType=VARCHAR},
+        </if>
+        <if test="bankType != null" >
+            #{bankType,jdbcType=CHAR},
+        </if>
+        <if test="remark != null" >
+            #{remark,jdbcType=VARCHAR},
+        </if>
+        <if test="accountDate != null" >
+            #{accountDate,jdbcType=CHAR},
+        </if>
+        <if test="createTime != null" >
+            #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="completeTime != null" >
+            #{completeTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="dealStatus != null" >
+            #{dealStatus,jdbcType=CHAR},
+        </if>
+        <if test="failReason != null" >
+            #{failReason,jdbcType=VARCHAR},
+        </if>
+        <if test="currenoy != null" >
+            #{currenoy,jdbcType=CHAR},
+        </if>
+        <if test="merOrderId != null" >
+            #{merOrderId,jdbcType=VARCHAR},
+        </if>
+        <if test="accountNo != null" >
+            #{accountNo,jdbcType=VARCHAR},
+        </if>
+        <if test="channelCode != null" >
+            #{channelCode,jdbcType=VARCHAR},
+        </if>
+        <if test="bankName != null" >
+            #{bankName,jdbcType=VARCHAR},
+        </if>
+        <if test="pubPriv != null" >
+            #{pubPriv,jdbcType=CHAR},
+        </if>
+        <if test="province != null" >
+            #{province,jdbcType=VARCHAR},
+        </if>
+        <if test="city != null" >
+            #{city,jdbcType=VARCHAR},
+        </if>
+        <if test="centralBk != null" >
+            #{centralBk,jdbcType=VARCHAR},
+        </if>
+        <if test="payeeBankCustName != null" >
+            #{payeeBankCustName,jdbcType=VARCHAR},
+        </if>
+        <if test="payeeBankCardNo != null" >
+            #{payeeBankCardNo,jdbcType=VARCHAR},
+        </if>
+        <if test="payerBankType != null" >
+            #{payerBankType,jdbcType=CHAR},
+        </if>
+        <if test="payerBankCustName != null" >
+            #{payerBankCustName,jdbcType=VARCHAR},
+        </if>
+        <if test="payerBankCardNo != null" >
+            #{payerBankCardNo,jdbcType=VARCHAR},
+        </if>
+        <if test="payerCentralBk != null" >
+            #{payerCentralBk,jdbcType=VARCHAR},
+        </if>
+        <if test="sameBank != null" >
+            #{sameBank,jdbcType=VARCHAR},
+        </if>
+        <if test="payerBankCustId != null" >
+            #{payerBankCustId,jdbcType=VARCHAR},
+        </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayWithdrawDto" >
+    update tb_pay_withdraw
+       <set >
+        <if test="busiId != null" >
+            BUSI_ID = #{busiId,jdbcType=CHAR},
+        </if>
+        <if test="custId != null" >
+            CUST_ID = #{custId,jdbcType=VARCHAR},
+        </if>
+        <if test="custName != null" >
+            CUST_NAME = #{custName,jdbcType=VARCHAR},
+        </if>
+        <if test="orderAmt != null" >
+            ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+        </if>
+        <if test="fee != null" >
+            FEE = #{fee,jdbcType=DECIMAL},
+        </if>
+        <if test="feeRemark != null" >
+            FEE_REMARK = #{feeRemark,jdbcType=VARCHAR},
+        </if>
+        <if test="orderStatus != null" >
+            ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+        </if>
+        <if test="channelName != null" >
+            CHANNEL_NAME = #{channelName,jdbcType=VARCHAR},
+        </if>
+        <if test="tradeName != null" >
+            TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+        </if>
+        <if test="bankType != null" >
+            BANK_TYPE = #{bankType,jdbcType=CHAR},
+        </if>
+        <if test="remark != null" >
+            REMARK = #{remark,jdbcType=VARCHAR},
+        </if>
+        <if test="accountDate != null" >
+            ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+        </if>
+        <if test="createTime != null" >
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="completeTime != null" >
+            COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="dealStatus != null" >
+            DEAL_STATUS = #{dealStatus,jdbcType=CHAR},
+        </if>
+        <if test="failReason != null" >
+            FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+        </if>
+        <if test="currenoy != null" >
+            CURRENOY = #{currenoy,jdbcType=CHAR},
+        </if>
+        <if test="merOrderId != null" >
+            MER_ORDER_ID = #{merOrderId,jdbcType=VARCHAR},
+        </if>
+        <if test="accountNo != null" >
+            ACCOUNT_NO = #{accountNo,jdbcType=VARCHAR},
+        </if>
+        <if test="channelCode != null" >
+            CHANNEL_CODE = #{channelCode,jdbcType=VARCHAR},
+        </if>
+        <if test="bankName != null" >
+            BANK_NAME = #{bankName,jdbcType=VARCHAR},
+        </if>
+        <if test="pubPriv != null" >
+            PUB_PRIV = #{pubPriv,jdbcType=CHAR},
+        </if>
+        <if test="province != null" >
+            PROVINCE = #{province,jdbcType=VARCHAR},
+        </if>
+        <if test="city != null" >
+            CITY = #{city,jdbcType=VARCHAR},
+        </if>
+        <if test="centralBk != null" >
+            CENTRAL_BK = #{centralBk,jdbcType=VARCHAR},
+        </if>
+        <if test="payeeBankCustName != null" >
+            PAYEE_BANK_CUST_NAME = #{payeeBankCustName,jdbcType=VARCHAR},
+        </if>
+        <if test="payeeBankCardNo != null" >
+            PAYEE_BANK_CARD_NO = #{payeeBankCardNo,jdbcType=VARCHAR},
+        </if>
+        <if test="payerBankType != null" >
+            PAYER_BANK_TYPE = #{payerBankType,jdbcType=CHAR},
+        </if>
+        <if test="payerBankCustName != null" >
+            PAYER_BANK_CUST_NAME = #{payerBankCustName,jdbcType=VARCHAR},
+        </if>
+        <if test="payerBankCardNo != null" >
+            PAYER_BANK_CARD_NO = #{payerBankCardNo,jdbcType=VARCHAR},
+        </if>
+        <if test="payerCentralBk != null" >
+            PAYER_CENTRAL_BK = #{payerCentralBk,jdbcType=VARCHAR},
+        </if>
+        <if test="sameBank != null" >
+            SAME_BANK = #{sameBank,jdbcType=VARCHAR},
+        </if>
+        <if test="payerBankCustId != null" >
+            PAYER_BANK_CUST_ID = #{payerBankCustId,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayWithdrawDto" >
+    update tb_pay_withdraw
+        set BUSI_ID = #{busiId,jdbcType=CHAR},
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+        ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+        FEE = #{fee,jdbcType=DECIMAL},
+        FEE_REMARK = #{feeRemark,jdbcType=VARCHAR},
+        ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+        CHANNEL_NAME = #{channelName,jdbcType=VARCHAR},
+        TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+        BANK_TYPE = #{bankType,jdbcType=CHAR},
+        REMARK = #{remark,jdbcType=VARCHAR},
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+        DEAL_STATUS = #{dealStatus,jdbcType=CHAR},
+        FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+        CURRENOY = #{currenoy,jdbcType=CHAR},
+        MER_ORDER_ID = #{merOrderId,jdbcType=VARCHAR},
+        ACCOUNT_NO = #{accountNo,jdbcType=VARCHAR},
+        CHANNEL_CODE = #{channelCode,jdbcType=VARCHAR},
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+        PUB_PRIV = #{pubPriv,jdbcType=CHAR},
+        PROVINCE = #{province,jdbcType=VARCHAR},
+        CITY = #{city,jdbcType=VARCHAR},
+        CENTRAL_BK = #{centralBk,jdbcType=VARCHAR},
+        PAYEE_BANK_CUST_NAME = #{payeeBankCustName,jdbcType=VARCHAR},
+        PAYEE_BANK_CARD_NO = #{payeeBankCardNo,jdbcType=VARCHAR},
+        PAYER_BANK_TYPE = #{payerBankType,jdbcType=CHAR},
+        PAYER_BANK_CUST_NAME = #{payerBankCustName,jdbcType=VARCHAR},
+        PAYER_BANK_CARD_NO = #{payerBankCardNo,jdbcType=VARCHAR},
+        PAYER_CENTRAL_BK = #{payerCentralBk,jdbcType=VARCHAR},
+        SAME_BANK = #{sameBank,jdbcType=VARCHAR},
+        PAYER_BANK_CUST_ID = #{payerBankCustId,jdbcType=VARCHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+<select id="queryWithdrawStation"  resultMap="station" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo">
+SELECT 
+b.PAYER_CUST_ID as payerCustId,
+b.PAYER_CUST_NAME as payerCustName,
+b.busi_type as busiType,
+(count(b.id)) as allCount,
+nvl(sum(a.order_amt),0) allAmt,
+
+(select count(d.id) FROM TB_PAY_WITHDRAW c,TB_PAY_BOOK d where  d.TRADE_TYPE='03' and c.ORDER_STATUS='04' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_WITHDRAW c,TB_PAY_BOOK d where c.BUSI_ID=d.BUSI_ID and d.TRADE_TYPE='03' and c.ORDER_STATUS='04' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+
+(select count(d.id) from TB_PAY_WITHDRAW c,TB_PAY_BOOK d where  d.TRADE_TYPE='03' and c.ORDER_STATUS='05' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_WITHDRAW c,TB_PAY_BOOK d where c.BUSI_ID=d.BUSI_ID and d.TRADE_TYPE='03' and c.ORDER_STATUS='05' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt,
+
+((select count(d.id) from  TB_PAY_WITHDRAW c,TB_PAY_BOOK d where  d.TRADE_TYPE='03' and c.ORDER_STATUS='04' and d.PAYER_CUST_ID=b.PAYER_CUST_ID and d.PAYER_CUST_NAME=b.PAYER_CUST_NAME and  d.busi_type=b.busi_type 
+<if test="endTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(d.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+)
+/
+decode(count(b.id),0,1,count(b.id))) as rate
+
+FROM TB_PAY_WITHDRAW a,TB_PAY_BOOK b
+where a.BUSI_ID=b.BUSI_ID
+and b.TRADE_TYPE='03'
+<if test="endTime!=null"> and date_format(b.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(b.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="payerCustId != null and payerCustId !=''"> and b.PAYER_CUST_ID=#{payerCustId,jdbcType=CHAR} </if>
+<if test="payerCustName != null and payerCustName != ''"> and b.PAYER_CUST_NAME=#{payerCustName,jdbcType=CHAR} </if>
+<if test="busiType !=null and busiType !=''"> and b.busi_type=#{busiType,jdbcType=CHAR} </if>
+group by b.PAYER_CUST_ID ,b.PAYER_CUST_NAME,b.busi_type
+  </select> 
+
+  <update id="updateDealStatusFromWaitToProcessing" parameterType="java.lang.String" >
+    update TB_PAY_WITHDRAW
+    set DEAL_STATUS = '2'
+    where ID = #{id,jdbcType=VARCHAR} and (DEAL_STATUS = '1' or DEAL_STATUS is null)
+  </update>
+  <select id="listPageWithOrderStatusAndAccountDate" resultMap="BaseResultMap">
+  	<![CDATA[
+  		select * from TB_PAY_WITHDRAW where ACCOUNT_DATE <= #{accountDate,jdbcType=CHAR} 
+  		and ORDER_STATUS = #{orderStatus,jdbcType=CHAR} and (DEAL_STATUS = '1' or DEAL_STATUS is null)
+  	]]>
+  </select>
+  <select id="groupByAccountDate" resultType="java.lang.String">
+  	<![CDATA[
+  		select ACCOUNT_DATE from TB_PAY_WITHDRAW where  ORDER_STATUS = #{orderStatus,jdbcType=CHAR} and (DEAL_STATUS = '1' or DEAL_STATUS is null) and ACCOUNT_DATE <= #{accountDate,jdbcType=CHAR} group by ACCOUNT_DATE
+  	]]>
+  </select>
+  <update id="updateOrderStatusByBusiId">
+  		update TB_PAY_WITHDRAW set ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+  		COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP}
+  		where BUSI_ID = #{busiId,jdbcType=CHAR}
+  </update>
+  <update id="updateOrderStatusAndFailReasonByBusiId">
+  		update TB_PAY_WITHDRAW set ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+  		COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+  		FAIL_REASON = #{failReason,jdbcType=VARCHAR}
+  		where BUSI_ID = #{busiId,jdbcType=CHAR}
+  </update>
+  <select id="countSuccessAmount" resultType="java.lang.Long">
+  	select sum(ORDER_AMT) from TB_PAY_WITHDRAW where CUST_ID = #{custId,jdbcType=VARCHAR}
+  		and ACCOUNT_DATE = #{curDate,jdbcType=VARCHAR}
+		and (ORDER_STATUS = '03' or ORDER_STATUS = '04' or ORDER_STATUS = '02')
+  </select>
+
+    <select id="findByMerOrderId" resultMap="BaseResultMap"  parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from TB_PAY_WITHDRAW
+        where MER_ORDER_ID = #{merOrderId,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

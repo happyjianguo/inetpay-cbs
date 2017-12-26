@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisActInterestDateAuditDtoMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisActInterestDateAuditDto">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="ACCOUNT_ID" jdbcType="VARCHAR" property="accountId" />
+    <result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="accountName" />
+    <result column="CUST_ID" jdbcType="VARCHAR" property="custId" />
+    <result column="CUST_NAME" jdbcType="VARCHAR" property="custName" />
+    <result column="SUBJECT_NO" jdbcType="VARCHAR" property="subjectNo" />
+    <result column="SUBJECT_NAME" jdbcType="VARCHAR" property="subjectName" />
+    <result column="LAST_INTEREST_DAY" jdbcType="CHAR" property="lastInterestDay" />
+    <result column="NEXT_INTEREST_DAY" jdbcType="CHAR" property="nextInterestDay" />
+    <result column="OPERATOR" jdbcType="VARCHAR" property="operator" />
+    <result column="OPERATOR_NAME" jdbcType="VARCHAR" property="operatorName" />
+    <result column="OPERATE_TIME" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="AUDITOR" jdbcType="VARCHAR" property="auditor" />
+    <result column="AUDITOR_NAME" jdbcType="VARCHAR" property="auditorName" />
+    <result column="AUDIT_STATUS" jdbcType="CHAR" property="auditStatus" />
+    <result column="AUDIT_TIME" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="REF_ID" jdbcType="VARCHAR" property="refId" />
+    <result column="REJECT_REASON" jdbcType="VARCHAR" property="rejectReason" />
+    <result column="CANCEL_REASON" jdbcType="VARCHAR" property="cancelReason" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisActInterestDateAuditDto">
+    <result column="REMARK" jdbcType="CLOB" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ACCOUNT_ID, ACCOUNT_NAME, CUST_ID, CUST_NAME, SUBJECT_NO, SUBJECT_NAME, LAST_INTEREST_DAY, 
+    NEXT_INTEREST_DAY, OPERATOR, OPERATOR_NAME, OPERATE_TIME, AUDITOR, AUDITOR_NAME, 
+    AUDIT_STATUS, AUDIT_TIME, REF_ID, REJECT_REASON, CANCEL_REASON
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_ACT_INTEREST_DATE_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TB_BIS_ACT_INTEREST_DATE_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActInterestDateAuditDto">
+    insert into TB_BIS_ACT_INTEREST_DATE_AUDIT (ID, ACCOUNT_ID, ACCOUNT_NAME, 
+      CUST_ID, CUST_NAME, SUBJECT_NO, 
+      SUBJECT_NAME, LAST_INTEREST_DAY, NEXT_INTEREST_DAY, 
+      OPERATOR, OPERATOR_NAME, OPERATE_TIME, 
+      AUDITOR, AUDITOR_NAME, AUDIT_STATUS, 
+      AUDIT_TIME, REF_ID, REJECT_REASON, 
+      CANCEL_REASON, REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, #{subjectNo,jdbcType=VARCHAR}, 
+      #{subjectName,jdbcType=VARCHAR}, #{lastInterestDay,jdbcType=CHAR}, #{nextInterestDay,jdbcType=CHAR}, 
+      #{operator,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
+      #{auditor,jdbcType=VARCHAR}, #{auditorName,jdbcType=VARCHAR}, #{auditStatus,jdbcType=CHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{refId,jdbcType=VARCHAR}, #{rejectReason,jdbcType=VARCHAR}, 
+      #{cancelReason,jdbcType=VARCHAR}, #{remark,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActInterestDateAuditDto">
+    insert into TB_BIS_ACT_INTEREST_DATE_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="accountId != null">
+        ACCOUNT_ID,
+      </if>
+      <if test="accountName != null">
+        ACCOUNT_NAME,
+      </if>
+      <if test="custId != null">
+        CUST_ID,
+      </if>
+      <if test="custName != null">
+        CUST_NAME,
+      </if>
+      <if test="subjectNo != null">
+        SUBJECT_NO,
+      </if>
+      <if test="subjectName != null">
+        SUBJECT_NAME,
+      </if>
+      <if test="lastInterestDay != null">
+        LAST_INTEREST_DAY,
+      </if>
+      <if test="nextInterestDay != null">
+        NEXT_INTEREST_DAY,
+      </if>
+      <if test="operator != null">
+        OPERATOR,
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME,
+      </if>
+      <if test="operateTime != null">
+        OPERATE_TIME,
+      </if>
+      <if test="auditor != null">
+        AUDITOR,
+      </if>
+      <if test="auditorName != null">
+        AUDITOR_NAME,
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS,
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME,
+      </if>
+      <if test="refId != null">
+        REF_ID,
+      </if>
+      <if test="rejectReason != null">
+        REJECT_REASON,
+      </if>
+      <if test="cancelReason != null">
+        CANCEL_REASON,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null">
+        #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null">
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastInterestDay != null">
+        #{lastInterestDay,jdbcType=CHAR},
+      </if>
+      <if test="nextInterestDay != null">
+        #{nextInterestDay,jdbcType=CHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null">
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null">
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refId != null">
+        #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null">
+        #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelReason != null">
+        #{cancelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActInterestDateAuditDto">
+    update TB_BIS_ACT_INTEREST_DATE_AUDIT
+    <set>
+      <if test="accountId != null">
+        ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null">
+        SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null">
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastInterestDay != null">
+        LAST_INTEREST_DAY = #{lastInterestDay,jdbcType=CHAR},
+      </if>
+      <if test="nextInterestDay != null">
+        NEXT_INTEREST_DAY = #{nextInterestDay,jdbcType=CHAR},
+      </if>
+      <if test="operator != null">
+        OPERATOR = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null">
+        OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null">
+        AUDITOR = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null">
+        AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refId != null">
+        REF_ID = #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null">
+        REJECT_REASON = #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelReason != null">
+        CANCEL_REASON = #{cancelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=CLOB},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActInterestDateAuditDto">
+    update TB_BIS_ACT_INTEREST_DATE_AUDIT
+    set ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      LAST_INTEREST_DAY = #{lastInterestDay,jdbcType=CHAR},
+      NEXT_INTEREST_DAY = #{nextInterestDay,jdbcType=CHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      REF_ID = #{refId,jdbcType=VARCHAR},
+      REJECT_REASON = #{rejectReason,jdbcType=VARCHAR},
+      CANCEL_REASON = #{cancelReason,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=CLOB}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActInterestDateAuditDto">
+    update TB_BIS_ACT_INTEREST_DATE_AUDIT
+    set ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      LAST_INTEREST_DAY = #{lastInterestDay,jdbcType=CHAR},
+      NEXT_INTEREST_DAY = #{nextInterestDay,jdbcType=CHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      REF_ID = #{refId,jdbcType=VARCHAR},
+      REJECT_REASON = #{rejectReason,jdbcType=VARCHAR},
+      CANCEL_REASON = #{cancelReason,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="countWaitAuditWithAccountId" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	select count(ID) from TB_BIS_ACT_INTEREST_DATE_AUDIT where AUDIT_STATUS='00' and ACCOUNT_ID = #{accountId,jdbcType=VARCHAR}
+  </select>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActInterestDateAuditDto" resultMap="BaseResultMap">
+  	select * from TB_BIS_ACT_INTEREST_DATE_AUDIT 
+  	<where>
+  		<if test="accountId != null and accountId != ''">
+  			and instr(ACCOUNT_ID, #{accountId,jdbcType=VARCHAR}) > 0
+  			<!-- ACCOUNT_ID = concat('%',concat(#{accountId,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="accountName != null and accountName != ''">
+  			and instr(ACCOUNT_NAME, #{accountName,jdbcType=VARCHAR}) > 0
+  			<!-- and ACCOUNT_NAME = concat('%',concat(#{accountName,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="custId != null and custId != ''">
+  			and instr(CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+  			<!-- and CUST_ID = concat('%',concat(#{custId,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="custName != null and custName != ''">
+  			and instr(CUST_NAME, #{custName,jdbcType=VARCHAR}) > 0
+  			<!-- and CUST_NAME = concat('%',concat(#{custName,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="subjectNo != null and subjectNo != ''">
+  			and instr(SUBJECT_NO, #{subjectNo,jdbcType=VARCHAR}) > 0
+  			<!-- and SUBJECT_NO = concat('%',concat(#{subjectNo,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="subjectName != null and subjectName != ''">
+  			and instr(SUBJECT_NAME, #{subjectName,jdbcType=VARCHAR}) > 0
+  			<!-- and SUBJECT_NAME = concat('%',concat(#{subjectName,jdbcType=VARCHAR},'%')) -->
+  		</if>
+  		<if test="lastInterestDay != null and lastInterestDay != ''">
+  			and LAST_INTEREST_DAY = #{lastInterestDay,jdbcType=CHAR}
+  		</if>
+  		<if test="nextInterestDay != null and nextInterestDay != ''">
+  			and NEXT_INTEREST_DAY = #{nextInterestDay,jdbcType=CHAR}
+  		</if>
+  		<if test="auditStatus != null">
+  			and AUDIT_STATUS = #{auditStatus,jdbcType=CHAR}
+  		</if>
+  	</where>
+  </select>
+   <select id="findWaitAudit" resultMap="BaseResultMap">
+		select * from TB_BIS_ACT_INTEREST_DATE_AUDIT
+		where AUDIT_STATUS = '00'
+		and ACCOUNT_ID in
+		<foreach collection="accountIds" index="index" item="item" open="(" separator="," close=")">
+	       #{item}
+	    </foreach>
+   </select>
+</mapper>

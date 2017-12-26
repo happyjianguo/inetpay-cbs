@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActRuleDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActRuleDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="DEAL_SN" property="dealSn" jdbcType="DECIMAL" />
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="CHAR" />
+    <result column="RULE_TYPE" property="ruleType" jdbcType="CHAR" />
+    <result column="DR_SUBJECT_NO" property="drSubjectNo" jdbcType="VARCHAR" />
+    <result column="DR_SUBJECT_NAME" property="drSubjectName" jdbcType="VARCHAR" />
+    <result column="DR_FLAG" property="drFlag" jdbcType="CHAR" />
+    <result column="CR_SUBJECT_NO" property="crSubjectNo" jdbcType="VARCHAR" />
+    <result column="CR_SUBJECT_NAME" property="crSubjectName" jdbcType="VARCHAR" />
+    <result column="CR_FLAG" property="crFlag" jdbcType="CHAR" />
+    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+    <result column="BOOK_AMOUNT_TYPE" property="bookAmountType" jdbcType="CHAR" />
+    <result column="DR_IS_NEGATIVE" property="drIsNegative" jdbcType="CHAR" />
+    <result column="CR_IS_NEGATIVE" property="crIsNegative" jdbcType="CHAR" />
+    <result column="EXT1" jdbcType="VARCHAR" property="ext1" />
+    <result column="EXT2" jdbcType="VARCHAR" property="ext2" />
+    <result column="EXT3" jdbcType="VARCHAR" property="ext3" />
+    <result column="EXT4" jdbcType="VARCHAR" property="ext4" />
+    <result column="EXT5" jdbcType="VARCHAR" property="ext5" />
+    <result column="EXT6" jdbcType="VARCHAR" property="ext6" />
+    <result column="EXT7" jdbcType="VARCHAR" property="ext7" />
+    <result column="EXT8" jdbcType="VARCHAR" property="ext8" />
+    <result column="EXT9" jdbcType="VARCHAR" property="ext9" />
+    <result column="EXT10" jdbcType="VARCHAR" property="ext10" />
+    <result column="EXT11" jdbcType="VARCHAR" property="ext11" />
+    <result column="EXT12" jdbcType="VARCHAR" property="ext12" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_TYPE, DEAL_SN, TRADE_TYPE, RULE_TYPE, DR_SUBJECT_NO, DR_SUBJECT_NAME, DR_FLAG, 
+    CR_SUBJECT_NO, CR_SUBJECT_NAME, CR_FLAG,BOOK_TYPE,BOOK_AMOUNT_TYPE,DR_IS_NEGATIVE,CR_IS_NEGATIVE, 
+    EXT1, EXT2, EXT3, EXT4, EXT5,EXT6, EXT7, EXT8, EXT9, EXT10, EXT11, EXT12
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_RULE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+<select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActRuleDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_ACT_RULE
+		where 1=1
+		<if test="busiType != null and busiType != ''">
+			and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+		</if>
+		<if test="tradeType != null and tradeType != ''">
+			and TRADE_TYPE = #{tradeType,jdbcType=CHAR}
+		</if>
+		<if test="ruleType != null and ruleType != ''">
+			and RULE_TYPE = #{ruleType,jdbcType=CHAR}
+		</if>
+		<if test="drSubjectNo != null and drSubjectNo != ''">
+			and  instr(DR_SUBJECT_NO, #{drSubjectNo}) > 0
+		</if>
+		<if test="drSubjectName != null and drSubjectName != ''">
+			and  instr(DR_SUBJECT_NAME, #{drSubjectName}) > 0
+		</if>
+		<if test="drFlag != null and drFlag != ''">
+			and DR_FLAG = #{drFlag,jdbcType=CHAR}
+		</if>
+		<if test="crSubjectNo != null and crSubjectNo != ''">
+			and instr(CR_SUBJECT_NO, #{crSubjectNo}) > 0
+		</if>
+		<if test="crSubjectName != null and crSubjectName != ''">
+			and  instr(CR_SUBJECT_NAME, #{crSubjectName}) > 0
+		</if>
+		<if test="crFlag != null and crFlag != ''">
+			and CR_FLAG = #{crFlag,jdbcType=CHAR}
+		</if>
+		<if test="bookType != null and bookType != ''">
+			and BOOK_TYPE = #{bookType,jdbcType=CHAR}
+		</if>
+		<if test="id != null and id != ''">
+			and  instr(ID, #{id}) > 0
+		</if>
+		order by BUSI_TYPE ASC,ID ASC
+</select>   
+  <select id="pageList" resultMap="BaseResultMap">
+     select 
+       <include refid="Base_Column_List" />
+     from TB_ACT_RULE
+  </select>
+ <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_RULE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActRuleDto" >
+    insert into TB_ACT_RULE (ID, BUSI_TYPE, DEAL_SN, 
+      TRADE_TYPE, RULE_TYPE, DR_SUBJECT_NO, 
+      DR_SUBJECT_NAME, DR_FLAG, CR_SUBJECT_NO, 
+      CR_SUBJECT_NAME, CR_FLAG,,BOOK_TYPE,BOOK_AMOUNT_TYPE,DR_IS_NEGATIVE,CR_IS_NEGATIVE, 
+      EXT1, EXT2, EXT3, EXT4,EXT5, EXT6, EXT7, EXT8,EXT9, EXT10, EXT11,EXT12)
+    values (#{id,jdbcType=VARCHAR}, #{busiType,jdbcType=CHAR}, #{dealSn,jdbcType=DECIMAL}, 
+      #{tradeType,jdbcType=CHAR}, #{ruleType,jdbcType=CHAR}, #{drSubjectNo,jdbcType=VARCHAR}, 
+      #{drSubjectName,jdbcType=VARCHAR}, #{drFlag,jdbcType=CHAR}, #{crSubjectNo,jdbcType=VARCHAR}, 
+      #{crSubjectName,jdbcType=VARCHAR}, #{crFlag,jdbcType=CHAR},
+      #{bookType,jdbcType=CHAR},#{bookAmountType,jdbcType=CHAR},
+      #{drIsNegative,jdbcType=CHAR},#{crIsNegative,jdbcType=CHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=VARCHAR}, 
+      #{ext5,jdbcType=VARCHAR}, #{ext6,jdbcType=VARCHAR}, #{ext7,jdbcType=VARCHAR}, #{ext8,jdbcType=VARCHAR}, 
+      #{ext9,jdbcType=VARCHAR}, #{ext10,jdbcType=VARCHAR}, #{ext11,jdbcType=VARCHAR}, 
+      #{ext12,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActRuleDto" >
+    insert into TB_ACT_RULE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="dealSn != null" >
+        DEAL_SN,
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE,
+      </if>
+      <if test="ruleType != null" >
+        RULE_TYPE,
+      </if>
+      <if test="drSubjectNo != null" >
+        DR_SUBJECT_NO,
+      </if>
+      <if test="drSubjectName != null" >
+        DR_SUBJECT_NAME,
+      </if>
+      <if test="drFlag != null" >
+        DR_FLAG,
+      </if>
+      <if test="crSubjectNo != null" >
+        CR_SUBJECT_NO,
+      </if>
+      <if test="crSubjectName != null" >
+        CR_SUBJECT_NAME,
+      </if>
+      <if test="crFlag != null" >
+        CR_FLAG,
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE,
+      </if>
+      <if test="bookAmountType != null" >
+        BOOK_AMOUNT_TYPE,
+      </if>
+      <if test="drIsNegative != null" >
+        DR_IS_NEGATIVE,
+      </if>
+      <if test="crIsNegative != null" >
+        CR_IS_NEGATIVE,
+      </if>
+      <if test="ext1 != null">
+        EXT1,
+      </if>
+      <if test="ext2 != null">
+        EXT2,
+      </if>
+      <if test="ext3 != null">
+        EXT3,
+      </if>
+      <if test="ext4 != null">
+        EXT4,
+      </if>
+      <if test="ext5 != null">
+        EXT5,
+      </if>
+      <if test="ext6 != null">
+        EXT6,
+      </if>
+      <if test="ext7 != null">
+        EXT7,
+      </if>
+      <if test="ext8 != null">
+        EXT8,
+      </if>
+      <if test="ext9 != null">
+        EXT9,
+      </if>
+      <if test="ext10 != null">
+        EXT10,
+      </if>
+      <if test="ext11 != null">
+        EXT11,
+      </if>
+      <if test="ext12 != null">
+        EXT12,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="dealSn != null" >
+        #{dealSn,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="ruleType != null" >
+        #{ruleType,jdbcType=CHAR},
+      </if>
+      <if test="drSubjectNo != null" >
+        #{drSubjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="drSubjectName != null" >
+        #{drSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="drFlag != null" >
+        #{drFlag,jdbcType=CHAR},
+      </if>
+      <if test="crSubjectNo != null" >
+        #{crSubjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="crSubjectName != null" >
+        #{crSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="crFlag != null" >
+        #{crFlag,jdbcType=CHAR},
+      </if>
+      <if test="bookType != null" >
+        #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="bookAmountType != null" >
+        #{bookAmountType,jdbcType=CHAR},
+      </if>
+      <if test="drIsNegative != null" >
+        #{drIsNegative,jdbcType=CHAR},
+      </if>
+      <if test="crIsNegative != null" >
+        #{crIsNegative,jdbcType=CHAR},
+      </if>
+      <if test="ext1 != null">
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null">
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null">
+        #{ext4,jdbcType=VARCHAR},
+      </if>
+      <if test="ext5 != null">
+        #{ext5,jdbcType=VARCHAR},
+      </if>
+      <if test="ext6 != null">
+        #{ext6,jdbcType=VARCHAR},
+      </if>
+      <if test="ext7 != null">
+        #{ext7,jdbcType=VARCHAR},
+      </if>
+      <if test="ext8 != null">
+        #{ext8,jdbcType=VARCHAR},
+      </if>
+      <if test="ext9 != null">
+        #{ext9,jdbcType=VARCHAR},
+      </if>
+      <if test="ext10 != null">
+        #{ext10,jdbcType=VARCHAR},
+      </if>
+      <if test="ext11 != null">
+        #{ext11,jdbcType=VARCHAR},
+      </if>
+      <if test="ext12 != null">
+        #{ext12,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActRuleDto" >
+    update TB_ACT_RULE
+    <set >
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="dealSn != null" >
+        DEAL_SN = #{dealSn,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="ruleType != null" >
+        RULE_TYPE = #{ruleType,jdbcType=CHAR},
+      </if>
+      <if test="drSubjectNo != null" >
+        DR_SUBJECT_NO = #{drSubjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="drSubjectName != null" >
+        DR_SUBJECT_NAME = #{drSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="drFlag != null" >
+        DR_FLAG = #{drFlag,jdbcType=CHAR},
+      </if>
+      <if test="crSubjectNo != null" >
+        CR_SUBJECT_NO = #{crSubjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="crSubjectName != null" >
+        CR_SUBJECT_NAME = #{crSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="crFlag != null" >
+        CR_FLAG = #{crFlag,jdbcType=CHAR},
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="bookAmountType != null" >
+        BOOK_AMOUNT_TYPE = #{bookAmountType,jdbcType=CHAR},
+      </if>
+      <if test="drIsNegative != null" >
+        DR_IS_NEGATIVE = #{drIsNegative,jdbcType=CHAR},
+      </if>
+      <if test="crIsNegative != null" >
+        CR_IS_NEGATIVE = #{crIsNegative,jdbcType=CHAR},
+      </if>
+      <if test="ext1 != null">
+        EXT1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        EXT2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null">
+        EXT3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null">
+        EXT4 = #{ext4,jdbcType=VARCHAR},
+      </if>
+      <if test="ext5 != null">
+        EXT5 = #{ext5,jdbcType=VARCHAR},
+      </if>
+      <if test="ext6 != null">
+        EXT6 = #{ext6,jdbcType=VARCHAR},
+      </if>
+      <if test="ext7 != null">
+        EXT7 = #{ext7,jdbcType=VARCHAR},
+      </if>
+      <if test="ext8 != null">
+        EXT8 = #{ext8,jdbcType=VARCHAR},
+      </if>
+      <if test="ext9 != null">
+        EXT9 = #{ext9,jdbcType=VARCHAR},
+      </if>
+      <if test="ext10 != null">
+        EXT10 = #{ext10,jdbcType=VARCHAR},
+      </if>
+      <if test="ext11 != null">
+        EXT11 = #{ext11,jdbcType=VARCHAR},
+      </if>
+      <if test="ext12 != null">
+        EXT12 = #{ext12,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActRuleDto" >
+    update TB_ACT_RULE
+    set BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      DEAL_SN = #{dealSn,jdbcType=DECIMAL},
+      TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      RULE_TYPE = #{ruleType,jdbcType=CHAR},
+      DR_SUBJECT_NO = #{drSubjectNo,jdbcType=VARCHAR},
+      DR_SUBJECT_NAME = #{drSubjectName,jdbcType=VARCHAR},
+      DR_FLAG = #{drFlag,jdbcType=CHAR},
+      CR_SUBJECT_NO = #{crSubjectNo,jdbcType=VARCHAR},
+      CR_SUBJECT_NAME = #{crSubjectName,jdbcType=VARCHAR},
+      CR_FLAG = #{crFlag,jdbcType=CHAR},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      BOOK_AMOUNT_TYPE = #{bookAmountType,jdbcType=CHAR},
+      DR_IS_NEGATIVE = #{drIsNegative,jdbcType=CHAR},
+      CR_IS_NEGATIVE = #{crIsNegative,jdbcType=CHAR},
+      EXT1 = #{ext1,jdbcType=VARCHAR},
+      EXT2 = #{ext2,jdbcType=VARCHAR},
+      EXT3 = #{ext3,jdbcType=VARCHAR},
+      EXT4 = #{ext4,jdbcType=VARCHAR},
+      EXT5 = #{ext5,jdbcType=VARCHAR},
+      EXT6 = #{ext6,jdbcType=VARCHAR},
+      EXT7 = #{ext7,jdbcType=VARCHAR},
+      EXT8 = #{ext8,jdbcType=VARCHAR},
+      EXT9 = #{ext9,jdbcType=VARCHAR},
+      EXT10 = #{ext10,jdbcType=VARCHAR},
+      EXT11 = #{ext11,jdbcType=VARCHAR},
+      EXT12 = #{ext12,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

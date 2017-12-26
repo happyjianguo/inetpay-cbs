@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.BisAcctTypeDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisAcctTypeDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCT_TYPE_NO" property="acctTypeNo" jdbcType="VARCHAR" />
+    <result column="ACCT_TYPE_NAME" property="acctTypeName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ACCT_TYPE_NO, ACCT_TYPE_NAME, REMARK, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCT_TYPE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_ACCT_TYPE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAcctTypeDto" >
+    insert into TB_BIS_ACCT_TYPE (ID, ACCT_TYPE_NO, ACCT_TYPE_NAME, 
+      REMARK, CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{acctTypeNo,jdbcType=VARCHAR}, #{acctTypeName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAcctTypeDto" >
+    insert into TB_BIS_ACCT_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="acctTypeNo != null" >
+        ACCT_TYPE_NO,
+      </if>
+      <if test="acctTypeName != null" >
+        ACCT_TYPE_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="acctTypeNo != null" >
+        #{acctTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="acctTypeName != null" >
+        #{acctTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAcctTypeDto" >
+    update TB_BIS_ACCT_TYPE
+    <set >
+      <if test="acctTypeNo != null" >
+        ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="acctTypeName != null" >
+        ACCT_TYPE_NAME = #{acctTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAcctTypeDto" >
+    update TB_BIS_ACCT_TYPE
+    set ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR},
+      ACCT_TYPE_NAME = #{acctTypeName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

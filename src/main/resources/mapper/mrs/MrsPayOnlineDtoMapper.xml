@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsPayOnlineDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayOnlineDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PAY_ID" property="payId" jdbcType="VARCHAR" />
+    <result column="LOGIN_ID" property="loginId" jdbcType="VARCHAR" />
+    <result column="BANK_ID" property="bankId" jdbcType="VARCHAR" />
+    <result column="ADUIT_ID" property="aduitId" jdbcType="VARCHAR" />
+    <result column="PAY_AUTH_SATTUS" property="payAuthSattus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PAY_ID, LOGIN_ID, BANK_ID, ADUIT_ID, PAY_AUTH_SATTUS, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_PAY_ONLINE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_PAY_ONLINE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayOnlineDto" >
+    insert into TB_MRS_PAY_ONLINE (ID, PAY_ID, LOGIN_ID, 
+      BANK_ID, ADUIT_ID, PAY_AUTH_SATTUS, 
+      CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{payId,jdbcType=VARCHAR}, #{loginId,jdbcType=VARCHAR}, 
+      #{bankId,jdbcType=VARCHAR}, #{aduitId,jdbcType=VARCHAR}, #{payAuthSattus,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayOnlineDto" >
+    insert into TB_MRS_PAY_ONLINE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="payId != null" >
+        PAY_ID,
+      </if>
+      <if test="loginId != null" >
+        LOGIN_ID,
+      </if>
+      <if test="bankId != null" >
+        BANK_ID,
+      </if>
+      <if test="aduitId != null" >
+        ADUIT_ID,
+      </if>
+      <if test="payAuthSattus != null" >
+        PAY_AUTH_SATTUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId != null" >
+        #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankId != null" >
+        #{bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitId != null" >
+        #{aduitId,jdbcType=VARCHAR},
+      </if>
+      <if test="payAuthSattus != null" >
+        #{payAuthSattus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayOnlineDto" >
+    update TB_MRS_PAY_ONLINE
+    <set >
+      <if test="payId != null" >
+        PAY_ID = #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId != null" >
+        LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankId != null" >
+        BANK_ID = #{bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitId != null" >
+        ADUIT_ID = #{aduitId,jdbcType=VARCHAR},
+      </if>
+      <if test="payAuthSattus != null" >
+        PAY_AUTH_SATTUS = #{payAuthSattus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPayOnlineDto" >
+    update TB_MRS_PAY_ONLINE
+    set PAY_ID = #{payId,jdbcType=VARCHAR},
+      LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+      BANK_ID = #{bankId,jdbcType=VARCHAR},
+      ADUIT_ID = #{aduitId,jdbcType=VARCHAR},
+      PAY_AUTH_SATTUS = #{payAuthSattus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

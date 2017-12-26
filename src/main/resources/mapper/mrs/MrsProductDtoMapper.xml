@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsProductDtoMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsProductDto">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+    <result column="CREDENTIALS_TYPE" jdbcType="CHAR" property="credentialsType" />
+    <result column="CREDENTIALS_NUMBER" jdbcType="VARCHAR" property="credentialsNumber" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRODUCT_TYPE_CODE" jdbcType="CHAR" property="productTypeCode" />
+    <result column="PRODUCT_SHORT_NAME" jdbcType="VARCHAR" property="productShortName" />
+    <result column="PRODUCT_END_DATE" jdbcType="CHAR" property="productEndDate" />
+    <result column="MANAGER_NAME" jdbcType="VARCHAR" property="managerName" />
+    <result column="MANAGER_CER_TYPE" jdbcType="CHAR" property="managerCerType" />
+    <result column="MANAGER_CER_CODE" jdbcType="VARCHAR" property="managerCerCode" />
+    <result column="TRUSTEE_NAME" jdbcType="VARCHAR" property="trusteeName" />
+    <result column="TRUSTEE_CER_TYPE" jdbcType="CHAR" property="trusteeCerType" />
+    <result column="TRUSTEE_CER_CODE" jdbcType="VARCHAR" property="trusteeCerCode" />
+    <result column="CONTACTS_NAME" jdbcType="VARCHAR" property="contactsName" />
+    <result column="CONTACTS_MOBILE" jdbcType="VARCHAR" property="contactsMobile" />
+    <result column="CONTACTS_TEL" jdbcType="VARCHAR" property="contactsTel" />
+    <result column="CONTACTS_SPARE_TEL" jdbcType="VARCHAR" property="contactsSpareTel" />
+    <result column="CONTACTS_FAX" jdbcType="VARCHAR" property="contactsFax" />
+    <result column="CONTACTS_EMAIL" jdbcType="VARCHAR" property="contactsEmail" />
+    <result column="CONTACTS_CONTACT_ADD" jdbcType="VARCHAR" property="contactsContactAdd" />
+    <result column="CONTACTS_ZIP" jdbcType="VARCHAR" property="contactsZip" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_OPERATOR" jdbcType="VARCHAR" property="createOperator" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_OPERATOR" jdbcType="VARCHAR" property="updateOperator" />
+    <result column="NATIONALITY_CODE" jdbcType="VARCHAR" property="nationalityCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID,CUST_ID,CUSTOMER_CODE, CREDENTIALS_TYPE, CREDENTIALS_NUMBER, PRODUCT_NAME, PRODUCT_TYPE_CODE, PRODUCT_SHORT_NAME, 
+    PRODUCT_END_DATE, MANAGER_NAME, MANAGER_CER_TYPE, MANAGER_CER_CODE, TRUSTEE_NAME, 
+    TRUSTEE_CER_TYPE, TRUSTEE_CER_CODE, CONTACTS_NAME, CONTACTS_MOBILE, CONTACTS_TEL, 
+    CONTACTS_SPARE_TEL, CONTACTS_FAX, CONTACTS_EMAIL, CONTACTS_CONTACT_ADD, CONTACTS_ZIP, 
+    CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, UPDATE_OPERATOR, NATIONALITY_CODE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_PRODUCT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findCustId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_PRODUCT
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  <select id="findListPage" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsProductDto" resultMap="BaseResultMap">
+    select 
+    <!-- <include refid="Base_Column_List" /> -->
+    t.ID,t.CUST_ID,t.CUSTOMER_CODE,t.PRODUCT_NAME,t.CREDENTIALS_NUMBER,t.PRODUCT_SHORT_NAME,
+    t.PRODUCT_TYPE_CODE,t.PRODUCT_END_DATE,t.CREATE_TIME,b.ACCOUNT_STATUS as accountStatus
+    from TB_MRS_PRODUCT t,TB_MRS_ACCOUNT b where 1=1 and t.CUST_ID = b.CUST_ID
+    <if test="custId !=null and custId !=''">
+      and instr(t.CUST_ID,#{custId,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="customerCode !=null and customerCode !=''">
+       and instr(t.CUSTOMER_CODE,#{customerCode,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="credentialsType !=null and credentialsType !=''">
+       and t.CREDENTIALS_TYPE = #{credentialsType}
+    </if>
+    <if test="credentialsNumber !=null and credentialsNumber !=''">
+       and instr(t.CREDENTIALS_NUMBER,#{credentialsNumber,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="productTypeCode !=null and productTypeCode !=''">
+       and t.PRODUCT_TYPE_CODE = #{productTypeCode,jdbcType=CHAR}
+    </if>
+    order by t.CREATE_TIME desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TB_MRS_PRODUCT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsProductDto">
+    insert into TB_MRS_PRODUCT (ID, CUST_ID,CUSTOMER_CODE,CREDENTIALS_TYPE, CREDENTIALS_NUMBER, 
+      PRODUCT_NAME, PRODUCT_TYPE_CODE, PRODUCT_SHORT_NAME, 
+      PRODUCT_END_DATE, MANAGER_NAME, MANAGER_CER_TYPE, 
+      MANAGER_CER_CODE, TRUSTEE_NAME, TRUSTEE_CER_TYPE, 
+      TRUSTEE_CER_CODE, CONTACTS_NAME, CONTACTS_MOBILE, 
+      CONTACTS_TEL, CONTACTS_SPARE_TEL, CONTACTS_FAX, 
+      CONTACTS_EMAIL, CONTACTS_CONTACT_ADD, CONTACTS_ZIP, 
+      CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, NATIONALITY_CODE,
+      UPDATE_OPERATOR)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR},#{customerCode,jdbcType=VARCHAR},
+     #{credentialsType,jdbcType=CHAR}, #{credentialsNumber,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{productTypeCode,jdbcType=CHAR}, #{productShortName,jdbcType=VARCHAR}, 
+      #{productEndDate,jdbcType=CHAR}, #{managerName,jdbcType=VARCHAR}, #{managerCerType,jdbcType=CHAR}, 
+      #{managerCerCode,jdbcType=VARCHAR}, #{trusteeName,jdbcType=VARCHAR}, #{trusteeCerType,jdbcType=CHAR}, 
+      #{trusteeCerCode,jdbcType=VARCHAR}, #{contactsName,jdbcType=VARCHAR}, #{contactsMobile,jdbcType=VARCHAR}, 
+      #{contactsTel,jdbcType=VARCHAR}, #{contactsSpareTel,jdbcType=VARCHAR}, #{contactsFax,jdbcType=VARCHAR}, 
+      #{contactsEmail,jdbcType=VARCHAR}, #{contactsContactAdd,jdbcType=VARCHAR}, #{contactsZip,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{nationalityCode,jdbcType=VARCHAR}, #{updateOperator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsProductDto">
+    insert into TB_MRS_PRODUCT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="custId != null">
+        CUST_ID,
+      </if>
+        <if test="customerCode != null">
+        CUSTOMER_CODE,
+      </if>
+      <if test="credentialsType != null">
+        CREDENTIALS_TYPE,
+      </if>
+      <if test="credentialsNumber != null">
+        CREDENTIALS_NUMBER,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="productTypeCode != null">
+        PRODUCT_TYPE_CODE,
+      </if>
+      <if test="productShortName != null">
+        PRODUCT_SHORT_NAME,
+      </if>
+      <if test="productEndDate != null">
+        PRODUCT_END_DATE,
+      </if>
+      <if test="managerName != null">
+        MANAGER_NAME,
+      </if>
+      <if test="managerCerType != null">
+        MANAGER_CER_TYPE,
+      </if>
+      <if test="managerCerCode != null">
+        MANAGER_CER_CODE,
+      </if>
+      <if test="trusteeName != null">
+        TRUSTEE_NAME,
+      </if>
+      <if test="trusteeCerType != null">
+        TRUSTEE_CER_TYPE,
+      </if>
+      <if test="trusteeCerCode != null">
+        TRUSTEE_CER_CODE,
+      </if>
+      <if test="contactsName != null">
+        CONTACTS_NAME,
+      </if>
+      <if test="contactsMobile != null">
+        CONTACTS_MOBILE,
+      </if>
+      <if test="contactsTel != null">
+        CONTACTS_TEL,
+      </if>
+      <if test="contactsSpareTel != null">
+        CONTACTS_SPARE_TEL,
+      </if>
+      <if test="contactsFax != null">
+        CONTACTS_FAX,
+      </if>
+      <if test="contactsEmail != null">
+        CONTACTS_EMAIL,
+      </if>
+      <if test="contactsContactAdd != null">
+        CONTACTS_CONTACT_ADD,
+      </if>
+      <if test="contactsZip != null">
+        CONTACTS_ZIP,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createOperator != null">
+        CREATE_OPERATOR,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateOperator != null">
+        UPDATE_OPERATOR,
+      </if>
+      <if test="nationalityCode != null">
+        NATIONALITY_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=VARCHAR},
+      </if>
+       <if test="customerCode != null">
+        #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsType != null">
+        #{credentialsType,jdbcType=CHAR},
+      </if>
+      <if test="credentialsNumber != null">
+        #{credentialsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productTypeCode != null">
+        #{productTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="productShortName != null">
+        #{productShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="productEndDate != null">
+        #{productEndDate,jdbcType=CHAR},
+      </if>
+      <if test="managerName != null">
+        #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerCerType != null">
+        #{managerCerType,jdbcType=CHAR},
+      </if>
+      <if test="managerCerCode != null">
+        #{managerCerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="trusteeName != null">
+        #{trusteeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trusteeCerType != null">
+        #{trusteeCerType,jdbcType=CHAR},
+      </if>
+      <if test="trusteeCerCode != null">
+        #{trusteeCerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsName != null">
+        #{contactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsMobile != null">
+        #{contactsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsTel != null">
+        #{contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsSpareTel != null">
+        #{contactsSpareTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsFax != null">
+        #{contactsFax,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsEmail != null">
+        #{contactsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsContactAdd != null">
+        #{contactsContactAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsZip != null">
+        #{contactsZip,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null">
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null">
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityCode != null">
+        #{nationalityCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsProductDto">
+    update TB_MRS_PRODUCT
+    <set>
+      <if test="custId != null">
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+        <if test="customerCode != null">
+        CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsType != null">
+        CREDENTIALS_TYPE = #{credentialsType,jdbcType=CHAR},
+      </if>
+      <if test="credentialsNumber != null">
+        CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productTypeCode != null">
+        PRODUCT_TYPE_CODE = #{productTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="productShortName != null">
+        PRODUCT_SHORT_NAME = #{productShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="productEndDate != null">
+        PRODUCT_END_DATE = #{productEndDate,jdbcType=CHAR},
+      </if>
+      <if test="managerName != null">
+        MANAGER_NAME = #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerCerType != null">
+        MANAGER_CER_TYPE = #{managerCerType,jdbcType=CHAR},
+      </if>
+      <if test="managerCerCode != null">
+        MANAGER_CER_CODE = #{managerCerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="trusteeName != null">
+        TRUSTEE_NAME = #{trusteeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trusteeCerType != null">
+        TRUSTEE_CER_TYPE = #{trusteeCerType,jdbcType=CHAR},
+      </if>
+      <if test="trusteeCerCode != null">
+        TRUSTEE_CER_CODE = #{trusteeCerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsName != null">
+        CONTACTS_NAME = #{contactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsMobile != null">
+        CONTACTS_MOBILE = #{contactsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsTel != null">
+        CONTACTS_TEL = #{contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsSpareTel != null">
+        CONTACTS_SPARE_TEL = #{contactsSpareTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsFax != null">
+        CONTACTS_FAX = #{contactsFax,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsEmail != null">
+        CONTACTS_EMAIL = #{contactsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsContactAdd != null">
+        CONTACTS_CONTACT_ADD = #{contactsContactAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsZip != null">
+        CONTACTS_ZIP = #{contactsZip,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null">
+        CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null">
+        UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityCode != null">
+        NATIONALITY_CODE = #{nationalityCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsProductDto">
+    update TB_MRS_PRODUCT
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+    	CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+    	CREDENTIALS_TYPE = #{credentialsType,jdbcType=CHAR},
+      CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_TYPE_CODE = #{productTypeCode,jdbcType=CHAR},
+      PRODUCT_SHORT_NAME = #{productShortName,jdbcType=VARCHAR},
+      PRODUCT_END_DATE = #{productEndDate,jdbcType=CHAR},
+      MANAGER_NAME = #{managerName,jdbcType=VARCHAR},
+      MANAGER_CER_TYPE = #{managerCerType,jdbcType=CHAR},
+      MANAGER_CER_CODE = #{managerCerCode,jdbcType=VARCHAR},
+      TRUSTEE_NAME = #{trusteeName,jdbcType=VARCHAR},
+      TRUSTEE_CER_TYPE = #{trusteeCerType,jdbcType=CHAR},
+      TRUSTEE_CER_CODE = #{trusteeCerCode,jdbcType=VARCHAR},
+      CONTACTS_NAME = #{contactsName,jdbcType=VARCHAR},
+      CONTACTS_MOBILE = #{contactsMobile,jdbcType=VARCHAR},
+      CONTACTS_TEL = #{contactsTel,jdbcType=VARCHAR},
+      CONTACTS_SPARE_TEL = #{contactsSpareTel,jdbcType=VARCHAR},
+      CONTACTS_FAX = #{contactsFax,jdbcType=VARCHAR},
+      CONTACTS_EMAIL = #{contactsEmail,jdbcType=VARCHAR},
+      CONTACTS_CONTACT_ADD = #{contactsContactAdd,jdbcType=VARCHAR},
+      CONTACTS_ZIP = #{contactsZip,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      NATIONALITY_CODE = #{nationalityCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+ 
+  
+  
+   <select id="findBy3Element" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_PRODUCT
+    where 1=1
+    <if test="credentialsType != null" >
+    	and CREDENTIALS_TYPE = #{credentialsType,jdbcType=CHAR}
+    </if>
+    <if test="credentialsNumber != null" >
+    	and CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR}
+    </if>
+    <if test="productName != null" >
+    	and PRODUCT_NAME = #{productName,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <!-- 根据三要素查询不为注销的产品信息 -->
+  <select id="findBy3ElementAndNoEff" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    p.*
+    from TB_MRS_PRODUCT p ,TB_MRS_ACCOUNT m
+    where m.ACCOUNT_STATUS !='2' and p.CUST_ID = m.CUST_ID
+    <if test="credentialsType != null" >
+    	and p.CREDENTIALS_TYPE = #{credentialsType,jdbcType=CHAR}
+    </if>
+    <if test="credentialsNumber != null" >
+    	and p.CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR}
+    </if>
+    <if test="productName != null" >
+    	and p.PRODUCT_NAME = #{productName,jdbcType=VARCHAR}
+    </if>
+    order by p.CREATE_TIME desc
+  </select>
+  <select id="findBy3ElementAndStatus" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    p.*
+    from TB_MRS_PRODUCT p ,TB_MRS_ACCOUNT m
+    where m.ACCOUNT_STATUS = #{accountStatus,jdbcType=VARCHAR} and p.CUST_ID = m.CUST_ID
+    <if test="credentialsType != null" >
+    	and p.CREDENTIALS_TYPE = #{credentialsType,jdbcType=CHAR}
+    </if>
+    <if test="credentialsNumber != null" >
+    	and p.CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR}
+    </if>
+    <if test="productName != null" >
+    	and p.PRODUCT_NAME = #{productName,jdbcType=VARCHAR}
+    </if>
+    order by p.CREATE_TIME desc
+  </select>
+  
+  <update id="updateCustomerCodeByCustId" >
+    update TB_MRS_PRODUCT
+    set 
+      CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR}, 
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

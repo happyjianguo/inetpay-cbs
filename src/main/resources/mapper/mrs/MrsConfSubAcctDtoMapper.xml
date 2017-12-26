@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsConfSubAcctDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <!-- <result column="SUB_ACCT_TYPE" property="subAcctType" jdbcType="CHAR" /> -->
+    <result column="SUB_ACCOUNT_CODE" property="subAccountCode" jdbcType="VARCHAR" />
+    <result column="SUB_ACCOUNT_NAME" property="subAccountName" jdbcType="VARCHAR" />
+    <result column="SUB_ACCOUNT_NUM" property="subAccountNum" jdbcType="DECIMAL" />
+    <result column="PERSON_TYPE" property="personType" jdbcType="CHAR" />
+    <result column="ORGAN_TYPE" property="organType" jdbcType="CHAR" />
+    <result column="PRODUCT_TYPE" property="productType" jdbcType="CHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="PLATFORM_CODE" property="platformCode" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID,<!--  SUB_ACCT_TYPE, --> SUB_ACCOUNT_CODE, SUB_ACCOUNT_NAME, SUB_ACCOUNT_NUM, PERSON_TYPE, 
+    ORGAN_TYPE, PRODUCT_TYPE, REMARK, CREATE_TIME, UPDATE_TIME,PLATFORM_CODE
+    ,ACCOUNT_TYPE
+  </sql>
+  <sql id="Base_ColumnVo_List" >
+    A.ID, <!-- A.SUB_ACCT_TYPE, --> A.SUB_ACCOUNT_CODE, A.SUB_ACCOUNT_NAME, A.SUB_ACCOUNT_NUM, A.PERSON_TYPE, 
+    A.ORGAN_TYPE, A.PRODUCT_TYPE, A.REMARK, A.CREATE_TIME, A.UPDATE_TIME,A.PLATFORM_CODE
+    ,A.ACCOUNT_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_CONF_SUB_ACCT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据客户类型，关联属性查询子账户配置信息 -->
+  <select id="findByPersonType" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<if test="relationType != null">
+			and PERSON_TYPE = #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	<select id="findByOrganType" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<!-- 个人客户 -->
+		<if test="relationType != null ">
+			and ORGAN_TYPE = #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	<select id="findByProductType" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<!-- 个人客户 -->
+		<if test="relationType !=null">
+			and PRODUCT_TYPE = #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	
+	<!-- 根据关联关系，渠道，一户通类型查询子账户配置信息 -->
+  <select id="findByPersonType3Element" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<if test="relationType != null">
+			and PERSON_TYPE = #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		<if test="accountType != null">
+			and ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	<select id="findByOrganType3Element" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<!-- 个人客户 -->
+		<if test="relationType != null ">
+			and ORGAN_TYPE = #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		<if test="accountType != null">
+			and ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	<select id="findByProductType3Element" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<!-- 个人客户 -->
+		<if test="relationType !=null">
+			and PRODUCT_TYPE = #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		<if test="accountType != null">
+			and ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	<select id="findByPersonType3Elements" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<!-- 个人客户 -->
+		<if test="relationType !=null">
+			and PERSON_TYPE != #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		<if test="accountType != null">
+			and ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	 <select id="findByOrganType3Elements" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<!-- 机构客户 -->
+		<if test="relationType !=null">
+			and ORGAN_TYPE != #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		<if test="accountType != null">
+			and ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	 <select id="findByProductType3Elements" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<!-- 产品客户 -->
+		<if test="relationType !=null">
+			and PRODUCT_TYPE != #{relationType,jdbcType=CHAR}
+		</if>
+		<if test="platformCode != null">
+			and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		</if>
+		<if test="accountType != null">
+			and ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME DESC
+	</select>
+	 <select id="findByAccountName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT where SUB_ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR}
+   </select>
+	
+	<!-- 根据查询条件查询 -->
+	<select id="list" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctDto" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_ColumnVo_List" />
+    	from TB_MRS_CONF_SUB_ACCT A
+    	where 1=1
+   	  <if test="id != null and id != ''" >
+   	   and A.ID = #{id,jdbcType=CHAR}
+      </if>
+      <!-- <if test="subAcctType != null and subAcctType != ''" >
+   	   and A.SUB_ACCT_TYPE = #{subAcctType,jdbcType=CHAR}
+      </if> -->
+      <if test="subAccountCode != null and subAccountCode != ''">
+        and A.SUB_ACCOUNT_CODE = #{subAccountCode,jdbcType=CHAR}
+      </if>
+      <if test="subAccountName != null and subAccountName != ''" >
+   	   	and	instr(A.SUB_ACCOUNT_NAME, #{subAccountName,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="subAccountNum != null and subAccountNum != ''">
+        and A.SUB_ACCOUNT_NUM <![CDATA[   =  ]]>#{subAccountNum}
+      </if>
+      <if test="personType != null and personType != ''">
+        and A.PERSON_TYPE = #{personType,jdbcType=CHAR}
+      </if>
+      <if test="organType != null and organType != ''">
+        and A.ORGAN_TYPE = #{organType,jdbcType=CHAR}
+      </if>
+      <if test="productType != null and productType != ''">
+        and A.PRODUCT_TYPE = #{productType,jdbcType=CHAR}
+      </if>
+      
+      <if test="platformCode != null and platformCode != ''">
+        and A.PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+      </if>
+      <if test="accountType != null and accountType != ''">
+        and A.ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+      </if>
+      <if test="remark != null and remark != ''" >
+   	   	and	instr(A.REMARK, #{remark,jdbcType=VARCHAR}) > 0
+      </if>
+      <if test="startTime !=null and startTime !=''">
+		and to_char(A.CREATE_TIME,'yyyy-MM-dd')<![CDATA[   >=  ]]>#{startTime}
+	  </if>
+	  <if test="endTime !=null and endTime !=''">
+		and to_char(A.CREATE_TIME,'yyyy-MM-dd')<![CDATA[   <=  ]]>#{endTime}
+	</if>
+     ORDER BY A.PLATFORM_CODE , A.CREATE_TIME DESC
+  </select>
+  <!--  -->
+  <select id="checkMrsConfSubAcct" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_MRS_CONF_SUB_ACCT
+		where 1=1
+		<if test="id !=null and id != ''">
+			and ID != #{id,jdbcType=CHAR}
+		</if>
+		and SUB_ACCOUNT_CODE = #{subAccountCode,jdbcType=CHAR}
+		and PLATFORM_CODE = #{platformCode,jdbcType=CHAR}
+		and ACCOUNT_TYPE = #{accountType,jdbcType=CHAR}
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_CONF_SUB_ACCT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctDto" >
+    insert into TB_MRS_CONF_SUB_ACCT (ID, <!-- SUB_ACCT_TYPE, --> SUB_ACCOUNT_CODE, 
+      SUB_ACCOUNT_NAME, SUB_ACCOUNT_NUM, PERSON_TYPE, 
+      ORGAN_TYPE, PRODUCT_TYPE, REMARK, 
+      CREATE_TIME, UPDATE_TIME,PLATFORM_CODE ,ACCOUNT_TYPE)
+    values (#{id,jdbcType=VARCHAR},<!--  #{subAcctType,jdbcType=CHAR}, --> #{subAccountCode,jdbcType=VARCHAR}, 
+      #{subAccountName,jdbcType=VARCHAR}, #{subAccountNum,jdbcType=DECIMAL}, #{personType,jdbcType=CHAR}, 
+      #{organType,jdbcType=CHAR}, #{productType,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{platformCode,jdbcType=VARCHAR},#{accountType,jdbcType=VARCHAR} )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctDto" >
+    insert into TB_MRS_CONF_SUB_ACCT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <!-- <if test="subAcctType != null" >
+        SUB_ACCT_TYPE,
+      </if> -->
+      <if test="subAccountCode != null" >
+        SUB_ACCOUNT_CODE,
+      </if>
+      <if test="subAccountName != null" >
+        SUB_ACCOUNT_NAME,
+      </if>
+      <if test="subAccountNum != null" >
+        SUB_ACCOUNT_NUM,
+      </if>
+      <if test="personType != null" >
+        PERSON_TYPE,
+      </if>
+      <if test="organType != null" >
+        ORGAN_TYPE,
+      </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="platformCode != null" >
+        PLATFORM_CODE,
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="subAcctType != null" >
+        #{subAcctType,jdbcType=CHAR},
+      </if> -->
+      <if test="subAccountCode != null" >
+        #{subAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountName != null" >
+        #{subAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountNum != null" >
+        #{subAccountNum,jdbcType=DECIMAL},
+      </if>
+      <if test="personType != null" >
+        #{personType,jdbcType=CHAR},
+      </if>
+      <if test="organType != null" >
+        #{organType,jdbcType=CHAR},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="platformCode != null" >
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctDto" >
+    update TB_MRS_CONF_SUB_ACCT
+    <set >
+      <!-- <if test="subAcctType != null" >
+        SUB_ACCT_TYPE = #{subAcctType,jdbcType=CHAR},
+      </if> -->
+      <if test="subAccountCode != null" >
+        SUB_ACCOUNT_CODE = #{subAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountName != null" >
+        SUB_ACCOUNT_NAME = #{subAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccountNum != null" >
+        SUB_ACCOUNT_NUM = #{subAccountNum,jdbcType=DECIMAL},
+      </if>
+      <if test="personType != null" >
+        PERSON_TYPE = #{personType,jdbcType=CHAR},
+      </if>
+      <if test="organType != null" >
+        ORGAN_TYPE = #{organType,jdbcType=CHAR},
+      </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE = #{productType,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="platformCode != null" >
+        PLATFORM_CODE = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsConfSubAcctDto" >
+    update TB_MRS_CONF_SUB_ACCT
+    set <!-- SUB_ACCT_TYPE = #{subAcctType,jdbcType=CHAR}, -->
+      SUB_ACCOUNT_CODE = #{subAccountCode,jdbcType=VARCHAR},
+      SUB_ACCOUNT_NAME = #{subAccountName,jdbcType=VARCHAR},
+      SUB_ACCOUNT_NUM = #{subAccountNum,jdbcType=DECIMAL},
+      PERSON_TYPE = #{personType,jdbcType=CHAR},
+      ORGAN_TYPE = #{organType,jdbcType=CHAR},
+      PRODUCT_TYPE = #{productType,jdbcType=CHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      PLATFORM_CODE = #{platformCode,jdbcType=VARCHAR},
+      ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

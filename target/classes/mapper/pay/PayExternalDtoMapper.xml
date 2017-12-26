@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayExternalHandleDtoMapper" >
+  
+	<resultMap id="resultMap" type="com.ylink.inetpay.common.project.pay.dto.PayExternalHandleDto" >
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="INNER_BANK" property="innerBank" jdbcType="VARCHAR" />
+		<result column="INNER_ACCT" property="innerAcct" jdbcType="VARCHAR" />
+		<result column="INNER_SUBJECT" property="innerSubject" jdbcType="VARCHAR" />
+		<result column="OUTER_BANK" property="outerBank" jdbcType="VARCHAR" />
+		<result column="OUTER_ACCT" property="outerAcct" jdbcType="VARCHAR" />
+		<result column="OUTER_SUBJECT" property="outerSubject" jdbcType="VARCHAR" />
+		<result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+		<result column="ABSTRACTS" property="abstracts" jdbcType="VARCHAR" />
+		<result column="N_CHECK_NUM" property="nCheckNum" jdbcType="DECIMAL" />
+		<result column="A_CHECK_NUM" property="aCheckNum" jdbcType="DECIMAL" />
+		<result column="HANDLE" property="handle" jdbcType="VARCHAR" />
+		<result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+		<result column="PAY_STATUS" property="payStatus" jdbcType="CHAR" />
+		<result column="MEMO" property="memo" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATER" property="creater" jdbcType="VARCHAR" />
+		<result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--查询-->
+	<select id="getByCond"  parameterType="com.ylink.inetpay.common.project.pay.dto.PayExternalHandleDto"  resultType="java.util.List" resultMap="resultMap">
+ 		select 
+ 		ID ,
+		  INNER_BANK ,
+		  INNER_ACCT ,
+		  INNER_SUBJECT,
+		  OUTER_BANK ,
+		  OUTER_ACCT ,
+		  OUTER_SUBJECT,
+		  AMOUNT ,
+		  ABSTRACTS,
+		  N_CHECK_NUM ,
+		  A_CHECK_NUM ,
+		  HANDLE ,
+		  CHECK_STATUS ,
+		  MEMO ,
+		  CREATE_DATE,
+		  CREATER ,
+		  MODIFY_DATE ,
+		  REVISER,
+		  PAY_STATUS
+ 		 from TB_PAY_EXTERNAL_HANDLE
+			 <where>
+			 		CHECK_STATUS !='99'
+				  <if test="innerBank != null and innerBank!=''">
+				       AND INNER_BANK = #{innerBank}
+				  </if>
+				  <if test="innerAcct != null and innerAcct!=''">
+				       AND INNER_ACCT = #{innerAcct}
+				  </if>
+				   <if test="outerBank != null and outerBank!=''">
+				       AND OUTER_BANK = #{outerBank}
+				  </if>
+				  <if test="outerAcct != null and outerAcct!=''">
+				       AND OUTER_ACCT = #{outerAcct}
+				  </if>
+				   <if test="handle != null and handle!=''">
+				       AND HANDLE = #{handle}
+				  </if>
+				  <if test="checkStatus != null and checkStatus!=''">
+				       AND CHECK_STATUS = #{checkStatus,jdbcType=CHAR}
+				  </if>
+			 </where>
+			 order by CREATE_DATE desc
+	</select>
+ 
+	<!--插入-->
+	<insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayExternalHandleDto">
+		 insert into TB_PAY_EXTERNAL_HANDLE
+		 (
+		ID ,
+		  INNER_BANK ,
+		  INNER_ACCT ,
+		  INNER_SUBJECT,
+		  OUTER_BANK ,
+		  OUTER_ACCT ,
+		  OUTER_SUBJECT,
+		  AMOUNT ,
+		  ABSTRACTS,
+		  N_CHECK_NUM ,
+		  A_CHECK_NUM ,
+		  HANDLE ,
+		  CHECK_STATUS ,
+		  MEMO ,
+		  CREATE_DATE,
+		  CREATER ,
+		  MODIFY_DATE ,
+		  REVISER,
+		  PAY_STATUS
+		  )
+		  values(
+		  	#{id,jdbcType=VARCHAR} ,
+		  	#{innerBank,jdbcType=VARCHAR} ,
+		  	#{innerAcct,jdbcType=VARCHAR} ,
+		  	#{innerSubject,jdbcType=VARCHAR} ,
+		  	#{outerBank,jdbcType=VARCHAR} ,
+		  	#{outerAcct,jdbcType=VARCHAR} ,
+		  	#{outerSubject,jdbcType=VARCHAR} ,
+		  	#{amount,jdbcType=DECIMAL} ,
+		  	#{abstracts,jdbcType=VARCHAR} ,
+		  	#{nCheckNum,jdbcType=DECIMAL} ,
+		  	#{aCheckNum,jdbcType=DECIMAL} ,
+		  	#{handle,jdbcType=VARCHAR} ,
+		  	#{checkStatus,jdbcType=CHAR} ,
+		  	#{memo,jdbcType=VARCHAR} ,
+		  	#{createDate,jdbcType=TIMESTAMP} ,
+		  	#{creater,jdbcType=VARCHAR} ,
+		  	#{modifyDate,jdbcType=TIMESTAMP} ,
+		  	#{reviser,jdbcType=VARCHAR},
+		  	#{payStatus,jdbcType=CHAR}
+		  )
+	</insert>
+	<update id="update" parameterType="com.ylink.inetpay.common.project.pay.dto.PayExternalHandleDto">
+		update TB_PAY_EXTERNAL_HANDLE
+			<set>
+			 <if test="aCheckNum != null">
+                     A_CHECK_NUM = #{aCheckNum,jdbcType=VARCHAR},
+             </if>
+               <if test="reviser != null and reviser!=''">
+                     REVISER = #{reviser,jdbcType=VARCHAR},
+             </if>
+             <if test="modifyDate != null and modifyDate!=''">
+                     MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+             </if>
+              <if test="checkStatus != null">
+                     CHECK_STATUS  = #{checkStatus,jdbcType=CHAR}
+             </if>
+			</set>
+			<where>
+				ID = #{id}
+			</where>
+	</update>
+	<select id="details"  parameterType="String" resultMap="resultMap">
+		 select 
+		 ID ,
+		  INNER_BANK ,
+		  INNER_ACCT ,
+		  INNER_SUBJECT,
+		  OUTER_BANK ,
+		  OUTER_ACCT ,
+		  OUTER_SUBJECT,
+		  AMOUNT ,
+		  ABSTRACTS,
+		  N_CHECK_NUM ,
+		  A_CHECK_NUM ,
+		  HANDLE ,
+		  CHECK_STATUS ,
+		  MEMO ,
+		  CREATE_DATE,
+		  CREATER ,
+		  MODIFY_DATE ,
+		  REVISER,
+		  PAY_STATUS
+		 from TB_PAY_EXTERNAL_HANDLE
+		 where ID=#{id}
+	</select>
+</mapper>

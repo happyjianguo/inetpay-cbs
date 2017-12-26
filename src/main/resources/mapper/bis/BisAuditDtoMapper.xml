@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisAuditDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUS_ID" property="busId" jdbcType="VARCHAR" />
+    <result column="AUDIT_TYPE" property="auditType" jdbcType="CHAR" />
+    <result column="AUDITOR" property="auditor" jdbcType="VARCHAR" />
+    <result column="AUDITOR_NAME" property="auditorName" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS" property="auditStatus" jdbcType="CHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto" extends="BaseResultMap" >
+    <result column="REMARK" property="remark" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUS_ID, AUDIT_TYPE, AUDITOR, AUDITOR_NAME, AUDIT_STATUS, AUDIT_TIME,REASON
+  </sql>
+  <sql id="Blob_Column_List" >
+    REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findListBybusId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_AUDIT
+    where BUS_ID = #{id,jdbcType=VARCHAR} AND AUDIT_TYPE = #{auditType,jdbcType=CHAR}
+    order by AUDIT_TIME ASC
+  </select>
+  <select id="findFrozenListBybusId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_AUDIT
+    where BUS_ID = #{id,jdbcType=VARCHAR} 
+    AND (AUDIT_TYPE = #{amountFrozen,jdbcType=CHAR})
+    order by AUDIT_TIME ASC
+  </select>
+  <select id="findRefundListBybusIds" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_AUDIT
+    where AUDITOR = #{loginName,jdbcType=VARCHAR}
+	and AUDIT_TYPE in (#{busiRefund,jdbcType=CHAR},#{merRefund,jdbcType=CHAR})
+	and AUDITOR = #{loginName,jdbcType=VARCHAR} 
+	<if test="busiIds != null and busiIds.size()>0" >
+	 	 and BUS_ID in 
+		<foreach collection="busiIds" index="index" item="item" open="(" separator="," close=")">
+           #{item}
+      	</foreach>
+	 </if>
+  </select>
+  <select id="isAudit" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_AUDIT
+    where BUS_ID = #{id,jdbcType=VARCHAR} AND AUDITOR = #{loginName,jdbcType=VARCHAR}
+    <if test="auditType != null and auditType != ''" >
+		and AUDIT_TYPE = #{auditType,jdbcType=CHAR}
+	</if>
+  </select>
+  <select id="findBisAuditDtoByLoginName" resultMap="BaseResultMap">
+  	 select 
+      <include refid="Base_Column_List" />
+    from TB_BIS_AUDIT
+    where AUDITOR = #{loginName,jdbcType=VARCHAR} 
+    <if test="auditType != null and auditType != ''" >
+		and AUDIT_TYPE = #{auditType,jdbcType=CHAR}
+	</if>
+    <if test="ids != null and ids != ''" >
+	 	 and BUS_ID in 
+		<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+           #{item}
+      	</foreach>
+	 </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto" >
+    insert into TB_BIS_AUDIT (ID, BUS_ID, AUDIT_TYPE, 
+      AUDITOR, AUDITOR_NAME, AUDIT_STATUS, 
+      AUDIT_TIME, REMARK,REASON)
+    values (#{id,jdbcType=VARCHAR}, #{busId,jdbcType=VARCHAR}, #{auditType,jdbcType=CHAR}, 
+      #{auditor,jdbcType=VARCHAR}, #{auditorName,jdbcType=VARCHAR}, #{auditStatus,jdbcType=CHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=CLOB}, #{reason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto" >
+    insert into TB_BIS_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busId != null" >
+        BUS_ID,
+      </if>
+      <if test="auditType != null" >
+        AUDIT_TYPE,
+      </if>
+      <if test="auditor != null" >
+        AUDITOR,
+      </if>
+      <if test="auditorName != null" >
+        AUDITOR_NAME,
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="reason != null" >
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busId != null" >
+        #{busId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditType != null" >
+        #{auditType,jdbcType=CHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null" >
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=CLOB},
+      </if>
+      <if test="reason != null" >
+         #{reason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto" >
+    update TB_BIS_AUDIT
+    <set >
+      <if test="busId != null" >
+        BUS_ID = #{busId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditType != null" >
+        AUDIT_TYPE = #{auditType,jdbcType=CHAR},
+      </if>
+      <if test="auditor != null" >
+        AUDITOR = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null" >
+        AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=CLOB},
+      </if>
+      <if test="reason != null" >
+        REASON =  #{reason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto" >
+    update TB_BIS_AUDIT
+    set BUS_ID = #{busId,jdbcType=VARCHAR},
+      AUDIT_TYPE = #{auditType,jdbcType=CHAR},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      REASON =  #{reason,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=CLOB}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto" >
+    update TB_BIS_AUDIT
+    set BUS_ID = #{busId,jdbcType=VARCHAR},
+      AUDIT_TYPE = #{auditType,jdbcType=CHAR},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      REASON =  #{reason,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!--查询-->
+	<select id="getByCond"  parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto"  resultType="java.util.List" resultMap="BaseResultMap">
+	 	select
+		 	ID, BUS_ID, AUDIT_TYPE, 
+     		AUDITOR, AUDITOR_NAME, AUDIT_STATUS, 
+      		AUDIT_TIME, REMARK,REASON
+	 	from TB_BIS_AUDIT
+	 	 where BUS_ID = #{busId,jdbcType=VARCHAR}
+		 order by AUDIT_TIME asc
+	</select>
+	
+	<select id="queryAllToList" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAuditDto" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_AUDIT
+    <where>
+      <if test="busId != null and busId = ''" >
+      and  BUS_ID = #{busId,jdbcType=VARCHAR}
+      </if>
+      <if test="auditType != null and auditType = ''" >
+      and  AUDIT_TYPE = #{auditType,jdbcType=CHAR}
+      </if>
+      <if test="auditor != null and auditor = ''" >
+      and  AUDITOR = #{auditor,jdbcType=VARCHAR}
+      </if>
+      <if test="auditorName != null and auditorName = ''" >
+      and  AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR}
+      </if>
+      <if test="auditStatus != null and auditStatus = ''" >
+      and  AUDIT_STATUS = #{auditStatus,jdbcType=CHAR}
+      </if>
+      <if test="auditTime != null and auditTime = ''" >
+      and  AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="reason != null and reason = ''" >
+      and  REASON =  #{reason,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by AUDIT_TIME ASC
+  </select>
+  <select id="getAucitNum" resultType="long">
+	 	select count(*) from TB_BIS_AUDIT
+	 	<where>
+	 		 <if test="ids != null and ids != ''" >
+	 		 	and BUS_ID in
+				<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+	 		 </if>
+	 		 <if test="auditType != null and auditType != ''" >
+	 		 	and AUDIT_TYPE = #{auditType,jdbcType=CHAR}
+	 		 </if>
+	 		 <if test="auditStatus != null and auditStatus != ''" >
+	 		 	and AUDIT_STATUS = #{auditStatus,jdbcType=CHAR}
+	 		 </if>
+	 		 <if test="loginName != null and loginName != ''" >
+	 		 	and AUDITOR = #{loginName,jdbcType=VARCHAR}
+	 		 </if>
+	 	</where>
+	</select>
+</mapper>

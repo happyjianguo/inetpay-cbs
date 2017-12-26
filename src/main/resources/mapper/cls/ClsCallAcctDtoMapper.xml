@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsCallAcctDtoMapper" >
+  
+	<resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsCallAcct" >
+		<result column="ID" property="id" jdbcType="CHAR" />
+		<result column="CALL_DAY" property="callDay" jdbcType="CHAR" />
+		<result column="BANK_CUST_ID" property="bankCustId" jdbcType="VARCHAR" />
+		<result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+		<result column="PAYER_BANK_TYPE" property="payerBankType" jdbcType="CHAR" />
+		<result column="PAYER_BANK_ACC" property="payerBankAcc" jdbcType="VARCHAR" />
+		<result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+		<result column="PAYEE_BANK_TYPE" property="payeeBankType" jdbcType="CHAR" />
+		<result column="PAYEE_BANK_ACC" property="payeeBankAcc" jdbcType="VARCHAR" />
+		<result column="CALL_AMT" property="callAmt" jdbcType="DECIMAL" />
+		<result column="PAYMENT" property="payment" jdbcType="CHAR" />
+		<result column="SETTLE_STATUS" property="settleStatus" jdbcType="CHAR" />
+		<result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+		<result column="EXCEPT_REASON" property="exceptReason" jdbcType="VARCHAR" />
+		<result column="CALC_PROCESS" property="calcProcess" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ListResultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsCallAcct" >
+		<result column="ID" property="id" jdbcType="CHAR" />
+		<result column="CALL_DAY" property="callDay" jdbcType="CHAR" />
+		<result column="BANK_CUST_ID" property="bankCustId" jdbcType="VARCHAR" />
+		<result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+		<result column="PAYER_BANK_TYPE" property="payerBankType" jdbcType="CHAR" />
+		<result column="PAYER_BANK_ACC" property="payerBankAcc" jdbcType="VARCHAR" />
+		<result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+		<result column="PAYEE_BANK_TYPE" property="payeeBankType" jdbcType="CHAR" />
+		<result column="PAYEE_BANK_ACC" property="payeeBankAcc" jdbcType="VARCHAR" />
+		<result column="CALL_AMT" property="callAmt" jdbcType="DECIMAL" />
+		<result column="PAYMENT" property="payment" jdbcType="CHAR" />
+		<result column="SETTLE_STATUS" property="settleStatus" jdbcType="CHAR" />
+		<result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+		<result column="EXCEPT_REASON" property="exceptReason" jdbcType="VARCHAR" />
+		<result column="CALC_PROCESS" property="calcProcess" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		
+	    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+	    <result column="APPLICANT" property="applicant" jdbcType="VARCHAR" />
+	    <result column="APPLICANT_NAME" property="applicantName" jdbcType="VARCHAR" />
+	    <result column="APPLY_SUGG" property="applySugg" jdbcType="VARCHAR" />
+	    <result column="APPLY_TIME" property="applyTime" jdbcType="TIMESTAMP" />
+	    <result column="REVIEW_STATUS" property="reviewStatus" jdbcType="CHAR" />
+	    <result column="AUDITER" property="auditer" jdbcType="VARCHAR" />
+	    <result column="AUDITER_NAME" property="auditerName" jdbcType="VARCHAR" />
+	    <result column="REVIEW_TIME" property="reviewTime" jdbcType="TIMESTAMP" />
+	    <result column="CHECK_SUGG" property="checkSugg" jdbcType="VARCHAR" />
+	</resultMap>
+ 
+	<!--查询-->
+	<select id="queryClsCallAcctByDate"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	CALL_DAY ,
+ 	BANK_CUST_ID ,
+ 	PAYER_CUST_ID ,
+ 	PAYER_BANK_TYPE ,
+ 	PAYER_BANK_ACC ,
+ 	PAYEE_CUST_ID ,
+ 	PAYEE_BANK_TYPE ,
+ 	PAYEE_BANK_ACC ,
+ 	CALL_AMT ,
+ 	PAYMENT ,
+ 	SETTLE_STATUS ,
+ 	DEAL_STATUS,
+ 	EXCEPT_REASON ,
+ 	CALC_PROCESS ,
+ 	REMARK ,
+ 	CREATE_TIME ,
+ 	UPDATE_TIME 
+ from TB_CLS_CALL_ACCT
+ where CALL_DAY=#{callDay,jdbcType=CHAR}
+	</select>
+ 
+	<select id="queryUnAccountRecordCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+ select  count(id)  from TB_CLS_CALL_ACCT
+ where CALL_DAY=#{callDay,jdbcType=CHAR} 
+ and SETTLE_STATUS='1'
+ and DEAL_STATUS='4'
+	</select>
+ 
+	<select id="queryByStatus"  parameterType="java.util.Map" resultMap="resultMap">
+ select * from TB_CLS_CALL_ACCT
+ where CALL_DAY=#{callDay,jdbcType=CHAR}
+ and SETTLE_STATUS=#{settleStatus,jdbcType=CHAR} 
+ and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+	</select>
+ 
+	<update id="updateCallAcctStatus"  parameterType="java.util.Map">
+ update TB_CLS_CALL_ACCT
+ set SETTLE_STATUS=#{newSettleStatus,jdbcType=CHAR} ,
+ DEAL_STATUS=#{newDealStatus,jdbcType=CHAR},
+ UPDATE_TIME=SYSDATE
+ where CALL_DAY=#{callDay,jdbcType=CHAR} 
+ and SETTLE_STATUS=#{oldSettleStatus,jdbcType=CHAR}
+ and DEAL_STATUS=#{oldDealStatus,jdbcType=CHAR}
+	</update>
+ 
+	<!--更新-->
+	<update id="updateClsCallAcct" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsCallAcct">
+ update TB_CLS_CALL_ACCT set
+ 	PAYER_CUST_ID=#{payerCustId,jdbcType=VARCHAR}  ,
+ 	PAYER_BANK_TYPE=#{payerBankType,jdbcType=CHAR}  ,
+ 	PAYER_BANK_ACC=#{payerBankAcc,jdbcType=VARCHAR}  ,
+ 	PAYEE_CUST_ID=#{payeeCustId,jdbcType=VARCHAR}  ,
+ 	PAYEE_BANK_TYPE=#{payeeBankType,jdbcType=CHAR}  ,
+ 	PAYEE_BANK_ACC=#{payeeBankAcc,jdbcType=VARCHAR}  ,
+ 	CALL_AMT=#{callAmt,jdbcType=DECIMAL}  ,
+ 	PAYMENT=#{payment,jdbcType=CHAR}  ,
+ 	SETTLE_STATUS=#{settleStatus,jdbcType=CHAR}  ,
+ 	DEAL_STATUS=#{dealStatus,jdbcType=CHAR} ,
+ 	EXCEPT_REASON=#{exceptReason,jdbcType=VARCHAR}  ,
+ 	CALC_PROCESS=#{calcProcess,jdbcType=VARCHAR}  ,
+ 	REMARK=#{remark,jdbcType=VARCHAR}  ,
+ 	UPDATE_TIME=sysdate  
+ where 
+ 	ID=#{id,jdbcType=CHAR}  
+	</update>
+ 
+	<!--插入-->
+	<insert id="addClsCallAcct" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsCallAcct">
+ insert into TB_CLS_CALL_ACCT
+ (
+  ID ,
+  CALL_DAY ,
+  BANK_CUST_ID ,
+  PAYER_CUST_ID ,
+  PAYER_BANK_TYPE ,
+  PAYER_BANK_ACC ,
+  PAYEE_CUST_ID ,
+  PAYEE_BANK_TYPE ,
+  PAYEE_BANK_ACC ,
+  CALL_AMT ,
+  PAYMENT ,
+  SETTLE_STATUS ,
+  DEAL_STATUS,
+  EXCEPT_REASON ,
+  CALC_PROCESS ,
+  REMARK ,
+  CREATE_TIME ,
+  UPDATE_TIME 
+  )
+  values(
+  	#{id,jdbcType=CHAR} ,
+  	#{callDay,jdbcType=CHAR} ,
+  	#{bankCustId,jdbcType=VARCHAR} ,
+  	#{payerCustId,jdbcType=VARCHAR} ,
+  	#{payerBankType,jdbcType=CHAR} ,
+  	#{payerBankAcc,jdbcType=VARCHAR} ,
+  	#{payeeCustId,jdbcType=VARCHAR} ,
+  	#{payeeBankType,jdbcType=CHAR} ,
+  	#{payeeBankAcc,jdbcType=VARCHAR} ,
+  	#{callAmt,jdbcType=DECIMAL} ,
+  	#{payment,jdbcType=CHAR} ,
+  	#{settleStatus,jdbcType=CHAR} ,
+  	#{dealStatus,jdbcType=CHAR} ,
+  	#{exceptReason,jdbcType=VARCHAR} ,
+  	#{calcProcess,jdbcType=VARCHAR} ,
+  	#{remark,jdbcType=VARCHAR} ,
+  	#{createTime,jdbcType=TIMESTAMP} ,
+  	#{updateTime,jdbcType=TIMESTAMP} 
+  )
+	</insert>
+ 
+	<!--删除-->
+	<delete id="deleteClsCallAcct">
+ delete from TB_CLS_CALL_ACCT 
+ where
+  ID  in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+        #{item}  
+		</foreach>  
+	</delete>
+	<sql id="Base_Column_List" >
+	    a.ID ,a.CALL_DAY ,a.BANK_CUST_ID ,a.PAYER_CUST_ID ,a.PAYER_BANK_TYPE ,a.PAYER_BANK_ACC ,a.PAYEE_CUST_ID ,
+	 	a.PAYEE_BANK_TYPE ,a.PAYEE_BANK_ACC ,a.CALL_AMT ,a.PAYMENT ,a.SETTLE_STATUS ,a.DEAL_STATUS,a.EXCEPT_REASON ,
+	 	a.CALC_PROCESS ,a.REMARK ,a.CREATE_TIME ,a.UPDATE_TIME,
+	 	c.BUSI_TYPE,c.APPLICANT,c.APPLICANT_NAME,c.APPLY_SUGG,c.APPLY_TIME,
+	 	c.REVIEW_STATUS,c.AUDITER,c.AUDITER_NAME,c.REVIEW_TIME,c.CHECK_SUGG
+	</sql>
+	<select id="pageAuditPageList"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsCallAcct" resultMap="ListResultMap">
+		 select 
+		 <include refid="Base_Column_List" />
+		 from TB_CLS_CALL_ACCT a left join TB_CLS_RECORD_CHECK c on a.ID=c.REPORT_ID
+		 <where>
+			 <if test="acct.callDay != null and acct.callDay !=''" >
+	      	 and  a.CALL_DAY = #{acct.callDay,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.bankCustId != null and acct.bankCustId !=''" >
+	      	 and  a.BANK_CUST_ID = #{acct.bankCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.id != null and acct.id !=''" >
+	      	 and  a.ID = #{acct.id,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerCustId != null and acct.payerCustId !=''" >
+	      	 and  a.PAYER_CUST_ID = #{acct.payerCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerBankType != null and acct.payerBankType !=''" >
+	      	 and  a.PAYER_BANK_TYPE = #{acct.payerBankType,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerBankAcc != null and acct.payerBankAcc !=''" >
+	      	 and  a.PAYER_BANK_ACC = #{acct.payerBankAcc,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeCustId != null and acct.payeeCustId !=''" >
+	      	 and  a.PAYEE_CUST_ID = #{acct.payeeCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeBankType != null and acct.payeeBankType !=''" >
+	      	 and  a.PAYEE_BANK_TYPE = #{acct.payeeBankType,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeBankAcc != null and acct.payeeBankAcc !=''" >
+	      	 and  a.PAYEE_BANK_ACC = #{acct.payeeBankAcc,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.callAmt != null and acct.callAmt !=''" >
+	      	 and  a.CALL_AMT = #{acct.callAmt,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payment != null and acct.payment !=''" >
+	      	 and  a.PAYMENT = #{acct.payment,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.dealStatus != null and acct.dealStatus !=''" >
+	      	 and  a.DEAL_STATUS = #{acct.dealStatus,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.exceptReason != null and acct.exceptReason !=''" >
+	      	 and  a.EXCEPT_REASON = #{acct.exceptReason,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.calcProcess != null and acct.calcProcess !=''" >
+	      	 and  a.CALC_PROCESS = #{acct.calcProcess,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.remark != null and acct.remark !=''" >
+	      	 and  a.REMARK = #{acct.remark,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.startCreateTime != null and acct.startCreateTime !=''" >
+	      	 and to_char(a.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startCreateTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endCreateTime != null and acct.endCreateTime !=''" >
+	      	 and to_char(a.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endCreateTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 <if test="acct.startUpdateTime != null and acct.startUpdateTime !=''" >
+	      	 and to_char(a.UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startUpdateTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endUpdateTime != null and acct.endUpdateTime !=''" >
+	      	 and to_char(a.UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endUpdateTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 
+	      	 <if test="acct.busiType != null and acct.busiType !=''" >
+	      	 and  c.BUSI_TYPE = #{acct.busiType,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.applicant != null and acct.applicant !=''" >
+	      	 and  c.APPLICANT = #{acct.applicant,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.applicantName != null and acct.applicantName !=''" >
+	      	 and  c.APPLICANT_NAME = #{acct.applicantName,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.applySugg != null and acct.applySugg !=''" >
+	      	 and  c.APPLY_SUGG = #{acct.applySugg,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.startApplyTime != null and acct.startApplyTime !=''" >
+	      	 and to_char(c.APPLY_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startApplyTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endApplyTime != null and acct.endApplyTime !=''" >
+	      	 and to_char(c.APPLY_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endApplyTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 <if test="acct.reviewStatus != null and acct.reviewStatus !=''" >
+	      	 and  c.REVIEW_STATUS = #{acct.reviewStatus,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.auditer != null and acct.auditer !=''" >
+	      	 and  c.AUDITER = #{acct.auditer,jdbcType=VARCHAR}
+	      	 </if>
+	      	 <if test="acct.auditerName != null and acct.auditerName !=''" >
+	      	 and  c.AUDITER_NAME = #{acct.auditerName,jdbcType=VARCHAR}
+	      	 </if>
+	      	 <if test="acct.startReviewTime != null and acct.startReviewTime !=''" >
+	      	 and to_char(c.AUDITER_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startReviewTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endReviewTime != null and acct.endReviewTime !=''" >
+	      	 and to_char(c.AUDITER_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endReviewTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 <if test="acct.checkSugg != null and acct.checkSugg !=''" >
+	      	 and  c.CHECK_SUGG = #{acct.checkSugg,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 and a.PAYMENT=#{payment,jdbcType=CHAR}
+	      	 and  a.SETTLE_STATUS = #{settleStatus,jdbcType=CHAR}
+		 </where>
+		 	order by a.CREATE_TIME desc
+	</select>
+	
+	<select id="pageAuditResultPageList"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsCallAcct" resultMap="ListResultMap">
+		 select 
+		 <include refid="Base_Column_List" />
+		 from TB_CLS_CALL_ACCT a left join TB_CLS_RECORD_CHECK c on a.ID=c.REPORT_ID
+		 <where>
+			 <if test="acct.callDay != null and acct.callDay !=''" >
+	      	 and  a.CALL_DAY = #{acct.callDay,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.bankCustId != null and acct.bankCustId !=''" >
+	      	 and  a.BANK_CUST_ID = #{acct.bankCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.id != null and acct.id !=''" >
+	      	 and  a.ID = #{acct.id,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerCustId != null and acct.payerCustId !=''" >
+	      	 and  a.PAYER_CUST_ID = #{acct.payerCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerBankType != null and acct.payerBankType !=''" >
+	      	 and  a.PAYER_BANK_TYPE = #{acct.payerBankType,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerBankAcc != null and acct.payerBankAcc !=''" >
+	      	 and  a.PAYER_BANK_ACC = #{acct.payerBankAcc,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeCustId != null and acct.payeeCustId !=''" >
+	      	 and  a.PAYEE_CUST_ID = #{acct.payeeCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeBankType != null and acct.payeeBankType !=''" >
+	      	 and  a.PAYEE_BANK_TYPE = #{acct.payeeBankType,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeBankAcc != null and acct.payeeBankAcc !=''" >
+	      	 and  a.PAYEE_BANK_ACC = #{acct.payeeBankAcc,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.callAmt != null and acct.callAmt !=''" >
+	      	 and  a.CALL_AMT = #{acct.callAmt,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payment != null and acct.payment !=''" >
+	      	 and  a.PAYMENT = #{acct.payment,jdbcType=CHAR}
+	      	 </if>		
+	      	 <if test="acct.dealStatus != null and acct.dealStatus !=''" >
+	      	 and  a.DEAL_STATUS = #{acct.dealStatus,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.exceptReason != null and acct.exceptReason !=''" >
+	      	 and  a.EXCEPT_REASON = #{acct.exceptReason,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.calcProcess != null and acct.calcProcess !=''" >
+	      	 and  a.CALC_PROCESS = #{acct.calcProcess,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.remark != null and acct.remark !=''" >
+	      	 and  a.REMARK = #{acct.remark,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.startCreateTime != null and acct.startCreateTime !=''" >
+	      	 and to_char(a.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startCreateTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endCreateTime != null and acct.endCreateTime !=''" >
+	      	 and to_char(a.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endCreateTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 <if test="acct.startUpdateTime != null and acct.startUpdateTime !=''" >
+	      	 and to_char(a.UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startUpdateTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endUpdateTime != null and acct.endUpdateTime !=''" >
+	      	 and to_char(a.UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endUpdateTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 
+	      	 <if test="acct.busiType != null and acct.busiType !=''" >
+	      	 and  c.BUSI_TYPE = #{acct.busiType,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.applicant != null and acct.applicant !=''" >
+	      	 and  c.APPLICANT = #{acct.applicant,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.applicantName != null and acct.applicantName !=''" >
+	      	 and  c.APPLICANT_NAME = #{acct.applicantName,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.applySugg != null and acct.applySugg !=''" >
+	      	 and  c.APPLY_SUGG = #{acct.applySugg,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.startApplyTime != null and acct.startApplyTime !=''" >
+	      	 and to_char(c.APPLY_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startApplyTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endApplyTime != null and acct.endApplyTime !=''" >
+	      	 and to_char(c.APPLY_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endApplyTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.auditer != null and acct.auditer !=''" >
+	      	 and  c.AUDITER = #{acct.auditer,jdbcType=VARCHAR}
+	      	 </if>
+	      	 <if test="acct.auditerName != null and acct.auditerName !=''" >
+	      	 and  c.AUDITER_NAME = #{acct.auditerName,jdbcType=VARCHAR}
+	      	 </if>
+	      	 <if test="acct.startReviewTime != null and acct.startReviewTime !=''" >
+	      	 and to_char(c.AUDITER_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startReviewTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endReviewTime != null and acct.endReviewTime !=''" >
+	      	 and to_char(c.AUDITER_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endReviewTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 <if test="acct.checkSugg != null and acct.checkSugg !=''" >
+	      	 and  c.CHECK_SUGG = #{acct.checkSugg,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 and a.PAYMENT=#{payment,jdbcType=CHAR}
+	      	 and (c.REVIEW_STATUS=#{auditPass,jdbcType=CHAR} or c.REVIEW_STATUS=#{auditReject,jdbcType=CHAR})
+		 </where>
+		 	order by a.CREATE_TIME desc
+	</select>
+	<select id="pagePayPageList"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsCallAcct" resultMap="ListResultMap">
+		 select 
+		 <include refid="Base_Column_List" />
+		 from TB_CLS_CALL_ACCT a left join TB_CLS_RECORD_CHECK c on a.ID=c.REPORT_ID
+		 <where>
+			 <if test="acct.callDay != null and acct.callDay !=''" >
+	      	 and  a.CALL_DAY = #{acct.callDay,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.bankCustId != null and acct.bankCustId !=''" >
+	      	 and  a.BANK_CUST_ID = #{acct.bankCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.id != null and acct.id !=''" >
+	      	 and  a.ID = #{acct.id,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerCustId != null and acct.payerCustId !=''" >
+	      	 and  a.PAYER_CUST_ID = #{acct.payerCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerBankType != null and acct.payerBankType !=''" >
+	      	 and  a.PAYER_BANK_TYPE = #{acct.payerBankType,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payerBankAcc != null and acct.payerBankAcc !=''" >
+	      	 and  a.PAYER_BANK_ACC = #{acct.payerBankAcc,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeCustId != null and acct.payeeCustId !=''" >
+	      	 and  a.PAYEE_CUST_ID = #{acct.payeeCustId,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeBankType != null and acct.payeeBankType !=''" >
+	      	 and  a.PAYEE_BANK_TYPE = #{acct.payeeBankType,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payeeBankAcc != null and acct.payeeBankAcc !=''" >
+	      	 and  a.PAYEE_BANK_ACC = #{acct.payeeBankAcc,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.callAmt != null and acct.callAmt !=''" >
+	      	 and  a.CALL_AMT = #{acct.callAmt,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.payment != null and acct.payment !=''" >
+	      	 and  a.PAYMENT = #{acct.payment,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.dealStatus != null and acct.dealStatus !=''" >
+	      	 and  a.DEAL_STATUS = #{acct.dealStatus,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.exceptReason != null and acct.exceptReason !=''" >
+	      	 and  a.EXCEPT_REASON = #{acct.exceptReason,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.calcProcess != null and acct.calcProcess !=''" >
+	      	 and  a.CALC_PROCESS = #{acct.calcProcess,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.remark != null and acct.remark !=''" >
+	      	 and  a.REMARK = #{acct.remark,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.startCreateTime != null and acct.startCreateTime !=''" >
+	      	 and to_char(a.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startCreateTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endCreateTime != null and acct.endCreateTime !=''" >
+	      	 and to_char(a.CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endCreateTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 <if test="acct.startUpdateTime != null and acct.startUpdateTime !=''" >
+	      	 and to_char(a.UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startUpdateTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endUpdateTime != null and acct.endUpdateTime !=''" >
+	      	 and to_char(a.UPDATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endUpdateTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 
+	      	 <if test="acct.busiType != null and acct.busiType !=''" >
+	      	 and  c.BUSI_TYPE = #{acct.busiType,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.applicant != null and acct.applicant !=''" >
+	      	 and  c.APPLICANT = #{acct.applicant,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.applicantName != null and acct.applicantName !=''" >
+	      	 and  c.APPLICANT_NAME = #{acct.applicantName,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.applySugg != null and acct.applySugg !=''" >
+	      	 and  c.APPLY_SUGG = #{acct.applySugg,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <if test="acct.startApplyTime != null and acct.startApplyTime !=''" >
+	      	 and to_char(c.APPLY_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startApplyTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endApplyTime != null and acct.endApplyTime !=''" >
+	      	 and to_char(c.APPLY_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endApplyTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 <if test="acct.reviewStatus != null and acct.reviewStatus !=''" >
+	      	 and  c.REVIEW_STATUS = #{acct.reviewStatus,jdbcType=CHAR}
+	      	 </if>	
+	      	 <if test="acct.auditer != null and acct.auditer !=''" >
+	      	 and  c.AUDITER = #{acct.auditer,jdbcType=VARCHAR}
+	      	 </if>
+	      	 <if test="acct.auditerName != null and acct.auditerName !=''" >
+	      	 and  c.AUDITER_NAME = #{acct.auditerName,jdbcType=VARCHAR}
+	      	 </if>
+	      	 <if test="acct.startReviewTime != null and acct.startReviewTime !=''" >
+	      	 and to_char(c.AUDITER_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{acct.startReviewTime},'YYYY-MM-DD')
+	      	 </if>	
+	      	 <if test="acct.endReviewTime != null and acct.endReviewTime !=''" >
+	      	 and to_char(c.AUDITER_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{acct.endReviewTime},'YYYY-MM-DD')
+	      	 </if>
+	      	 <if test="acct.checkSugg != null and acct.checkSugg !=''" >
+	      	 and  c.CHECK_SUGG = #{acct.checkSugg,jdbcType=VARCHAR}
+	      	 </if>	
+	      	 <!--and a.PAYMENT=#{payment,jdbcType=CHAR}-->
+	      	 and  a.SETTLE_STATUS = #{settleStatus,jdbcType=CHAR}
+		 </where>
+		 	order by a.CREATE_TIME desc
+	</select>
+	<select id="details"  parameterType="String" resultMap="ListResultMap">
+		 select 
+		 <include refid="Base_Column_List" />
+		 from TB_CLS_CALL_ACCT a left join TB_CLS_RECORD_CHECK c on a.ID=c.REPORT_ID
+		 where a.ID=#{id}
+	</select>
+</mapper>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayCheckFileDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayCheckFileDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DAY" property="accountDay" jdbcType="CHAR" />
+    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+    <result column="FTP_URL" property="ftpUrl" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ACCOUNT_DAY, FILE_NAME, FTP_URL, CHECK_STATUS, DEAL_STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_CHECK_FILE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+<select id="findCheckFile" parameterType="com.ylink.inetpay.common.project.pay.dto.PayCheckFileDto" resultMap="BaseResultMap">
+  select 
+    <include refid="Base_Column_List" />
+  from TB_PAY_CHECK_FILE
+  where 1=1
+<if test="checkStatus!=null and checkStatus!=''">
+	and CHECK_STATUS=#{checkStatus,jdbcType=CHAR}
+</if>
+<if test="dealStatus!=null and dealStatus!=''">
+	and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+</if>
+<if test="endTime!=null">
+	<!-- and DATE_FORMAT(ACCOUNT_DAY,'yyyyMMdd')&lt;=#{endTime,jdbcType=DATE} -->
+    and DATE_FORMAT(ACCOUNT_DAY,'%Y%m%d')<![CDATA[   <=  ]]>DATE_FORMAT(#{endTime,jdbcType=DATE},'%Y%m%d')
+</if>
+<if test="startTime!=null">
+	<!-- and DATE_FORMAT(ACCOUNT_DAY,'yyyyMMdd')&gt;=#{startTime,jdbcType=DATE} -->
+    and DATE_FORMAT(ACCOUNT_DAY,'%Y%m%d')<![CDATA[   >=  ]]>DATE_FORMAT(#{startTime,jdbcType=DATE},'%Y%m%d')
+</if>  
+<!-- order by  ACCOUNT_DAY desc,id desc -->
+   order by  CREATE_TIME desc,id desc
+</select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_CHECK_FILE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayCheckFileDto" >
+    insert into TB_PAY_CHECK_FILE (ID, ACCOUNT_DAY, FILE_NAME, 
+      FTP_URL, CHECK_STATUS, DEAL_STATUS, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{accountDay,jdbcType=CHAR}, #{fileName,jdbcType=VARCHAR}, 
+      #{ftpUrl,jdbcType=VARCHAR}, #{checkStatus,jdbcType=CHAR}, #{dealStatus,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayCheckFileDto" >
+    insert into TB_PAY_CHECK_FILE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="accountDay != null" >
+        ACCOUNT_DAY,
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME,
+      </if>
+      <if test="ftpUrl != null" >
+        FTP_URL,
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS,
+      </if>
+      <if test="dealStatus != null" >
+        DEAL_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDay != null" >
+        #{accountDay,jdbcType=CHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="ftpUrl != null" >
+        #{ftpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="dealStatus != null" >
+        #{dealStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayCheckFileDto" >
+    update TB_PAY_CHECK_FILE
+    <set >
+      <if test="accountDay != null" >
+        ACCOUNT_DAY = #{accountDay,jdbcType=CHAR},
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="ftpUrl != null" >
+        FTP_URL = #{ftpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="dealStatus != null" >
+        DEAL_STATUS = #{dealStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayCheckFileDto" >
+    update TB_PAY_CHECK_FILE
+    set ACCOUNT_DAY = #{accountDay,jdbcType=CHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      FTP_URL = #{ftpUrl,jdbcType=VARCHAR},
+      CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      DEAL_STATUS = #{dealStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateDealStatusToUnProcess" parameterType="java.lang.String">
+   update TB_PAY_CHECK_FILE
+    set DEAL_STATUS='1'
+   where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+</mapper>

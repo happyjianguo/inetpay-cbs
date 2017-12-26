@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActBookDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActBookDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BOOK_ID" property="bookId" jdbcType="CHAR" />
+    <result column="PAY_ID" property="payId" jdbcType="CHAR" />
+    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="CHAR" />
+    <result column="PAY_ACCOUNT_DATE" property="payAccountDate" jdbcType="CHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_NAME" property="payeeCustName" jdbcType="VARCHAR" />
+    <result column="DR_ACCOUNT_ID" property="drAccountId" jdbcType="VARCHAR" />
+    <result column="CR_ACCOUNT_ID" property="crAccountId" jdbcType="VARCHAR" />
+    <result column="ORDER_AMOUNT" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="FEE_AMOUNT" property="feeAmount" jdbcType="DECIMAL" />
+    <result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+    <result column="BOOK_SN" property="bookSn" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+    <result column="CURRENOY" property="currenoy" jdbcType="CHAR" />
+    <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
+    <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
+    <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
+    <result column="EXT4" property="ext4" jdbcType="VARCHAR" />
+    <result column="EXT5" property="ext5" jdbcType="VARCHAR" />
+    <result column="EXT6" property="ext6" jdbcType="VARCHAR" />
+    <result column="EXT7" property="ext7" jdbcType="VARCHAR" />
+    <result column="EXT8" property="ext8" jdbcType="VARCHAR" />
+    <result column="EXT9" property="ext9" jdbcType="VARCHAR" />
+    <result column="EXT10" property="ext10" jdbcType="VARCHAR" />
+    <result column="EXT11" property="ext11" jdbcType="VARCHAR" />
+    <result column="EXT12" property="ext12" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BOOK_ID, PAY_ID, TRADE_NAME, BUSI_TYPE, TRADE_TYPE, PAY_ACCOUNT_DATE, ACCOUNT_DATE, 
+    PAYER_CUST_ID, PAYEE_CUST_ID, PAYER_CUST_NAME, PAYEE_CUST_NAME, DR_ACCOUNT_ID, CR_ACCOUNT_ID, 
+    ORDER_AMOUNT, FEE_AMOUNT, CHECK_STATUS, BOOK_SN, CREATE_TIME,BOOK_TYPE,CURRENOY,
+    EXT1,EXT2,EXT3,EXT4,EXT5,EXT6,EXT7,EXT8,EXT9,EXT10,EXT11,EXT12 
+  </sql>
+    <resultMap id="ReportResultMap" type="com.ylink.inetpay.common.core.dto.ReporHeadDto" >
+ 	  <result column="allNum" property="allNum" jdbcType="DECIMAL" />
+ 	  <result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+  </resultMap>
+   <select id="reportSumData" resultMap="ReportResultMap" parameterType="com.ylink.inetpay.common.project.account.dto.ActBookDto" >
+   	select  count(1) as allNum, nvl(sum(ORDER_AMOUNT),0) as allAmt from TB_ACT_BOOK 
+		where 1=1
+		<if test="payId != null and payId != ''">
+			and PAY_ID  = #{payId,jdbcType=CHAR}
+		</if>
+		<if test="bookId != null and bookId != ''">
+			and BOOK_ID = #{bookId,jdbcType=CHAR}
+		</if>
+		<if test="busiType != null and busiType != ''">
+			and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+		</if>
+		<if test="checkStatus != null and checkStatus != ''">
+			and CHECK_STATUS = #{checkStatus,jdbcType=CHAR}
+		</if>
+		<if test="accountDate != null and accountDate != ''">
+			and ACCOUNT_DATE = #{accountDate,jdbcType=CHAR}
+		</if>
+		<if test="orderAmount != null and orderAmount != ''">
+			and ORDER_AMOUNT<![CDATA[   =  ]]>#{orderAmount}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and ORDER_AMOUNT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and ORDER_AMOUNT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByBookId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_ACT_BOOK
+		where BOOK_ID = #{bookId,jdbcType=CHAR}
+	</select>
+   <select id="selectByPayId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_ACT_BOOK
+		where PAY_ID = #{payId,jdbcType=CHAR}
+	</select>
+	<select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.account.dto.ActBookDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_ACT_BOOK
+		where 1=1
+		<if test="payId != null and payId != ''">
+			and instr(PAY_ID,#{payId,jdbcType=CHAR}) > 0
+		</if>
+		<if test="bookId != null and bookId != ''">
+			and instr(BOOK_ID,#{bookId,jdbcType=CHAR}) > 0
+		</if>
+		<if test="busiType != null and busiType != ''">
+			and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+		</if>
+		<if test="checkStatus != null and checkStatus != ''">
+			and CHECK_STATUS = #{checkStatus,jdbcType=CHAR}
+		</if>
+		<if test="accountDate != null and accountDate != ''">
+			and ACCOUNT_DATE = #{accountDate,jdbcType=CHAR}
+		</if>
+		<if test="tradeType!= null and tradeType!= ''">
+			and TRADE_TYPE = #{tradeType,jdbcType=CHAR}
+		</if>
+		<if test="bookType!= null and bookType!= ''">
+			and BOOK_TYPE = #{bookType,jdbcType=CHAR}
+		</if>
+		<if test="orderAmount != null and orderAmount != ''">
+			and ORDER_AMOUNT<![CDATA[   =  ]]>#{orderAmount}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and ORDER_AMOUNT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and ORDER_AMOUNT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   >=  ]]>to_char(#{startTime},'YYYY-MM-DD')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and to_char(CREATE_TIME,'YYYY-MM-DD')<![CDATA[   <=  ]]>to_char(#{endTime},'YYYY-MM-DD')
+		</if>
+		order by BOOK_ID DESC,CREATE_TIME DESC
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActBookDto" >
+    insert into TB_ACT_BOOK (ID, BOOK_ID, PAY_ID, 
+      TRADE_NAME, BUSI_TYPE, TRADE_TYPE, 
+      PAY_ACCOUNT_DATE, ACCOUNT_DATE, PAYER_CUST_ID, 
+      PAYEE_CUST_ID, PAYER_CUST_NAME, PAYEE_CUST_NAME, 
+      DR_ACCOUNT_ID, CR_ACCOUNT_ID, ORDER_AMOUNT, 
+      FEE_AMOUNT, CHECK_STATUS, BOOK_SN, 
+      CREATE_TIME,BOOK_TYPE,CURRENOY,EXT1,EXT2,EXT3,EXT4,EXT5,EXT6,EXT7,EXT8,EXT9,EXT10,EXT11,EXT12)
+    values (#{id,jdbcType=VARCHAR}, #{bookId,jdbcType=CHAR}, #{payId,jdbcType=CHAR}, 
+      #{tradeName,jdbcType=VARCHAR}, #{busiType,jdbcType=CHAR}, #{tradeType,jdbcType=CHAR}, 
+      #{payAccountDate,jdbcType=CHAR}, #{accountDate,jdbcType=CHAR}, #{payerCustId,jdbcType=VARCHAR}, 
+      #{payeeCustId,jdbcType=VARCHAR}, #{payerCustName,jdbcType=VARCHAR}, #{payeeCustName,jdbcType=VARCHAR}, 
+      #{drAccountId,jdbcType=VARCHAR}, #{crAccountId,jdbcType=VARCHAR}, #{orderAmount,jdbcType=DECIMAL}, 
+      #{feeAmount,jdbcType=DECIMAL}, #{checkStatus,jdbcType=CHAR}, #{bookSn,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP},#{bookType,jdbcType=CHAR},#{currenoy,jdbcType=CHAR},
+      #{ext1,jdbcType=VARCHAR},#{ext2,jdbcType=VARCHAR},#{ext3,jdbcType=VARCHAR},#{ext4,jdbcType=VARCHAR},
+      #{ext5,jdbcType=VARCHAR},#{ext6,jdbcType=VARCHAR},#{ext7,jdbcType=VARCHAR},#{ext8,jdbcType=VARCHAR},
+      #{ext9,jdbcType=VARCHAR},#{ext10,jdbcType=VARCHAR},#{ext11,jdbcType=VARCHAR},#{ext12,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActBookDto" >
+    insert into TB_ACT_BOOK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bookId != null" >
+        BOOK_ID,
+      </if>
+      <if test="payId != null" >
+        PAY_ID,
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE,
+      </if>
+      <if test="payAccountDate != null" >
+        PAY_ACCOUNT_DATE,
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE,
+      </if>
+      <if test="payerCustId != null" >
+        PAYER_CUST_ID,
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID,
+      </if>
+      <if test="payerCustName != null" >
+        PAYER_CUST_NAME,
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME,
+      </if>
+      <if test="drAccountId != null" >
+        DR_ACCOUNT_ID,
+      </if>
+      <if test="crAccountId != null" >
+        CR_ACCOUNT_ID,
+      </if>
+      <if test="orderAmount != null" >
+        ORDER_AMOUNT,
+      </if>
+      <if test="feeAmount != null" >
+        FEE_AMOUNT,
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS,
+      </if>
+      <if test="bookSn != null" >
+        BOOK_SN,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE,
+      </if>
+      <if test="currenoy != null" >
+        CURRENOY,
+      </if>
+      <if test="ext1 != null" >
+        EXT1,
+      </if>
+      <if test="ext2 != null" >
+        EXT2,
+      </if>
+      <if test="ext3 != null" >
+        EXT3,
+      </if>
+      <if test="ext4 != null" >
+        EXT4,
+      </if>
+      <if test="ext5 != null" >
+        EXT5,
+      </if>
+      <if test="ext6 != null" >
+        EXT6,
+      </if>
+      <if test="ext7 != null" >
+        EXT7,
+      </if>
+      <if test="ext8 != null" >
+        EXT8,
+      </if>
+      <if test="ext9 != null" >
+        EXT9,
+      </if>
+      <if test="ext10 != null" >
+        EXT10,
+      </if>
+      <if test="ext11 != null" >
+        EXT11,
+      </if>
+      <if test="ext12 != null" >
+        EXT12,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=CHAR},
+      </if>
+      <if test="tradeName != null" >
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="payAccountDate != null" >
+        #{payAccountDate,jdbcType=CHAR},
+      </if>
+      <if test="accountDate != null" >
+        #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="payerCustId != null" >
+        #{payerCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerCustName != null" >
+        #{payerCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="drAccountId != null" >
+        #{drAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountId != null" >
+        #{crAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="feeAmount != null" >
+        #{feeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="bookSn != null" >
+        #{bookSn,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookType != null" >
+        #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="currenoy != null" >
+        #{currenoy,jdbcType=CHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=VARCHAR},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=VARCHAR},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=VARCHAR},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=VARCHAR},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=VARCHAR},
+      </if>
+      <if test="ext9 != null" >
+        #{ext9,jdbcType=VARCHAR},
+      </if>
+      <if test="ext10 != null" >
+        #{ext10,jdbcType=VARCHAR},
+      </if>
+      <if test="ext11 != null" >
+        #{ext11,jdbcType=VARCHAR},
+      </if>
+      <if test="ext12 != null" >
+        #{ext12,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActBookDto" >
+    update TB_ACT_BOOK
+    <set >
+      <if test="bookId != null" >
+        BOOK_ID = #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="payId != null" >
+        PAY_ID = #{payId,jdbcType=CHAR},
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="payAccountDate != null" >
+        PAY_ACCOUNT_DATE = #{payAccountDate,jdbcType=CHAR},
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="payerCustId != null" >
+        PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerCustName != null" >
+        PAYER_CUST_NAME = #{payerCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="drAccountId != null" >
+        DR_ACCOUNT_ID = #{drAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountId != null" >
+        CR_ACCOUNT_ID = #{crAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        ORDER_AMOUNT = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="feeAmount != null" >
+        FEE_AMOUNT = #{feeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="bookSn != null" >
+        BOOK_SN = #{bookSn,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookType != null" >
+        BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="currenoy != null" >
+        CURRENOY = #{currenoy,jdbcType=CHAR},
+      </if>
+      <if test="ext1 != null" >
+        EXT1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        EXT2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        EXT3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        EXT4 = #{ext4,jdbcType=VARCHAR},
+      </if>
+      <if test="ext5 != null" >
+        EXT5 = #{ext5,jdbcType=VARCHAR},
+      </if>
+      <if test="ext6 != null" >
+        EXT6 = #{ext6,jdbcType=VARCHAR},
+      </if>
+      <if test="ext7 != null" >
+        EXT7 = #{ext7,jdbcType=VARCHAR},
+      </if>
+      <if test="ext8 != null" >
+        EXT8 = #{ext8,jdbcType=VARCHAR},
+      </if>
+      <if test="ext9 != null" >
+        EXT9 = #{ext9,jdbcType=VARCHAR},
+      </if>
+      <if test="ext10 != null" >
+        EXT10 = #{ext10,jdbcType=VARCHAR},
+      </if>
+      <if test="ext11 != null" >
+        EXT11 = #{ext11,jdbcType=VARCHAR},
+      </if>
+      <if test="ext12 != null" >
+        EXT12 = #{ext12,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActBookDto" >
+    update TB_ACT_BOOK
+    set BOOK_ID = #{bookId,jdbcType=CHAR},
+      PAY_ID = #{payId,jdbcType=CHAR},
+      TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      PAY_ACCOUNT_DATE = #{payAccountDate,jdbcType=CHAR},
+      ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR},
+      PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      PAYER_CUST_NAME = #{payerCustName,jdbcType=VARCHAR},
+      PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      DR_ACCOUNT_ID = #{drAccountId,jdbcType=VARCHAR},
+      CR_ACCOUNT_ID = #{crAccountId,jdbcType=VARCHAR},
+      ORDER_AMOUNT = #{orderAmount,jdbcType=DECIMAL},
+      FEE_AMOUNT = #{feeAmount,jdbcType=DECIMAL},
+      CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      BOOK_SN = #{bookSn,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      CURRENOY = #{currenoy,jdbcType=CHAR},
+      EXT1 = #{ext1,jdbcType=VARCHAR},
+      EXT2 = #{ext2,jdbcType=VARCHAR},
+      EXT3 = #{ext3,jdbcType=VARCHAR},
+      EXT4 = #{ext4,jdbcType=VARCHAR},
+      EXT5 = #{ext5,jdbcType=VARCHAR},
+      EXT6 = #{ext6,jdbcType=VARCHAR},
+      EXT7 = #{ext7,jdbcType=VARCHAR},
+      EXT8 = #{ext8,jdbcType=VARCHAR},
+      EXT9 = #{ext9,jdbcType=VARCHAR},
+      EXT10 = #{ext10,jdbcType=VARCHAR},
+      EXT11 = #{ext11,jdbcType=VARCHAR},
+      EXT12 = #{ext12,jdbcType=VARCHAR},
+      EXT13 = #{ext13,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

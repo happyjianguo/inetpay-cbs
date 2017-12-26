@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsProfitReportDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsProfitReport" >
+	    <result column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="LAST_AMT" property="lastAmt" jdbcType="DECIMAL" />
+	    <result column="CURR_AMT" property="currAmt" jdbcType="DECIMAL" />
+	    <result column="CHANGE_RATE" property="changeRate" jdbcType="DECIMAL" />
+	    <result column="ACCT_DATE" property="acctDate" jdbcType="CHAR" />
+	    <result column="SUBJECT_ONE" property="subjectOne" jdbcType="CHAR" />
+	    <result column="SUBJECT_TWO" property="subjectTwo" jdbcType="CHAR" />
+	    <result column="SUBJECT_THREE" property="subjectThree" jdbcType="CHAR" />
+  </resultMap>
+ 
+<!--查询-->
+ <select id="queryProfitReport"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	LAST_AMT ,
+ 	CURR_AMT ,
+ 	CHANGE_RATE ,
+ 	ACCT_DATE ,
+ 	SUBJECT_ONE ,
+ 	SUBJECT_TWO ,
+ 	SUBJECT_THREE 
+ from TB_CLS_PROFIT_REPORT
+ where to_char(to_date(ACCT_DATE,'yyyyMMdd'),'yyyyMM')=#{acctDate,jdbcType=CHAR}
+  and SUBJECT_TWO in ('6001','6011','6051','6401','6603')
+ </select>
+  
+ 
+</mapper>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsSubPayBusiDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubPayBusiDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NO" property="subjectNo" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="IS_RECHARGE" property="isRecharge" jdbcType="CHAR" />
+    <result column="IS_WITHD" property="isWithd" jdbcType="CHAR" />
+    <result column="IS_PAY" property="isPay" jdbcType="CHAR" />
+    <result column="IS_TRANSFER" property="isTransfer" jdbcType="CHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SUBJECT_NO, SUBJECT_NAME, IS_RECHARGE, IS_WITHD, IS_PAY, IS_TRANSFER,BUSI_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_SUB_PAY_BUSI
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+ <!--  <select id="findByConfSubAcctIds" resultType="java.lang.String" parameterType="java.util.List" >
+    select 
+    distinct SUBJECT_NO
+    from TB_MRS_SUB_PAY_BUSI 
+    <if test="confSubAcctIds !=null and confSubAcctIds != ''">
+	    where ID in (
+	    	select distinct SUBJECT2_PAY_NO from TB_MRS_CONF_SUB_ACCT_ITEM where SUB_ACCT_ID in
+		    <foreach collection="confSubAcctIds" index="index" item="item" open="(" separator="," close=")">
+		     #{item}
+		    </foreach>
+	    )
+    </if>
+  </select> -->
+  
+  <select id="findByConfSubAcctIds" resultType="java.lang.String" parameterType="java.util.List" >
+    select 
+    distinct SUBJECT_NO
+    from TB_ACT_BUSI_REF_SUB 
+    <if test="confSubAcctIds !=null and confSubAcctIds != ''">
+	    where ACCT_TYPE_NO in (
+	    	select distinct SUBJECT2_PAY_NO from TB_MRS_CONF_SUB_ACCT_ITEM where SUB_ACCT_ID in
+		    <foreach collection="confSubAcctIds" index="index" item="item" open="(" separator="," close=")">
+		     #{item}
+		    </foreach>
+	    )
+    </if>
+  </select>
+   <select id="findBySubAccountCodeWithOrgan" resultType="java.lang.String" >
+	select distinct t1.subject_no
+	from TB_MRS_SUB_PAY_BUSI t1
+	left join TB_MRS_CONF_SUB_ACCT_ITEM t2
+	on t1.id = t2.subject2_pay_no
+	left join TB_MRS_CONF_SUB_ACCT t3
+	ON t2.sub_acct_id = t3.id
+	where t3.sub_account_code= #{subAccountCode}
+	and t3.ORGAN_TYPE = #{relationType}
+  </select>
+  <select id="findBySubAccountCodeProduct" resultType="java.lang.String" >
+	select distinct t1.subject_no
+	from TB_MRS_SUB_PAY_BUSI t1
+	left join TB_MRS_CONF_SUB_ACCT_ITEM t2
+	on t1.id = t2.subject2_pay_no
+	left join TB_MRS_CONF_SUB_ACCT t3
+	ON t2.sub_acct_id = t3.id
+	where t3.sub_account_code= #{subAccountCode}
+	and t3.PRODUCT_TYPE = #{relationType}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_SUB_PAY_BUSI
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubPayBusiDto" >
+    insert into TB_MRS_SUB_PAY_BUSI (ID, SUBJECT_NO, SUBJECT_NAME, 
+      IS_RECHARGE, IS_WITHD, IS_PAY, 
+      IS_TRANSFER,BUSI_TYPE)
+    values (#{id,jdbcType=VARCHAR}, #{subjectNo,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, 
+      #{isRecharge,jdbcType=CHAR}, #{isWithd,jdbcType=CHAR}, #{isPay,jdbcType=CHAR}, 
+      #{isTransfer,jdbcType=CHAR},#{busiType,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubPayBusiDto" >
+    insert into TB_MRS_SUB_PAY_BUSI
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="subjectNo != null" >
+        SUBJECT_NO,
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME,
+      </if>
+      <if test="isRecharge != null" >
+        IS_RECHARGE,
+      </if>
+      <if test="isWithd != null" >
+        IS_WITHD,
+      </if>
+      <if test="isPay != null" >
+        IS_PAY,
+      </if>
+      <if test="isTransfer != null" >
+        IS_TRANSFER,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null" >
+        #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecharge != null" >
+        #{isRecharge,jdbcType=CHAR},
+      </if>
+      <if test="isWithd != null" >
+        #{isWithd,jdbcType=CHAR},
+      </if>
+      <if test="isPay != null" >
+        #{isPay,jdbcType=CHAR},
+      </if>
+      <if test="isTransfer != null" >
+        #{isTransfer,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubPayBusiDto" >
+    update TB_MRS_SUB_PAY_BUSI
+    <set >
+      <if test="subjectNo != null" >
+        SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecharge != null" >
+        IS_RECHARGE = #{isRecharge,jdbcType=CHAR},
+      </if>
+      <if test="isWithd != null" >
+        IS_WITHD = #{isWithd,jdbcType=CHAR},
+      </if>
+      <if test="isPay != null" >
+        IS_PAY = #{isPay,jdbcType=CHAR},
+      </if>
+      <if test="isTransfer != null" >
+        IS_TRANSFER = #{isTransfer,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsSubPayBusiDto" >
+    update TB_MRS_SUB_PAY_BUSI
+    set SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      IS_RECHARGE = #{isRecharge,jdbcType=CHAR},
+      IS_WITHD = #{isWithd,jdbcType=CHAR},
+      IS_PAY = #{isPay,jdbcType=CHAR},
+      IS_TRANSFER = #{isTransfer,jdbcType=CHAR},
+      BUSI_TYPE = #{busiType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

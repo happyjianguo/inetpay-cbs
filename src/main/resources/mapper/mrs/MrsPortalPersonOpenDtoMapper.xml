@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsPortalPersonOpenDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalPersonOpenDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="NATIONALITY_CODE" property="nationalityCode" jdbcType="VARCHAR" />
+    <result column="CREDENTIALS_TYPE" property="credentialsType" jdbcType="VARCHAR" />
+    <result column="CREDENTIALS_NUMBER" property="credentialsNumber" jdbcType="VARCHAR" />
+    <result column="CREDENTIALS_ENDDATE" property="credentialsEnddate" jdbcType="CHAR" />
+    <result column="CREDENTIALS_FILEPATH" property="credentialsFilepath" jdbcType="VARCHAR" />
+    <result column="BIRTHDATE" property="birthdate" jdbcType="CHAR" />
+    <result column="SEX_CODE" property="sexCode" jdbcType="CHAR" />
+    <result column="EDUCATION_CODE" property="educationCode" jdbcType="CHAR" />
+    <result column="OCCUPATION" property="occupation" jdbcType="VARCHAR" />
+    <result column="NATIONAL_CODE" property="nationalCode" jdbcType="CHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="SPARE_TEL" property="spareTel" jdbcType="VARCHAR" />
+    <result column="CONTACT_ADDR" property="contactAddr" jdbcType="VARCHAR" />
+    <result column="ZIP_CODE" property="zipCode" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPERATOR" property="createOperator" jdbcType="VARCHAR" />
+    <result column="BUSI_SOURCE" property="busiSource" jdbcType="CHAR" />
+    <result column="PAY_AUTH_SATTUS" property="payAuthSattus" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, CUSTOMER_CODE, CUSTOMER_NAME, NATIONALITY_CODE, CREDENTIALS_TYPE, CREDENTIALS_NUMBER, 
+    CREDENTIALS_ENDDATE, CREDENTIALS_FILEPATH, BIRTHDATE, SEX_CODE, EDUCATION_CODE, OCCUPATION, 
+    NATIONAL_CODE, MOBILE, TEL, SPARE_TEL, CONTACT_ADDR, ZIP_CODE, EMAIL, CREATE_TIME, 
+    CREATE_OPERATOR, BUSI_SOURCE, PAY_AUTH_SATTUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_PORTAL_PERSON_OPEN
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_PORTAL_PERSON_OPEN
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalPersonOpenDto" >
+    insert into TB_MRS_PORTAL_PERSON_OPEN (ID, CUST_ID, CUSTOMER_CODE, 
+      CUSTOMER_NAME, NATIONALITY_CODE, CREDENTIALS_TYPE, 
+      CREDENTIALS_NUMBER, CREDENTIALS_ENDDATE, CREDENTIALS_FILEPATH, 
+      BIRTHDATE, SEX_CODE, EDUCATION_CODE, 
+      OCCUPATION, NATIONAL_CODE, MOBILE, 
+      TEL, SPARE_TEL, CONTACT_ADDR, 
+      ZIP_CODE, EMAIL, CREATE_TIME, 
+      CREATE_OPERATOR, BUSI_SOURCE, PAY_AUTH_SATTUS
+      )
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{customerCode,jdbcType=VARCHAR}, 
+      #{customerName,jdbcType=VARCHAR}, #{nationalityCode,jdbcType=VARCHAR}, #{credentialsType,jdbcType=VARCHAR}, 
+      #{credentialsNumber,jdbcType=VARCHAR}, #{credentialsEnddate,jdbcType=CHAR}, #{credentialsFilepath,jdbcType=VARCHAR}, 
+      #{birthdate,jdbcType=CHAR}, #{sexCode,jdbcType=CHAR}, #{educationCode,jdbcType=CHAR}, 
+      #{occupation,jdbcType=VARCHAR}, #{nationalCode,jdbcType=CHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{spareTel,jdbcType=VARCHAR}, #{contactAddr,jdbcType=VARCHAR}, 
+      #{zipCode,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createOperator,jdbcType=VARCHAR}, #{busiSource,jdbcType=CHAR}, #{payAuthSattus,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalPersonOpenDto" >
+    insert into TB_MRS_PORTAL_PERSON_OPEN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="customerCode != null" >
+        CUSTOMER_CODE,
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME,
+      </if>
+      <if test="nationalityCode != null" >
+        NATIONALITY_CODE,
+      </if>
+      <if test="credentialsType != null" >
+        CREDENTIALS_TYPE,
+      </if>
+      <if test="credentialsNumber != null" >
+        CREDENTIALS_NUMBER,
+      </if>
+      <if test="credentialsEnddate != null" >
+        CREDENTIALS_ENDDATE,
+      </if>
+      <if test="credentialsFilepath != null" >
+        CREDENTIALS_FILEPATH,
+      </if>
+      <if test="birthdate != null" >
+        BIRTHDATE,
+      </if>
+      <if test="sexCode != null" >
+        SEX_CODE,
+      </if>
+      <if test="educationCode != null" >
+        EDUCATION_CODE,
+      </if>
+      <if test="occupation != null" >
+        OCCUPATION,
+      </if>
+      <if test="nationalCode != null" >
+        NATIONAL_CODE,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="tel != null" >
+        TEL,
+      </if>
+      <if test="spareTel != null" >
+        SPARE_TEL,
+      </if>
+      <if test="contactAddr != null" >
+        CONTACT_ADDR,
+      </if>
+      <if test="zipCode != null" >
+        ZIP_CODE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR,
+      </if>
+      <if test="busiSource != null" >
+        BUSI_SOURCE,
+      </if>
+      <if test="payAuthSattus != null" >
+        PAY_AUTH_SATTUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCode != null" >
+        #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityCode != null" >
+        #{nationalityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsType != null" >
+        #{credentialsType,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsNumber != null" >
+        #{credentialsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsEnddate != null" >
+        #{credentialsEnddate,jdbcType=CHAR},
+      </if>
+      <if test="credentialsFilepath != null" >
+        #{credentialsFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        #{birthdate,jdbcType=CHAR},
+      </if>
+      <if test="sexCode != null" >
+        #{sexCode,jdbcType=CHAR},
+      </if>
+      <if test="educationCode != null" >
+        #{educationCode,jdbcType=CHAR},
+      </if>
+      <if test="occupation != null" >
+        #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalCode != null" >
+        #{nationalCode,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="spareTel != null" >
+        #{spareTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddr != null" >
+        #{contactAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="busiSource != null" >
+        #{busiSource,jdbcType=CHAR},
+      </if>
+      <if test="payAuthSattus != null" >
+        #{payAuthSattus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalPersonOpenDto" >
+    update TB_MRS_PORTAL_PERSON_OPEN
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCode != null" >
+        CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityCode != null" >
+        NATIONALITY_CODE = #{nationalityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsType != null" >
+        CREDENTIALS_TYPE = #{credentialsType,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsNumber != null" >
+        CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsEnddate != null" >
+        CREDENTIALS_ENDDATE = #{credentialsEnddate,jdbcType=CHAR},
+      </if>
+      <if test="credentialsFilepath != null" >
+        CREDENTIALS_FILEPATH = #{credentialsFilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        BIRTHDATE = #{birthdate,jdbcType=CHAR},
+      </if>
+      <if test="sexCode != null" >
+        SEX_CODE = #{sexCode,jdbcType=CHAR},
+      </if>
+      <if test="educationCode != null" >
+        EDUCATION_CODE = #{educationCode,jdbcType=CHAR},
+      </if>
+      <if test="occupation != null" >
+        OCCUPATION = #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalCode != null" >
+        NATIONAL_CODE = #{nationalCode,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="spareTel != null" >
+        SPARE_TEL = #{spareTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddr != null" >
+        CONTACT_ADDR = #{contactAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        ZIP_CODE = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="busiSource != null" >
+        BUSI_SOURCE = #{busiSource,jdbcType=CHAR},
+      </if>
+      <if test="payAuthSattus != null" >
+        PAY_AUTH_SATTUS = #{payAuthSattus,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsPortalPersonOpenDto" >
+    update TB_MRS_PORTAL_PERSON_OPEN
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      NATIONALITY_CODE = #{nationalityCode,jdbcType=VARCHAR},
+      CREDENTIALS_TYPE = #{credentialsType,jdbcType=VARCHAR},
+      CREDENTIALS_NUMBER = #{credentialsNumber,jdbcType=VARCHAR},
+      CREDENTIALS_ENDDATE = #{credentialsEnddate,jdbcType=CHAR},
+      CREDENTIALS_FILEPATH = #{credentialsFilepath,jdbcType=VARCHAR},
+      BIRTHDATE = #{birthdate,jdbcType=CHAR},
+      SEX_CODE = #{sexCode,jdbcType=CHAR},
+      EDUCATION_CODE = #{educationCode,jdbcType=CHAR},
+      OCCUPATION = #{occupation,jdbcType=VARCHAR},
+      NATIONAL_CODE = #{nationalCode,jdbcType=CHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      SPARE_TEL = #{spareTel,jdbcType=VARCHAR},
+      CONTACT_ADDR = #{contactAddr,jdbcType=VARCHAR},
+      ZIP_CODE = #{zipCode,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      BUSI_SOURCE = #{busiSource,jdbcType=CHAR},
+      PAY_AUTH_SATTUS = #{payAuthSattus,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

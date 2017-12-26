@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisSchedJobQueueDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobQueueDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PLAN_TYPE" property="planType" jdbcType="VARCHAR" />
+    <result column="REF_ID" property="refId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="FAILURE_COUNT" property="failureCount" jdbcType="DECIMAL" />
+    <result column="MAX_SEND_COUNT" property="maxSendCount" jdbcType="DECIMAL" />
+    <result column="ERR_MSG" property="errMsg" jdbcType="VARCHAR" />
+    <result column="INVOKE_TIME" property="invokeTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="EXEC_TYPE" property="execType" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PLAN_TYPE, REF_ID, STATUS, FAILURE_COUNT, MAX_SEND_COUNT, ERR_MSG, INVOKE_TIME, 
+    CREATE_TIME, DESCRIPTION,EXEC_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SCHED_JOB_QUEUE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_SCHED_JOB_QUEUE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByRefId" parameterType="java.lang.String" >
+    delete from TB_BIS_SCHED_JOB_QUEUE
+    where REF_ID = #{refId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobQueueDto" >
+    insert into TB_BIS_SCHED_JOB_QUEUE (ID, PLAN_TYPE, REF_ID, 
+      STATUS, FAILURE_COUNT, MAX_SEND_COUNT, 
+      ERR_MSG, INVOKE_TIME, CREATE_TIME, 
+      DESCRIPTION,EXEC_TYPE)
+    values (#{id,jdbcType=VARCHAR}, #{planType,jdbcType=VARCHAR}, #{refId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{failureCount,jdbcType=DECIMAL}, #{maxSendCount,jdbcType=DECIMAL}, 
+      #{errMsg,jdbcType=VARCHAR}, #{invokeTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{description,jdbcType=VARCHAR}, #{execType,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobQueueDto" >
+    insert into TB_BIS_SCHED_JOB_QUEUE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="planType != null" >
+        PLAN_TYPE,
+      </if>
+      <if test="refId != null" >
+        REF_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="failureCount != null" >
+        FAILURE_COUNT,
+      </if>
+      <if test="maxSendCount != null" >
+        MAX_SEND_COUNT,
+      </if>
+      <if test="errMsg != null" >
+        ERR_MSG,
+      </if>
+      <if test="invokeTime != null" >
+        INVOKE_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="execType != null" >
+        EXEC_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="planType != null" >
+        #{planType,jdbcType=VARCHAR},
+      </if>
+      <if test="refId != null" >
+        #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="failureCount != null" >
+        #{failureCount,jdbcType=DECIMAL},
+      </if>
+      <if test="maxSendCount != null" >
+        #{maxSendCount,jdbcType=DECIMAL},
+      </if>
+      <if test="errMsg != null" >
+        #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="invokeTime != null" >
+        #{invokeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="execType != null" >
+        #{execType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobQueueDto" >
+    update TB_BIS_SCHED_JOB_QUEUE
+    <set >
+      <if test="planType != null" >
+        PLAN_TYPE = #{planType,jdbcType=VARCHAR},
+      </if>
+      <if test="refId != null" >
+        REF_ID = #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="failureCount != null" >
+        FAILURE_COUNT = #{failureCount,jdbcType=DECIMAL},
+      </if>
+      <if test="maxSendCount != null" >
+        MAX_SEND_COUNT = #{maxSendCount,jdbcType=DECIMAL},
+      </if>
+      <if test="errMsg != null" >
+        ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="invokeTime != null" >
+        INVOKE_TIME = #{invokeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="execType != null" >
+        EXEC_TYPE = #{execType,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobQueueDto" >
+    update TB_BIS_SCHED_JOB_QUEUE
+    set PLAN_TYPE = #{planType,jdbcType=VARCHAR},
+      REF_ID = #{refId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      FAILURE_COUNT = #{failureCount,jdbcType=DECIMAL},
+      MAX_SEND_COUNT = #{maxSendCount,jdbcType=DECIMAL},
+      ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+      INVOKE_TIME = #{invokeTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      EXEC_TYPE = #{execType,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SCHED_JOB_QUEUE 
+    <if test="planType != null">
+    	 where PLAN_TYPE = #{planType,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="listWithLock" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select <include refid="Base_Column_List" /> from TB_BIS_SCHED_JOB_QUEUE 
+    where PLAN_TYPE = #{planType,jdbcType=VARCHAR}
+    for update 
+  </select>
+  <select id="getByPlanTypeRefId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SCHED_JOB_QUEUE
+    where PLAN_TYPE = #{planType,jdbcType=VARCHAR} AND REF_ID = #{refId,jdbcType=VARCHAR}
+  </select>
+  <insert id="saveList" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobQueueDto">
+  	insert into TB_BIS_SCHED_JOB_QUEUE (ID, PLAN_TYPE, REF_ID, STATUS, FAILURE_COUNT, 
+  		MAX_SEND_COUNT, ERR_MSG, INVOKE_TIME, CREATE_TIME, DESCRIPTION,EXEC_TYPE)
+      <foreach collection="jobQueueList" index="index" item="item" separator=" union all ">
+  		select #{item.id,jdbcType=VARCHAR}, #{item.planType,jdbcType=VARCHAR}, #{item.refId,jdbcType=VARCHAR}, 
+	      #{item.status,jdbcType=VARCHAR}, #{item.failureCount,jdbcType=DECIMAL}, #{item.maxSendCount,jdbcType=DECIMAL}, 
+	      #{item.errMsg,jdbcType=VARCHAR}, #{item.invokeTime,jdbcType=TIMESTAMP},
+	      #{item.createTime,jdbcType=TIMESTAMP}, #{item.description,jdbcType=VARCHAR},#{item.execType,jdbcType=CHAR} from dual 
+  	  </foreach>
+  </insert>
+</mapper>

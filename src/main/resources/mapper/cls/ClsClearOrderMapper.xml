@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsClearOrderDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsClearOrder" >
+	    <result column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="JOB_ID" property="jobId" jdbcType="VARCHAR" />
+	    <result column="CLEAR_TYPE" property="clearType" jdbcType="CHAR" />
+	    <result column="BUSI_ID" property="busiId" jdbcType="VARCHAR" />
+	    <result column="ACCT_DATE" property="acctDate" jdbcType="CHAR" />
+	    <result column="RISK_CODE" property="riskCode" jdbcType="VARCHAR" />
+	    <result column="SUM_PREMIUM" property="sumPremium" jdbcType="DECIMAL" />
+	    <result column="SUM_SALES_FEE" property="sumSalesFee" jdbcType="DECIMAL" />
+	    <result column="SALES_COM_CODE" property="salesComCode" jdbcType="VARCHAR" />
+	    <result column="CLEAR_COM_CODE" property="clearComCode" jdbcType="VARCHAR" />
+	    <result column="CLEAR_RATE" property="clearRate" jdbcType="DECIMAL" />
+	    <result column="SHARE_SALES_FEE" property="shareSalesFee" jdbcType="DECIMAL" />
+	    <result column="SHARE_PREMIUM" property="sharePremium" jdbcType="DECIMAL" />
+	    <result column="CLEAR_ACCOUNT_STATUS" property="clearAccountStatus" jdbcType="CHAR" />
+	    <result column="COMM_ACCOUNT_STATUS" property="commAccountStatus" jdbcType="CHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="POLICY_NO" property="policyNo" jdbcType="VARCHAR" />
+        <result column="ENDORSE_NO" property="endorseNo" jdbcType="VARCHAR" />
+        <result column="FEE_JOB_ID" property="feeJobId" jdbcType="VARCHAR" />
+          <result column="BUSI_CODE" property="busiCode" jdbcType="VARCHAR" />
+        <result column="BUSI_NAME" property="busiName" jdbcType="VARCHAR" />
+        <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+        <result column="TRANS_TYPE" property="transType" jdbcType="VARCHAR" />
+        <result column="TRANS_DATE" property="transDate" jdbcType="CHAR" />
+        <result column="SETTLE_DATE" property="settleDate" jdbcType="CHAR" />
+        <result column="FEE_TYPE" property="feeType" jdbcType="VARCHAR" />
+        <result column="FEE_AMOUNT" property="feeAmount" jdbcType="DECIMAL" />
+        <result column="PAYEE" property="payee" jdbcType="VARCHAR" />
+        <result column="PAYER" property="payer" jdbcType="VARCHAR" />
+        <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+        <result column="SYS_ORDER_ID" property="sysOrderId" jdbcType="VARCHAR" />
+        <result column="PAY_ID" property="payId" jdbcType="VARCHAR" />
+        <result column="EXTENSION" property="extension" jdbcType="VARCHAR" />
+        <result column="TRADE_SETT_ID" property="tradeSettId" jdbcType="VARCHAR" />
+        <result column="FEE_SETT_ID" property="feeSettId" jdbcType="VARCHAR" />
+        <result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+        <result column="REAL_TIME_SETTLE" property="realTimeSettle" jdbcType="CHAR" />
+        <result column="OFFSET_STYLE" property="offsetStyle" jdbcType="CHAR" />
+        <result column="ASSURANCE_STYLE" property="assuranceStyle" jdbcType="CHAR" />
+        <result column="OPPOSITE_SIDE" property="oppositeSide" jdbcType="CHAR" />
+        <result column="PAYER_FEE_AMT" property="payerFeeAmt" jdbcType="DECIMAL" />
+        <result column="PAYEE_FEE_AMT" property="payeeFeeAmt" jdbcType="DECIMAL" />
+        <result column="FEE_ACCOUNT_STATUS" property="feeAccountStatus" jdbcType="CHAR" />
+        <result column="FEE_MODE" property="feeMode" jdbcType="CHAR" />
+        <result column="PAYER_FEE_TYPE" property="payerFeeType" jdbcType="CHAR" />
+        <result column="PAYEE_FEE_TYPE" property="payeeFeeType" jdbcType="CHAR" />
+        <result column="PAYER_FEE_RATE" property="payerFeeRate" jdbcType="DECIMAL" />
+        <result column="PAYEE_FEE_RATE" property="payeeFeeRate" jdbcType="DECIMAL" />
+        <result column="ASSIT_INFO" property="assitInfo" jdbcType="VARCHAR" />
+        <result column="PAYEE_NAME" property="payeeName" jdbcType="VARCHAR" />
+        <result column="PAYER_NAME" property="payerName" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+<!--查询全部-->
+ <select id="queryClsClearOrder"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsClearOrder" resultMap="resultMap">
+ select 
+ 	s.ID ,
+ 	s.JOB_ID ,
+ 	s.CLEAR_TYPE ,
+ 	s.BUSI_ID ,
+ 	s.ACCT_DATE ,
+ 	s.RISK_CODE ,
+ 	s.SUM_PREMIUM ,
+ 	s.SUM_SALES_FEE ,
+ 	s.SALES_COM_CODE ,
+ 	s.CLEAR_COM_CODE ,
+ 	s.CLEAR_RATE ,
+ 	s.SHARE_SALES_FEE ,
+ 	s.SHARE_PREMIUM ,
+ 	s.CLEAR_ACCOUNT_STATUS ,
+ 	s.COMM_ACCOUNT_STATUS ,
+ 	s.CREATE_TIME ,
+ 	s.UPDATE_TIME ,
+    s.POLICY_NO,
+    s.ENDORSE_NO,
+    s.FEE_TYPE,
+ 	s.FEE_AMOUNT
+ from TB_CLS_CLEAR_ORDER s where 1=1
+ <if test="busiId!=null and busiId!=''">
+ and instr(BUSI_ID,#{busiId}) > 0
+ </if>
+ <if test="startAcctDate!=null and startAcctDate !=''">
+ and ACCT_DATE <![CDATA[   >=  ]]> #{startAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="endAcctDate!=null and endAcctDate !=''">
+ and ACCT_DATE <![CDATA[   <=  ]]> #{endAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="clearType!=null">
+ and CLEAR_TYPE=#{clearType,jdbcType=CHAR}
+ </if>
+ <if test="clearAccountStatus!=null">
+ and CLEAR_ACCOUNT_STATUS=#{clearAccountStatus,jdbcType=CHAR}
+ </if>
+ <if test="commAccountStatus!=null">
+ and COMM_ACCOUNT_STATUS=#{commAccountStatus,jdbcType=CHAR}
+ </if>
+ <if test="riskCode!=null and riskCode!=''">
+ AND instr(RISK_CODE, #{riskCode}) > 0
+ </if>
+ <if test="clearComCode!=null and clearComCode!=''">
+ AND instr(CLEAR_COM_CODE, #{clearComCode}) > 0
+ </if>
+ <if test="salesComCode!=null and salesComCode!=''">
+ AND instr(SALES_COM_CODE, #{salesComCode}) > 0
+ </if>
+ <if test="policyNo!=null and policyNo!=''">
+ AND instr(POLICY_NO, #{policyNo}) > 0
+ </if>
+ <if test="endorseNo!=null and endorseNo!=''">
+ AND instr(ENDORSE_NO, #{endorseNo}) > 0
+ </if>
+ order by ACCT_DATE desc, BUSI_ID desc
+ </select>
+ 
+<!-- 查询详情 -->
+<select id="queryById" parameterType="java.lang.String" resultMap="resultMap">
+select 
+	s.ID ,
+ 	s.JOB_ID ,
+ 	s.CLEAR_TYPE ,
+ 	s.BUSI_ID ,
+ 	s.ACCT_DATE ,
+ 	s.RISK_CODE ,
+ 	s.SUM_PREMIUM ,
+ 	s.SUM_SALES_FEE ,
+ 	s.SALES_COM_CODE ,
+ 	s.CLEAR_COM_CODE ,
+ 	s.CLEAR_RATE ,
+ 	s.SHARE_SALES_FEE ,
+ 	s.SHARE_PREMIUM ,
+ 	s.CLEAR_ACCOUNT_STATUS ,
+ 	s.COMM_ACCOUNT_STATUS ,
+ 	s.CREATE_TIME ,
+ 	s.UPDATE_TIME,
+ 	s.FEE_JOB_ID,
+ 	s.BUSI_CODE,
+ 	s.BUSI_NAME，
+ 	s.PRODUCT_NAME,
+ 	s.TRANS_TYPE,
+ 	s.TRANS_DATE,
+ 	s.SETTLE_DATE,
+ 	s.FEE_TYPE,
+ 	s.FEE_AMOUNT,
+ 	s.PAYEE,
+ 	s.PAYER,
+ 	s.ORDER_ID,
+ 	s.SYS_ORDER_ID,
+ 	s.PAY_ID,
+ 	s.EXTENSION,
+ 	s.TRADE_SETT_ID,
+ 	s.FEE_SETT_ID,
+ 	s.BOOK_TYPE,
+ 	s.REAL_TIME_SETTLE,
+ 	s.OFFSET_STYLE,
+ 	s.ASSURANCE_STYLE,
+ 	s.OPPOSITE_SIDE,
+ 	s.PAYER_FEE_AMT,
+ 	s.PAYEE_FEE_AMT,
+ 	s.FEE_ACCOUNT_STATUS,
+ 	s.FEE_MODE,
+ 	s.PAYER_FEE_TYPE,
+ 	s.PAYEE_FEE_TYPE,
+ 	s.PAYER_FEE_RATE,
+ 	s.PAYEE_FEE_RATE,
+ 	s.ASSIT_INFO,
+ 	s.POLICY_NO，
+ 	s.PAYEE_NAME,
+ 	s.PAYER_NAME 
+ from TB_CLS_CLEAR_ORDER s where s.ID = #{id,jdbcType=VARCHAR}
+</select>
+<!--更新-->
+ <update id="updateClsClearOrder" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsClearOrder">
+ update TB_CLS_CLEAR_ORDER set
+ 	ID=#{id,jdbcType=VARCHAR}  ,
+ 	JOB_ID=#{jobId,jdbcType=VARCHAR}  ,
+ 	CLEAR_TYPE=#{clearType,jdbcType=CHAR}  ,
+ 	BUSI_ID=#{busiId,jdbcType=VARCHAR}  ,
+ 	ACCT_DATE=#{acctDate,jdbcType=CHAR}  ,
+ 	RISK_CODE=#{riskCode,jdbcType=VARCHAR}  ,
+ 	SUM_PREMIUM=#{sumPremium,jdbcType=DECIMAL}  ,
+ 	SUM_SALES_FEE=#{sumSalesFee,jdbcType=DECIMAL}  ,
+ 	SALES_COM_CODE=#{salesComCode,jdbcType=VARCHAR}  ,
+ 	CLEAR_COM_CODE=#{clearComCode,jdbcType=VARCHAR}  ,
+ 	CLEAR_RATE=#{clearRate,jdbcType=DECIMAL}  ,
+ 	SHARE_SALES_FEE=#{shareSalesFee,jdbcType=DECIMAL}  ,
+ 	SHARE_PREMIUM=#{sharePremium,jdbcType=DECIMAL}  ,
+ 	CLEAR_ACCOUNT_STATUS=#{clearAccountStatus,jdbcType=CHAR}  ,
+ 	COMM_ACCOUNT_STATUS=#{commAccountStatus,jdbcType=CHAR}  ,
+ 	CREATE_TIME=#{createTime,jdbcType=TIMESTAMP}  ,
+ 	UPDATE_TIME=#{updateTime,jdbcType=TIMESTAMP}  
+ where 
+ 	ID=#{id,jdbcType=VARCHAR}  
+ </update>
+ 
+<!--插入-->
+ <insert id="addClsClearOrder" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsClearOrder">
+ insert into TB_CLS_CLEAR_ORDER
+ (
+  ID ,
+  JOB_ID ,
+  CLEAR_TYPE ,
+  BUSI_ID ,
+  ACCT_DATE ,
+  RISK_CODE ,
+  SUM_PREMIUM ,
+  SUM_SALES_FEE ,
+  SALES_COM_CODE ,
+  CLEAR_COM_CODE ,
+  CLEAR_RATE ,
+  SHARE_SALES_FEE ,
+  SHARE_PREMIUM ,
+  CLEAR_ACCOUNT_STATUS ,
+  COMM_ACCOUNT_STATUS ,
+  CREATE_TIME ,
+  UPDATE_TIME 
+  )
+  values(
+  	#{id,jdbcType=VARCHAR} ,
+  	#{jobId,jdbcType=VARCHAR} ,
+  	#{clearType,jdbcType=CHAR} ,
+  	#{busiId,jdbcType=VARCHAR} ,
+  	#{acctDate,jdbcType=CHAR} ,
+  	#{riskCode,jdbcType=VARCHAR} ,
+  	#{sumPremium,jdbcType=DECIMAL} ,
+  	#{sumSalesFee,jdbcType=DECIMAL} ,
+  	#{salesComCode,jdbcType=VARCHAR} ,
+  	#{clearComCode,jdbcType=VARCHAR} ,
+  	#{clearRate,jdbcType=DECIMAL} ,
+  	#{shareSalesFee,jdbcType=DECIMAL} ,
+  	#{sharePremium,jdbcType=DECIMAL} ,
+  	#{clearAccountStatus,jdbcType=CHAR} ,
+  	#{commAccountStatus,jdbcType=CHAR} ,
+  	#{createTime,jdbcType=TIMESTAMP} ,
+  	#{updateTime,jdbcType=TIMESTAMP} 
+  )
+ </insert>
+ 
+ <!--删除-->
+ <delete id="deleteClsClearOrder">
+ delete from TB_CLS_CLEAR_ORDER 
+ where
+  ID  in
+   <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+        #{item}  
+    </foreach>  
+ </delete>
+ 
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsBankCheckDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsBankCheck" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="CHANNEL_CODE" property="channelCode" jdbcType="VARCHAR" />
+	    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+	    <result column="CHANNEL_TYPE" property="channelType" jdbcType="CHAR" />
+	    <result column="FILE_DAY" property="fileDay" jdbcType="CHAR" />
+	    <result column="MONI_STATUS" property="moniStatus" jdbcType="CHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="ERR_DETAIL" property="errDetail" jdbcType="VARCHAR" />
+	    <result column="BANK_FILE" property="bankFile" jdbcType="VARCHAR" />
+	    <result column="HANDLE_COUNT" property="handleCount" jdbcType="DECIMAL" />
+	    <result column="FTP_URL" property="ftpUrl" jdbcType="VARCHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+ 
+ <!--查询-->
+ <select id="queryClsBankCheckById"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	CHANNEL_CODE ,
+ 	BANK_TYPE ,
+ 	CHANNEL_TYPE ,
+ 	FILE_DAY ,
+ 	MONI_STATUS ,
+ 	DEAL_STATUS ,
+ 	ERR_DETAIL ,
+ 	BANK_FILE ,
+ 	HANDLE_COUNT ,
+ 	FTP_URL ,
+ 	CREATE_TIME ,
+ 	UPDATE_TIME  
+ from TB_CLS_BANK_CHECK
+ where ID=#{id,jdbcType=CHAR}
+ </select>
+ 
+ <select id="queryClsBankCheck"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	CHANNEL_CODE ,
+ 	BANK_TYPE ,
+ 	CHANNEL_TYPE ,
+ 	FILE_DAY ,
+ 	MONI_STATUS ,
+ 	DEAL_STATUS ,
+ 	ERR_DETAIL ,
+ 	BANK_FILE ,
+ 	HANDLE_COUNT ,
+ 	FTP_URL ,
+ 	CREATE_TIME ,
+ 	UPDATE_TIME 
+ from TB_CLS_BANK_CHECK
+ where 1=1
+  <if test="moniStatus!=null and moniStatus!=''">
+	and MONI_STATUS=#{moniStatus,jdbcType=CHAR}
+</if>
+  <if test="dealStatus!=null and dealStatus!=''">
+	and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+</if>
+ <if test="endTime!=null">
+	and FILE_DAY <![CDATA[   <=  ]]>to_char(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and FILE_DAY <![CDATA[   >=  ]]>to_char(#{startTime},'yyyyMMdd')
+</if>
+<if test="channelType!=null">
+	and CHANNEL_TYPE = #{channelType,jdbcType=CHAR}
+</if>
+order by FILE_DAY desc,ID desc
+</select>
+ 
+</mapper>

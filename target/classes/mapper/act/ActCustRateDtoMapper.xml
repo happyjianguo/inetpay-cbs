@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActCustRateDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActCustRateDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="RATE" property="rate" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="RATE_TYPE" property="rateType" jdbcType="CHAR" />
+    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="BANK_CARD_NO" property="bankCardNo" jdbcType="VARCHAR" />
+    <result column="BANK_CARD_NAME" property="bankCardName" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="VALID_TIME" property="validTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ExtBaseResultMap" extends="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActCustRateDto" >
+    <result column="subjectNo2Name" property="subjectNo2Name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, CUST_NAME, ACCOUNT_ID, STATUS, RATE, CREATE_TIME, RATE_TYPE, BANK_TYPE, 
+    BANK_NAME,BANK_CARD_NO,BANK_CARD_NAME,UPDATE_TIME,VALID_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_CUST_RATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_CUST_RATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustRateDto" >
+    insert into TB_ACT_CUST_RATE (ID, CUST_ID, CUST_NAME, 
+      ACCOUNT_ID, STATUS, RATE, 
+      CREATE_TIME, RATE_TYPE, BANK_TYPE, BANK_NAME,
+      BANK_CARD_NO,BANK_CARD_NAME,UPDATE_TIME,VALID_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, 
+      #{accountId,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{rate,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{rateType,jdbcType=CHAR}, #{bankType,jdbcType=CHAR}, 
+      #{bankName,jdbcType=VARCHAR},#{bankCardNo,jdbcType=VARCHAR},#{bankCardName,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP},#{validTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustRateDto" >
+    insert into TB_ACT_CUST_RATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="rate != null" >
+        RATE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="rateType != null" >
+        RATE_TYPE,
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="bankCardNo != null" >
+        BANK_CARD_NO,
+      </if>
+      <if test="bankCardName != null" >
+        BANK_CARD_NAME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="validTime != null" >
+        VALID_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rateType != null" >
+        #{rateType,jdbcType=CHAR},
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNo != null" >
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardName != null" >
+        #{bankCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validTime != null" >
+        #{validTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustRateDto" >
+    update TB_ACT_CUST_RATE
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="rate != null" >
+        RATE = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rateType != null" >
+        RATE_TYPE = #{rateType,jdbcType=CHAR},
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE = #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNo != null" >
+        BANK_CARD_NO = #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardName != null" >
+        BANK_CARD_NAME = #{bankCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validTime != null" >
+        VALID_TIME = #{validTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustRateDto" >
+    update TB_ACT_CUST_RATE
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      RATE = #{rate,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      RATE_TYPE = #{rateType,jdbcType=CHAR},
+      BANK_TYPE = #{bankType,jdbcType=CHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      BANK_CARD_NO = #{bankCardNo,jdbcType=VARCHAR},
+      BANK_CARD_NAME = #{bankCardName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      VALID_TIME = #{validTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="queryByCustIds" resultMap="BaseResultMap">
+  	select * from TB_ACT_CUST_RATE where CUST_ID in 
+  	<foreach collection="custIds" item="custId" open="(" separator="," close=")">
+  		#{custId,jdbcType=VARCHAR}
+  	</foreach>
+  </select>
+  <select id="findBankRate" resultMap="BaseResultMap">
+  	select * from TB_ACT_CUST_RATE where CUST_ID like 'CV%' 
+  </select>
+  <sql id="listWhereSql">
+  		<if test="custId != null and custId != ''">
+  			and instr(r.CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+  			<!-- and r.CUST_ID like concat(concat('%',#{custId,jdbcType=VARCHAR}),'%') --> 
+  		</if>
+  		<if test="custName != null and custName != ''">
+  			and instr(r.CUST_NAME, #{custName,jdbcType=VARCHAR}) > 0
+  			<!-- and r.CUST_NAME like concat(concat('%',#{custName,jdbcType=VARCHAR}),'%')  -->
+  		</if>
+  		<if test="accountId != null and accountId != ''">
+  			and instr(r.ACCOUNT_ID, #{accountId,jdbcType=VARCHAR}) > 0
+  			<!-- and r.ACCOUNT_ID like concat(concat('%',#{accountId,jdbcType=VARCHAR}),'%') --> 
+  		</if>
+  		<if test="bankName != null and bankName != ''">
+  			and instr(r.BANK_NAME, #{bankName,jdbcType=VARCHAR}) > 0
+  			<!-- and r.BANK_NAME like concat(concat('%',#{bankName,jdbcType=VARCHAR}),'%')  -->
+  		</if>
+  		<if test="bankCardNo != null and bankCardNo != ''">
+  			and instr(r.BANK_CARD_NO, #{bankCardNo,jdbcType=VARCHAR}) > 0
+  			<!-- and r.BANK_CARD_NO like concat(concat('%',#{bankCardNo,jdbcType=VARCHAR}),'%')  -->
+  		</if>
+  		<if test="accountId != null and accountId != ''">
+  			and instr(r.BANK_CARD_NAME, #{bankCardName,jdbcType=VARCHAR}) > 0
+  			<!-- and r.BANK_CARD_NAME like concat(concat('%',#{bankCardName,jdbcType=VARCHAR}),'%')  -->
+  		</if>
+  		<if test="status != null">
+  			and r.STATUS = #{status,jdbcType=CHAR} 
+  		</if>
+		<if test="rateType != null">
+  			and r.RATE_TYPE = #{rateType,jdbcType=CHAR} 
+  		</if>
+  		<if test="bankType != null">
+  			and r.BANK_TYPE = #{bankType,jdbcType=CHAR} 
+  		</if>
+  		<if test="validTime != null">
+  			and r.VALID_TIME = #{validTime,jdbcType=TIMESTAMP} 
+  		</if>
+  </sql>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustRateDto" resultMap="BaseResultMap">
+  	select r.* from TB_ACT_CUST_RATE r 
+  	<where> 
+		1=1 <include refid="listWhereSql"/>
+  	</where>
+  	order by CREATE_TIME desc 
+  </select>
+  <select id="listCustRate" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustRateDto" resultMap="ExtBaseResultMap">
+    select a.CUST_ID,a.CUST_NAME,a.ACCOUNT_ID,s.subject_name as subjectNo2Name,
+      r.STATUS,r.rate,r.VALID_TIME,r.CREATE_TIME,r.UPDATE_TIME ,a.subject_no_2
+       from TB_ACT_ACCOUNT a 
+      inner join TB_ACT_SUBJECT s on a.subject_no_2=s.subject_no  
+      left join TB_ACT_CUST_RATE r on r.ACCOUNT_ID = a.ACCOUNT_ID and r.RATE_TYPE = #{custRateDto.rateType,jdbcType=CHAR}
+      inner join TB_ACT_BUSI_REF_SUB b on b.SUB2_NO = s.SUBJECT_NO and b.BUSI_TYPE = #{custRateDto.busiType,jdbcType=CHAR}
+  	<where> 
+  		a.ACCT_TYPE_NO=b.ACCT_TYPE_NO
+  		<if test="custRateDto.custId != null and custRateDto.custId != ''">
+  			and instr(a.CUST_ID, #{custRateDto.custId,jdbcType=VARCHAR}) > 0
+  			<!-- a.CUST_ID like concat(concat('%',#{custId,jdbcType=VARCHAR}),'%') --> 
+  		</if>
+  		<if test="custRateDto.custName != null and custRateDto.custName != ''">
+  			and instr(a.CUST_NAME, #{custRateDto.custName,jdbcType=VARCHAR}) > 0
+  			<!-- and a.CUST_NAME like concat(concat('%',#{custName,jdbcType=VARCHAR}),'%')  -->
+  		</if>
+  		<if test="custRateDto.accountId != null and custRateDto.accountId != ''">
+  			and instr(a.ACCOUNT_ID, #{custRateDto.accountId,jdbcType=VARCHAR}) > 0
+  			<!-- and a.ACCOUNT_ID like concat(concat('%',#{accountId,jdbcType=VARCHAR}),'%')  -->
+  		</if>
+  		<if test="custRateDto.status != null">
+  			and r.STATUS = #{custRateDto.status,jdbcType=CHAR} 
+  		</if>
+  		<if test="custRateDto.validTime != null">
+  			and r.VALID_TIME = #{custRateDto.validTime,jdbcType=TIMESTAMP} 
+  		</if>
+  		<if test="custId != null and custId!=''">
+  			and a.CUST_ID != #{custId,jdbcType=VARCHAR} 
+  		</if>
+  		<!-- <if test="busiType != null">
+  			and b.BUSI_TYPE = #{busiType,jdbcType=CHAR} 
+  		</if> -->
+  	</where>   
+  </select>
+  <select id="findByAccountId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * 
+    from TB_ACT_CUST_RATE
+    where ACCOUNT_ID = #{accountId,jdbcType=VARCHAR}
+  </select>
+  <select id="findByBankCardNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * 
+    from TB_ACT_CUST_RATE
+    where BANK_CARD_NO = #{bankCardNo,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findByBankCardNos" resultMap="BaseResultMap">
+  	select * from TB_ACT_CUST_RATE where BANK_CARD_NO in 
+  	<foreach collection="bankAccNos" item="item" open="(" separator="," close=")">
+  		#{item,jdbcType=VARCHAR}
+  	</foreach>
+  </select>
+  <select id="listCustRateByAccountIds" resultMap="ExtBaseResultMap">
+    select a.CUST_ID,a.CUST_NAME,a.ACCOUNT_ID,s.subject_name as subjectNo2Name,a.subject_no_2
+      from TB_ACT_ACCOUNT a 
+      inner join TB_ACT_SUBJECT s on a.subject_no_2=s.subject_no  
+      inner join  TB_ACT_BUSI_REF_SUB b on b.SUB2_NO = a.subject_no_2 
+      and b.BUSI_TYPE = #{custRateDto.busiType,jdbcType=CHAR}
+  	<where> 
+  		a.ACCT_TYPE_NO=b.ACCT_TYPE_NO
+  		<if test="accountIds != null and accountIds.size()>0">
+	  		and a.ACCOUNT_ID in 
+	  		<foreach collection="accountIds" item="accountId" open="(" separator="," close=")">
+		  		#{accountId,jdbcType=VARCHAR}
+		  	</foreach>
+	  	</if>
+	  	<if test="custId != null and custId!=''">
+  			and a.CUST_ID != #{custId,jdbcType=VARCHAR} 
+  		</if>
+  	</where>   
+  </select>
+</mapper>

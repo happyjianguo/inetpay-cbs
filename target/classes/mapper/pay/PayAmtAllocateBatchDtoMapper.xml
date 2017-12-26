@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayAmtAllocateBatchDtoMapper">
+    <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateBatchDto">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR"/>
+        <result column="ACCESS_CODE" property="accessCode" jdbcType="VARCHAR"/>
+        <result column="ACCESS_NAME" property="accessName" jdbcType="VARCHAR"/>
+        <result column="MER_ORDER_DATE" property="merOrderDate" jdbcType="CHAR"/>
+        <result column="MER_CODE" property="merCode" jdbcType="VARCHAR"/>
+        <result column="MER_NAME" property="merName" jdbcType="VARCHAR"/>
+        <result column="NOTIFY_URL" property="notifyUrl" jdbcType="VARCHAR"/>
+        <result column="TOTAL_NUM" property="totalNum" jdbcType="DECIMAL"/>
+        <result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="SUCCESS_NUM" property="successNum" jdbcType="DECIMAL"/>
+        <result column="FAIL_NUM" property="failNum" jdbcType="DECIMAL"/>
+        <result column="FAIL_AMOUNT" property="failAmount" jdbcType="DECIMAL"/>
+        <result column="SUCCESS_AMOUNT" property="successAmount" jdbcType="DECIMAL"/>
+        <result column="CLEAR_DATE" property="clearDate" jdbcType="CHAR"/>
+        <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+        <result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, BATCH_NO, ACCESS_CODE, ACCESS_NAME, MER_ORDER_DATE, MER_CODE, MER_NAME, NOTIFY_URL, TOTAL_NUM,
+        TOTAL_AMOUNT, SUCCESS_NUM, FAIL_NUM,FAIL_AMOUNT, SUCCESS_AMOUNT, CLEAR_DATE, REMARK,PRODUCT_CODE, UPDATE_TIME
+    </sql>
+    
+    <select id="listAll" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateBatchDto" resultMap="BaseResultMap" >  
+	 select
+    <include refid="Base_Column_List" />
+     from tb_pay_amt_allocate_batch 
+     where 1=1 
+     <if test="merCode !=null  and merCode !=''">
+		and instr(MER_CODE, #{merCode}) > 0
+	</if>
+	 <if test="merName !=null  and merName!=''">
+		and instr(MER_NAME, #{merName}) > 0
+	</if>
+    <if test="batchNo !=null  and batchNo !=''">
+		and instr(BATCH_NO, #{batchNo}) > 0
+	</if>
+	 <if test="startCreateTime !=null and startCreateTime !=''">
+		and date_format(UPDATE_TIME,'%Y%m%d')<![CDATA[   >=  ]]>date_format(#{startCreateTime},'%Y%m%d')
+	</if>
+	 <if test="endCreateTime !=null and endCreateTime !=''">
+		and date_format(UPDATE_TIME,'%Y%m%d')<![CDATA[   <=  ]]>date_format(#{endCreateTime},'%Y%m%d')
+	</if>
+	 <if test="stratTime !=null and stratTime !=''">
+    	 and CLEAR_DATE <![CDATA[   >=  ]]>date_format(#{stratTime},'%Y%m%d')
+    </if>
+	<if test="endTime !=null and endTime !=''">
+		and CLEAR_DATE <![CDATA[   <=  ]]>date_format(#{endTime},'%Y%m%d')
+	 </if>
+ 
+	<if test="startTotalAmount != null and startTotalAmount != ''">
+		and TOTAL_AMOUNT<![CDATA[   >=  ]]>#{startTotalAmount}
+	</if>
+	<if test="endTotalAmount != null and endTotalAmount != ''">
+		and TOTAL_AMOUNT<![CDATA[   <=  ]]>#{endTotalAmount}
+	</if>	
+	<if test="startTotalNum != null and startTotalNum != ''">
+		and TOTAL_NUM<![CDATA[   >=  ]]>#{startTotalNum}
+	</if>
+	<if test="endTotalNum != null and endTotalNum != ''">
+		and TOTAL_NUM<![CDATA[   <=  ]]>#{endTotalNum}
+	</if>	
+	 order by UPDATE_TIME desc
+  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_pay_amt_allocate_batch
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM tb_pay_amt_allocate_batch
+        WHERE ID = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateBatchDto">
+        INSERT INTO tb_pay_amt_allocate_batch (ID, BATCH_NO, ACCESS_CODE, ACCESS_NAME,
+                                               MER_ORDER_DATE, MER_CODE, MER_NAME,
+                                               NOTIFY_URL, TOTAL_NUM, TOTAL_AMOUNT,
+                                               SUCCESS_NUM, FAIL_NUM,FAIL_AMOUNT, SUCCESS_AMOUNT, CLEAR_DATE,
+                                               REMARK,PRODUCT_CODE, UPDATE_TIME)
+        VALUES
+            (#{id,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{accessCode,jdbcType=VARCHAR},#{accessName,jdbcType=VARCHAR},
+        #{merOrderDate,jdbcType=CHAR}, #{merCode,jdbcType=VARCHAR}, #{merName,jdbcType=VARCHAR},
+        #{notifyUrl,jdbcType=VARCHAR}, #{totalNum,jdbcType=DECIMAL}, #{totalAmount,jdbcType=DECIMAL},
+        #{successNum,jdbcType=DECIMAL}, #{failNum,jdbcType=DECIMAL},#{failAmount,jdbcType=DECIMAL},
+        #{successAmount,jdbcType=DECIMAL},#{clearDate,jdbcType=CHAR},
+        #{remark,jdbcType=VARCHAR},#{productCode,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateBatchDto">
+        insert into tb_pay_amt_allocate_batch
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="batchNo != null">
+                BATCH_NO,
+            </if>
+            <if test="accessCode != null">
+                ACCESS_CODE,
+            </if>
+            <if test="accessName != null">
+                ACCESS_NAME,
+            </if>
+            <if test="merOrderDate != null">
+                MER_ORDER_DATE,
+            </if>
+            <if test="merCode != null">
+                MER_CODE,
+            </if>
+            <if test="merName != null">
+                MER_NAME,
+            </if>
+            <if test="notifyUrl != null">
+                NOTIFY_URL,
+            </if>
+            <if test="totalNum != null">
+                TOTAL_NUM,
+            </if>
+            <if test="totalAmount != null">
+                TOTAL_AMOUNT,
+            </if>
+            <if test="successNum != null">
+                SUCCESS_NUM,
+            </if>
+            <if test="failNum != null">
+                FAIL_NUM,
+            </if>
+            <if test="failAmount != null">
+                FAIL_AMOUNT,
+            </if>
+            <if test="successAmount != null">
+                SUCCESS_AMOUNT,
+            </if>
+            <if test="clearDate != null">
+                CLEAR_DATE,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="productCode != null">
+                PRODUCT_CODE,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="batchNo != null">
+                #{batchNo,jdbcType=VARCHAR},
+            </if>
+            <if test="accessCode != null">
+                #{accessCode,jdbcType=VARCHAR},
+            </if>
+            <if test="accessName != null">
+                #{accessName,jdbcType=VARCHAR},
+            </if>
+            <if test="merOrderDate != null">
+                #{merOrderDate,jdbcType=CHAR},
+            </if>
+            <if test="merCode != null">
+                #{merCode,jdbcType=VARCHAR},
+            </if>
+            <if test="merName != null">
+                #{merName,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyUrl != null">
+                #{notifyUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNum != null">
+                #{totalNum,jdbcType=DECIMAL},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="successNum != null">
+                #{successNum,jdbcType=DECIMAL},
+            </if>
+            <if test="failNum != null">
+                #{failNum,jdbcType=DECIMAL},
+            </if>
+            <if test="failAmount != null">
+                #{failAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="successAmount != null">
+                #{successAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="clearDate != null">
+                #{clearDate,jdbcType=CHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateBatchDto">
+        update tb_pay_amt_allocate_batch
+        <set>
+            <if test="batchNo != null">
+                BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+            </if>
+            <if test="accessCode != null">
+                ACCESS_CODE = #{accessCode,jdbcType=VARCHAR},
+            </if>
+            <if test="accessName != null">
+                ACCESS_NAME = #{accessName,jdbcType=VARCHAR},
+            </if>
+            <if test="merOrderDate != null">
+                MER_ORDER_DATE = #{merOrderDate,jdbcType=CHAR},
+            </if>
+            <if test="merCode != null">
+                MER_CODE = #{merCode,jdbcType=VARCHAR},
+            </if>
+            <if test="merName != null">
+                MER_NAME = #{merName,jdbcType=VARCHAR},
+            </if>
+            <if test="notifyUrl != null">
+                NOTIFY_URL = #{notifyUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNum != null">
+                TOTAL_NUM = #{totalNum,jdbcType=DECIMAL},
+            </if>
+            <if test="totalAmount != null">
+                TOTAL_AMOUNT = #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="successNum != null">
+                SUCCESS_NUM = #{successNum,jdbcType=DECIMAL},
+            </if>
+            <if test="failNum != null">
+                FAIL_NUM = #{failNum,jdbcType=DECIMAL},
+            </if>
+            <if test="failAmount != null">
+                FAIL_AMOUNT= #{failAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="successAmount != null">
+                SUCCESS_AMOUNT = #{successAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="clearDate != null">
+                CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                PRODUCT_CODE = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayAmtAllocateBatchDto">
+        UPDATE tb_pay_amt_allocate_batch
+        SET BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+        ACCESS_CODE = #{accessCode,jdbcType=VARCHAR},
+        ACCESS_NAME = #{accessName,jdbcType=VARCHAR},
+        MER_ORDER_DATE = #{merOrderDate,jdbcType=CHAR},
+        MER_CODE = #{merCode,jdbcType=VARCHAR},
+        MER_NAME = #{merName,jdbcType=VARCHAR},
+        NOTIFY_URL = #{notifyUrl,jdbcType=VARCHAR},
+        TOTAL_NUM = #{totalNum,jdbcType=DECIMAL},
+        TOTAL_AMOUNT = #{totalAmount,jdbcType=DECIMAL},
+        SUCCESS_NUM = #{successNum,jdbcType=DECIMAL},
+        FAIL_NUM = #{failNum,jdbcType=DECIMAL},
+        FAIL_AMOUNT= #{failAmount,jdbcType=DECIMAL},
+        SUCCESS_AMOUNT = #{successAmount,jdbcType=DECIMAL},
+        CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+        REMARK = #{remark,jdbcType=VARCHAR},
+        PRODUCT_CODE = #{productCode,jdbcType=VARCHAR},
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="findByBatchNoAndAccessCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_pay_amt_allocate_batch
+        where ACCESS_CODE = #{accessCode,jdbcType=VARCHAR}
+        AND  BATCH_NO= #{batchNo,jdbcType=VARCHAR}
+    </select>
+
+
+    <update id="addSuccessNumAndAmount" >
+        UPDATE tb_pay_amt_allocate_batch t
+        SET SUCCESS_NUM=SUCCESS_NUM+#{num,jdbcType=DECIMAL},
+            SUCCESS_AMOUNT=SUCCESS_AMOUNT+#{amount,jdbcType=DECIMAL},
+            UPDATE_TIME=now()
+        WHERE BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="addFailNumAndAmount" >
+        UPDATE tb_pay_amt_allocate_batch t
+        SET FAIL_NUM=FAIL_NUM+#{num,jdbcType=DECIMAL},
+            FAIL_AMOUNT=FAIL_AMOUNT+#{amount,jdbcType=DECIMAL},
+            UPDATE_TIME=now()
+        WHERE BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="addFailBySuccess" >
+        UPDATE tb_pay_amt_allocate_batch t
+        SET FAIL_NUM=FAIL_NUM+#{num,jdbcType=DECIMAL},
+            FAIL_AMOUNT=FAIL_AMOUNT+#{amount,jdbcType=DECIMAL},
+            SUCCESS_NUM=SUCCESS_NUM-#{num,jdbcType=DECIMAL},
+            SUCCESS_AMOUNT=SUCCESS_AMOUNT-#{amount,jdbcType=DECIMAL},
+            UPDATE_TIME=now()
+        WHERE BATCH_NO = #{batchNo,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

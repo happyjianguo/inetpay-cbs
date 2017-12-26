@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsPayBookDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsPayBook" >
+	    <result column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="PAY_ID" property="payId" jdbcType="CHAR" />
+	    <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
+	    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+	    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+	    <result column="TRADE_TYPE" property="tradeType" jdbcType="CHAR" />
+	    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+	    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+	    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+	    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+	    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+	    <result column="PAYEE_CUST_NAME" property="payeeCustName" jdbcType="VARCHAR" />
+	    <result column="ACCT_DATE" property="acctDate" jdbcType="CHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	 
+  </resultMap>
+ 
+<!--查询-->
+ <select id="queryClsPayBook"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBook" resultMap="resultMap">
+ select 
+ 	p.ID ,
+ 	p.PAY_ID ,
+ 	p.PAY_TYPE ,
+ 	p.BUSI_ID ,
+ 	p.BUSI_TYPE ,
+ 	p.TRADE_TYPE ,
+ 	p.ORDER_AMT ,
+ 	p.ORDER_STATUS ,
+ 	p.PAYER_CUST_ID ,
+ 	p.PAYER_CUST_NAME ,
+ 	p.PAYEE_CUST_ID ,
+ 	p.PAYEE_CUST_NAME ,
+ 	p.ACCT_DATE ,
+ 	p.CREATE_TIME 
+ from TB_CLS_PAY_BOOK p where 1=1
+ <if test="startAcctDate!=null and startAcctDate !=''">
+ and ACCT_DATE <![CDATA[   >=  ]]> #{startAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="endAcctDate!=null and endAcctDate !=''">
+ and ACCT_DATE <![CDATA[   <=  ]]> #{endAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="payId!=null and payId !=''">
+ AND instr(PAY_ID, #{payId}) > 0
+ </if>
+ <if test="busiId!=null and busiId !=''">
+ AND instr(BUSI_ID, #{busiId}) > 0
+ </if>
+ <if test="payerCustId!=null and payerCustId!=''">
+ AND instr(PAYER_CUST_ID, #{payerCustId}) > 0
+ </if>
+ <if test="payerCustName!=null and payerCustName!=''">
+ AND instr(PAYER_CUST_NAME, #{payerCustName}) > 0
+ </if>
+ <if test="payeeCustId!=null and payeeCustId!=''">
+ AND instr(PAYEE_CUST_ID, #{payeeCustId}) > 0
+ </if>
+ <if test="payeeCustName!=null and payeeCustName!=''">
+ AND instr(PAYEE_CUST_NAME, #{payeeCustName}) > 0
+ </if>
+ <if test="busiType!=null">
+ and BUSI_TYPE=#{busiType,jdbcType=CHAR}
+ </if>
+ <if test="orderStatus!=null">
+ and ORDER_STATUS=#{orderStatus,jdbcType=CHAR}
+ </if>
+ <if test="tradeType!=null and tradeType!=''">
+ and TRADE_TYPE=#{tradeType,jdbcType=CHAR}
+ </if>
+ order by p.CREATE_TIME DESC,p.PAY_ID desc
+ </select>
+ 
+<!--更新-->
+ <update id="updateClsPayBook" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBook">
+ update TB_CLS_PAY_BOOK set
+ 	ID=#{id,jdbcType=VARCHAR}  ,
+ 	PAY_ID=#{payId,jdbcType=CHAR}  ,
+ 	PAY_TYPE=#{payType,jdbcType=CHAR}  ,
+ 	BUSI_ID=#{busiId,jdbcType=CHAR}  ,
+ 	BUSI_TYPE=#{busiType,jdbcType=CHAR}  ,
+ 	TRADE_TYPE=#{tradeType,jdbcType=CHAR}  ,
+ 	ORDER_AMT=#{orderAmt,jdbcType=DECIMAL}  ,
+ 	ORDER_STATUS=#{orderStatus,jdbcType=CHAR}  ,
+ 	PAYER_CUST_ID=#{payerCustId,jdbcType=VARCHAR}  ,
+ 	PAYER_CUST_NAME=#{payerCustName,jdbcType=VARCHAR}  ,
+ 	PAYEE_CUST_ID=#{payeeCustId,jdbcType=VARCHAR}  ,
+ 	PAYEE_CUST_NAME=#{payeeCustName,jdbcType=VARCHAR}  ,
+ 	ACCT_DATE=#{acctDate,jdbcType=CHAR}  ,
+ 	CREATE_TIME=#{createTime,jdbcType=TIMESTAMP}  
+ where 
+ 	ID=#{id,jdbcType=VARCHAR}  
+ </update>
+ 
+<!--插入-->
+ <insert id="addClsPayBook" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsPayBook">
+ insert into TB_CLS_PAY_BOOK
+ (
+  ID ,
+  PAY_ID ,
+  PAY_TYPE ,
+  BUSI_ID ,
+  BUSI_TYPE ,
+  TRADE_TYPE ,
+  ORDER_AMT ,
+  ORDER_STATUS ,
+  PAYER_CUST_ID ,
+  PAYER_CUST_NAME ,
+  PAYEE_CUST_ID ,
+  PAYEE_CUST_NAME ,
+  ACCT_DATE ,
+  CREATE_TIME 
+  )
+  values(
+  	#{id,jdbcType=VARCHAR} ,
+  	#{payId,jdbcType=CHAR} ,
+  	#{payType,jdbcType=CHAR} ,
+  	#{busiId,jdbcType=CHAR} ,
+  	#{busiType,jdbcType=CHAR} ,
+  	#{tradeType,jdbcType=CHAR} ,
+  	#{orderAmt,jdbcType=DECIMAL} ,
+  	#{orderStatus,jdbcType=CHAR} ,
+  	#{payerCustId,jdbcType=VARCHAR} ,
+  	#{payerCustName,jdbcType=VARCHAR} ,
+  	#{payeeCustId,jdbcType=VARCHAR} ,
+  	#{payeeCustName,jdbcType=VARCHAR} ,
+  	#{acctDate,jdbcType=CHAR} ,
+  	#{createTime,jdbcType=TIMESTAMP} 
+  )
+ </insert>
+ 
+ <!--删除-->
+ <delete id="deleteClsPayBook">
+ delete from TB_CLS_PAY_BOOK 
+ where
+  ID  in
+   <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+        #{item}  
+    </foreach>  
+ </delete>
+ 
+</mapper>

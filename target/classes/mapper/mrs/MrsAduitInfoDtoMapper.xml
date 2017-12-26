@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsAduitInfoDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitInfoDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="START_SYSTEM" property="startSystem" jdbcType="CHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="CUST_TYPE" property="custType" jdbcType="CHAR" />
+    <result column="CREATE_OPERATOR" property="createOperator" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="ADUIT_TOTAL" property="aduitTotal" jdbcType="DECIMAL" />
+    <result column="ADUIT_NUM" property="aduitNum" jdbcType="DECIMAL" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CART_TYPE" property="cartType" jdbcType="CHAR" />
+    <result column="CART_NO" property="cartNo" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PRODUCT_STATUS" property="productStatus" jdbcType="CHAR" />
+    <result column="PRODUCT_AUTH_STATUS" property="productAuthStatus" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, START_SYSTEM, BUSI_TYPE, CUST_TYPE, CREATE_OPERATOR, REMARK, CREATE_TIME, STATUS, 
+    ADUIT_TOTAL, ADUIT_NUM, CUST_ID, CART_TYPE, CART_NO, NAME, PRODUCT_STATUS, PRODUCT_AUTH_STATUS 
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ADUIT_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="findListByLoginId" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select  a.*
+	  from TB_MRS_ADUIT_INFO a
+	  left join TB_MRS_PORTAL_ACCOUNT_ADUIT p on p.aduit_id=a.id
+	where  p.login_id=#{loginId,jdbcType=VARCHAR}
+	order by a.create_time DESC
+  </select>
+  <!-- 根据一户通编号查询不是终态一户通号码 -->
+   <select id="findByCustIdNoFinalStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select  a.*
+	  from TB_MRS_ADUIT_INFO a
+	where  a.CUST_ID=#{custId,jdbcType=VARCHAR} and a.STATUS  in ('00','01')
+	order by a.create_time DESC
+  </select>
+  
+  
+  <select id="getByIds" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitInfoDto" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  from TB_MRS_ADUIT_INFO info
+  where info.status in ('00', '01') 
+  and info.CUST_TYPE = #{custType,jdbcType=CHAR} 
+  and info.id in 
+  (select aduit_id from TB_MRS_ADUIT_PERSON p 
+  where p.aduit_user_id = #{userId,jdbcType=VARCHAR} 
+  and p.aduit_status = '00' and p.status = '00') 
+  <if test="name != '' and name != null">
+   	 and instr(NAME,#{name,jdbcType=VARCHAR}) > 0 
+  </if> 
+  <if test="cartNo != '' and cartNo != null">
+   	 and instr(CART_NO,#{cartNo,jdbcType=VARCHAR}) > 0 
+  </if>
+  <if test="busiType !='' and busiType != null">
+       and BUSI_TYPE = #{busiType,jdbcType=CHAR} 
+  </if>
+  <if test="custId !='' and custId != null">
+       and instr(CUST_ID,#{custId,jdbcType=VARCHAR}) > 0
+  </if>
+  <if test="startTime !='' and startTime != null">
+       and to_char(CREATE_TIME,'yyyy-MM-dd') <![CDATA[   >=  ]]> #{startTime}
+  </if>
+  <if test="endTime !='' and endTime != null">
+       and to_char(CREATE_TIME,'yyyy-MM-dd') <![CDATA[   <=  ]]> #{endTime}
+  </if>
+   order by CREATE_TIME desc 
+  </select>
+  
+  <select id="findListPage" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitInfoDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_ADUIT_INFO where 1=1
+    <if test="name !='' and name != null">
+       and instr(NAME,#{name,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="cartNo !='' and cartNo != null">
+       and instr(CART_NO,#{cartNo,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="custId !='' and custId != null">
+       and instr(CUST_ID,#{custId,jdbcType=VARCHAR}) > 0
+    </if>
+    <if test="busiType !='' and busiType != null">
+       and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+    </if>
+    <if test="status !='' and status != null">
+       and STATUS = #{status,jdbcType=CHAR}
+    </if>
+    <if test="custType !='' and custType != null">
+       and CUST_TYPE = #{custType,jdbcType=CHAR}
+    </if>
+    <if test="startTime !='' and startTime != null">
+       and to_char(CREATE_TIME,'yyyy-MM-dd') <![CDATA[   >=  ]]> #{startTime}
+    </if>
+    <if test="endTime !='' and endTime != null">
+       and to_char(CREATE_TIME,'yyyy-MM-dd') <![CDATA[   <=  ]]> #{endTime}
+    </if>
+    <!-- 后续添加 -->
+    <if test="busiTypes !=null and busiTypes != ''">
+	    <foreach collection="busiTypes" index="index" item="item">
+	     	and BUSI_TYPE != #{item}
+	    </foreach>
+    </if>
+    
+    order by CREATE_TIME desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_ADUIT_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitInfoDto" >
+    insert into TB_MRS_ADUIT_INFO (ID, START_SYSTEM, BUSI_TYPE, 
+      CUST_TYPE, CREATE_OPERATOR, REMARK, 
+      CREATE_TIME, STATUS, ADUIT_TOTAL, 
+      ADUIT_NUM, CUST_ID, CART_TYPE, 
+      CART_NO, NAME, PRODUCT_STATUS, 
+      PRODUCT_AUTH_STATUS)
+    values (#{id,jdbcType=VARCHAR}, #{startSystem,jdbcType=CHAR}, #{busiType,jdbcType=CHAR}, 
+      #{custType,jdbcType=CHAR}, #{createOperator,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{aduitTotal,jdbcType=DECIMAL}, 
+      #{aduitNum,jdbcType=DECIMAL}, #{custId,jdbcType=VARCHAR}, #{cartType,jdbcType=CHAR}, 
+      #{cartNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{productStatus,jdbcType=CHAR}, 
+      #{productAuthStatus,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitInfoDto" >
+    insert into TB_MRS_ADUIT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="startSystem != null" >
+        START_SYSTEM,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="custType != null" >
+        CUST_TYPE,
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="aduitTotal != null" >
+        ADUIT_TOTAL,
+      </if>
+      <if test="aduitNum != null" >
+        ADUIT_NUM,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="cartType != null" >
+        CART_TYPE,
+      </if>
+      <if test="cartNo != null" >
+        CART_NO,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="productStatus != null" >
+        PRODUCT_STATUS,
+      </if>
+      <if test="productAuthStatus != null" >
+        PRODUCT_AUTH_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="startSystem != null" >
+        #{startSystem,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="custType != null" >
+        #{custType,jdbcType=CHAR},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="aduitTotal != null" >
+        #{aduitTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="aduitNum != null" >
+        #{aduitNum,jdbcType=DECIMAL},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="cartType != null" >
+        #{cartType,jdbcType=CHAR},
+      </if>
+      <if test="cartNo != null" >
+        #{cartNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="productStatus != null" >
+        #{productStatus,jdbcType=CHAR},
+      </if>
+      <if test="productAuthStatus != null" >
+        #{productAuthStatus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitInfoDto" >
+    update TB_MRS_ADUIT_INFO
+    <set >
+      <if test="startSystem != null" >
+        START_SYSTEM = #{startSystem,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="custType != null" >
+        CUST_TYPE = #{custType,jdbcType=CHAR},
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="aduitTotal != null" >
+        ADUIT_TOTAL = #{aduitTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="aduitNum != null" >
+        ADUIT_NUM = #{aduitNum,jdbcType=DECIMAL},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="cartType != null" >
+        CART_TYPE = #{cartType,jdbcType=CHAR},
+      </if>
+      <if test="cartNo != null" >
+        CART_NO = #{cartNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="productStatus != null" >
+        PRODUCT_STATUS = #{productStatus,jdbcType=CHAR},
+      </if>
+      <if test="productAuthStatus != null" >
+        PRODUCT_AUTH_STATUS = #{productAuthStatus,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitInfoDto" >
+    update TB_MRS_ADUIT_INFO
+    set START_SYSTEM = #{startSystem,jdbcType=CHAR},
+      BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      CUST_TYPE = #{custType,jdbcType=CHAR},
+      CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=CHAR},
+      ADUIT_TOTAL = #{aduitTotal,jdbcType=DECIMAL},
+      ADUIT_NUM = #{aduitNum,jdbcType=DECIMAL},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CART_TYPE = #{cartType,jdbcType=CHAR},
+      CART_NO = #{cartNo,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PRODUCT_STATUS = #{productStatus,jdbcType=CHAR},
+      PRODUCT_AUTH_STATUS = #{productAuthStatus,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

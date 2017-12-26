@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisHistorySmsMapper" >
+  
+  
+ 
+<!--插入-->
+ <insert id="insert">
+insert into TB_BIS_HISTORY_SMS A
+ (
+  A.ID ,
+  A.SYSTEM ,
+  A.SEND_ER ,
+  A.MOBILE ,
+  A.STATUS ,
+  A.FAIL_REASON ,
+  A.SEND_CONTENT ,
+  A.CREATE_TIME ,
+  A.SEND_TIME ,
+  A.SEND_START_TIME ,
+  A.SEND_END_TIME ,
+  A.SEND_CHANNEL ,
+  A.SEND_TYPE ,
+  A.MESS_TYPE ,
+  A.OPENID ,
+  A.MESS_TITLE ,
+  A.AMOUNT ,
+  A.BALANCE 
+  )
+SELECT 
+  B.ID ,
+  B.SYSTEM ,
+  B.SEND_ER ,
+  B.MOBILE ,
+  B.STATUS ,
+  B.FAIL_REASON ,
+  B.SEND_CONTENT ,
+  B.CREATE_TIME ,
+  B.SEND_TIME ,
+  B.SEND_START_TIME ,
+  B.SEND_END_TIME ,
+  B.SEND_CHANNEL ,
+  B.SEND_TYPE ,
+  B.MESS_TYPE ,
+  B.OPENID ,
+  B.MESS_TITLE ,
+  B.AMOUNT ,
+  B.BALANCE 
+FROM TB_BIS_SMS B
+  WHERE B.CREATE_TIME&lt;#{date}
+ </insert>
+ 
+ <!--删除-->
+ <delete id="delete">
+ delete from TB_BIS_SMS 
+ where CREATE_TIME&lt;#{date}
+ </delete>
+ 
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsDebtReportDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsDebtReport" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="SUBJECT_CODE" property="subjectCode" jdbcType="VARCHAR" />
+	    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+	    <result column="SUBJECT_TYPE" property="subjectType" jdbcType="CHAR"/>
+	    <result column="OWN_SUBJECT_CODE" property="ownSubjectCode" jdbcType="CHAR" />
+	    <result column="PARENT_SUBJECT_NAME" property="parentSubjectName" jdbcType="VARCHAR" />
+	    <result column="LAST_ASET" property="lastAset" jdbcType="DECIMAL" />
+	    <result column="CUR_ASET" property="curAset" jdbcType="DECIMAL" />
+	    <result column="ASET_FLOAT" property="asetFloat" jdbcType="DECIMAL" />
+	    <result column="CAL_DATE" property="calDate" jdbcType="CHAR" />
+	    <result column="POS_NAME" property="posName" jdbcType="VARCHAR" />
+	 
+  </resultMap>
+ 
+<!--查询-->
+ <select id="queryDebtReport"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsDebtReport" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	SUBJECT_CODE ,
+ 	SUBJECT_NAME ,
+ 	SUBJECT_TYPE ,
+ 	OWN_SUBJECT_CODE ,
+ 	PARENT_SUBJECT_NAME ,
+ 	LAST_ASET ,
+ 	CUR_ASET ,
+ 	ASET_FLOAT ,
+ 	CAL_DATE ,
+ 	POS_NAME 
+ from TB_CLS_DEBT_REPORT
+ where to_char(TO_DATE(CAL_DATE, 'yyyyMMdd'),'yyyyMM')=#{calDate,jdbcType=CHAR}
+ order by SUBJECT_CODE
+ </select>
+  
+</mapper>

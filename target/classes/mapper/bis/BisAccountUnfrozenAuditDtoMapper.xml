@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisAccountUnfrozenAuditDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountUnfrozenAuditDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+   <!--  <result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR" /> -->
+   <!--  <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" /> -->
+    <result column="UNFROZEN_ACCOUNT_ID" property="unfrozenAccountId" jdbcType="VARCHAR" />
+    <result column="UNFROZEN_ACCOUNT_NAME" property="unfrozenAccountName" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="UNFROZEN_VALID_TIME" property="unfrozenValidTime" jdbcType="TIMESTAMP" />
+    <result column="UNFREEZE_AUDIT_STATUS" property="unfreezeAuditStatus" jdbcType="CHAR" />
+    <result column="UNFREEZE_OPERATOR" property="unfreezeOperator" jdbcType="VARCHAR" />
+    <result column="UNFREEZE_OPERATOR_NAME" property="unfreezeOperatorName" jdbcType="VARCHAR" />
+    <result column="UNFREEZE_OPERATOR_TIME" property="unfreezeOperatorTime" jdbcType="TIMESTAMP" />
+    <result column="UNFREEZE_TYPE" property="unfreezeType" jdbcType="CHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="UNFROZEN_REASON" property="unfrozenReason" jdbcType="VARCHAR" />
+    <result column="ACTUAL_UNFROZEN_AMT" property="actualUnfrozenAmt" jdbcType="DECIMAL" />
+    <result column="PAY_STATUS" property="payStatus" jdbcType="CHAR" />
+    <result column="FROZEN_ID" property="frozenId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, <!-- ACCOUNT_ID, ACCOUNT_NAME, --> UNFROZEN_ACCOUNT_ID, UNFROZEN_ACCOUNT_NAME, CUST_ID, CUST_NAME, 
+    UNFROZEN_VALID_TIME, UNFREEZE_AUDIT_STATUS, UNFREEZE_OPERATOR, UNFREEZE_OPERATOR_NAME, 
+    UNFREEZE_OPERATOR_TIME, UNFREEZE_TYPE, SUBJECT_NAME, UNFROZEN_REASON, ACTUAL_UNFROZEN_AMT, 
+    PAY_STATUS, FROZEN_ID, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountUnfrozenAuditDto" >
+    insert into TB_BIS_ACCOUNT_UNFROZEN_AUDIT (ID, <!-- ACCOUNT_ID, ACCOUNT_NAME, --> 
+      UNFROZEN_ACCOUNT_ID, UNFROZEN_ACCOUNT_NAME, CUST_ID, 
+      CUST_NAME, UNFROZEN_VALID_TIME, UNFREEZE_AUDIT_STATUS, 
+      UNFREEZE_OPERATOR, UNFREEZE_OPERATOR_NAME, 
+      UNFREEZE_OPERATOR_TIME, UNFREEZE_TYPE, SUBJECT_NAME, 
+      UNFROZEN_REASON, ACTUAL_UNFROZEN_AMT, 
+      PAY_STATUS, FROZEN_ID, REMARK
+      )
+    values (#{id,jdbcType=VARCHAR}, <!-- #{accountId,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR},  -->
+      #{unfrozenAccountId,jdbcType=VARCHAR}, #{unfrozenAccountName,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{custName,jdbcType=VARCHAR}, #{unfrozenValidTime,jdbcType=TIMESTAMP}, #{unfreezeAuditStatus,jdbcType=CHAR}, 
+      #{unfreezeOperator,jdbcType=VARCHAR}, #{unfreezeOperatorName,jdbcType=VARCHAR}, 
+      #{unfreezeOperatorTime,jdbcType=TIMESTAMP}, #{unfreezeType,jdbcType=CHAR}, #{subjectName,jdbcType=VARCHAR}, 
+      #{unfrozenReason,jdbcType=VARCHAR}, #{actualUnfrozenAmt,jdbcType=DECIMAL}, 
+      #{payStatus,jdbcType=CHAR}, #{frozenId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountUnfrozenAuditDto" >
+    insert into TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+     <!--  <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="accountName != null" >
+        ACCOUNT_NAME,
+      </if> -->
+      <if test="unfrozenAccountId != null" >
+        UNFROZEN_ACCOUNT_ID,
+      </if>
+      <if test="unfrozenAccountName != null" >
+        UNFROZEN_ACCOUNT_NAME,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="unfrozenValidTime != null" >
+        UNFROZEN_VALID_TIME,
+      </if>
+      <if test="unfreezeAuditStatus != null" >
+        UNFREEZE_AUDIT_STATUS,
+      </if>
+      <if test="unfreezeOperator != null" >
+        UNFREEZE_OPERATOR,
+      </if>
+      <if test="unfreezeOperatorName != null" >
+        UNFREEZE_OPERATOR_NAME,
+      </if>
+      <if test="unfreezeOperatorTime != null" >
+        UNFREEZE_OPERATOR_TIME,
+      </if>
+      <if test="unfreezeType != null" >
+        UNFREEZE_TYPE,
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME,
+      </if>
+      <if test="unfrozenReason != null" >
+        UNFROZEN_REASON,
+      </if>
+      <if test="actualUnfrozenAmt != null" >
+        ACTUAL_UNFROZEN_AMT,
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS,
+      </if>
+      <if test="frozenId != null" >
+        FROZEN_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if> -->
+      <if test="unfrozenAccountId != null" >
+        #{unfrozenAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="unfrozenAccountName != null" >
+        #{unfrozenAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="unfrozenValidTime != null" >
+        #{unfrozenValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unfreezeAuditStatus != null" >
+        #{unfreezeAuditStatus,jdbcType=CHAR},
+      </if>
+      <if test="unfreezeOperator != null" >
+        #{unfreezeOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="unfreezeOperatorName != null" >
+        #{unfreezeOperatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="unfreezeOperatorTime != null" >
+        #{unfreezeOperatorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unfreezeType != null" >
+        #{unfreezeType,jdbcType=CHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="unfrozenReason != null" >
+        #{unfrozenReason,jdbcType=VARCHAR},
+      </if>
+      <if test="actualUnfrozenAmt != null" >
+        #{actualUnfrozenAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="frozenId != null" >
+        #{frozenId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountUnfrozenAuditDto" >
+    update TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+    <set >
+      <!-- <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      </if> -->
+      <if test="unfrozenAccountId != null" >
+       UNFROZEN_ACCOUNT_ID = #{unfrozenAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="unfrozenAccountName != null" >
+        UNFROZEN_ACCOUNT_NAME = #{unfrozenAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="unfrozenValidTime != null" >
+        UNFROZEN_VALID_TIME = #{unfrozenValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unfreezeAuditStatus != null" >
+        UNFREEZE_AUDIT_STATUS = #{unfreezeAuditStatus,jdbcType=CHAR},
+      </if>
+      <if test="unfreezeOperator != null" >
+        UNFREEZE_OPERATOR = #{unfreezeOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="unfreezeOperatorName != null" >
+        UNFREEZE_OPERATOR_NAME = #{unfreezeOperatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="unfreezeOperatorTime != null" >
+        UNFREEZE_OPERATOR_TIME = #{unfreezeOperatorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unfreezeType != null" >
+        UNFREEZE_TYPE = #{unfreezeType,jdbcType=CHAR},
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="unfrozenReason != null" >
+        UNFROZEN_REASON = #{unfrozenReason,jdbcType=VARCHAR},
+      </if>
+      <if test="actualUnfrozenAmt != null" >
+        ACTUAL_UNFROZEN_AMT = #{actualUnfrozenAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS = #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="frozenId != null" >
+        FROZEN_ID = #{frozenId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountUnfrozenAuditDto" >
+    update TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+    set <!-- ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR}, -->
+      UNFROZEN_ACCOUNT_ID = #{unfrozenAccountId,jdbcType=VARCHAR},
+      UNFROZEN_ACCOUNT_NAME = #{unfrozenAccountName,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      UNFROZEN_VALID_TIME = #{unfrozenValidTime,jdbcType=TIMESTAMP},
+      UNFREEZE_AUDIT_STATUS = #{unfreezeAuditStatus,jdbcType=CHAR},
+      UNFREEZE_OPERATOR = #{unfreezeOperator,jdbcType=VARCHAR},
+      UNFREEZE_OPERATOR_NAME = #{unfreezeOperatorName,jdbcType=VARCHAR},
+      UNFREEZE_OPERATOR_TIME = #{unfreezeOperatorTime,jdbcType=TIMESTAMP},
+      UNFREEZE_TYPE = #{unfreezeType,jdbcType=CHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      UNFROZEN_REASON = #{unfrozenReason,jdbcType=VARCHAR},
+      ACTUAL_UNFROZEN_AMT = #{actualUnfrozenAmt,jdbcType=DECIMAL},
+      PAY_STATUS = #{payStatus,jdbcType=CHAR},
+      FROZEN_ID = #{frozenId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <select id="listUnFrozen" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisAccountUnfrozenAuditDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+    <where>
+		<if test="unfrozenAccountId != null and unfrozenAccountId != ''">
+			and instr(UNFROZEN_ACCOUNT_ID, #{unfrozenAccountId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="custId != null and custId != ''">
+			and instr(CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="custName != null and custName != ''">
+			and instr(CUST_NAME, #{custName,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="subjectName != null and subjectName != ''">
+			and instr(SUBJECT_NAME, #{subjectName,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="unfrozenValidTime != null">
+			and to_char(UNFROZEN_VALID_TIME,'YYYY-MM-DD') = to_char(#{unfrozenValidTime,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+		</if>
+		<if test="unfreezeAuditStatus != null">
+			and UNFREEZE_AUDIT_STATUS = #{unfreezeAuditStatus,jdbcType=CHAR}
+		</if>
+		<if test="frozenId != null and frozenId != ''">
+			and instr(FROZEN_ID, #{frozenId,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="payStatus != null">
+			and PAY_STATUS = #{payStatus,jdbcType=CHAR}
+		</if>
+    </where>
+	order by UNFREEZE_OPERATOR_TIME desc
+  </select>
+  <select id="listUnFrozenByEndTime" resultMap="BaseResultMap">
+	  select 
+	  <include refid="Base_Column_List" />
+	  from TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+	  where to_char(UNFROZEN_VALID_TIME,'YYYY-MM-DD') &lt;=to_char(#{actDate,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+	  and UNFREEZE_AUDIT_STATUS = '01'
+	  and PAY_STATUS = '03'
+  </select>
+  <select id="autoQueryUnDownStatus" resultMap="BaseResultMap">
+	  select 
+	  <include refid="Base_Column_List" />
+	  from TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+	  where PAY_STATUS = '00'
+  </select>
+  <select id="runOutWaitAuditByEndTime" resultMap="BaseResultMap">
+	  select 
+	  unf.ID,<!--  unf.ACCOUNT_ID, unf.ACCOUNT_NAME,  -->unf.UNFROZEN_ACCOUNT_ID, unf.UNFROZEN_ACCOUNT_NAME, unf.CUST_ID, unf.CUST_NAME, 
+      unf.UNFROZEN_VALID_TIME, unf.UNFREEZE_AUDIT_STATUS, unf.UNFREEZE_OPERATOR, unf.UNFREEZE_OPERATOR_NAME, 
+      unf.UNFREEZE_OPERATOR_TIME, unf.UNFREEZE_TYPE, unf.SUBJECT_NAME, unf.UNFROZEN_REASON, unf.ACTUAL_UNFROZEN_AMT, 
+      unf.PAY_STATUS, unf.FROZEN_ID, unf.REMARK
+	  from TB_BIS_ACCOUNT_FROZEN_AUDIT f left join TB_BIS_ACCOUNT_UNFROZEN_AUDIT unf
+	  on f.ID = unf.FROZEN_ID
+	  where unf.UNFREEZE_AUDIT_STATUS = '00' and to_char(f.FROZEN_END_TIME,'YYYY-MM-DD') &lt;=to_char(#{actDate,jdbcType=TIMESTAMP},'YYYY-MM-DD')
+  </select>
+  <select id="getAuditNum" resultType="long">
+	  select 
+	  count(ID)
+	  from TB_BIS_ACCOUNT_UNFROZEN_AUDIT
+	  where PAY_STATUS = #{waitpay,jdbcType=CHAR}
+	  and UNFREEZE_AUDIT_STATUS = #{auditPass,jdbcType=CHAR}
+	  <if test="ids!=null and ids.size()>0">
+      and id in 
+      <foreach collection="ids" item="id" open="(" separator="," close=")">
+	  #{id }
+	  </foreach>
+	  </if> 
+  </select>
+</mapper>

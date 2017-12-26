@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsLoginUserDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_CODE" property="accountCode" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="LOGIN_PWD" property="loginPwd" jdbcType="VARCHAR" />
+    <result column="PAY_PWD" property="payPwd" jdbcType="VARCHAR" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="CHAR" />
+    <result column="REGISTER_TYPE" property="registerType" jdbcType="CHAR" />
+    <result column="LOGIN_TIME" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="LOGIN_FAIL_NUM" property="loginFailNum" jdbcType="DECIMAL" />
+    <result column="LAST_LOGIN_LOCK_TIME" property="lastLoginLockTime" jdbcType="TIMESTAMP" />
+    <result column="PAY_FAIL_NUM" property="payFailNum" jdbcType="DECIMAL" />
+    <result column="LAST_PAY_LOCK_TIME" property="lastPayLockTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPERATOR" property="createOperator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_OPERATOR" property="updateOperator" jdbcType="VARCHAR" />
+    <result column="WECHATID" property="weChatId" jdbcType="VARCHAR" />
+      <result column="CUST_ID" property="custId" jdbcType="VARCHAR"/>
+      <result column="ACCOUNT_NAME" property="customerName" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap id="LoginUserResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_CODE" property="accountCode" jdbcType="VARCHAR" />
+    <result column="ALIAS" property="alias" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="LOGIN_PWD" property="loginPwd" jdbcType="VARCHAR" />
+    <result column="PAY_PWD" property="payPwd" jdbcType="VARCHAR" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="CHAR" />
+    <result column="REGISTER_TYPE" property="registerType" jdbcType="CHAR" />
+    <result column="LOGIN_TIME" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="LOGIN_FAIL_NUM" property="loginFailNum" jdbcType="DECIMAL" />
+    <result column="LAST_LOGIN_LOCK_TIME" property="lastLoginLockTime" jdbcType="TIMESTAMP" />
+    <result column="PAY_FAIL_NUM" property="payFailNum" jdbcType="DECIMAL" />
+    <result column="LAST_PAY_LOCK_TIME" property="lastPayLockTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPERATOR" property="createOperator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_OPERATOR" property="updateOperator" jdbcType="VARCHAR" />
+    <result column="IS_MAIN" property="isMain" jdbcType="VARCHAR" />
+    <result column="WECHATID" property="weChatId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    U.ID, U.ACCOUNT_CODE, U.ALIAS, U.MOBILE, U.EMAIL, U.LOGIN_PWD, U.PAY_PWD, U.USER_STATUS,U.REGISTER_TYPE, 
+    U.LOGIN_TIME, U.LOGIN_FAIL_NUM, U.LAST_LOGIN_LOCK_TIME, U.PAY_FAIL_NUM, U.LAST_PAY_LOCK_TIME, 
+    U.CREATE_TIME, U.CREATE_OPERATOR, U.UPDATE_TIME, U.UPDATE_OPERATOR,U.WECHATID
+  </sql>
+  <sql id="Base_login_Column_List" >
+    ID, ACCOUNT_CODE, ALIAS, MOBILE, EMAIL, LOGIN_PWD, PAY_PWD, USER_STATUS, REGISTER_TYPE,
+    LOGIN_TIME, LOGIN_FAIL_NUM, LAST_LOGIN_LOCK_TIME, PAY_FAIL_NUM, LAST_PAY_LOCK_TIME, 
+    CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, UPDATE_OPERATOR,WECHATID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_login_Column_List" />
+    from TB_MRS_LOGIN_USER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="getByCustIdLoginPwd" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_LOGIN_USER U, TB_MRS_USER_ACCOUNT UA, TB_MRS_ACCOUNT A
+    where UA.ACCOUNT_ID = A.ID AND UA.LOGIN_ID = U.ID AND A.CUST_ID = #{custId,jdbcType=VARCHAR} AND U.LOGIN_PWD = #{loginPwd,jdbcType=VARCHAR}
+  </select>
+  <select id="findByIdAndLoginPwd" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_login_Column_List" />
+    from TB_MRS_LOGIN_USER
+    where ID = #{id,jdbcType=VARCHAR} and LOGIN_PWD = #{loginPwd,jdbcType=VARCHAR}
+  </select>
+  <select id="findByAlias" resultMap="BaseResultMap" parameterType="java.lang.String" >
+     select 
+    <include refid="Base_login_Column_List" />
+    from TB_MRS_LOGIN_USER WHERE ALIAS = #{alias,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+    where UA.ACCOUNT_ID = A.ID AND UA.LOGIN_ID = U.ID AND A.CUST_ID = #{custId,jdbcType=VARCHAR} AND UA.IS_MAIN = '0'
+  </select>
+  <select id="selectLoginUserByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+    where UA.ACCOUNT_ID = A.ID AND UA.LOGIN_ID = U.ID AND A.CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  <select id="findUserDtoByCustId" resultMap="LoginUserResultMap" parameterType="java.lang.String" >
+    select 
+     U.ID, U.ACCOUNT_CODE, U.ALIAS, U.MOBILE, U.EMAIL, U.LOGIN_PWD, U.PAY_PWD, U.USER_STATUS,U.REGISTER_TYPE, 
+    U.LOGIN_TIME, U.LOGIN_FAIL_NUM, U.LAST_LOGIN_LOCK_TIME, U.PAY_FAIL_NUM, U.LAST_PAY_LOCK_TIME, 
+    U.CREATE_TIME, U.CREATE_OPERATOR, U.UPDATE_TIME, U.UPDATE_OPERATOR ,UA.IS_MAIN
+    from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+    where UA.ACCOUNT_ID = A.ID AND UA.LOGIN_ID = U.ID AND A.CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+  
+ 
+  
+  <select id="findByLoginMsg" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+    where U.ID = UA.LOGIN_ID AND A.ID = UA.ACCOUNT_ID 
+    <if test="customerType != null and customerType != '' and customerType == '0'.toString() " >
+		AND A.CUSTOMER_TYPE = '0'    
+    </if>
+    <if test="customerType != null and customerType != '' and customerType == '1'.toString() " >
+		AND (A.CUSTOMER_TYPE = '1' or A.CUSTOMER_TYPE = '9' )
+    </if>
+    AND 
+	(
+		( 1 <![CDATA[  <>  ]]> 1
+		    
+		    <if test="alias != null and alias != '' " >
+				OR U.ALIAS = #{alias,jdbcType=VARCHAR}    
+		    </if>
+		    <if test="mobile != null and mobile != '' " >
+				OR U.MOBILE = #{mobile,jdbcType=VARCHAR}    
+		    </if>
+		   <!--  <if test="email != null and email != '' " >
+				OR U.EMAIL = #{email,jdbcType=VARCHAR}    
+		    </if> -->
+	    )
+	    OR (
+	    	 UA.IS_MAIN = '0'
+	    	<if test="custId != null and custId != '' " >
+			and	 A.CUST_ID = #{custId,jdbcType=VARCHAR}    
+		    </if>
+	    )
+    )
+  </select>
+   <select id="findUserDtoByWeChatId" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    select 
+    U.*
+    from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+    where U.ID = UA.LOGIN_ID AND A.ID = UA.ACCOUNT_ID AND A.CUSTOMER_TYPE = '0'    
+    AND U.WECHATID = #{weChatId,jdbcType=VARCHAR}
+  </select>
+    <select id="findUserDtoByLoginId" resultMap="BaseResultMap"
+            parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto">
+        select
+        U.*,A.CUST_ID,A.ACCOUNT_NAME
+        from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+        where U.ID = UA.LOGIN_ID AND A.ID = UA.ACCOUNT_ID
+        AND U.ID = #{id,jdbcType=VARCHAR}
+    </select>
+   <select id="findByLoginUser" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_LOGIN_USER U, TB_MRS_ACCOUNT A, TB_MRS_USER_ACCOUNT UA
+    where U.ID = UA.LOGIN_ID AND A.ID = UA.ACCOUNT_ID 
+    <if test="customerType != null and customerType != '' " >
+		AND A.CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR}    
+    </if>
+     <if test="alias != null and alias != '' ">
+		AND U.ALIAS = #{alias,jdbcType=VARCHAR}
+	</if>
+	<if test="mobile != null and mobile != '' ">
+		AND U.MOBILE = #{mobile,jdbcType=VARCHAR}
+	</if>
+	<if test="custId != null and custId != '' ">
+		AND A.CUST_ID = #{custId,jdbcType=VARCHAR}
+	</if>
+     ORDER  BY U.CREATE_TIME DESC 
+  </select>
+  <select id="findOrganLoginByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_LOGIN_USER U, TB_MRS_USER_ACCOUNT UA, TB_MRS_ACCOUNT A 
+    WHERE UA.ACCOUNT_ID = A.ID AND UA.LOGIN_ID = U.ID AND 
+    	A.CUST_ID = #{custId,jdbcType=VARCHAR} and UA.IS_MAIN = '0'
+  </select>
+  <select id="findOrganLoginByAlias" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_login_Column_List" />
+    from TB_MRS_LOGIN_USER WHERE ALIAS = #{alias,jdbcType=VARCHAR}
+  </select>
+  <select id="pageList" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    select 
+    <include refid="Base_login_Column_List" />
+    from TB_MRS_LOGIN_USER
+    where 1 = 1 
+    <if test="alias != null and alias != '' " >
+		AND ALIAS = #{alias,jdbcType=VARCHAR}    
+    </if>
+    <if test="mobile != null and mobile != '' " >
+		AND MOBILE = #{mobile,jdbcType=VARCHAR}    
+    </if>
+    <if test="email != null and email != '' " >
+		AND EMAIL = #{email,jdbcType=VARCHAR}    
+    </if>
+    <if test="userStatus != null and userStatus != '' " >
+		AND USER_STATUS = #{userStatus,jdbcType=CHAR}    
+    </if>
+  </select>
+  <select id="pageUser" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    select 
+	    U.ID, U.ACCOUNT_CODE, U.ALIAS, U.MOBILE, U.EMAIL, U.LOGIN_PWD, U.PAY_PWD, U.USER_STATUS,U.REGISTER_TYPE, 
+	    U.LOGIN_TIME, U.LOGIN_FAIL_NUM, U.LAST_LOGIN_LOCK_TIME, U.PAY_FAIL_NUM, U.LAST_PAY_LOCK_TIME, 
+	    U.CREATE_TIME, U.CREATE_OPERATOR, U.UPDATE_TIME, U.UPDATE_OPERATOR,
+	    (select count(1) from TB_MRS_USER_ACCOUNT where LOGIN_ID = U.ID) as coustname
+    from TB_MRS_LOGIN_USER U
+    <!-- left join TB_MRS_USER_ACCOUNT t on U.ID=t.LOGIN_ID -->
+    where 1 = 1 
+    <if test="alias != null and alias != '' " >
+		AND ALIAS  like '%${alias}%'   
+    </if>
+    <if test="mobile != null and mobile != '' " >
+		AND MOBILE  like '%${mobile}%'    
+    </if>
+    <if test="email != null and email != '' " >
+		AND EMAIL  like '%${email}%'   
+    </if>
+    <if test="userStatus != null and userStatus != '' " >
+		AND USER_STATUS = #{userStatus,jdbcType=CHAR}
+    </if>
+    <if test="startTime !='' and startTime != null">
+       and to_char(CREATE_TIME,'yyyy-MM-dd') <![CDATA[   >=  ]]> #{startTime}
+    </if>
+    <if test="endTime !='' and endTime != null">
+       and to_char(CREATE_TIME,'yyyy-MM-dd') <![CDATA[   <=  ]]> #{endTime}
+    </if>
+    <if test="custId != null and custId != '' " >
+		AND id in (select ua.login_id from TB_MRS_USER_ACCOUNT ua left join tb_mrs_account ma on ua.account_id=ma.id where instr(ma.cust_id,#{custId})>0)
+    </if>
+    order by CREATE_TIME desc
+  </select>
+  <select id="list"  parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" resultMap="BaseResultMap">
+      select U.ID, U.ALIAS, U.MOBILE, U.EMAIL, U.USER_STATUS,b.IS_MAIN isMain,c.CUST_ID coustId,c.ACCOUNT_TYPE accountType,c.PLATFORM_CODE platformCode,
+     		c.CUSTOMER_TYPE customerType,c.ACCOUNT_STATUS accountStatus,c.OPEN_TIME openTime,U.ACCOUNT_CODE
+	 from TB_MRS_LOGIN_USER U, TB_MRS_USER_ACCOUNT b, TB_MRS_ACCOUNT c
+	 where U.ID = b.LOGIN_ID AND b.ACCOUNT_ID = c.ID AND  b.LOGIN_ID = #{id,jdbcType=VARCHAR}
+	 order by b.CREATE_TIME desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_LOGIN_USER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    insert into TB_MRS_LOGIN_USER (ID, ACCOUNT_CODE ,
+      ALIAS, MOBILE, EMAIL, 
+      LOGIN_PWD, PAY_PWD, 
+      USER_STATUS,REGISTER_TYPE, LOGIN_TIME, LOGIN_FAIL_NUM, 
+      LAST_LOGIN_LOCK_TIME, PAY_FAIL_NUM, LAST_PAY_LOCK_TIME, 
+      CREATE_TIME, CREATE_OPERATOR, UPDATE_TIME, 
+      UPDATE_OPERATOR,WECHATID)
+    values (#{id,jdbcType=VARCHAR}, #{accountCode,jdbcType=VARCHAR},
+      #{alias,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{loginPwd,jdbcType=VARCHAR}, #{payPwd,jdbcType=VARCHAR}, 
+      #{userStatus,jdbcType=CHAR}, #{registerType,jdbcType=CHAR},#{loginTime,jdbcType=TIMESTAMP}, #{loginFailNum,jdbcType=DECIMAL}, 
+      #{lastLoginLockTime,jdbcType=TIMESTAMP}, #{payFailNum,jdbcType=DECIMAL}, #{lastPayLockTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateOperator,jdbcType=VARCHAR},#{weChatId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    insert into TB_MRS_LOGIN_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="accountCode != null" >
+        ACCOUNT_CODE,
+      </if>
+      <if test="alias != null" >
+        ALIAS,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="loginPwd != null" >
+        LOGIN_PWD,
+      </if>
+      <if test="payPwd != null" >
+        PAY_PWD,
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS,
+      </if>
+       <if test="registerType != null" >
+        REGISTER_TYPE,
+      </if>
+      <if test="loginTime != null" >
+        LOGIN_TIME,
+      </if>
+      <if test="loginFailNum != null" >
+        LOGIN_FAIL_NUM,
+      </if>
+      <if test="lastLoginLockTime != null" >
+        LAST_LOGIN_LOCK_TIME,
+      </if>
+      <if test="payFailNum != null" >
+        PAY_FAIL_NUM,
+      </if>
+      <if test="lastPayLockTime != null" >
+        LAST_PAY_LOCK_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createOperator != null" >
+        CREATE_OPERATOR,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateOperator != null" >
+        UPDATE_OPERATOR,
+      </if>
+      <if test="weChatId != null" >
+        WECHATID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCode != null" >
+        #{accountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null" >
+        #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="payPwd != null" >
+        #{payPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=CHAR},
+      </if>
+       <if test="registerType != null" >
+        #{registerType,jdbcType=CHAR},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginFailNum != null" >
+        #{loginFailNum,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginLockTime != null" >
+        #{lastLoginLockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payFailNum != null" >
+        #{payFailNum,jdbcType=DECIMAL},
+      </if>
+      <if test="lastPayLockTime != null" >
+        #{lastPayLockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="weChatId != null" >
+        #{weChatId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+   <update id="updateMobile" parameterType="java.lang.String" >
+   	 update TB_MRS_LOGIN_USER set mobile = #{mobile,jdbcType=VARCHAR}
+   	 where ID = ( 
+   	 	select U.ID 
+   	 	from TB_MRS_ACCOUNT A, TB_MRS_LOGIN_USER U, TB_MRS_USER_ACCOUNT UA
+   		where A.ID = UA.ACCOUNT_ID AND U.ID = UA.LOGIN_ID AND A.CUST_ID = #{custId,jdbcType=VARCHAR}
+   	)
+   </update>
+   <update id="updateEmail" parameterType="java.lang.String" >
+   	 update TB_MRS_LOGIN_USER set EMAIL = #{email, jdbcType=VARCHAR}
+   	 where ID = ( 
+   	 	select U.ID 
+   	 	from TB_MRS_ACCOUNT A, TB_MRS_LOGIN_USER U, TB_MRS_USER_ACCOUNT UA
+   		where A.ID = UA.ACCOUNT_ID AND U.ID = UA.LOGIN_ID AND A.CUST_ID = #{custId,jdbcType=VARCHAR}
+   	)
+   </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    update TB_MRS_LOGIN_USER
+      <set>
+      <if test="accountCode != null and accountCode !=''" >
+        ACCOUNT_CODE = #{accountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null and alias !=''" >
+        ALIAS = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null and mobile!=''" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email !=''" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null and loginPwd !=''" >
+        LOGIN_PWD = #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="payPwd != null and payPwd !=''" >
+        PAY_PWD = #{payPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null and userStatus !=''" >
+        USER_STATUS = #{userStatus,jdbcType=CHAR},
+      </if>
+       <if test="registerType != null and registerType !=''" >
+        REGISTER_TYPE = #{registerType,jdbcType=CHAR},
+      </if>
+      <if test="loginTime != null and loginTime !=''" >
+        LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginFailNum != null and loginFailNum !=''" >
+        LOGIN_FAIL_NUM = #{loginFailNum,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginLockTime != null and lastLoginLockTime !=''" >
+        LAST_LOGIN_LOCK_TIME = #{lastLoginLockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payFailNum != null and payFailNum !=''" >
+        PAY_FAIL_NUM = #{payFailNum,jdbcType=DECIMAL},
+      </if>
+      <if test="lastPayLockTime != null and lastPayLockTime !=''" >
+        LAST_PAY_LOCK_TIME = #{lastPayLockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null and createTime !=''" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null and createOperator !=''" >
+        CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime !=''" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null and updateOperator !=''" >
+        UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="weChatId != null" >
+        WECHATID = #{weChatId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    update TB_MRS_LOGIN_USER
+    set
+      ACCOUNT_CODE = #{accountCode,jdbcType=VARCHAR},
+      ALIAS = #{alias,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      LOGIN_PWD = #{loginPwd,jdbcType=VARCHAR},
+      PAY_PWD = #{payPwd,jdbcType=VARCHAR},
+      USER_STATUS = #{userStatus,jdbcType=CHAR},
+      REGISTER_TYPE = #{registerType,jdbcType=CHAR},
+      LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+      LOGIN_FAIL_NUM = #{loginFailNum,jdbcType=DECIMAL},
+      LAST_LOGIN_LOCK_TIME = #{lastLoginLockTime,jdbcType=TIMESTAMP},
+      PAY_FAIL_NUM = #{payFailNum,jdbcType=DECIMAL},
+      LAST_PAY_LOCK_TIME = #{lastPayLockTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_OPERATOR = #{createOperator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_OPERATOR = #{updateOperator,jdbcType=VARCHAR},
+      WECHATID = #{weChatId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateAlias" parameterType="java.lang.String" >
+  	update TB_MRS_LOGIN_USER
+  	set 
+  		ALIAS = #{alias,jdbcType=VARCHAR}
+  	where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateEmailById" parameterType="java.lang.String" >
+   	 update TB_MRS_LOGIN_USER set EMAIL = #{email, jdbcType=VARCHAR}
+   	 where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="findByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_login_Column_List" />
+    from TB_MRS_LOGIN_USER
+    where EMAIL = #{email,jdbcType=VARCHAR}
+  </select>
+  <select id="findByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_login_Column_List" />
+    from TB_MRS_LOGIN_USER
+    where MOBILE = #{mobile,jdbcType=VARCHAR}
+  </select>
+  <select id="findByMobileAndAlias" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    select 
+    <include refid="Base_login_Column_List" />
+    from TB_MRS_LOGIN_USER
+    where 1=1 
+    <if test="registerType != null and registerType != '' " >
+		AND REGISTER_TYPE = #{registerType,jdbcType=VARCHAR}    
+    </if>
+    AND(
+    1 <![CDATA[  <>  ]]> 1
+	    <if test="alias != null and alias != '' " >
+			OR ALIAS = #{alias,jdbcType=VARCHAR}    
+	    </if>
+	    <if test="mobile != null and mobile != '' " >
+			OR MOBILE = #{mobile,jdbcType=VARCHAR}    
+	    </if>
+	 )
+  </select>
+  <select id="findMainByCustId" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsLoginUserDto" >
+    select 
+    m.*
+    from  TB_MRS_USER_ACCOUNT t ,TB_MRS_LOGIN_USER m ,TB_MRS_ACCOUNT n where  
+    m.id = t.login_id and n.id = t.account_id and  t.is_main = '0' 
+    and n.cust_id = #{custId,jdbcType=VARCHAR}
+  </select>
+ 
+</mapper>

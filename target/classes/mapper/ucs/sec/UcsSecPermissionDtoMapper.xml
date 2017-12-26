@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.ucs.sec.dao.UcsSecPermissionDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecPermissionDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="NLEVEL" property="nlevel" jdbcType="VARCHAR" />
+    <result column="OUTER_SYS" property="outerSys" jdbcType="CHAR" />
+    <result column="SEQ" property="seq" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME, URL, NLEVEL, OUTER_SYS, SEQ, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_UCS_SEC_PERMISSION
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_UCS_SEC_PERMISSION
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecPermissionDto" >
+    insert into TB_UCS_SEC_PERMISSION (ID, NAME, URL, 
+      NLEVEL, OUTER_SYS, SEQ, 
+      CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{nlevel,jdbcType=VARCHAR}, #{outerSys,jdbcType=CHAR}, #{seq,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecPermissionDto" >
+    insert into TB_UCS_SEC_PERMISSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="nlevel != null" >
+        NLEVEL,
+      </if>
+      <if test="outerSys != null" >
+        OUTER_SYS,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="nlevel != null" >
+        #{nlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="outerSys != null" >
+        #{outerSys,jdbcType=CHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecPermissionDto" >
+    update TB_UCS_SEC_PERMISSION
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="nlevel != null" >
+        NLEVEL = #{nlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="outerSys != null" >
+        OUTER_SYS = #{outerSys,jdbcType=CHAR},
+      </if>
+      <if test="seq != null" >
+        SEQ = #{seq,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecPermissionDto" >
+    update TB_UCS_SEC_PERMISSION
+    set NAME = #{name,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      NLEVEL = #{nlevel,jdbcType=VARCHAR},
+      OUTER_SYS = #{outerSys,jdbcType=CHAR},
+      SEQ = #{seq,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="listAll" resultMap="BaseResultMap">
+	 select * from TB_UCS_SEC_PERMISSION 
+  </select>
+  <select id="listByRoleTag" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from TB_UCS_SEC_PERMISSION WHERE ROLE_TAG like concat('%',concat(#{roleTag,jdbcType=VARCHAR},'%'))
+  </select>
+  <select id="listPerms" resultType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecPermissionDto">
+	 select * from TB_UCS_SEC_PERMISSION WHERE length(NLEVEL) = #{length} 
+    <if test="nlevel != null and nlevel != ''">
+		AND NLEVEL like concat(#{nlevel},'%')  order by NLEVEL ASC 
+    </if>
+    <if test="nlevel == null or nlevel == ''">
+		order by SEQ ASC 
+    </if>
+  </select>
+  <select id="getPermsByRoles" resultType="string">
+  	select p.ID from TB_UCS_SEC_PERMISSION p 
+  	left join TB_UCS_SEC_ROLE_PERMISSION rp on rp.PERMISSION_ID = p.ID  
+  	where rp.ROLE_ID in 
+  	<foreach collection="roleIdList" open="(" separator="," close=")" item="item">
+  		#{item }
+  	</foreach>
+  </select>
+  <select id="getPermDtosByRoles" resultMap="BaseResultMap">
+  	select distinct p.* from TB_UCS_SEC_PERMISSION p 
+  	left join TB_UCS_SEC_ROLE_PERMISSION rp on rp.PERMISSION_ID = P.ID  
+  	<where>
+  		rp.ROLE_ID in 
+  		<foreach collection="roleIdList" open="(" separator="," close=")" item="item">
+  			#{item }
+  		</foreach>
+  		and length(p.NLEVEL) = #{length} 
+  		<if test="nlevel != null and nlevel != ''">
+			and p.NLEVEL like concat(#{nlevel},'%')  order by p.NLEVEL ASC 
+	    </if>
+	    <if test="nlevel == null or nlevel == ''">
+			order by p.SEQ ASC 
+	    </if>
+  	</where>
+  </select>
+  <select id="getUserTopMenus" parameterType="string" resultMap="BaseResultMap">
+  	select distinct p.* from TB_UCS_SEC_PERMISSION p
+  	left join TB_UCS_SEC_ROLE_PERMISSION rp on rp.PERMISSION_ID = P.ID
+  	left join TB_UCS_SEC_USER_ROLE ur on ur.ROLE_ID = rp.ROLE_ID  
+  	left join TB_UCS_SEC_ROLE r on r.id = ur.ROLE_ID 
+  	where length(p.NLEVEL) = 2 and ur.USER_ID = #{userId} and r.status = '1' order by p.seq desc   
+  </select>
+  <select id="getOuterTopMenus" resultMap="BaseResultMap">
+  	select * from TB_UCS_SEC_PERMISSION where length(NLEVEL) = 2 and OUTER_SYS = '1' 
+  </select>
+</mapper>

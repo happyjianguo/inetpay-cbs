@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsHistoryOperationLogMapper" >
+<!--插入-->
+ <insert id="insert" >
+ insert into TB_MRS_HISTORY_OPERATION_LOG A
+ (
+  A.ID ,
+  A.LOGIN_NAME ,
+  A.OPERATE_TYPE ,
+  A.IP ,
+  A.DESCRIPTION ,
+  A.CREATE_TIME 
+  )
+SELECT 
+  B.ID ,
+  B.LOGIN_NAME ,
+  B.OPERATE_TYPE ,
+  B.IP ,
+  B.DESCRIPTION ,
+  B.CREATE_TIME 
+FROM TB_MRS_OPERATION_LOG B
+WHERE B.CREATE_TIME&lt;#{date}
+ </insert>
+ 
+ <!--删除-->
+ <delete id="delete">
+ delete from TB_MRS_OPERATION_LOG 
+ where CREATE_TIME&lt;#{date} 
+ </delete>
+ 
+</mapper>

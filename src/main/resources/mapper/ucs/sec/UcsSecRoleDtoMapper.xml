@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.ucs.sec.dao.UcsSecRoleDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecRoleDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATER_NAME" property="createrName" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="REVISER" property="reviser" jdbcType="VARCHAR" />
+    <result column="REVISER_NAME" property="reviserName" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="RolePermissionMap" extends="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecRoleDto">
+	<collection property="permissions"
+		ofType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecPermissionDto"
+		columnPrefix="PERM_">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="NAME" property="name" jdbcType="VARCHAR" />
+	    <result column="URL" property="url" jdbcType="VARCHAR" />
+	    <result column="NLEVEL" property="nlevel" jdbcType="VARCHAR" />
+	    <result column="OUTER_SYS" property="outerSys" jdbcType="CHAR" />
+	    <result column="SEQ" property="seq" jdbcType="DECIMAL" />
+	</collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ROLE_NAME, STATUS, CREATER, CREATER_NAME,CREATE_TIME, REVISER, REVISER_NAME,UPDATE_TIME, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_UCS_SEC_ROLE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="isExistRoleName" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_UCS_SEC_ROLE
+    where ROLE_NAME = #{roleName,jdbcType=VARCHAR} and STATUS = #{status,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_UCS_SEC_ROLE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecRoleDto" >
+    insert into TB_UCS_SEC_ROLE (ID, ROLE_NAME, STATUS, 
+      CREATER, CREATER_NAME,CREATE_TIME, REVISER, REVISER_NAME,
+      UPDATE_TIME, REMARK)
+    values (#{identity,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{creater,jdbcType=VARCHAR},#{createrName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{reviser,jdbcType=VARCHAR},#{reviserName,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecRoleDto" >
+    insert into TB_UCS_SEC_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="identity != null" >
+        ID,
+      </if>
+      <if test="roleName != null" >
+        ROLE_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="reviser != null" >
+        REVISER,
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="identity != null" >
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviser != null" >
+        #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecRoleDto" >
+    update TB_UCS_SEC_ROLE
+    <set >
+      <if test="roleName != null" >
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviser != null" >
+        REVISER = #{reviser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviserName != null" >
+        REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecRoleDto" >
+    update TB_UCS_SEC_ROLE
+    set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATER_NAME = #{createrName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REVISER = #{reviser,jdbcType=VARCHAR},
+      REVISER_NAME = #{reviserName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deletePermsByRoleId" parameterType="java.lang.String">
+	delete from TB_UCS_SEC_ROLE_PERMISSION where ROLE_ID = #{id,jdbcType=VARCHAR} 
+  </delete>
+  <insert id="saveWithId" parameterType="com.ylink.inetpay.common.project.cbs.dto.ucs.sec.UcsSecRoleDto">
+    insert into TB_UCS_SEC_ROLE (ID, ROLE_NAME, STATUS, 
+      CREATER,CREATER_NAME, CREATE_TIME, REVISER, REVISER_NAME,
+      UPDATE_TIME, REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{creater,jdbcType=VARCHAR},#{createrName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{reviser,jdbcType=VARCHAR},#{reviserName,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <select id="getWidthPermissions" parameterType="string" resultMap="RolePermissionMap">
+		select r.*,
+			   p.ID AS PERM_ID,
+			   p.NAME AS PERM_NAME,
+			   p.URL AS PERM_URL,
+			   p.NLEVEL AS PERM_NLEVEL,
+			   p.OUTER_SYS AS PERM_OUTER_SYS,
+			   p.SEQ AS PERM_SEQ
+		from TB_UCS_SEC_ROLE r 
+		left join TB_UCS_SEC_ROLE_PERMISSION rp on r.ID = rp.ROLE_ID
+		left join TB_UCS_SEC_PERMISSION p on p.ID = rp.PERMISSION_ID
+		where r.id = #{id}
+	</select>
+	<insert id="addRolePermissions">
+		insert into TB_UCS_SEC_ROLE_PERMISSION(ID,ROLE_ID,PERMISSION_ID)
+		<foreach collection="permIdList" index="index" item="item" separator=" union all ">
+			select sys_guid(),#{roleId},#{item} from dual
+		</foreach>
+	</insert>
+	<select id="listRoles" resultMap="BaseResultMap">
+		select r.* from TB_UCS_SEC_ROLE r
+		<where>
+			<if test="roleName != null and roleName !=''">
+				and instr(r.ROLE_NAME, #{roleName}) > 0
+				<!-- r.ROLE_NAME like concat('%',concat(#{roleName},'%')) -->  
+			</if>
+			<if test="status != null">
+				and r.STATUS = #{status,jdbcType=CHAR}
+			</if>
+		</where>
+		order by CREATE_TIME asc 
+	</select>
+	<select id="getUserList" parameterType="string" resultType="string">
+		select distinct USER_ID from TB_UCS_SEC_USER_ROLE where ROLE_ID = #{roleId}
+	</select>
+</mapper>

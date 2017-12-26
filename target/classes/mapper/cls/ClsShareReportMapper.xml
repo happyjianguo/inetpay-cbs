@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsShareReportDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsShareReport" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="ORG_ID" property="orgId" jdbcType="CHAR" />
+	    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+	    <result column="PLAN_DAY" property="planDay" jdbcType="CHAR" />
+	    <result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+	    <result column="SHARE_AMT" property="shareAmt" jdbcType="DECIMAL" />
+	    <result column="SHARE_COUNT" property="shareCount" jdbcType="DECIMAL" />
+	    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+	    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+	    <result column="BANK_ACC" property="bankAcc" jdbcType="VARCHAR" />
+	    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+	    <result column="SETTLE_STATUS" property="settleStatus" jdbcType="CHAR" />
+	    <result column="EXCEPT_REASON" property="exceptReason" jdbcType="VARCHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="REVIEW_STATUS" property="reviewStatus" jdbcType="CHAR" />
+
+	    <result column="APPLICANT_NAME" property="applicatiName" jdbcType="CHAR" />
+	    <result column="APPLY_TIME" property="applyDate" jdbcType="DATE" />
+	    <result column="AUDITER_NAME" property="auditerName" jdbcType="CHAR" />
+	    <result column="REVIEW_TIME" property="reviewDate" jdbcType="DATE" />
+	    <result column="CHECK_SUGG" property="checkSugg" jdbcType="CHAR" />
+	 
+  </resultMap>
+ 
+ 
+<!--查询-->
+ <select id="queryClsShareReport"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsShareReport" resultMap="resultMap">
+ select 
+ 	s.*<!--,
+ 	tb.REVIEW_STATUS,
+ 	tb.APPLICANT_NAME,
+	tb.APPLY_TIME,
+	tb.AUDITER_NAME,
+	tb.REVIEW_TIME,
+	tb.CHECK_SUGG-->
+ from TB_CLS_SHARE_REPORT s<!-- left join TB_CLS_RECORD_CHECK tb on s.id=tb.REPORT_ID and  tb.BUSI_TYPE='02'-->
+ where 1=1
+ and (select count(c1.ID) from TB_CLS_RECORD_CHECK c1 where c1.REPORT_ID=s.id and c1.REVIEW_STATUS in ('1'))=0
+ <if test="orgId!=null and orgId!=''">
+ 	and s.ORG_ID=#{orgId,jdbcType=CHAR}
+</if> 
+	<if test="endTime!=null">
+		and s.PLAN_DAY&lt;=to_char(#{endTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="startTime!=null">
+		and s.PLAN_DAY&gt;=to_char(#{startTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="maxTime!=null">
+		and s.REAL_DAY&lt;=to_char(#{maxTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="minTime!=null">
+		and s.REAL_DAY&gt;=to_char(#{minTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="dealStatus!=null and dealStatus!=''">
+		and s.DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+	</if>
+	order by  s.PLAN_DAY desc
+ </select>
+ 
+ <!--审核-->
+ <select id="findShareRecordAudit"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsShareReport" resultMap="resultMap">
+ select 
+ 	s.*,
+ 	tb.REVIEW_STATUS,
+ 	tb.APPLICANT_NAME,
+	tb.APPLY_TIME,
+	tb.AUDITER_NAME,
+	tb.REVIEW_TIME,
+	tb.CHECK_SUGG
+ from TB_CLS_SHARE_REPORT s left join TB_CLS_RECORD_CHECK tb on s.id=tb.REPORT_ID and  tb.BUSI_TYPE='02'
+ where 1=1 and tb.REVIEW_STATUS is not null
+ 	<if test="orgId!=null and orgId!=''">
+ 		and s.ORG_ID=#{orgId,jdbcType=CHAR}
+	</if> 
+	<if test="reviewStatus !=null and reviewStatus !=''">
+ 		and tb.REVIEW_STATUS=#{reviewStatus,jdbcType=CHAR}
+	</if> 
+ 	<if test="endTime!=null">
+		and s.PLAN_DAY&lt;=to_char(#{endTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="startTime!=null">
+		and s.PLAN_DAY&gt;=to_char(#{startTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="maxTime!=null">
+		and s.REAL_DAY&lt;=to_char(#{maxTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	<if test="minTime!=null">
+		and s.REAL_DAY&gt;=to_char(#{minTime,jdbcType=DATE},'yyyyMMdd')
+	</if>
+	order by s.PLAN_DAY desc,tb.REVIEW_STATUS asc,s.id desc
+ </select>
+ 
+ <select id="queryById"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	s.*
+ 	<!--,tb.REVIEW_STATUS,
+ 	tb.APPLICANT_NAME,
+	tb.APPLY_TIME,
+	tb.AUDITER_NAME,
+	tb.REVIEW_TIME,
+	tb.CHECK_SUGG-->
+ from TB_CLS_SHARE_REPORT s <!--left join TB_CLS_RECORD_CHECK tb on s.id=tb.REPORT_ID and  tb.BUSI_TYPE='02'-->
+ where  s.id=#{id,jdbcType=CHAR}
+ </select>
+  
+  
+<select id="querALlShareOrg" resultMap="resultMap">
+  select ORG_ID,ORG_NAME
+  from TB_CLS_SHARE_REPORT 
+ group by ORG_ID,ORG_NAME
+  </select>
+  
+<select id="findById" resultMap="resultMap">
+select * from TB_CLS_SHARE_REPORT 
+where id=#{id,jdbcType=CHAR}
+</select>
+
+
+ <select id="queryShareReportSummary"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsShareReport" 
+ resultType="com.ylink.inetpay.common.core.dto.ReporHeadDto">
+ select 
+ 	nvl(sum(s.SHARE_COUNT),0) as allNum,
+ 	nvl(sum(s.SHARE_AMT),0) as allAmt
+ from TB_CLS_SHARE_REPORT s left join TB_CLS_RECORD_CHECK tb on s.id=tb.REPORT_ID and  tb.BUSI_TYPE='02'
+ where 1=1
+ <if test="orgId!=null and orgId!=''">
+ 	and s.ORG_ID=#{orgId,jdbcType=CHAR}
+</if> 
+ <if test="endTime!=null">
+	and s.PLAN_DAY&lt;=to_char(#{endTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and s.PLAN_DAY&gt;=to_char(#{startTime,jdbcType=DATE},'yyyyMMdd')
+</if>
+ </select>
+ 
+  <select id="isEqual"  resultType="java.lang.String">
+ 	select count(REPORT_ID) from TB_CLS_RECORD_CHECK 
+ 	where REPORT_ID=#{id} 
+ 	and APPLICANT=#{applicant,jdbcType=VARCHAR} 
+ 	and REVIEW_STATUS=#{auditStatus,jdbcType=CHAR}
+ </select>
+</mapper>

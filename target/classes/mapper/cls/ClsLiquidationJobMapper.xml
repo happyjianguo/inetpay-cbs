@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsLiquidationJobDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsLiquidationJob" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="ACCT_DATE" property="acctDate" jdbcType="CHAR" />
+	    <result column="FEE_NUM_SUM" property="feeNumSum" jdbcType="DECIMAL" />
+	    <result column="FILE_ID" property="fileId" jdbcType="CHAR" />
+	    <result column="FEE_SUM" property="feeSum" jdbcType="DECIMAL" />
+	    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+	    <result column="LIQUIDATION_STEP" property="liquidationStep" jdbcType="CHAR" />
+	    <result column="DEAL_STATUS" property="dealStatus" jdbcType="CHAR" />
+	    <result column="ERR_DETAIL" property="errDetail" jdbcType="VARCHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    
+  </resultMap>	
+	
+ 
+<!--查询-->
+ <select id="queryAll"  parameterType="com.ylink.inetpay.common.project.clear.dto.ClsLiquidationJob" resultMap="resultMap">
+ select 
+ 	s.ID ,s.ACCT_DATE ,s.FEE_NUM_SUM,s.FILE_ID,s.FEE_SUM,s.FILE_NAME,LIQUIDATION_STEP,s.DEAL_STATUS,s.ERR_DETAIL,s.CREATE_TIME,s.UPDATE_TIME
+ from TB_CLS_LIQUIDATION_JOB s where 1=1
+ <if test="startAcctDate!=null and startAcctDate !=''">
+ and ACCT_DATE <![CDATA[   >=  ]]> #{startAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="endAcctDate!=null and endAcctDate !=''">
+ and ACCT_DATE <![CDATA[   <=  ]]> #{endAcctDate,jdbcType=CHAR}
+ </if>
+ <if test="liquidationStep!=null">
+ and LIQUIDATION_STEP=#{liquidationStep,jdbcType=CHAR}
+ </if>
+ <if test="dealStatus!=null">
+ and DEAL_STATUS=#{dealStatus,jdbcType=CHAR}
+ </if>
+ order by s.ACCT_DATE desc
+ </select>  
+</mapper>

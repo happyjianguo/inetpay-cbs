@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActHistoryAccountMapper" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.account.dto.ActHistoryAccountDto" >
+	    <result column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+	    <result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR" />
+	    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+	    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+	    <result column="SUBJECT_NO_2" property="subjectNo2" jdbcType="VARCHAR" />
+	    <result column="SUBJECT_TYPE" property="subjectType" jdbcType="CHAR" />
+	    <result column="DR_CR_FLAG" property="drCrFlag" jdbcType="CHAR" />
+	    <result column="ACCOUNT_STATUS" property="accountStatus" jdbcType="CHAR" />
+	    <result column="CASH_AMOUNT" property="cashAmount" jdbcType="DECIMAL" />
+	    <result column="FROZEN_AMOUNT" property="frozenAmount" jdbcType="DECIMAL" />
+	    <result column="RATE_AMOUNT" property="rateAmount" jdbcType="DECIMAL" />
+	    <result column="ACCOUNT_CHANGE_DAY" property="accountChangeDay" jdbcType="TIMESTAMP" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="DAC" property="dac" jdbcType="VARCHAR" />
+	    <result column="CURRENOY" property="currenoy" jdbcType="CHAR" />
+	    <result column="IS_NEGATIVE" property="isNegative" jdbcType="CHAR" />
+	    <result column="RATE" property="rate" jdbcType="DECIMAL" />
+	    <result column="INTEREST" property="interest" jdbcType="DECIMAL" />
+	    <result column="INTEREST_STATUS" property="interestStatus" jdbcType="CHAR" />
+	 	<result column="BOOK_TYPE" property="bookType" jdbcType="CHAR" />
+	 	<result column="SUBJECT_NAME" property="subjectNo2Name" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+<!--查询-->
+ <select id="queryActHistoryAccount"  parameterType="com.ylink.inetpay.common.project.account.dto.ActHistoryAccountDto" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	ACCOUNT_DATE ,
+ 	ACCOUNT_ID ,
+ 	CUST_ID ,
+ 	CUST_NAME ,
+ 	SUBJECT_NO_2 ,
+ 	SUBJECT_TYPE ,
+ 	DR_CR_FLAG ,
+ 	ACCOUNT_STATUS ,
+ 	CASH_AMOUNT ,
+ 	FROZEN_AMOUNT ,
+ 	RATE_AMOUNT ,
+ 	ACCOUNT_CHANGE_DAY ,
+ 	CREATE_TIME ,
+ 	UPDATE_TIME ,
+ 	DAC ,
+ 	CURRENOY ,
+ 	IS_NEGATIVE ,
+ 	RATE ,
+ 	INTEREST ,
+ 	INTEREST_STATUS 
+ from TB_ACT_HISTORY_ACCOUNT
+ </select>
+ 
+<!--更新-->
+ <update id="updateActHistoryAccount" parameterType="com.ylink.inetpay.common.project.account.dto.ActHistoryAccountDto">
+ update TB_ACT_HISTORY_ACCOUNT set
+ 	ID=#{id,jdbcType=VARCHAR}  ,
+ 	ACCOUNT_DATE=#{accountDate,jdbcType=CHAR}  ,
+ 	ACCOUNT_ID=#{accountId,jdbcType=VARCHAR}  ,
+ 	CUST_ID=#{custId,jdbcType=VARCHAR}  ,
+ 	CUST_NAME=#{custName,jdbcType=VARCHAR}  ,
+ 	SUBJECT_NO_2=#{subjectNo2,jdbcType=VARCHAR}  ,
+ 	SUBJECT_TYPE=#{subjectType,jdbcType=CHAR}  ,
+ 	DR_CR_FLAG=#{drCrFlag,jdbcType=CHAR}  ,
+ 	ACCOUNT_STATUS=#{accountStatus,jdbcType=CHAR}  ,
+ 	CASH_AMOUNT=#{cashAmount,jdbcType=DECIMAL}  ,
+ 	FROZEN_AMOUNT=#{frozenAmount,jdbcType=DECIMAL}  ,
+ 	RATE_AMOUNT=#{rateAmount,jdbcType=DECIMAL}  ,
+ 	ACCOUNT_CHANGE_DAY=#{accountChangeDay,jdbcType=TIMESTAMP}  ,
+ 	CREATE_TIME=#{createTime,jdbcType=TIMESTAMP}  ,
+ 	UPDATE_TIME=#{updateTime,jdbcType=TIMESTAMP}  ,
+ 	DAC=#{dac,jdbcType=VARCHAR}  ,
+ 	CURRENOY=#{currenoy,jdbcType=CHAR}  ,
+ 	IS_NEGATIVE=#{isNegative,jdbcType=CHAR}  ,
+ 	RATE=#{rate,jdbcType=DECIMAL}  ,
+ 	INTEREST=#{interest,jdbcType=DECIMAL}  ,
+ 	INTEREST_STATUS=#{interestStatus,jdbcType=CHAR}  
+ where 
+ 	ID=#{id,jdbcType=VARCHAR}  
+ </update>
+ 
+<!--插入-->
+ <insert id="addActHistoryAccount" parameterType="com.ylink.inetpay.common.project.account.dto.ActHistoryAccountDto">
+ insert into TB_ACT_HISTORY_ACCOUNT
+ (
+  ID ,
+  ACCOUNT_DATE ,
+  ACCOUNT_ID ,
+  CUST_ID ,
+  CUST_NAME ,
+  SUBJECT_NO_2 ,
+  SUBJECT_TYPE ,
+  DR_CR_FLAG ,
+  ACCOUNT_STATUS ,
+  CASH_AMOUNT ,
+  FROZEN_AMOUNT ,
+  RATE_AMOUNT ,
+  ACCOUNT_CHANGE_DAY ,
+  CREATE_TIME ,
+  UPDATE_TIME ,
+  DAC ,
+  CURRENOY ,
+  IS_NEGATIVE ,
+  RATE ,
+  INTEREST ,
+  INTEREST_STATUS 
+  )
+  values(
+  	#{id,jdbcType=VARCHAR} ,
+  	#{accountDate,jdbcType=CHAR} ,
+  	#{accountId,jdbcType=VARCHAR} ,
+  	#{custId,jdbcType=VARCHAR} ,
+  	#{custName,jdbcType=VARCHAR} ,
+  	#{subjectNo2,jdbcType=VARCHAR} ,
+  	#{subjectType,jdbcType=CHAR} ,
+  	#{drCrFlag,jdbcType=CHAR} ,
+  	#{accountStatus,jdbcType=CHAR} ,
+  	#{cashAmount,jdbcType=DECIMAL} ,
+  	#{frozenAmount,jdbcType=DECIMAL} ,
+  	#{rateAmount,jdbcType=DECIMAL} ,
+  	#{accountChangeDay,jdbcType=TIMESTAMP} ,
+  	#{createTime,jdbcType=TIMESTAMP} ,
+  	#{updateTime,jdbcType=TIMESTAMP} ,
+  	#{dac,jdbcType=VARCHAR} ,
+  	#{currenoy,jdbcType=CHAR} ,
+  	#{isNegative,jdbcType=CHAR} ,
+  	#{rate,jdbcType=DECIMAL} ,
+  	#{interest,jdbcType=DECIMAL} ,
+  	#{interestStatus,jdbcType=CHAR} 
+  )
+ </insert>
+ 
+ <!--删除-->
+ <delete id="deleteActHistoryAccount">
+ delete from TB_ACT_HISTORY_ACCOUNT 
+ where
+  ID  in
+   <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+        #{item}  
+    </foreach>  
+ </delete>
+  <select id="getList" parameterType="com.ylink.inetpay.common.project.account.dto.ActHistoryAccountDto"  resultType="java.util.List" resultMap="resultMap">
+	select a.*,s.SUBJECT_NAME
+	  from TB_ACT_HISTORY_ACCOUNT a left join TB_ACT_SUBJECT s on s.SUBJECT_NO=a.SUBJECT_NO_2
+		where 1 = 1 
+		  <if test="bookType != null and bookType !=''" >
+     		 and  a.BOOK_TYPE = #{bookType,jdbcType=CHAR}
+      	  </if>
+		  <if test="accountId != null and accountId !=''" >
+	      and  instr( a.ACCOUNT_ID, #{accountId}) > 0 
+	      </if>
+	      <if test="custId != null and custId !=''" >
+	      and   instr( a.CUST_ID, #{custId}) > 0 
+	      </if>
+	      <if test="custName != null and custName !=''" >
+	      and     instr(  a.CUST_NAME, #{custName}) > 0 
+	      </if>
+	      <if test="subjectNo2 != null and subjectNo2 !=''" >
+	      and  instr(  a.SUBJECT_NO_2, #{subjectNo2}) > 0 
+	      </if>
+	      <if test="subjectType != null and subjectType !=''" >
+	      and   a.SUBJECT_TYPE = #{subjectType,jdbcType=CHAR}
+	      </if>
+	      <if test="drCrFlag != null and drCrFlag !=''" >
+	      and   a.DR_CR_FLAG = #{drCrFlag,jdbcType=CHAR}
+	      </if>
+	      <if test="accountStatus != null and accountStatus !=''" >
+	      and   a.ACCOUNT_STATUS = #{accountStatus,jdbcType=CHAR}
+	      </if>
+	       <if test="startAmt != null and startAmt !=''">
+	      and  a.CASH_AMOUNT &gt; =#{startAmt}
+	      </if>
+	      <if test="endAmt != null and endAmt !=''" >
+	      and  a.CASH_AMOUNT &lt; = #{endAmt}
+	      </if>
+	      <if test="frozenAmount != null and frozenAmount !=''" >
+	      and   a.FROZEN_AMOUNT = #{frozenAmount,jdbcType=DECIMAL}
+	      </if>
+	      <if test="rateAmount != null and rateAmount !=''" >
+	      and   a.RATE_AMOUNT = #{rateAmount,jdbcType=DECIMAL}
+	      </if>
+	       <if test="startTime != null and startTime !=''">
+	      and  a.ACCOUNT_DATE &gt; =#{startTime}
+	      </if>
+	      <if test="endTime != null and endTime !=''" >
+	      and  a.ACCOUNT_DATE &lt; = #{endTime}
+	      </if>
+	      <if test="dac != null and dac !=''" >
+	      and   a.DAC = #{dac,jdbcType=VARCHAR}
+	      </if>
+          order by a.account_date DESC,a.account_id DESC
+	</select>
+	
+	  <select id="selectByAccountId" resultMap="resultMap"
+		parameterType="java.lang.String">
+		select a.*
+	 	from TB_ACT_HISTORY_ACCOUNT a 
+		where a.ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findAccountBySubjectNo2AndAccountDate" resultMap="resultMap" >
+		select *  from tb_act_history_account t 
+		where 1=1
+		<if test="subjectList!= null and subjectList.size() > 0">
+		 	 and t.subject_no_2 IN
+		  	<foreach collection="subjectList" item="item" open="(" close=")" separator=",">
+    			#{item}
+   		 	</foreach>
+		</if>
+		 <if test="lastAccountDate !=null and lastAccountDate !=''">
+			and t.account_date = #{lastAccountDate}
+		</if>
+	</select>
+	<select id="selectByAccountIdAndAccountDate" resultMap="resultMap">
+		select a.*,s.SUBJECT_NAME
+	 	from TB_ACT_HISTORY_ACCOUNT a left join TB_ACT_SUBJECT s on s.SUBJECT_NO=a.SUBJECT_NO_2
+		where a.ID = #{id,jdbcType=VARCHAR} and a.ACCOUNT_DATE=#{accountDate,jdbcType=VARCHAR}
+	</select>
+	
+	 
+	<select id="getCashAmount"  resultMap="resultMap">
+		select t.CASH_AMOUNT from TB_ACT_HISTORY_ACCOUNT t 
+		where 1=1
+		<if test="queryParam.cashAmount !=null and queryParam.cashAmount !=''">
+			and ACCOUNT_DATE<![CDATA[  =  ]]>to_char(#{queryParam.cashAmount},'YYYYMMDD')
+		</if>
+		<if test="actAccountDtoList != null and actAccountDtoList.size() > 0">
+		 	 and ACCOUNT_ID IN
+		  	<foreach collection="actAccountDtoList" item="item" open="(" close=")" separator=",">
+    			#{item.accountId}
+   		 	</foreach>
+		</if>
+	 </select>
+	
+</mapper>

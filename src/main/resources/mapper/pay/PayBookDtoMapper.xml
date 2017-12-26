@@ -1,0 +1,1202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayBookDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayBookDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PAY_ID" property="payId" jdbcType="CHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="CHAR" />
+    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="CHAR" />
+    <result column="FEE_RATE" property="feeRate" jdbcType="DECIMAL" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+    <result column="PAYER_CUST_ID" property="payerCustId" jdbcType="VARCHAR" />
+    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_ID" property="payeeCustId" jdbcType="VARCHAR" />
+    <result column="PAYEE_CUST_NAME" property="payeeCustName" jdbcType="VARCHAR" />
+    <result column="DR_ACCOUNT_ID" property="drAccountId" jdbcType="VARCHAR" />
+    <result column="CR_ACCOUNT_ID" property="crAccountId" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="CLEAR_DATE" property="clearDate" jdbcType="CHAR" />
+    <result column="CHECK_STATUS" property="checkStatus" jdbcType="CHAR" />
+    <result column="ADJUST_STATUS" property="adjustStatus" jdbcType="CHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="PAY_STYLE" property="payStyle" jdbcType="CHAR" />
+  </resultMap>
+    <resultMap id="station"  type="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo" >
+		<result column="busiType" property="busiType" jdbcType="CHAR" />
+		<result column="tradeType" property="tradeType" jdbcType="CHAR" />
+		<result column="allCount" property="allCount" jdbcType="CHAR" />
+		<result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+		<result column="successCount" property="succCount" jdbcType="INTEGER" />
+		<result column="successAmt" property="succAmt" jdbcType="DECIMAL" />
+		<result column="failCount" property="failCount" jdbcType="INTEGER" />
+		<result column="failAmt" property="failAmt" jdbcType="DECIMAL" />
+		<result column="rate" property="rate" jdbcType="DOUBLE" />
+		<result column="payerCustId" property="payerCustId" jdbcType="CHAR" />
+		<result column="payerCustName" property="payerCustName" jdbcType="CHAR" />
+		<result column="merCode" property="merCode" jdbcType="CHAR" />
+		<result column="merName" property="merName" jdbcType="CHAR" />
+		<result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+	</resultMap>
+	<resultMap id="resultMap2" type="com.ylink.inetpay.common.project.clear.dto.ClsTradeDetailVo" >
+		    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+		    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+		    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+		    <result column="PAYER_CUST_NAME" property="payerCustName" jdbcType="VARCHAR" />
+		    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+		    <result column="MER_CODE" property="merCode" jdbcType="CHAR" />
+		    <result column="MER_NAME" property="merName" jdbcType="CHAR" />
+		    <result column="PLAN_DAY" property="planDay" jdbcType="CHAR" />
+		    <result column="REAL_DAY" property="realDay" jdbcType="CHAR" />
+		    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+		    <result column="EXCEPT_REASON" property="exceptReason" jdbcType="VARCHAR" />
+	  </resultMap>	
+  <resultMap id="forAccount" type="com.ylink.inetpay.common.project.pay.dto.PayBookDto" extends="BaseResultMap">
+	    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+	    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+	    <result column="BANK_TYPE" property="bankType" jdbcType="VARCHAR" />
+	    <result column="PAYEE_BANK_CUST_NAME" property="payeeBankCustName" jdbcType="VARCHAR" />
+	    <result column="PAYEE_BANK_NO" property="payeeBankNo" jdbcType="VARCHAR" />
+	    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>	
+  <sql id="Base_Column_List" >
+    ID, PAY_ID, BUSI_ID, BUSI_TYPE, TRADE_TYPE, TRADE_NAME, ORDER_AMT, FEE, FEE_TYPE, 
+    FEE_RATE, ORDER_STATUS, PAYER_CUST_ID, PAYER_CUST_NAME, PAYEE_CUST_ID, PAYEE_CUST_NAME, 
+    DR_ACCOUNT_ID, CR_ACCOUNT_ID, ACCOUNT_DATE, CLEAR_DATE, CHECK_STATUS, ADJUST_STATUS, 
+    CHANNEL_CODE, CREATE_TIME, COMPLETE_TIME,PAY_STYLE
+  </sql>
+    <resultMap id="ReportResultMap" type="com.ylink.inetpay.common.core.dto.ReporHeadDto" >
+ 	  <result column="allNum" property="allNum" jdbcType="DECIMAL" />
+ 	  <result column="allAmt" property="allAmt" jdbcType="DECIMAL" />
+  </resultMap>
+   <select id="reportSumData" resultMap="ReportResultMap" parameterType="com.ylink.inetpay.common.project.pay.dto.PayBookDto" >
+   		select  count(1) as allNum, nvl(sum(order_amt),0) as allAmt from TB_PAY_BOOK 
+		where 1=1
+		<if test="payId != null and payId != ''">
+			and PAY_ID  = #{payId,jdbcType=CHAR}
+		</if>
+		<if test="busiId != null and busiId != ''">
+			and BUSI_ID  = #{busiId,jdbcType=CHAR}
+		</if>
+		<if test="busiType != null and busiType != ''">
+			and BUSI_TYPE  = #{busiType,jdbcType=CHAR}
+		</if>
+		<if test="orderStatus != null and orderStatus != ''">
+			and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+		</if>
+		<if test="payerCustId != null and payerCustId != ''">
+			and PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR}
+		</if>
+		<if test="payerCustName != null and payerCustName != ''">
+			and	instr(PAYER_CUST_NAME, #{payerCustName}) > 0
+		</if>
+		<if test="payeeCustId != null and payeeCustId != ''">
+			and PAYEE_CUST_ID = #{payeeCustId,jdbcType=CHAR}
+		</if>
+		<if test="payeeCustName != null and payeeCustName != ''">
+			and	instr(PAYEE_CUST_NAME, #{payeeCustName}) > 0
+		</if>
+		<if test="orderAmt != null and orderAmt != ''">
+			and ORDER_AMT<![CDATA[   =  ]]>#{orderAmt}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and ORDER_AMT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and ORDER_AMT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+		</if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findBusIdByPayId"  resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from TB_PAY_BOOK t where 1=1
+	<if test="payIdSet != null and payIdSet.size() >0 ">
+		and t.PAY_ID IN
+		<foreach collection="payIdSet" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</if>
+  </select>
+  	
+     <select id="selectByPayId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_BOOK
+		where PAY_ID = #{payId,jdbcType=CHAR}
+	</select>
+	<select id="queryAllData" resultMap="BaseResultMap"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayBookDto">
+		select
+		<include refid="Base_Column_List" />
+		from TB_PAY_BOOK
+		where 1=1
+		<if test="payId != null and payId != ''">
+			and  instr(PAY_ID,#{payId,jdbcType=CHAR})<!-- like concat('%',concat(#{payId,jdbcType=CHAR},'%')) -->
+		</if>
+		<if test="busiId != null and busiId != ''">
+			and  instr(BUSI_ID,#{busiId,jdbcType=CHAR})<!-- like concat('%',#{busiId,jdbcType=CHAR},'%')) -->
+		</if>
+		<if test="tradeType != null and tradeType != ''">
+			and TRADE_TYPE  = #{tradeType,jdbcType=CHAR}
+		</if>
+		<if test="busiType != null and busiType != ''">
+			and BUSI_TYPE  = #{busiType,jdbcType=CHAR}
+		</if>
+		<if test="orderStatus != null and orderStatus != ''">
+			and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+		</if>
+		<if test="payerCustId != null and payerCustId != ''">
+			and instr(PAYER_CUST_ID,#{payerCustId,jdbcType=VARCHAR})<!-- like concat('%',#{payerCustId,jdbcType=VARCHAR},'%')) -->
+		</if>
+		<if test="payerCustName != null and payerCustName != ''">
+			and	instr(PAYER_CUST_NAME, #{payerCustName}) > 0
+		</if>
+		<if test="payeeCustId != null and payeeCustId != ''">
+			and instr(PAYEE_CUST_ID,#{payeeCustId,jdbcType=CHAR}) <!-- like concat('%',#{payeeCustId,jdbcType=CHAR},'%')) -->
+		</if>
+		<if test="payeeCustName != null and payeeCustName != ''">
+			and	instr(PAYEE_CUST_NAME, #{payeeCustName}) > 0
+		</if>
+		<if test="orderAmt != null and orderAmt != ''">
+			and ORDER_AMT<![CDATA[   =  ]]>#{orderAmt}
+		</if>
+		<if test="startAmt != null and startAmt != ''">
+			and ORDER_AMT<![CDATA[   >=  ]]>#{startAmt}
+		</if>
+		<if test="endAmt != null and endAmt != ''">
+			and ORDER_AMT<![CDATA[   <=  ]]>#{endAmt}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+		</if>
+		<if test="payStyle != null and payStyle != ''">
+			and PAY_STYLE = #{payStyle,jdbcType=CHAR}
+		</if>
+		order by PAY_ID DESC,CREATE_TIME DESC
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayBookDto" >
+    insert into TB_PAY_BOOK (ID, PAY_ID, BUSI_ID, 
+      BUSI_TYPE, TRADE_TYPE, TRADE_NAME, 
+      ORDER_AMT, FEE, FEE_TYPE, 
+      FEE_RATE, ORDER_STATUS, PAYER_CUST_ID, 
+      PAYER_CUST_NAME, PAYEE_CUST_ID, PAYEE_CUST_NAME, 
+      DR_ACCOUNT_ID, CR_ACCOUNT_ID, ACCOUNT_DATE, 
+      CLEAR_DATE, CHECK_STATUS, ADJUST_STATUS, 
+      CHANNEL_CODE, CREATE_TIME, COMPLETE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{payId,jdbcType=CHAR}, #{busiId,jdbcType=CHAR}, 
+      #{busiType,jdbcType=CHAR}, #{tradeType,jdbcType=CHAR}, #{tradeName,jdbcType=VARCHAR}, 
+      #{orderAmt,jdbcType=DECIMAL}, #{fee,jdbcType=DECIMAL}, #{feeType,jdbcType=CHAR}, 
+      #{feeRate,jdbcType=DECIMAL}, #{orderStatus,jdbcType=CHAR}, #{payerCustId,jdbcType=VARCHAR}, 
+      #{payerCustName,jdbcType=VARCHAR}, #{payeeCustId,jdbcType=VARCHAR}, #{payeeCustName,jdbcType=VARCHAR}, 
+      #{drAccountId,jdbcType=VARCHAR}, #{crAccountId,jdbcType=VARCHAR}, #{accountDate,jdbcType=CHAR}, 
+      #{clearDate,jdbcType=CHAR}, #{checkStatus,jdbcType=CHAR}, #{adjustStatus,jdbcType=CHAR}, 
+      #{channelCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayBookDto" >
+    insert into TB_PAY_BOOK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="payId != null" >
+        PAY_ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE,
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME,
+      </if>
+      <if test="orderAmt != null" >
+        ORDER_AMT,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE,
+      </if>
+      <if test="feeRate != null" >
+        FEE_RATE,
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS,
+      </if>
+      <if test="payerCustId != null" >
+        PAYER_CUST_ID,
+      </if>
+      <if test="payerCustName != null" >
+        PAYER_CUST_NAME,
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID,
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME,
+      </if>
+      <if test="drAccountId != null" >
+        DR_ACCOUNT_ID,
+      </if>
+      <if test="crAccountId != null" >
+        CR_ACCOUNT_ID,
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE,
+      </if>
+      <if test="clearDate != null" >
+        CLEAR_DATE,
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS,
+      </if>
+      <if test="adjustStatus != null" >
+        ADJUST_STATUS,
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=CHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="tradeName != null" >
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null" >
+        #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="feeRate != null" >
+        #{feeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="payerCustId != null" >
+        #{payerCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerCustName != null" >
+        #{payerCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="drAccountId != null" >
+        #{drAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountId != null" >
+        #{crAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="clearDate != null" >
+        #{clearDate,jdbcType=CHAR},
+      </if>
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="adjustStatus != null" >
+        #{adjustStatus,jdbcType=CHAR},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayBookDto" >
+    update TB_PAY_BOOK
+    <set >
+      <if test="payId != null" >
+        PAY_ID = #{payId,jdbcType=CHAR},
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null" >
+        ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE = #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="feeRate != null" >
+        FEE_RATE = #{feeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="payerCustId != null" >
+        PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerCustName != null" >
+        PAYER_CUST_NAME = #{payerCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustId != null" >
+        PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeCustName != null" >
+        PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="drAccountId != null" >
+        DR_ACCOUNT_ID = #{drAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="crAccountId != null" >
+        CR_ACCOUNT_ID = #{crAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="clearDate != null" >
+        CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      </if>
+      <if test="adjustStatus != null" >
+        ADJUST_STATUS = #{adjustStatus,jdbcType=CHAR},
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE = #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayBookDto" >
+    update TB_PAY_BOOK
+    set PAY_ID = #{payId,jdbcType=CHAR},
+      BUSI_ID = #{busiId,jdbcType=CHAR},
+      BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      FEE = #{fee,jdbcType=DECIMAL},
+      FEE_TYPE = #{feeType,jdbcType=CHAR},
+      FEE_RATE = #{feeRate,jdbcType=DECIMAL},
+      ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      PAYER_CUST_ID = #{payerCustId,jdbcType=VARCHAR},
+      PAYER_CUST_NAME = #{payerCustName,jdbcType=VARCHAR},
+      PAYEE_CUST_ID = #{payeeCustId,jdbcType=VARCHAR},
+      PAYEE_CUST_NAME = #{payeeCustName,jdbcType=VARCHAR},
+      DR_ACCOUNT_ID = #{drAccountId,jdbcType=VARCHAR},
+      CR_ACCOUNT_ID = #{crAccountId,jdbcType=VARCHAR},
+      ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+      CHECK_STATUS = #{checkStatus,jdbcType=CHAR},
+      ADJUST_STATUS = #{adjustStatus,jdbcType=CHAR},
+      CHANNEL_CODE = #{channelCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+<!-- 
+1）提现
+2）转账
+3）充值
+4）退款
+5）支付 -->
+<select id="queryActiveUserStation"  resultMap="station" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo">
+
+select * from (
+<if test="busiType==null or busiType.value=='02'">
+<!-- 提现 -->
+SELECT 
+a.CUST_ID as payerCustId,
+a.CUST_NAME as payerCustName,
+'02' as busiType,
+(count(a.id)) as allCount,
+nvl(sum(a.order_amt),0) allAmt,
+
+(select count(c.id) FROM TB_PAY_WITHDRAW c where c.ORDER_STATUS not in ('05','07') and c.CUST_ID=a.CUST_ID and c.CUST_NAME=a.CUST_NAME
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_WITHDRAW c where c.ORDER_STATUS not in ('05','07') and c.CUST_ID=a.CUST_ID and c.CUST_NAME=a.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+
+(select count(c.id) from TB_PAY_WITHDRAW c where c.ORDER_STATUS in ('05','07') and c.CUST_ID=a.CUST_ID and c.CUST_NAME=a.CUST_NAME
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_WITHDRAW c where  c.ORDER_STATUS in ('05','07') and c.CUST_ID=a.CUST_ID and c.CUST_NAME=a.CUST_NAME
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt,
+
+((select count(c.id) from  TB_PAY_WITHDRAW c where c.ORDER_STATUS not in ('05','07') and c.CUST_ID=a.CUST_ID and c.CUST_NAME=a.CUST_NAME
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+)
+/
+decode(count(a.id),0,1,count(a.id))) as rate
+
+FROM TB_PAY_WITHDRAW a
+where 1=1
+<if test="endTime!=null"> and a.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and a.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="payerCustId != null and payerCustId !=''"> and a.CUST_ID=#{payerCustId,jdbcType=CHAR} </if>
+<if test="payerCustName != null and payerCustName != ''"> and a.CUST_NAME=#{payerCustName,jdbcType=CHAR} </if>
+group by a.CUST_ID ,a.CUST_NAME
+
+</if>
+
+<if test="busiType==null">
+union
+</if>
+
+<if test="busiType==null or busiType.value=='03'">
+<!-- 转账 -->
+SELECT 
+a.CUST_ID as payerCustId,
+a.CUST_NAME as payerCustName,
+'03' as busiType,
+(count(a.id)) as allCount,
+nvl(sum(a.order_amt),0) allAmt,
+
+(select count(c.id) FROM TB_PAY_TRANSFER c where  c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_TRANSFER c where   c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+
+(select count(c.id) from TB_PAY_TRANSFER c where  c.ORDER_STATUS  in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_TRANSFER c where  c.ORDER_STATUS  in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt,
+
+((select count(c.id) from  TB_PAY_TRANSFER c where  c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+)
+/
+decode(count(a.id),0,1,count(a.id))) as rate
+
+FROM TB_PAY_TRANSFER a
+where   1=1
+<if test="endTime!=null"> and a.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and a.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="payerCustId != null and payerCustId !=''"> and a.CUST_ID=#{payerCustId,jdbcType=CHAR} </if>
+<if test="payerCustName != null and payerCustName != ''"> and a.CUST_NAME=#{payerCustName,jdbcType=CHAR} </if>
+group by a.CUST_ID ,a.CUST_NAME
+
+</if>
+
+<if test="busiType==null">
+union
+</if>
+
+<if test="busiType==null or busiType.value=='01'">
+<!-- 充值 -->
+SELECT 
+a.CUST_ID as payerCustId,
+a.CUST_NAME as payerCustName,
+'01' as busiType,
+(count(a.id)) as allCount,
+nvl(sum(a.order_amt),0) allAmt,
+
+(select count(c.id) FROM TB_PAY_RECHARGE c where   c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_RECHARGE c where    c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+
+(select count(c.id) from TB_PAY_RECHARGE c where  c.ORDER_STATUS  in ('05','07')and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=  date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_RECHARGE c  where c.ORDER_STATUS  in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt,
+
+((select count(c.id) from  TB_PAY_RECHARGE c  where  c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+)
+/
+decode(count(a.id),0,1,count(a.id))) as rate
+
+FROM TB_PAY_RECHARGE a
+where 1=1
+<if test="endTime!=null"> and a.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and a.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="payerCustId != null and payerCustId !=''"> and a.CUST_ID=#{payerCustId,jdbcType=CHAR} </if>
+<if test="payerCustName != null and payerCustName != ''"> and a.CUST_NAME=#{payerCustName,jdbcType=CHAR} </if>
+group by a.CUST_ID ,a.CUST_NAME
+</if>
+
+<if test="busiType==null">
+union
+</if>
+
+<if test="busiType==null or busiType.value=='05'">
+<!-- 退款 -->
+SELECT 
+a.CUST_ID as payerCustId,
+a.CUST_NAME as payerCustName,
+'05' as busiType,
+(count(a.id)) as allCount,
+nvl(sum(a.order_amt),0) allAmt,
+
+(select count(c.id) FROM TB_PAY_REFUND c where c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_REFUND c  where   c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+
+(select count(c.id) from TB_PAY_REFUND c where   c.ORDER_STATUS  in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_REFUND c  where  c.ORDER_STATUS  in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt,
+
+((select count(c.id) from  TB_PAY_REFUND c  where  c.ORDER_STATUS not in ('05','07') and a.CUST_ID=c.CUST_ID and a.CUST_NAME=c.CUST_NAME 
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+)
+/
+decode(count(a.id),0,1,count(a.id))) as rate
+
+FROM TB_PAY_REFUND a 
+where 1=1
+<if test="endTime!=null"> and a.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and a.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="payerCustId != null and payerCustId !=''"> and a.CUST_ID=#{payerCustId,jdbcType=CHAR} </if>
+<if test="payerCustName != null and payerCustName != ''"> and a.CUST_NAME=#{payerCustName,jdbcType=CHAR} </if>
+group by a.CUST_ID ,a.CUST_NAME 
+
+</if>
+
+<if test="busiType==null">
+union
+</if>
+
+<if test="busiType==null or busiType.value=='04'">
+<!-- 支付-->
+SELECT 
+a.PAYER_CUST_ID as payerCustId,
+a.PAYER_CUST_NAME as payerCustName,
+'04' as busiType,
+(count(a.id)) as allCount,
+nvl(sum(a.order_amt),0) allAmt,
+
+(select count(c.id) FROM TB_PAY_PAYMENT c  where   c.ORDER_STATUS not in ('05','07') and a.PAYER_CUST_ID=c.PAYER_CUST_ID and a.PAYER_CUST_NAME=c.PAYER_CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_PAYMENT c  where   c.ORDER_STATUS not in ('05','07') and a.PAYER_CUST_ID=c.PAYER_CUST_ID and a.PAYER_CUST_NAME=c.PAYER_CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+
+(select count(c.id) from TB_PAY_PAYMENT c  where   c.ORDER_STATUS  in ('05','07') and a.PAYER_CUST_ID=c.PAYER_CUST_ID and a.PAYER_CUST_NAME=c.PAYER_CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount ,
+
+(select nvl(sum(c.order_amt),0) from TB_PAY_PAYMENT c  where   c.ORDER_STATUS  in ('05','07') and a.PAYER_CUST_ID=c.PAYER_CUST_ID and a.PAYER_CUST_NAME=c.PAYER_CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt,
+
+((select count(c.id) from  TB_PAY_PAYMENT c  where   c.ORDER_STATUS not in ('05','07') and a.PAYER_CUST_ID=c.PAYER_CUST_ID and a.PAYER_CUST_NAME=c.PAYER_CUST_NAME  
+<if test="endTime!=null"> and c.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and c.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+)
+/
+decode(count(a.id),0,1,count(a.id))) as rate
+
+FROM TB_PAY_PAYMENT a
+where 1=1
+<if test="endTime!=null"> and a.ACCOUNT_DATE&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and a.ACCOUNT_DATE&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="payerCustId != null and payerCustId !=''"> and a.PAYER_CUST_ID=#{payerCustId,jdbcType=CHAR} </if>
+<if test="payerCustName != null and payerCustName != ''"> and a.PAYER_CUST_NAME=#{payerCustName,jdbcType=CHAR} </if>
+group by a.PAYER_CUST_ID ,a.PAYER_CUST_NAME 
+
+</if>
+
+)
+</select>
+  
+  
+  
+  
+  
+   
+<select id="queryMerTradeDetail" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeDetailVo" resultMap="resultMap2">
+select * from ( 
+select 
+ pm.id,
+ pm.TRADE_NAME,
+ pm.ORDER_AMT,
+ bk.FEE,
+ pm.PAYER_CUST_NAME,
+ pm.ORDER_STATUS,
+ pm.MER_CODE,
+ pm.MER_NAME,
+ pm.COMPLETE_TIME,
+pm.CLEAR_DATE as PLAN_DAY,
+pm.CLEAR_DATE as REAL_DAY,
+PM.FAIL_REASON as EXCEPT_REASON
+from 
+TB_PAY_PAYMENT pm left join TB_PAY_BOOK bk on  pm.BUSI_ID=BK.BUSI_ID
+where  bk.trade_type in ('08','09')
+ <if test="merCode!=null and merCode!=''">
+ 	and pm.MER_CODE=#{merCode,jdbcType=CHAR}
+ </if>
+ <if test="orderStatus!=null and orderStatus!=''">
+ 	and pm.ORDER_STATUS=#{orderStatus,jdbcType=CHAR}
+ </if>
+ <if test="tradeEndTime!=null and tradeEndTime!=''">
+	and date_format(pm.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{tradeEndTime},'yyyyMMdd')
+</if>
+<if test="tradeStartTime!=null and tradeStartTime!=''">
+	and date_format(pm.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{tradeStartTime},'yyyyMMdd')
+</if>
+<if test="settleEndTime!=null">
+	and pm.CLEAR_DATE&lt;=date_format(#{settleEndTime},'yyyyMMdd')
+</if>
+<if test="settleStartTime!=null">
+	and pm.CLEAR_DATE&gt;=date_format(#{settleStartTime},'yyyyMMdd')
+</if>
+
+
+union 
+
+select 
+ pm.id,
+ pm.TRADE_NAME,
+ pm.ORDER_AMT,
+ bk.FEE,
+ pm.CUST_NAME,
+ pm.ORDER_STATUS,
+ pm.MER_CODE,
+pm.MER_NAME,
+ pm.COMPLETE_TIME,
+pm.CLEAR_DATE as PLAN_DAY,
+pm.CLEAR_DATE as REAL_DAY,
+PM.FAIL_REASON as EXCEPT_REASON
+from 
+TB_PAY_REFUND pm  left join TB_PAY_BOOK bk on  pm.BUSI_ID=BK.BUSI_ID
+where BK.TRADE_TYPE in ('11','12')
+ <if test="merCode!=null and merCode!=''">
+ 	and pm.MER_CODE=#{merCode,jdbcType=CHAR}
+ </if>
+ <if test="orderStatus!=null and orderStatus!=''">
+ 	and pm.ORDER_STATUS=#{orderStatus,jdbcType=CHAR}
+ </if>
+ <if test="tradeEndTime!=null and tradeEndTime!=''">
+	and date_format(pm.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{tradeEndTime},'yyyyMMdd')
+</if>
+<if test="tradeStartTime!=null and tradeStartTime!=''">
+	and date_format(pm.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{tradeStartTime},'yyyyMMdd')
+</if>
+<if test="settleEndTime!=null">
+	and pm.CLEAR_DATE&lt;=date_format(#{settleEndTime},'yyyyMMdd')
+</if>
+<if test="settleStartTime!=null">
+	and pm.CLEAR_DATE&gt;=date_format(#{settleStartTime},'yyyyMMdd')
+</if>
+)
+order by  COMPLETE_TIME desc,id desc
+ </select>
+ 
+ <!--根据交易日期查询商户交易汇总信息 -->
+ <select id="queryMerTradeSummary1" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo"
+resultMap="station">
+select * from (
+select 
+ '04' as busiType,
+ BILL.MER_CODE as merCode,
+ BILL.MER_NAME as merName,
+ TO_CHAR(BILL.COMPLETE_TIME,'yyyyMMdd') as REAL_DAY,
+ COUNT(BILL.ID)  as allCount,
+nvl(sum(BILL.ORDER_AMT),0) as allAmt
+ from TB_PAY_PAYMENT bill
+where bill.ORDER_STATUS  not IN ('05','07')
+<if test="endTime!=null">
+	and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')
+</if>
+<if test="merCode!=null and merCode!=''">
+	and bill.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+GROUP by  TO_CHAR(bill.COMPLETE_TIME,'yyyyMMdd'),BILL.MER_CODE,BILL.MER_NAME
+
+UNION
+
+select 
+ '05' as busiType,
+ BILL.MER_CODE as merCode,
+ BILL.MER_NAME as merName,
+ TO_CHAR(BILL.COMPLETE_TIME,'yyyyMMdd') as REAL_DAY,
+ COUNT(BILL.ID)  as allCount,
+nvl(sum(BILL.ORDER_AMT),0) as allAmt
+ from TB_PAY_REFUND bill
+where bill.ORDER_STATUS  not IN ('05','07')
+and bill.busi_id not in (select b.busi_id from TB_PAY_BOOK b where b.busi_id=bill.busi_id and b.trade_type='10' )
+<if test="endTime!=null">
+	and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')
+</if>
+<if test="merCode!=null and merCode!=''">
+	and bill.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+GROUP by  TO_CHAR(bill.COMPLETE_TIME,'yyyyMMdd'),BILL.MER_CODE,BILL.MER_NAME
+) order by REAL_DAY desc,merCode desc,busiType desc,allAmt desc
+ </select>
+ 
+<!--根据结算日期查询商户交易汇总信息 -->
+<select id="queryMerTradeSummary2" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo"
+resultMap="station">
+select * from (
+select 
+ '04' as busiType,
+ BILL.MER_CODE as merCode,
+ BILL.MER_NAME as merName,
+ BILL.CLEAR_DATE as REAL_DAY,
+ COUNT(BILL.ID)  as allCount,
+nvl(sum(BILL.ORDER_AMT),0) as allAmt
+ from TB_PAY_PAYMENT bill
+where bill.ORDER_STATUS  not IN ('05','07')
+<if test="endTime!=null">
+	and bill.CLEAR_DATE&lt;=date_format(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and bill.CLEAR_DATE&gt;=date_format(#{startTime},'yyyyMMdd')
+</if>
+<if test="merCode!=null and merCode!=''">
+	and bill.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+GROUP by  BILL.CLEAR_DATE,BILL.MER_CODE,BILL.MER_NAME
+
+UNION
+
+select 
+ '05' as busiType,
+ BILL.MER_CODE as merCode,
+ BILL.MER_NAME as merName,
+ BILL.CLEAR_DATE as REAL_DAY,
+ COUNT(BILL.ID)  as allCount,
+nvl(sum(BILL.ORDER_AMT),0) as allAmt
+ from TB_PAY_REFUND bill
+where bill.ORDER_STATUS  not IN ('05','07')
+and bill.busi_id not in (select b.busi_id from TB_PAY_BOOK b where b.busi_id=bill.busi_id and b.trade_type='10' )
+<if test="endTime!=null">
+	and bill.CLEAR_DATE&lt;=date_format(#{endTime},'yyyyMMdd')
+</if>
+<if test="startTime!=null">
+	and bill.CLEAR_DATE&gt;=date_format(#{startTime},'yyyyMMdd')
+</if>
+<if test="merCode!=null and merCode!=''">
+	and bill.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+GROUP by  BILL.CLEAR_DATE,BILL.MER_CODE,BILL.MER_NAME
+
+) order by REAL_DAY desc,merCode desc,busiType desc,allAmt desc
+ </select>
+ 
+ <!-- 交易情况报表查询-->
+<select id="queryStation" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo"
+resultMap="station" >
+select 
+'01' as busiType,
+count(bill.id) as	allCount,
+nvl(sum(bill.order_amt),0) as  allAmt,
+(select count(r.id)  from TB_PAY_RECHARGE   r where r.ORDER_STATUS not in  ('05','07')
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_RECHARGE r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successAmt,
+(select count(r.id)  from TB_PAY_RECHARGE   r where r.ORDER_STATUS in   ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as   failCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_RECHARGE r where r.ORDER_STATUS in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  failAmt
+ from TB_PAY_RECHARGE bill
+ where 1=1
+<if test="endTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+group by null
+
+union 
+
+select 
+'02' as busiType,
+count(bill.id) as	allCount,
+nvl(sum(bill.order_amt),0) as  allAmt,
+(select count(r.id)  from TB_PAY_WITHDRAW   r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_WITHDRAW r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successAmt,
+(select count(r.id)  from TB_PAY_WITHDRAW   r where r.ORDER_STATUS in   ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as   failCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_WITHDRAW r where r.ORDER_STATUS in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  failAmt
+ from TB_PAY_WITHDRAW bill
+  where 1=1
+<if test="endTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+group by null
+
+union 
+
+select 
+'03' as busiType,
+count(bill.id) as	allCount,
+nvl(sum(bill.order_amt),0) as  allAmt,
+(select count(r.id)  from TB_PAY_TRANSFER   r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_TRANSFER r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successAmt,
+(select count(r.id)  from TB_PAY_TRANSFER   r where r.ORDER_STATUS in   ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as   failCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_TRANSFER r where r.ORDER_STATUS in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  failAmt
+ from TB_PAY_TRANSFER bill
+  where 1=1
+<if test="endTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+group by null
+
+
+union 
+
+select 
+'04' as busiType,
+count(bill.id) as	allCount,
+nvl(sum(bill.order_amt),0) as  allAmt,
+(select count(r.id)  from TB_PAY_PAYMENT   r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_PAYMENT r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successAmt,
+(select count(r.id)  from TB_PAY_PAYMENT   r where r.ORDER_STATUS in   ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as   failCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_PAYMENT r where r.ORDER_STATUS in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  failAmt
+ from TB_PAY_PAYMENT bill
+  where 1=1
+<if test="endTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+group by null
+
+
+union 
+
+select 
+'05' as busiType,
+count(bill.id) as	allCount,
+nvl(sum(bill.order_amt),0) as  allAmt,
+(select count(r.id)  from TB_PAY_REFUND   r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_REFUND r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successAmt,
+(select count(r.id)  from TB_PAY_REFUND   r where r.ORDER_STATUS in   ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as   failCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_REFUND r where r.ORDER_STATUS in  ('05','07') 
+<if test="endTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  failAmt
+ from TB_PAY_REFUND bill
+  where 1=1
+<if test="endTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(bill.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+group by null
+
+
+union 
+
+select 
+'08' as busiType,
+count(bill.id) as	allCount,
+nvl(sum(bill.order_amt),0) as  allAmt,
+(select count(r.id)  from TB_PAY_RED   r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.CREATE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.CREATE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_RED r where r.ORDER_STATUS not in  ('05','07') 
+<if test="endTime!=null">and date_format(r.CREATE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.CREATE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  successAmt,
+(select count(r.id)  from TB_PAY_RED   r where r.ORDER_STATUS in   ('05','07') 
+<if test="endTime!=null">and date_format(r.CREATE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.CREATE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as   failCount,
+(select nvl(sum(r.order_amt),0)  from TB_PAY_RED r where r.ORDER_STATUS in  ('05','07') 
+<if test="endTime!=null">and date_format(r.CREATE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(r.CREATE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+) as  failAmt
+ from TB_PAY_RED bill
+  where 1=1
+<if test="endTime!=null">and date_format(bill.CREATE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd')</if>
+<if test="startTime!=null">and date_format(bill.CREATE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if> 
+group by null
+</select> 
+  
+  
+<select id="queryActiveMer" parameterType="com.ylink.inetpay.common.project.clear.dto.ClsTradeStationVo"
+resultMap="station">
+select * from (
+select 
+p.mer_code as merCode,
+p.mer_name as merName,
+'04' as busiType,
+count(p.id) as allCount,
+nvl(sum(p.order_amt),0) allAmt,
+(select count(t.id) from TB_PAY_PAYMENT t  where t.ORDER_STATUS not in ('05','07')  and t.MER_CODE=p.MER_CODE and t.mer_name=p.mer_name
+<if test="endTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount,
+(select nvl(sum(t.order_amt),0) from TB_PAY_PAYMENT t  where t.ORDER_STATUS not in ('05','07')  and t.MER_CODE=p.MER_CODE and t.mer_name=p.mer_name
+<if test="endTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+(select count(t.id) from TB_PAY_PAYMENT t  where t.ORDER_STATUS  in ('05','07')  and t.MER_CODE=p.MER_CODE and t.mer_name=p.mer_name
+<if test="endTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount,
+(select nvl(sum(t.order_amt),0) from TB_PAY_PAYMENT t  where t.ORDER_STATUS  in ('05','07') and t.MER_CODE=p.MER_CODE and t.mer_name=p.mer_name
+<if test="endTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt
+from TB_PAY_PAYMENT p
+where 1=1
+<if test="endTime!=null"> and date_format(p.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(p.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="merCode!=null and merCode!=''">
+	and p.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+<if test="merName!=null and merName!=''">
+	and instr(p.mer_name, #{merName}) > 0
+	<!-- and p.mer_name LIKE concat('%',concat(#{merName},'%')) -->
+</if>
+group by p.MER_CODE,p.mer_name
+
+union 
+
+select 
+p.mer_code as merCode,
+p.mer_name as merName,
+'05' as busiType,
+count(p.id) as allCount,
+nvl(sum(p.order_amt),0) allAmt,
+(select count(t.id) from TB_PAY_REFUND t  where t.ORDER_STATUS not in ('05','07')  and t.MER_CODE=p.MER_CODE and t.mer_name=p.mer_name
+<if test="endTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successCount,
+(select nvl(sum(t.order_amt),0) from TB_PAY_REFUND t  where t.ORDER_STATUS not in ('05','07')  and t.MER_CODE=p.MER_CODE and t.mer_name=p.mer_name
+<if test="endTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as successAmt,
+(select count(t.id) from TB_PAY_REFUND t  where t.ORDER_STATUS  in ('05','07')  and t.MER_CODE=p.MER_CODE and t.mer_name=p.mer_name
+<if test="endTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failCount,
+(select nvl(sum(t.order_amt),0) from TB_PAY_REFUND t  where t.ORDER_STATUS  in ('05','07')  and t.MER_CODE=p.MER_CODE and t.mer_name=p.mer_name
+<if test="endTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(t.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+) as failAmt
+from TB_PAY_REFUND p
+where p.busi_id not in (select b.busi_id from TB_PAY_BOOK b where b.busi_id=p.busi_id and b.trade_type='10' )
+<if test="endTime!=null"> and date_format(p.COMPLETE_TIME,'yyyyMMdd')&lt;=date_format(#{endTime},'yyyyMMdd') </if>
+<if test="startTime!=null"> and date_format(p.COMPLETE_TIME,'yyyyMMdd')&gt;=date_format(#{startTime},'yyyyMMdd')</if>
+<if test="merCode!=null and merCode!=''">
+	and p.MER_CODE=#{merCode,jdbcType=CHAR}
+</if>
+<if test="merName!=null and merName!=''">
+	and p.mer_name LIKE concat('%',concat(#{merName},'%'))
+</if>
+group by p.MER_CODE,p.mer_name
+)
+order by merCode desc,successAmt desc , successCount desc
+</select> 
+
+	<!-- 一户通账户交易明细查询   充值、对外支付-->
+	<select id="queryAllDataForAccount" resultMap="forAccount"
+		parameterType="com.ylink.inetpay.common.project.pay.dto.PayBookDto">
+		select t1.*
+			,t2.MER_ORDER_ID,t2.FAIL_REASON,t2.PAYEE_BANK_CUST_NAME,t2.PAYEE_BANK_NO,t2.REMARK 
+		from (select ID, PAY_ID, BUSI_ID, BUSI_TYPE, TRADE_TYPE, TRADE_NAME, ORDER_AMT, FEE, FEE_TYPE, 
+		    FEE_RATE, ORDER_STATUS, PAYER_CUST_ID, PAYER_CUST_NAME, PAYEE_CUST_ID, PAYEE_CUST_NAME, 
+		    DR_ACCOUNT_ID, CR_ACCOUNT_ID, ACCOUNT_DATE, CLEAR_DATE, CHECK_STATUS, ADJUST_STATUS, 
+		    CHANNEL_CODE, CREATE_TIME, COMPLETE_TIME,PAY_STYLE,BANK_TYPE from TB_PAY_BOOK 
+		where busi_type in ('01','12','16') and trade_type in ('01','22','29','23','36') and order_status != '07') t1
+		left join 
+		(
+			select '01' busi_type,busi_id,MER_ORDER_ID,BANK_TYPE bank_type,fail_reason,'' PAYEE_BANK_CUST_NAME,'' PAYEE_BANK_NO, '' remark from TB_PAY_RECHARGE
+			union
+			select '12' busi_type,busi_id,MER_ORDER_ID,PAYER_BANK_TYPE bank_type,ALLOCATE_REASON fail_reason,PAYEE_BANK_CUST_NAME PAYEE_BANK_CUST_NAME,PAYEE_BANK_CARD_NO PAYEE_BANK_NO,REMARK remark from TB_PAY_AMT_ALLOCATE
+			union
+			select '16' busi_type,cn.ACC_CHANGE_BUSI_ID busi_id,aa.MER_ORDER_ID,aa.PAYER_BANK_TYPE bank_type,aa.ALLOCATE_REASON fail_reason,'' PAYEE_BANK_CUST_NAME,'' PAYEE_BANK_NO, '' remark 
+			from TB_PAY_AMT_ALLOCATE aa left join tb_pay_acc_change_notify cn on aa.mer_order_id=cn.mer_order_id
+		) t2
+		on t1.busi_type=t2.busi_type and t1.busi_id=t2.busi_id
+		where 1=1 
+		<if test="payerCustId!=null and payerCustId!=''">
+			and ((t1.busi_type != '16' and PAYER_CUST_ID=#{payerCustId,jdbcType=VARCHAR} ) or (t1.busi_type = '16' and PAYEE_CUST_ID=#{payerCustId,jdbcType=VARCHAR}))
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   >=  ]]>date_format(#{startTime},'%Y-%c-%d')
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and date_format(CREATE_TIME,'%Y-%c-%d')<![CDATA[   <=  ]]>date_format(#{endTime},'%Y-%c-%d')
+		</if>
+		order by CREATE_TIME asc
+	</select>
+</mapper>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayNoticeDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayNoticeDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="MER_CODE" property="merCode" jdbcType="CHAR" />
+    <result column="MER_ORDER_DATE" property="merOrderDate" jdbcType="CHAR" />
+    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="CHECK_DAY" property="checkDay" jdbcType="CHAR" />
+    <result column="TIMES" property="times" jdbcType="DECIMAL" />
+    <result column="PRO_STATUS" property="proStatus" jdbcType="CHAR" />
+    <result column="NOTICE_STATUS" property="noticeStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="NOTIFY_URL" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="RESEND_TIME" property="resendTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, MER_CODE, MER_ORDER_DATE, MER_ORDER_ID, BUSI_ID, CHECK_DAY, TIMES, PRO_STATUS, 
+    NOTICE_STATUS, CREATE_TIME, NOTIFY_URL, RESEND_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_NOTICE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBybusiId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_NOTICE
+    where BUSI_ID = #{busiId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_NOTICE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayNoticeDto" >
+    insert into TB_PAY_NOTICE (ID, MER_CODE, MER_ORDER_DATE, 
+      MER_ORDER_ID, BUSI_ID, CHECK_DAY, 
+      TIMES, PRO_STATUS, NOTICE_STATUS, 
+      CREATE_TIME, NOTIFY_URL, RESEND_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{merCode,jdbcType=CHAR}, #{merOrderDate,jdbcType=CHAR}, 
+      #{merOrderId,jdbcType=VARCHAR}, #{busiId,jdbcType=CHAR}, #{checkDay,jdbcType=CHAR}, 
+      #{times,jdbcType=DECIMAL}, #{proStatus,jdbcType=CHAR}, #{noticeStatus,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{notifyUrl,jdbcType=VARCHAR}, #{resendTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayNoticeDto" >
+    insert into TB_PAY_NOTICE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="merCode != null" >
+        MER_CODE,
+      </if>
+      <if test="merOrderDate != null" >
+        MER_ORDER_DATE,
+      </if>
+      <if test="merOrderId != null" >
+        MER_ORDER_ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="checkDay != null" >
+        CHECK_DAY,
+      </if>
+      <if test="times != null" >
+        TIMES,
+      </if>
+      <if test="proStatus != null" >
+        PRO_STATUS,
+      </if>
+      <if test="noticeStatus != null" >
+        NOTICE_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="notifyUrl != null" >
+        NOTIFY_URL,
+      </if>
+      <if test="resendTime != null" >
+        RESEND_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="merCode != null" >
+        #{merCode,jdbcType=CHAR},
+      </if>
+      <if test="merOrderDate != null" >
+        #{merOrderDate,jdbcType=CHAR},
+      </if>
+      <if test="merOrderId != null" >
+        #{merOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="checkDay != null" >
+        #{checkDay,jdbcType=CHAR},
+      </if>
+      <if test="times != null" >
+        #{times,jdbcType=DECIMAL},
+      </if>
+      <if test="proStatus != null" >
+        #{proStatus,jdbcType=CHAR},
+      </if>
+      <if test="noticeStatus != null" >
+        #{noticeStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="resendTime != null" >
+        #{resendTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayNoticeDto" >
+    update TB_PAY_NOTICE
+    <set >
+      <if test="merCode != null" >
+        MER_CODE = #{merCode,jdbcType=CHAR},
+      </if>
+      <if test="merOrderDate != null" >
+        MER_ORDER_DATE = #{merOrderDate,jdbcType=CHAR},
+      </if>
+      <if test="merOrderId != null" >
+        MER_ORDER_ID = #{merOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="checkDay != null" >
+        CHECK_DAY = #{checkDay,jdbcType=CHAR},
+      </if>
+      <if test="times != null" >
+        TIMES = #{times,jdbcType=DECIMAL},
+      </if>
+      <if test="proStatus != null" >
+        PRO_STATUS = #{proStatus,jdbcType=CHAR},
+      </if>
+      <if test="noticeStatus != null" >
+        NOTICE_STATUS = #{noticeStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyUrl != null" >
+        NOTIFY_URL = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="resendTime != null" >
+        RESEND_TIME = #{resendTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayNoticeDto" >
+    update TB_PAY_NOTICE
+    set MER_CODE = #{merCode,jdbcType=CHAR},
+      MER_ORDER_DATE = #{merOrderDate,jdbcType=CHAR},
+      MER_ORDER_ID = #{merOrderId,jdbcType=VARCHAR},
+      BUSI_ID = #{busiId,jdbcType=CHAR},
+      CHECK_DAY = #{checkDay,jdbcType=CHAR},
+      TIMES = #{times,jdbcType=DECIMAL},
+      PRO_STATUS = #{proStatus,jdbcType=CHAR},
+      NOTICE_STATUS = #{noticeStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      NOTIFY_URL = #{notifyUrl,jdbcType=VARCHAR},
+      RESEND_TIME = #{resendTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

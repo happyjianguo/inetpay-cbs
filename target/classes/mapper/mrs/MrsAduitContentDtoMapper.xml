@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsAduitContentDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitContentDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ADUIT_ID" property="aduitId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitContentDtoWithBLOBs" extends="BaseResultMap" >
+    <result column="OLD_VALUE" property="oldValue" jdbcType="CLOB" />
+    <result column="NEW_VALUE" property="newValue" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ADUIT_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    OLD_VALUE, NEW_VALUE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_MRS_ADUIT_CONTENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByAuditId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_MRS_ADUIT_CONTENT
+    where ADUIT_ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_ADUIT_CONTENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByAduitId" parameterType="java.lang.String" >
+    delete from TB_MRS_ADUIT_CONTENT
+    where ADUIT_ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitContentDtoWithBLOBs" >
+    insert into TB_MRS_ADUIT_CONTENT (ID, ADUIT_ID, OLD_VALUE, 
+      NEW_VALUE)
+    values (#{id,jdbcType=VARCHAR}, #{aduitId,jdbcType=VARCHAR}, #{oldValue,jdbcType=CLOB}, 
+      #{newValue,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitContentDtoWithBLOBs" >
+    insert into TB_MRS_ADUIT_CONTENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="aduitId != null" >
+        ADUIT_ID,
+      </if>
+      <if test="oldValue != null" >
+        OLD_VALUE,
+      </if>
+      <if test="newValue != null" >
+        NEW_VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitId != null" >
+        #{aduitId,jdbcType=VARCHAR},
+      </if>
+      <if test="oldValue != null" >
+        #{oldValue,jdbcType=CLOB},
+      </if>
+      <if test="newValue != null" >
+        #{newValue,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitContentDtoWithBLOBs" >
+    update TB_MRS_ADUIT_CONTENT
+    <set >
+      <if test="aduitId != null" >
+        ADUIT_ID = #{aduitId,jdbcType=VARCHAR},
+      </if>
+      <if test="oldValue != null" >
+        OLD_VALUE = #{oldValue,jdbcType=CLOB},
+      </if>
+      <if test="newValue != null" >
+        NEW_VALUE = #{newValue,jdbcType=CLOB},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitContentDtoWithBLOBs" >
+    update TB_MRS_ADUIT_CONTENT
+    set ADUIT_ID = #{aduitId,jdbcType=VARCHAR},
+      OLD_VALUE = #{oldValue,jdbcType=CLOB},
+      NEW_VALUE = #{newValue,jdbcType=CLOB}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsAduitContentDto" >
+    update TB_MRS_ADUIT_CONTENT
+    set ADUIT_ID = #{aduitId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

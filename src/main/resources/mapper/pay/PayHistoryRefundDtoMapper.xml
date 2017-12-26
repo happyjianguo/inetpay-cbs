@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayHistoryRefundDtoMapper" >
+ <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayHistoryRefundDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_ID" property="busiId" jdbcType="CHAR" />
+    <result column="OLD_BUSI_ID" property="oldBusiId" jdbcType="CHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="SOURCE" property="source" jdbcType="CHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="ORDER_AMT" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="CHAR" />
+    <result column="ACCESS_CODE" property="accessCode" jdbcType="VARCHAR" />
+    <result column="MER_CODE" property="merCode" jdbcType="CHAR" />
+    <result column="MER_NAME" property="merName" jdbcType="VARCHAR" />
+    <result column="MER_ORDER_ID" property="merOrderId" jdbcType="VARCHAR" />
+    <result column="MER_ORDER_DATE" property="merOrderDate" jdbcType="CHAR" />
+    <result column="TRADE_NAME" property="tradeName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_DATE" property="accountDate" jdbcType="CHAR" />
+    <result column="CLEAR_DATE" property="clearDate" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_ID, OLD_BUSI_ID, BUSI_TYPE, SOURCE, CUST_ID, CUST_NAME, ORDER_AMT, ORDER_STATUS, 
+    ACCESS_CODE, MER_CODE, MER_NAME, MER_ORDER_ID, MER_ORDER_DATE, TRADE_NAME, REMARK, 
+    ACCOUNT_DATE, CLEAR_DATE, CREATE_TIME, COMPLETE_TIME,FAIL_REASON
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_HISTORY_REFUND
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_HISTORY_REFUND
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryRefundDto" >
+    insert into TB_PAY_HISTORY_REFUND (ID, BUSI_ID, OLD_BUSI_ID, 
+      BUSI_TYPE, SOURCE, CUST_ID, 
+      CUST_NAME, ORDER_AMT, ORDER_STATUS, 
+      ACCESS_CODE, MER_CODE, MER_NAME, 
+      MER_ORDER_ID, MER_ORDER_DATE, TRADE_NAME, 
+      REMARK, ACCOUNT_DATE, CLEAR_DATE, 
+      CREATE_TIME, COMPLETE_TIME,FAIL_REASON)
+    values (#{id,jdbcType=VARCHAR}, #{busiId,jdbcType=CHAR}, #{oldBusiId,jdbcType=CHAR}, 
+      #{busiType,jdbcType=CHAR}, #{source,jdbcType=CHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{custName,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL}, #{orderStatus,jdbcType=CHAR}, 
+      #{accessCode,jdbcType=VARCHAR}, #{merCode,jdbcType=CHAR}, #{merName,jdbcType=VARCHAR}, 
+      #{merOrderId,jdbcType=VARCHAR}, #{merOrderDate,jdbcType=CHAR}, #{tradeName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{accountDate,jdbcType=CHAR}, #{clearDate,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP},#{failReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryRefundDto" >
+    insert into TB_PAY_HISTORY_REFUND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiId != null" >
+        BUSI_ID,
+      </if>
+      <if test="oldBusiId != null" >
+        OLD_BUSI_ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="orderAmt != null" >
+        ORDER_AMT,
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS,
+      </if>
+      <if test="accessCode != null" >
+        ACCESS_CODE,
+      </if>
+      <if test="merCode != null" >
+        MER_CODE,
+      </if>
+      <if test="merName != null" >
+        MER_NAME,
+      </if>
+      <if test="merOrderId != null" >
+        MER_ORDER_ID,
+      </if>
+      <if test="merOrderDate != null" >
+        MER_ORDER_DATE,
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE,
+      </if>
+      <if test="clearDate != null" >
+        CLEAR_DATE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="oldBusiId != null" >
+        #{oldBusiId,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null" >
+        #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="accessCode != null" >
+        #{accessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merCode != null" >
+        #{merCode,jdbcType=CHAR},
+      </if>
+      <if test="merName != null" >
+        #{merName,jdbcType=VARCHAR},
+      </if>
+      <if test="merOrderId != null" >
+        #{merOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="merOrderDate != null" >
+        #{merOrderDate,jdbcType=CHAR},
+      </if>
+      <if test="tradeName != null" >
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="clearDate != null" >
+        #{clearDate,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="failReason != null" >
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryRefundDto" >
+    update TB_PAY_HISTORY_REFUND
+    <set >
+      <if test="busiId != null" >
+        BUSI_ID = #{busiId,jdbcType=CHAR},
+      </if>
+      <if test="oldBusiId != null" >
+        OLD_BUSI_ID = #{oldBusiId,jdbcType=CHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null" >
+        ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="accessCode != null" >
+        ACCESS_CODE = #{accessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merCode != null" >
+        MER_CODE = #{merCode,jdbcType=CHAR},
+      </if>
+      <if test="merName != null" >
+        MER_NAME = #{merName,jdbcType=VARCHAR},
+      </if>
+      <if test="merOrderId != null" >
+        MER_ORDER_ID = #{merOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="merOrderDate != null" >
+        MER_ORDER_DATE = #{merOrderDate,jdbcType=CHAR},
+      </if>
+      <if test="tradeName != null" >
+        TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDate != null" >
+        ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      </if>
+      <if test="clearDate != null" >
+        CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="failReason != null" >
+       FAIL_REASON= #{failReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayHistoryRefundDto" >
+    update TB_PAY_HISTORY_REFUND
+    set BUSI_ID = #{busiId,jdbcType=CHAR},
+      OLD_BUSI_ID = #{oldBusiId,jdbcType=CHAR},
+      BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      SOURCE = #{source,jdbcType=CHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      ACCESS_CODE = #{accessCode,jdbcType=VARCHAR},
+      MER_CODE = #{merCode,jdbcType=CHAR},
+      MER_NAME = #{merName,jdbcType=VARCHAR},
+      MER_ORDER_ID = #{merOrderId,jdbcType=VARCHAR},
+      MER_ORDER_DATE = #{merOrderDate,jdbcType=CHAR},
+      TRADE_NAME = #{tradeName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ACCOUNT_DATE = #{accountDate,jdbcType=CHAR},
+      CLEAR_DATE = #{clearDate,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      FAIL_REASON = #{failReason,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

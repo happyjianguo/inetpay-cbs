@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.act.dao.ActCustInterestDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.account.dto.ActCustInterestDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="START_DAY" property="startDay" jdbcType="VARCHAR" />
+    <result column="END_DAY" property="endDay" jdbcType="VARCHAR" />
+    <result column="INTEREST_TYPE" property="interestType" jdbcType="CHAR" />
+    <result column="INTEREST_AMOUNT" property="interestAmount" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, CUST_NAME, ACCOUNT_ID, STATUS, START_DAY, END_DAY, INTEREST_TYPE, INTEREST_AMOUNT, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_CUST_INTEREST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findBeanByAccountId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_ACT_CUST_INTEREST
+    where ACCOUNT_ID = #{accountId,jdbcType=VARCHAR}
+    and STATUS = #{interestStatus,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_ACT_CUST_INTEREST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustInterestDto" >
+    insert into TB_ACT_CUST_INTEREST (ID, CUST_ID, CUST_NAME, 
+      ACCOUNT_ID, STATUS, START_DAY, 
+      END_DAY, INTEREST_TYPE, INTEREST_AMOUNT, 
+      CREATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, 
+      #{accountId,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{startDay,jdbcType=VARCHAR}, 
+      #{endDay,jdbcType=VARCHAR}, #{interestType,jdbcType=CHAR}, #{interestAmount,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustInterestDto" >
+    insert into TB_ACT_CUST_INTEREST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="startDay != null" >
+        START_DAY,
+      </if>
+      <if test="endDay != null" >
+        END_DAY,
+      </if>
+      <if test="interestType != null" >
+        INTEREST_TYPE,
+      </if>
+      <if test="interestAmount != null" >
+        INTEREST_AMOUNT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="startDay != null" >
+        #{startDay,jdbcType=VARCHAR},
+      </if>
+      <if test="endDay != null" >
+        #{endDay,jdbcType=VARCHAR},
+      </if>
+      <if test="interestType != null" >
+        #{interestType,jdbcType=CHAR},
+      </if>
+      <if test="interestAmount != null" >
+        #{interestAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustInterestDto" >
+    update TB_ACT_CUST_INTEREST
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="startDay != null" >
+        START_DAY = #{startDay,jdbcType=VARCHAR},
+      </if>
+      <if test="endDay != null" >
+        END_DAY = #{endDay,jdbcType=VARCHAR},
+      </if>
+      <if test="interestType != null" >
+        INTEREST_TYPE = #{interestType,jdbcType=CHAR},
+      </if>
+      <if test="interestAmount != null" >
+        INTEREST_AMOUNT = #{interestAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustInterestDto" >
+    update TB_ACT_CUST_INTEREST
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      START_DAY = #{startDay,jdbcType=VARCHAR},
+      END_DAY = #{endDay,jdbcType=VARCHAR},
+      INTEREST_TYPE = #{interestType,jdbcType=CHAR},
+      INTEREST_AMOUNT = #{interestAmount,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="listWhere">
+  	<where>
+  		<if test="custId != null and custId !=''">
+  			and instr(CUST_ID, #{custId,jdbcType=VARCHAR}) > 0
+  			<!-- CUST_ID like concat('%',concat(#{custId,jdbcType=VARCHAR},'%'))  -->
+  		</if>
+  		<if test="custName != null and custName !=''">
+  			and instr(CUST_NAME, #{custName,jdbcType=VARCHAR}) > 0
+  			<!-- and CUST_NAME like concat('%',concat(#{custName,jdbcType=VARCHAR},'%')) --> 
+  		</if>
+  		<if test="accountId != null and accountId !=''">
+  			and instr(ACCOUNT_ID, #{accountId,jdbcType=VARCHAR}) > 0
+  			<!-- and ACCOUNT_ID like concat('%',concat(#{accountId,jdbcType=VARCHAR},'%')) --> 
+  		</if>
+  		<if test="status != null">
+  			and STATUS = #{status,jdbcType=CHAR}
+  		</if>
+  		<if test="startDay != null and startDay !=''">
+  			and START_DAY = #{startDay,jdbcType=VARCHAR}
+  		</if>
+  		<if test="endDay != null and endDay !=''">
+  			and END_DAY = #{endDay,jdbcType=VARCHAR}
+  		</if>
+  		<if test="interestType != null">
+  			and INTEREST_TYPE = #{interestType,jdbcType=CHAR}
+  		</if>
+  	</where>
+  	order by CREATE_TIME desc
+  </sql>
+  <select id="list" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustInterestDto" resultMap="BaseResultMap">
+  	select * from TB_ACT_CUST_INTEREST 
+  	<include refid="listWhere"/>
+  </select>
+  <select id="countList" parameterType="com.ylink.inetpay.common.project.account.dto.ActCustInterestDto" resultType="long">
+  	select count(id) from TB_ACT_CUST_INTEREST 
+  	<include refid="listWhere"/>
+  </select>
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.chl.dao.TbChlChannelBankMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.channel.dto.TbChlChannelBank" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="CHAR" />
+    <result column="SUPPORT_MODE" property="supportMode" jdbcType="CHAR" />
+    <result column="CHANNEL_BANK_CODE" property="channelBankCode" jdbcType="VARCHAR" />
+    <result column="SINGLE_PEN_LIMIT" property="singlePenLimit" jdbcType="BIGINT" />
+    <result column="SINGLE_DAY_LIMIE" property="singleDayLimie" jdbcType="BIGINT" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CHANNEL_NAME" property="channelName" jdbcType="VARCHAR" />
+    <result column="DC_FLAG" property="dcFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BANK_TYPE, CHANNEL_CODE, SUPPORT_MODE, CHANNEL_BANK_CODE, SINGLE_PEN_LIMIT, SINGLE_DAY_LIMIE,DC_FLAG
+  </sql>
+  <sql id="Page_Column_List" >
+    a.ID, a.BANK_TYPE, a.CHANNEL_CODE, a.SUPPORT_MODE, a.CHANNEL_BANK_CODE, a.SINGLE_PEN_LIMIT, a.SINGLE_DAY_LIMIE,a.DC_FLAG,b.BANK_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Page_Column_List" />,c.CHANNEL_NAME
+    from TB_CHL_CHANNEL_BANK a left join TB_CHL_BANK b on a.BANK_TYPE = b.BANK_TYPE left join TB_CHL_CHANNEL c on a.CHANNEL_CODE = c.CHANNEL_CODE
+    where a.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findListPage" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Page_Column_List" />
+    from TB_CHL_CHANNEL_BANK a left join TB_CHL_BANK b on a.BANK_TYPE = b.BANK_TYPE
+    where 1=1
+    <if test="id != null and id != ''" >
+        and a.ID = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="bankType != null and bankType != ''" >
+       and a.BANK_TYPE =  #{bankType,jdbcType=VARCHAR}
+      </if>
+      <if test="channelCode != null and channelCode != ''" >
+        and a.CHANNEL_CODE like concat('%',concat(#{channelCode,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="supportMode != null and supportMode != ''" >
+        and a.SUPPORT_MODE = #{supportMode,jdbcType=VARCHAR}
+      </if>
+      <if test="channelBankCode != null and channelBankCode != ''" >
+        and a.CHANNEL_BANK_CODE =  #{channelBankCode,jdbcType=VARCHAR}
+      </if>
+      <if test="singlePenLimit != null and singlePenLimit != ''" >
+        and a.SINGLE_PEN_LIMIT =  #{singlePenLimit,jdbcType=BIGINT}
+      </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_CHL_CHANNEL_BANK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlChannelBank" >
+    insert into TB_CHL_CHANNEL_BANK (ID, BANK_TYPE, CHANNEL_CODE, 
+      SUPPORT_MODE, CHANNEL_BANK_CODE, SINGLE_PEN_LIMIT, 
+      SINGLE_DAY_LIMIE,DC_FLAG)
+    values (#{id,jdbcType=VARCHAR}, #{bankType,jdbcType=CHAR}, #{channelCode,jdbcType=CHAR}, 
+      #{supportMode,jdbcType=CHAR}, #{channelBankCode,jdbcType=VARCHAR}, #{singlePenLimit,jdbcType=BIGINT}, 
+      #{singleDayLimie,jdbcType=BIGINT},#{dcFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlChannelBank" >
+    insert into TB_CHL_CHANNEL_BANK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE,
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE,
+      </if>
+      <if test="supportMode != null" >
+        SUPPORT_MODE,
+      </if>
+      <if test="channelBankCode != null" >
+        CHANNEL_BANK_CODE,
+      </if>
+      <if test="singlePenLimit != null" >
+        SINGLE_PEN_LIMIT,
+      </if>
+      <if test="singleDayLimie != null" >
+        SINGLE_DAY_LIMIE,
+      </if>
+      <if test="dcFlag != null">
+      DC_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="supportMode != null" >
+        #{supportMode,jdbcType=CHAR},
+      </if>
+      <if test="channelBankCode != null" >
+        #{channelBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="singlePenLimit != null" >
+        #{singlePenLimit,jdbcType=BIGINT},
+      </if>
+      <if test="singleDayLimie != null" >
+        #{singleDayLimie,jdbcType=BIGINT},
+      </if>
+      <if test="dcFlag != null">
+      	#{dcFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlChannelBank" >
+    update TB_CHL_CHANNEL_BANK
+    <set >
+      <if test="bankType != null" >
+        BANK_TYPE = #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="supportMode != null" >
+        SUPPORT_MODE = #{supportMode,jdbcType=CHAR},
+      </if>
+      <if test="channelBankCode != null" >
+        CHANNEL_BANK_CODE = #{channelBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="singlePenLimit != null" >
+        SINGLE_PEN_LIMIT = #{singlePenLimit,jdbcType=BIGINT},
+      </if>
+      <if test="singleDayLimie != null" >
+        SINGLE_DAY_LIMIE = #{singleDayLimie,jdbcType=BIGINT},
+      </if>
+      <if test="dcFlag != null">
+      	DC_FLAG = #{dcFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlChannelBank" >
+   
+    update TB_CHL_CHANNEL_BANK
+    set BANK_TYPE = #{bankType,jdbcType=CHAR},
+      CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      SUPPORT_MODE = #{supportMode,jdbcType=CHAR},
+      CHANNEL_BANK_CODE = #{channelBankCode,jdbcType=VARCHAR},
+      SINGLE_PEN_LIMIT = #{singlePenLimit,jdbcType=BIGINT},
+      SINGLE_DAY_LIMIE = #{singleDayLimie,jdbcType=BIGINT},
+      DC_FLAG = #{dcFlag,jdbcType=CHAR},
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

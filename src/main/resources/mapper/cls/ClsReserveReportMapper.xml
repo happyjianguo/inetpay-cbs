@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.cls.dao.ClsReserveReportDao" >
+  
+  <resultMap id="resultMap" type="com.ylink.inetpay.common.project.clear.dto.ClsReserveReport" >
+	    <result column="ID" property="id" jdbcType="CHAR" />
+	    <result column="RESV_ACCOUNT" property="resvAccount" jdbcType="VARCHAR" />
+	    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+	    <result column="RESV_AMT" property="resvAmt" jdbcType="DECIMAL" />
+	    <result column="CAL_DATE" property="calDate" jdbcType="TIMESTAMP" />
+	    <result column="POS_NAME" property="posName" jdbcType="VARCHAR" />
+	    <result column="RESV_ACC_NAME" property="resvAccName" jdbcType="VARCHAR" />
+	 
+  </resultMap>
+ 
+<!--查询-->
+ <select id="queryReserveReport"  parameterType="java.lang.String" resultMap="resultMap">
+ select 
+ 	ID ,
+ 	RESV_ACCOUNT ,
+ 	BANK_TYPE ,
+ 	RESV_AMT ,
+ 	CAL_DATE ,
+ 	POS_NAME ,
+ 	RESV_ACC_NAME 
+ from TB_CLS_RESERVE_REPORT
+ where to_char(CAL_DATE,'yyyyMMdd')=#{calDate,jdbcType=CHAR}
+ </select>
+  
+ 
+</mapper>

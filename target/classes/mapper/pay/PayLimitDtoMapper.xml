@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.pay.dao.PayLimitDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.pay.dto.PayLimitDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="CHAR" />
+    <result column="SINGLE" property="single" jdbcType="DECIMAL" />
+    <result column="DAY_TOTAL" property="dayTotal" jdbcType="DECIMAL" />
+    <result column="MONTH_TOTAL" property="monthTotal" jdbcType="DECIMAL" />
+    <result column="YEAR_TOTAL" property="yearTotal" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_ID, BUSI_TYPE, SINGLE, DAY_TOTAL, MONTH_TOTAL, YEAR_TOTAL, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_LIMIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_PAY_LIMIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.pay.dto.PayLimitDto" >
+    insert into TB_PAY_LIMIT (ID, CUST_ID, BUSI_TYPE, 
+      SINGLE, DAY_TOTAL, MONTH_TOTAL, 
+      YEAR_TOTAL, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{busiType,jdbcType=CHAR}, 
+      #{single,jdbcType=DECIMAL}, #{dayTotal,jdbcType=DECIMAL}, #{monthTotal,jdbcType=DECIMAL}, 
+      #{yearTotal,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayLimitDto" >
+    insert into TB_PAY_LIMIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="single != null" >
+        SINGLE,
+      </if>
+      <if test="dayTotal != null" >
+        DAY_TOTAL,
+      </if>
+      <if test="monthTotal != null" >
+        MONTH_TOTAL,
+      </if>
+      <if test="yearTotal != null" >
+        YEAR_TOTAL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="single != null" >
+        #{single,jdbcType=DECIMAL},
+      </if>
+      <if test="dayTotal != null" >
+        #{dayTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="monthTotal != null" >
+        #{monthTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="yearTotal != null" >
+        #{yearTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.pay.dto.PayLimitDto" >
+    update TB_PAY_LIMIT
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="single != null" >
+        SINGLE = #{single,jdbcType=DECIMAL},
+      </if>
+      <if test="dayTotal != null" >
+        DAY_TOTAL = #{dayTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="monthTotal != null" >
+        MONTH_TOTAL = #{monthTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="yearTotal != null" >
+        YEAR_TOTAL = #{yearTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.pay.dto.PayLimitDto" >
+    update TB_PAY_LIMIT
+    set CUST_ID = #{custId,jdbcType=VARCHAR},
+      BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      SINGLE = #{single,jdbcType=DECIMAL},
+      DAY_TOTAL = #{dayTotal,jdbcType=DECIMAL},
+      MONTH_TOTAL = #{monthTotal,jdbcType=DECIMAL},
+      YEAR_TOTAL = #{yearTotal,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getPayLimits" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_PAY_LIMIT
+    where CUST_ID = #{custId}
+  </select>
+  <select id="findByCustIdAndBusiType" resultMap="BaseResultMap">
+  	select * from TB_PAY_LIMIT where CUST_ID = #{custId,jdbcType=VARCHAR}
+  		and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+  </select>
+</mapper>

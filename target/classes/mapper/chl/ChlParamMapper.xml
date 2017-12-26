@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.chl.dao.ChlParamMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.channel.dto.TbChlParamDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="CHAR" />
+    <result column="PARAM_CODE" property="paramCode" jdbcType="VARCHAR" />
+    <result column="PARAM_NAME" property="paramName" jdbcType="VARCHAR" />
+    <result column="PARAM_VALUE" property="paramValue" jdbcType="VARCHAR" />
+    <result column="PARAM_DESC" property="paramDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CHANNEL_CODE, PARAM_CODE, PARAM_NAME, PARAM_VALUE, PARAM_DESC
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CHL_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+   
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_CHL_PARAM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlParamDto" >
+    insert into TB_CHL_PARAM (ID, CHANNEL_CODE, PARAM_CODE, 
+      PARAM_NAME, PARAM_VALUE, PARAM_DESC
+      )
+    values (#{id,jdbcType=VARCHAR}, #{channelCode,jdbcType=CHAR}, #{paramCode,jdbcType=VARCHAR}, 
+      #{paramName,jdbcType=VARCHAR}, #{paramValue,jdbcType=VARCHAR}, #{paramDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlParamDto" >
+    insert into TB_CHL_PARAM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE,
+      </if>
+      <if test="paramCode != null" >
+        PARAM_CODE,
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME,
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE,
+      </if>
+      <if test="paramDesc != null" >
+        PARAM_DESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="paramCode != null" >
+        #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null" >
+        #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null" >
+        #{paramDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlParamDto" >
+    update TB_CHL_PARAM
+    <set >
+      <if test="channelCode != null" >
+        CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="paramCode != null" >
+        PARAM_CODE = #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null" >
+        PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlParamDto" >
+    update TB_CHL_PARAM
+    set CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      PARAM_CODE = #{paramCode,jdbcType=VARCHAR},
+      PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      PARAM_DESC = #{paramDesc,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+   <select id="getParams" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CHL_PARAM
+    where CHANNEL_CODE = #{channelCode}
+  </select>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlParamDto">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CHL_PARAM
+    <where>
+    <if test="channelCode != null and channelCode !=''" >
+      and  CHANNEL_CODE = #{channelCode,jdbcType=CHAR}
+      </if>
+      <if test="paramCode != null and paramCode !=''" >
+      and  PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+      </if>
+      <if test="paramName != null and paramName !=''" >
+      and  PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+      </if>
+      <if test="paramValue != null and paramValue !=''" >
+      and  PARAM_VALUE = #{paramValue,jdbcType=VARCHAR}
+      </if>
+      <if test="paramDesc != null and paramDesc !=''" >
+      and  PARAM_DESC = #{paramDesc,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+   <select id="selectByChannelCodeAndParam" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlParamDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_CHL_PARAM
+    <where>
+    <if test="channelCode != null and channelCode !=''" >
+      and  CHANNEL_CODE = #{channelCode,jdbcType=CHAR}
+      </if>
+      <if test="paramCode != null and paramCode !=''" >
+      and  PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+      </if>
+      <if test="paramName != null and paramName !=''" >
+      and  PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+      </if>
+      <if test="paramValue != null and paramValue !=''" >
+      and  PARAM_VALUE = #{paramValue,jdbcType=VARCHAR}
+      </if>
+      <if test="paramDesc != null and paramDesc !=''" >
+      and  PARAM_DESC = #{paramDesc,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <update id="updateByChannelCodeAndParam" parameterType="com.ylink.inetpay.common.project.channel.dto.TbChlParamDto" >
+    update TB_CHL_PARAM
+    <set >
+      <if test="channelCode != null" >
+        CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="paramCode != null" >
+        PARAM_CODE = #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null" >
+        PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 1=1
+ 	and CHANNEL_CODE = #{channelCode,jdbcType=CHAR}
+	and  PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+  </update>
+  <select id="listByChannelCodeAndParam" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from TB_CHL_PARAM
+    <where>
+    	<if test="paramCodeList != null and paramCodeList.size() >0 " >
+	    	CHANNEL_CODE in 
+	    	<foreach collection="channelCodeList" item="channelCode"  open="(" separator="," close=")">
+	    		#{channelCode,jdbcType=CHAR}
+	    	</foreach>
+    	</if>
+    	<if test="paramCodeList != null and paramCodeList.size() >0 " >
+	    	and PARAM_CODE in 
+	    	<foreach collection="paramCodeList" item="paramCode"  open="(" separator="," close=")">
+	    		#{paramCode,jdbcType=VARCHAR}
+	    	</foreach>
+    	</if>
+    </where>
+  </select>
+</mapper>

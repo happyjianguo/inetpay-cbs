@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.mrs.dao.MrsBankBusiDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsBankBusiDto" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="CHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
+    <result column="BANK_TYPE" property="bankType" jdbcType="CHAR" />
+    <result column="ACC_NO" property="accNo" jdbcType="VARCHAR" />
+    <result column="ACC_NAME" property="accName" jdbcType="VARCHAR" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="CUST_TYPE" property="custType" jdbcType="CHAR" />
+    <result column="ID_TYPE" property="idType" jdbcType="CHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="AUTH_NO" property="authNo" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="IS_DEFAULT" property="isDefault" jdbcType="CHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="CHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="CHAR" />
+    <result column="REGION_CODE" property="regionCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="CHAR" />
+    <result column="ADD_MODE" property="addMode" jdbcType="CHAR" />
+    <result column="ADUIT_STATUS" property="aduitStatus" jdbcType="CHAR" />
+    <result column="BIND_STATUS" property="bindStatus" jdbcType="CHAR" />
+    <result column="ERROR_CODE" property="errorCode" jdbcType="VARCHAR" />
+    <result column="ERROR_REMARK" property="errorRemark" jdbcType="VARCHAR" />
+    <result column="CARD_TYPE" property="cardType" jdbcType="CHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="BANK_MOBLE_PWD" property="bankMoblePwd" jdbcType="VARCHAR" />
+    <result column="OPEN_BANK_NAME" property="openBankName" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_NO" property="createUserNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CHANNEL_CODE, CUST_ID, CUST_TYPE,PAY_TYPE, BANK_TYPE, ACC_NO, ACC_NAME, CUST_NAME, CARD_TYPE, 
+    ID_TYPE, ID_NO, AUTH_NO, BANK_CODE, IS_DEFAULT, ACCOUNT_TYPE, PROVINCE_CODE, CITY_CODE, 
+    REGION_CODE, CREATE_TIME, MODIFY_TIME, IS_DELETE, ADD_MODE, ADUIT_STATUS, BIND_STATUS, 
+    ERROR_CODE, ERROR_REMARK,BANK_NAME,BANK_MOBLE_PWD,OPEN_BANK_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_BANK_BUSI
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsBankBusiDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_BANK_BUSI
+    where 1=1
+     <if test="custId != null and custId != ''" >
+       and CUST_ID =#{custId}
+      </if>
+      <if test="channelCode != null and channelCode != ''" >
+       and CHANNEL_CODE = #{channelCode,jdbcType=CHAR}
+      </if>
+      <if test="bindChannelType != null and bindChannelType != ''" >
+       and  SUBSTR(CHANNEL_CODE,4) = #{bindChannelType,jdbcType=CHAR}
+      </if>
+      <if test="bankType != null and bankType != ''" >
+       and BANK_TYPE =#{bankType}
+      </if>
+      <if test="accNo != null and accNo != ''" >
+       and ACC_NO = #{accNo}
+      </if>
+      <if test="idNo != null and idNo != ''" >
+       and ID_NO = #{idNo}	
+      </if>
+      <if test="bindStatus != null and bindStatus != ''" >
+       and BIND_STATUS = #{bindStatus}	
+      </if>
+  </select>
+  <select id="pageBank" resultMap="BaseResultMap" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsBankBusiDto" >
+    select 
+	<include refid="Base_Column_List" />
+    from TB_MRS_BANK_BUSI U
+    <!-- left join TB_MRS_USER_ACCOUNT t on U.ID=t.LOGIN_ID BANK_NAME  = #{bankName,jdbcType=CHAR} ACC_NO  like '%${accNo}%'   -->
+    where 1 = 1 
+    <if test="bankName != null and bankName != '' " >
+		AND instr(U.BANK_NAME, #{bankName}) > 0  
+    </if>
+    <if test="custName != null and custName != '' " >
+		AND instr(U.CUST_NAME, #{custName}) > 0 
+    </if>
+    <if test="accNo != null and accNo != '' " >
+		AND instr(U.ACC_NO, #{accNo}) > 0 
+    </if>
+    <if test="custId != null and custId != ''" >
+		AND instr(U.CUST_ID, #{custId}) > 0 
+    </if>
+    <if test="bindStatus != null and bindStatus != '' " >
+		AND U.BIND_STATUS = '${bindStatus}'
+    </if>
+    order by CREATE_TIME desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_MRS_BANK_BUSI
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsBankBusiDto" >
+    insert into TB_MRS_BANK_BUSI (ID, CHANNEL_CODE, CUST_ID, 
+      PAY_TYPE, BANK_TYPE, ACC_NO, 
+      ACC_NAME, CUST_NAME, CUST_TYPE, 
+      ID_TYPE, ID_NO, AUTH_NO, 
+      BANK_CODE, IS_DEFAULT, ACCOUNT_TYPE, 
+      PROVINCE_CODE, CITY_CODE, REGION_CODE, 
+      CREATE_TIME, MODIFY_TIME, IS_DELETE, 
+      ADD_MODE, ADUIT_STATUS, BIND_STATUS, 
+      ERROR_CODE, ERROR_REMARK,CARD_TYPE,BANK_NAME,
+      BANK_MOBLE_PWD,OPEN_BANK_NAME)
+    values (#{id,jdbcType=VARCHAR}, #{channelCode,jdbcType=CHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{payType,jdbcType=CHAR}, #{bankType,jdbcType=CHAR}, #{accNo,jdbcType=VARCHAR}, 
+      #{accName,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, #{custType,jdbcType=CHAR}, 
+      #{idType,jdbcType=CHAR}, #{idNo,jdbcType=VARCHAR}, #{authNo,jdbcType=VARCHAR}, 
+      #{bankCode,jdbcType=VARCHAR}, #{isDefault,jdbcType=CHAR}, #{accountType,jdbcType=CHAR}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=CHAR}, #{regionCode,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=CHAR}, 
+      #{addMode,jdbcType=CHAR}, #{aduitStatus,jdbcType=CHAR}, #{bindStatus,jdbcType=CHAR}, 
+      #{errorCode,jdbcType=VARCHAR}, #{errorRemark,jdbcType=VARCHAR}, #{cardType,jdbcType=CHAR},
+      #{bankName,jdbcType=VARCHAR},#{bankMoblePwd,jdbcType=VARCHAR},#{openBankName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsBankBusiDto" >
+    insert into TB_MRS_BANK_BUSI
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE,
+      </if>
+      <if test="accNo != null" >
+        ACC_NO,
+      </if>
+      <if test="accName != null" >
+        ACC_NAME,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="custType != null" >
+        CUST_TYPE,
+      </if>
+      <if test="idType != null" >
+        ID_TYPE,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="authNo != null" >
+        AUTH_NO,
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE,
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT,
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="regionCode != null" >
+        REGION_CODE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+      <if test="addMode != null" >
+        ADD_MODE,
+      </if>
+      <if test="aduitStatus != null" >
+        ADUIT_STATUS,
+      </if>
+      <if test="bindStatus != null" >
+        BIND_STATUS,
+      </if>
+      <if test="errorCode != null" >
+        ERROR_CODE,
+      </if>
+      <if test="errorRemark != null" >
+        ERROR_REMARK,
+      </if>
+      <if test="bankMoblePwd != null" >
+        BANK_MOBLE_PWD,
+      </if>
+      <if test="openBankName != null" >
+        OPEN_BANK_NAME,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="accNo != null" >
+        #{accNo,jdbcType=VARCHAR},
+      </if>
+      <if test="accName != null" >
+        #{accName,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custType != null" >
+        #{custType,jdbcType=CHAR},
+      </if>
+      <if test="idType != null" >
+        #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="authNo != null" >
+        #{authNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=CHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=CHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=CHAR},
+      </if>
+      <if test="regionCode != null" >
+        #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="addMode != null" >
+        #{addMode,jdbcType=CHAR},
+      </if>
+      <if test="aduitStatus != null" >
+        #{aduitStatus,jdbcType=CHAR},
+      </if>
+      <if test="bindStatus != null" >
+        #{bindStatus,jdbcType=CHAR},
+      </if>
+      <if test="errorCode != null" >
+        #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRemark != null" >
+        #{errorRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="bankMoblePwd != null" >
+        #{bankMoblePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="openBankName != null" >
+        #{openBankName,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsBankBusiDto" >
+    update TB_MRS_BANK_BUSI
+    <set >
+      <if test="channelCode != null" >
+        CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE = #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="accNo != null" >
+        ACC_NO = #{accNo,jdbcType=VARCHAR},
+      </if>
+      <if test="accName != null" >
+        ACC_NAME = #{accName,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custType != null" >
+        CUST_TYPE = #{custType,jdbcType=CHAR},
+      </if>
+      <if test="idType != null" >
+        ID_TYPE = #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="authNo != null" >
+        AUTH_NO = #{authNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT = #{isDefault,jdbcType=CHAR},
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE = #{accountType,jdbcType=CHAR},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=CHAR},
+      </if>
+      <if test="regionCode != null" >
+        REGION_CODE = #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="addMode != null" >
+        ADD_MODE = #{addMode,jdbcType=CHAR},
+      </if>
+      <if test="aduitStatus != null" >
+        ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR},
+      </if>
+      <if test="bindStatus != null" >
+        BIND_STATUS = #{bindStatus,jdbcType=CHAR},
+      </if>
+      <if test="errorCode != null" >
+        ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRemark != null" >
+        ERROR_REMARK = #{errorRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        CARD_TYPE = #{cardType,jdbcType=CHAR},
+      </if>
+      <if test="bankName != null" >
+       BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankMoblePwd != null" >
+       BANK_MOBLE_PWD = #{bankMoblePwd,jdbcType=VARCHAR},
+      </if>
+       <if test="openBankName != null" >
+       OPEN_BANK_NAME = #{openBankName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.mrs.MrsBankBusiDto" >
+    update TB_MRS_BANK_BUSI
+    set CHANNEL_CODE = #{channelCode,jdbcType=CHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      PAY_TYPE = #{payType,jdbcType=CHAR},
+      BANK_TYPE = #{bankType,jdbcType=CHAR},
+      ACC_NO = #{accNo,jdbcType=VARCHAR},
+      ACC_NAME = #{accName,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      CUST_TYPE = #{custType,jdbcType=CHAR},
+      ID_TYPE = #{idType,jdbcType=CHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      AUTH_NO = #{authNo,jdbcType=VARCHAR},
+      BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      IS_DEFAULT = #{isDefault,jdbcType=CHAR},
+      ACCOUNT_TYPE = #{accountType,jdbcType=CHAR},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=CHAR},
+      REGION_CODE = #{regionCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      IS_DELETE = #{isDelete,jdbcType=CHAR},
+      ADD_MODE = #{addMode,jdbcType=CHAR},
+      ADUIT_STATUS = #{aduitStatus,jdbcType=CHAR},
+      BIND_STATUS = #{bindStatus,jdbcType=CHAR},
+      ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      ERROR_REMARK = #{errorRemark,jdbcType=VARCHAR},
+      CARD_TYPE = #{cardType,jdbcType=CHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      BANK_MOBLE_PWD = #{bankMoblePwd,jdbcType=VARCHAR},
+      OPEN_BANK_NAME = #{openBankName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_BANK_BUSI
+    where CUST_ID = #{custId,jdbcType=VARCHAR} AND IS_DELETE = 'N'
+  </select>
+   <select id="findBanksByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_BANK_BUSI
+    where  IS_DELETE = 'N'
+      	AND (ADUIT_STATUS = '01' OR ADUIT_STATUS = '03')
+      	AND BIND_STATUS='02'
+      	AND PAY_TYPE='02'
+    	AND CUST_ID = #{custId,jdbcType=VARCHAR} order by IS_DEFAULT ASC
+  </select>
+  <select id="findBandByCustId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_BANK_BUSI
+    where BIND_STATUS='02'
+    	AND CUST_ID = #{custId,jdbcType=VARCHAR}
+  </select>
+   <select id="findBanksBychnlAndAccno" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_BANK_BUSI
+    where  
+    	 CHANNEL_CODE = #{channelCode} 
+    	AND ACC_NO = #{accNo} 
+    	AND BIND_STATUS = #{bindStatus}
+  </select>
+  <select id="findByCustIdAndAduitStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from TB_MRS_BANK_BUSI
+    where CUST_ID = #{custId,jdbcType=VARCHAR} AND IS_DELETE = 'N' AND ADUIT_STATUS = #{aduitStatus,jdbcType=VARCHAR} 
+  </select>
+  
+  <select id="findByCustIdAndAduitStatusAndSuccess" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    a.*,b.CREATE_USER_NO
+    from TB_MRS_BANK_BUSI a,TB_MRS_PORTAL_REVIEW_ADUIT b 
+    where a.ID = b.BUSI_NO AND b.ADUIT_STATUS = '00' AND a.CUST_ID = #{custId,jdbcType=VARCHAR} AND a.IS_DELETE = 'N' AND a.ADUIT_STATUS = #{aduitStatus,jdbcType=VARCHAR} 
+  </select>
+   
+  
+  
+  <select id="findByAccnoAndCustidAndPaytype" resultMap="BaseResultMap" parameterType="java.lang.String">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from TB_MRS_BANK_BUSI
+	    where CUST_ID = #{custId,jdbcType=VARCHAR} AND IS_DELETE = 'N' AND PAY_TYPE = #{payType,jdbcType=VARCHAR} AND ACC_NO = #{accNo,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据一户通号查询(快捷专用:绑定(02)、绑卡类型(01)) -->
+  <select id="findByBindStatusAndCustidAndPaytype" resultMap="BaseResultMap" parameterType="java.lang.String">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from TB_MRS_BANK_BUSI
+	    where CUST_ID = #{custId,jdbcType=VARCHAR} AND IS_DELETE = 'N' AND PAY_TYPE = '01' AND BIND_STATUS = '02'
+  </select>
+    <select id="findByAccnoAndCustid" resultMap="BaseResultMap" parameterType="java.lang.String">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from TB_MRS_BANK_BUSI
+	    where CUST_ID = #{custId,jdbcType=VARCHAR} 
+	    AND ACC_NO = #{accNo,jdbcType=VARCHAR}
+  </select>
+  <select id="findIsDefault" resultMap="BaseResultMap" parameterType="java.lang.String">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from TB_MRS_BANK_BUSI
+	    where CUST_ID = #{custId,jdbcType=VARCHAR} AND IS_DEFAULT = '01'
+  </select>
+  
+</mapper>

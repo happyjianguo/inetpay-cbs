@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisSchedJobIntervalDtoMapper" >
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobIntervalDto" >
+    <id column="TRIGGER_NAME" property="triggerName" jdbcType="VARCHAR" />
+    <result column="CRON_EXPRESSION" property="cronExpression" jdbcType="VARCHAR" />
+    <result column="ENABLED" property="enabled" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TRIGGER_NAME, CRON_EXPRESSION, ENABLED
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_BIS_SCHED_JOB_INTERVAL
+    where TRIGGER_NAME = #{triggerName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TB_BIS_SCHED_JOB_INTERVAL
+    where TRIGGER_NAME = #{triggerName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobIntervalDto" >
+    insert into TB_BIS_SCHED_JOB_INTERVAL (TRIGGER_NAME, CRON_EXPRESSION, ENABLED
+      )
+    values (#{triggerName,jdbcType=VARCHAR}, #{cronExpression,jdbcType=VARCHAR}, #{enabled,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobIntervalDto" >
+    insert into TB_BIS_SCHED_JOB_INTERVAL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="triggerName != null" >
+        TRIGGER_NAME,
+      </if>
+      <if test="cronExpression != null" >
+        CRON_EXPRESSION,
+      </if>
+      <if test="enabled != null" >
+        ENABLED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="triggerName != null" >
+        #{triggerName,jdbcType=VARCHAR},
+      </if>
+      <if test="cronExpression != null" >
+        #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobIntervalDto" >
+    update TB_BIS_SCHED_JOB_INTERVAL
+    <set >
+      <if test="cronExpression != null" >
+        CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        ENABLED = #{enabled,jdbcType=CHAR},
+      </if>
+    </set>
+    where TRIGGER_NAME = #{triggerName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisSchedJobIntervalDto" >
+    update TB_BIS_SCHED_JOB_INTERVAL
+    set CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR},
+      ENABLED = #{enabled,jdbcType=CHAR}
+    where TRIGGER_NAME = #{triggerName,jdbcType=VARCHAR}
+  </update>
+  <select id="listAll" resultMap="BaseResultMap">
+  	select * from TB_BIS_SCHED_JOB_INTERVAL 
+  </select>
+</mapper>

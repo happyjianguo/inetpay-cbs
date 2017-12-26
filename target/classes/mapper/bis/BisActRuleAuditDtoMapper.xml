@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylink.inetpay.cbs.bis.dao.BisActRuleAuditDtoMapper">
+  <resultMap id="BaseResultMap" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisActRuleAuditDto">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="BUSI_TYPE" jdbcType="CHAR" property="busiType" />
+    <result column="DEAL_SN" jdbcType="DECIMAL" property="dealSn" />
+    <result column="TRADE_TYPE" jdbcType="CHAR" property="tradeType" />
+    <result column="RULE_TYPE" jdbcType="CHAR" property="ruleType" />
+    <result column="DR_SUBJECT_NO" jdbcType="VARCHAR" property="drSubjectNo" />
+    <result column="DR_SUBJECT_NAME" jdbcType="VARCHAR" property="drSubjectName" />
+    <result column="DR_FLAG" jdbcType="CHAR" property="drFlag" />
+    <result column="CR_SUBJECT_NO" jdbcType="VARCHAR" property="crSubjectNo" />
+    <result column="CR_SUBJECT_NAME" jdbcType="VARCHAR" property="crSubjectName" />
+    <result column="CR_FLAG" jdbcType="CHAR" property="crFlag" />
+    <result column="BOOK_TYPE" jdbcType="CHAR" property="bookType" />
+    <result column="EXT1" jdbcType="VARCHAR" property="ext1" />
+    <result column="EXT2" jdbcType="VARCHAR" property="ext2" />
+    <result column="EXT3" jdbcType="VARCHAR" property="ext3" />
+    <result column="EXT4" jdbcType="VARCHAR" property="ext4" />
+    <result column="EXT5" jdbcType="VARCHAR" property="ext5" />
+    <result column="EXT6" jdbcType="VARCHAR" property="ext6" />
+    <result column="EXT7" jdbcType="VARCHAR" property="ext7" />
+    <result column="EXT8" jdbcType="VARCHAR" property="ext8" />
+    <result column="EXT9" jdbcType="VARCHAR" property="ext9" />
+    <result column="EXT10" jdbcType="VARCHAR" property="ext10" />
+    <result column="EXT11" jdbcType="VARCHAR" property="ext11" />
+    <result column="EXT12" jdbcType="VARCHAR" property="ext12" />
+    <result column="BOOK_AMOUNT_TYPE" jdbcType="CHAR" property="bookAmountType" />
+    <result column="OPERATE_TYPE" jdbcType="CHAR" property="operateType" />
+    <result column="DR_IS_NEGATIVE" jdbcType="CHAR" property="drIsNegative" />
+    <result column="CR_IS_NEGATIVE" jdbcType="CHAR" property="crIsNegative" />
+    <result column="REF_ID" jdbcType="VARCHAR" property="refId" />
+    <result column="OPERATOR" jdbcType="VARCHAR" property="operator" />
+    <result column="OPERATOR_NAME" jdbcType="VARCHAR" property="operatorName" />
+    <result column="AUDITOR" jdbcType="VARCHAR" property="auditor" />
+    <result column="AUDITOR_NAME" jdbcType="VARCHAR" property="auditorName" />
+    <result column="AUDIT_STATUS" jdbcType="CHAR" property="auditStatus" />
+    <result column="AUDIT_TIME" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="ACCT_TYPE_NO" jdbcType="VARCHAR" property="acctTypeNo" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ylink.inetpay.common.project.cbs.dto.bis.BisActRuleAuditDto">
+    <result column="REMARK" jdbcType="CLOB" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BUSI_TYPE, DEAL_SN, TRADE_TYPE, RULE_TYPE, DR_SUBJECT_NO, DR_SUBJECT_NAME, DR_FLAG, 
+    CR_SUBJECT_NO, CR_SUBJECT_NAME, CR_FLAG, BOOK_TYPE, EXT1, EXT2, EXT3, EXT4, EXT5, 
+    EXT6, EXT7, EXT8, EXT9, EXT10, EXT11, EXT12, BOOK_AMOUNT_TYPE, OPERATE_TYPE, DR_IS_NEGATIVE, 
+    CR_IS_NEGATIVE, REF_ID, OPERATOR, OPERATOR_NAME, AUDITOR, AUDITOR_NAME, AUDIT_STATUS, AUDIT_TIME,CREATE_TIME,ACCT_TYPE_NO
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TB_BIS_ACT_RULE_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TB_BIS_ACT_RULE_AUDIT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActRuleAuditDto">
+    insert into TB_BIS_ACT_RULE_AUDIT (ID, BUSI_TYPE, DEAL_SN, 
+      TRADE_TYPE, RULE_TYPE, DR_SUBJECT_NO, 
+      DR_SUBJECT_NAME, DR_FLAG, CR_SUBJECT_NO, 
+      CR_SUBJECT_NAME, CR_FLAG, BOOK_TYPE, 
+      EXT1, EXT2, EXT3, EXT4, 
+      EXT5, EXT6, EXT7, EXT8, 
+      EXT9, EXT10, EXT11, 
+      EXT12, BOOK_AMOUNT_TYPE, OPERATE_TYPE, 
+      DR_IS_NEGATIVE, CR_IS_NEGATIVE, REF_ID, 
+      OPERATOR, OPERATOR_NAME, AUDITOR,AUDITOR_NAME,AUDIT_STATUS, 
+      AUDIT_TIME, REMARK,CREATE_TIME,ACCT_TYPE_NO)
+    values (#{id,jdbcType=VARCHAR}, #{busiType,jdbcType=CHAR}, #{dealSn,jdbcType=DECIMAL}, 
+      #{tradeType,jdbcType=CHAR}, #{ruleType,jdbcType=CHAR}, #{drSubjectNo,jdbcType=VARCHAR}, 
+      #{drSubjectName,jdbcType=VARCHAR}, #{drFlag,jdbcType=CHAR}, #{crSubjectNo,jdbcType=VARCHAR}, 
+      #{crSubjectName,jdbcType=VARCHAR}, #{crFlag,jdbcType=CHAR}, #{bookType,jdbcType=CHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=VARCHAR}, 
+      #{ext5,jdbcType=VARCHAR}, #{ext6,jdbcType=VARCHAR}, #{ext7,jdbcType=VARCHAR}, #{ext8,jdbcType=VARCHAR}, 
+      #{ext9,jdbcType=VARCHAR}, #{ext10,jdbcType=VARCHAR}, #{ext11,jdbcType=VARCHAR}, 
+      #{ext12,jdbcType=VARCHAR}, #{bookAmountType,jdbcType=CHAR}, #{operateType,jdbcType=CHAR}, 
+      #{drIsNegative,jdbcType=CHAR}, #{crIsNegative,jdbcType=CHAR}, #{refId,jdbcType=VARCHAR}, 
+      #{operator,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR},
+      #{auditor,jdbcType=VARCHAR}, #{auditorName,jdbcType=VARCHAR}, #{auditStatus,jdbcType=CHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=CLOB},#{createTime,jdbcType=TIMESTAMP}, #{acctTypeNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActRuleAuditDto">
+    insert into TB_BIS_ACT_RULE_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="busiType != null">
+        BUSI_TYPE,
+      </if>
+      <if test="dealSn != null">
+        DEAL_SN,
+      </if>
+      <if test="tradeType != null">
+        TRADE_TYPE,
+      </if>
+      <if test="ruleType != null">
+        RULE_TYPE,
+      </if>
+      <if test="drSubjectNo != null">
+        DR_SUBJECT_NO,
+      </if>
+      <if test="drSubjectName != null">
+        DR_SUBJECT_NAME,
+      </if>
+      <if test="drFlag != null">
+        DR_FLAG,
+      </if>
+      <if test="crSubjectNo != null">
+        CR_SUBJECT_NO,
+      </if>
+      <if test="crSubjectName != null">
+        CR_SUBJECT_NAME,
+      </if>
+      <if test="crFlag != null">
+        CR_FLAG,
+      </if>
+      <if test="bookType != null">
+        BOOK_TYPE,
+      </if>
+      <if test="ext1 != null">
+        EXT1,
+      </if>
+      <if test="ext2 != null">
+        EXT2,
+      </if>
+      <if test="ext3 != null">
+        EXT3,
+      </if>
+      <if test="ext4 != null">
+        EXT4,
+      </if>
+      <if test="ext5 != null">
+        EXT5,
+      </if>
+      <if test="ext6 != null">
+        EXT6,
+      </if>
+      <if test="ext7 != null">
+        EXT7,
+      </if>
+      <if test="ext8 != null">
+        EXT8,
+      </if>
+      <if test="ext9 != null">
+        EXT9,
+      </if>
+      <if test="ext10 != null">
+        EXT10,
+      </if>
+      <if test="ext11 != null">
+        EXT11,
+      </if>
+      <if test="ext12 != null">
+        EXT12,
+      </if>
+      <if test="bookAmountType != null">
+        BOOK_AMOUNT_TYPE,
+      </if>
+      <if test="operateType != null">
+        OPERATE_TYPE,
+      </if>
+      <if test="drIsNegative != null">
+        DR_IS_NEGATIVE,
+      </if>
+      <if test="crIsNegative != null">
+        CR_IS_NEGATIVE,
+      </if>
+      <if test="refId != null">
+        REF_ID,
+      </if>
+      <if test="operator != null">
+        OPERATOR,
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME,
+      </if>
+      <if test="auditor != null">
+        AUDITOR,
+      </if>
+      <if test="auditorName != null">
+        AUDITOR_NAME,
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS,
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="acctTypeNo != null">
+        ACCT_TYPE_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null">
+        #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="dealSn != null">
+        #{dealSn,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="ruleType != null">
+        #{ruleType,jdbcType=CHAR},
+      </if>
+      <if test="drSubjectNo != null">
+        #{drSubjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="drSubjectName != null">
+        #{drSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="drFlag != null">
+        #{drFlag,jdbcType=CHAR},
+      </if>
+      <if test="crSubjectNo != null">
+        #{crSubjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="crSubjectName != null">
+        #{crSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="crFlag != null">
+        #{crFlag,jdbcType=CHAR},
+      </if>
+      <if test="bookType != null">
+        #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="ext1 != null">
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null">
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null">
+        #{ext4,jdbcType=VARCHAR},
+      </if>
+      <if test="ext5 != null">
+        #{ext5,jdbcType=VARCHAR},
+      </if>
+      <if test="ext6 != null">
+        #{ext6,jdbcType=VARCHAR},
+      </if>
+      <if test="ext7 != null">
+        #{ext7,jdbcType=VARCHAR},
+      </if>
+      <if test="ext8 != null">
+        #{ext8,jdbcType=VARCHAR},
+      </if>
+      <if test="ext9 != null">
+        #{ext9,jdbcType=VARCHAR},
+      </if>
+      <if test="ext10 != null">
+        #{ext10,jdbcType=VARCHAR},
+      </if>
+      <if test="ext11 != null">
+        #{ext11,jdbcType=VARCHAR},
+      </if>
+      <if test="ext12 != null">
+        #{ext12,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAmountType != null">
+        #{bookAmountType,jdbcType=CHAR},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=CHAR},
+      </if>
+      <if test="drIsNegative != null">
+        #{drIsNegative,jdbcType=CHAR},
+      </if>
+      <if test="crIsNegative != null">
+        #{crIsNegative,jdbcType=CHAR},
+      </if>
+      <if test="refId != null">
+        #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null">
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null">
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=CLOB},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acctTypeNo != null">
+        #{acctTypeNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActRuleAuditDto">
+    update TB_BIS_ACT_RULE_AUDIT
+    <set>
+      <if test="busiType != null">
+        BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      </if>
+      <if test="dealSn != null">
+        DEAL_SN = #{dealSn,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeType != null">
+        TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="ruleType != null">
+        RULE_TYPE = #{ruleType,jdbcType=CHAR},
+      </if>
+      <if test="drSubjectNo != null">
+        DR_SUBJECT_NO = #{drSubjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="drSubjectName != null">
+        DR_SUBJECT_NAME = #{drSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="drFlag != null">
+        DR_FLAG = #{drFlag,jdbcType=CHAR},
+      </if>
+      <if test="crSubjectNo != null">
+        CR_SUBJECT_NO = #{crSubjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="crSubjectName != null">
+        CR_SUBJECT_NAME = #{crSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="crFlag != null">
+        CR_FLAG = #{crFlag,jdbcType=CHAR},
+      </if>
+      <if test="bookType != null">
+        BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      </if>
+      <if test="ext1 != null">
+        EXT1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        EXT2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null">
+        EXT3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null">
+        EXT4 = #{ext4,jdbcType=VARCHAR},
+      </if>
+      <if test="ext5 != null">
+        EXT5 = #{ext5,jdbcType=VARCHAR},
+      </if>
+      <if test="ext6 != null">
+        EXT6 = #{ext6,jdbcType=VARCHAR},
+      </if>
+      <if test="ext7 != null">
+        EXT7 = #{ext7,jdbcType=VARCHAR},
+      </if>
+      <if test="ext8 != null">
+        EXT8 = #{ext8,jdbcType=VARCHAR},
+      </if>
+      <if test="ext9 != null">
+        EXT9 = #{ext9,jdbcType=VARCHAR},
+      </if>
+      <if test="ext10 != null">
+        EXT10 = #{ext10,jdbcType=VARCHAR},
+      </if>
+      <if test="ext11 != null">
+        EXT11 = #{ext11,jdbcType=VARCHAR},
+      </if>
+      <if test="ext12 != null">
+        EXT12 = #{ext12,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAmountType != null">
+        BOOK_AMOUNT_TYPE = #{bookAmountType,jdbcType=CHAR},
+      </if>
+      <if test="operateType != null">
+        OPERATE_TYPE = #{operateType,jdbcType=CHAR},
+      </if>
+      <if test="drIsNegative != null">
+        DR_IS_NEGATIVE = #{drIsNegative,jdbcType=CHAR},
+      </if>
+      <if test="crIsNegative != null">
+        CR_IS_NEGATIVE = #{crIsNegative,jdbcType=CHAR},
+      </if>
+      <if test="refId != null">
+        REF_ID = #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        OPERATOR = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null">
+        AUDITOR = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null">
+        AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=CLOB},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="acctTypeNo != null">
+        ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActRuleAuditDto">
+    update TB_BIS_ACT_RULE_AUDIT
+    set BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      DEAL_SN = #{dealSn,jdbcType=DECIMAL},
+      TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      RULE_TYPE = #{ruleType,jdbcType=CHAR},
+      DR_SUBJECT_NO = #{drSubjectNo,jdbcType=VARCHAR},
+      DR_SUBJECT_NAME = #{drSubjectName,jdbcType=VARCHAR},
+      DR_FLAG = #{drFlag,jdbcType=CHAR},
+      CR_SUBJECT_NO = #{crSubjectNo,jdbcType=VARCHAR},
+      CR_SUBJECT_NAME = #{crSubjectName,jdbcType=VARCHAR},
+      CR_FLAG = #{crFlag,jdbcType=CHAR},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      EXT1 = #{ext1,jdbcType=VARCHAR},
+      EXT2 = #{ext2,jdbcType=VARCHAR},
+      EXT3 = #{ext3,jdbcType=VARCHAR},
+      EXT4 = #{ext4,jdbcType=VARCHAR},
+      EXT5 = #{ext5,jdbcType=VARCHAR},
+      EXT6 = #{ext6,jdbcType=VARCHAR},
+      EXT7 = #{ext7,jdbcType=VARCHAR},
+      EXT8 = #{ext8,jdbcType=VARCHAR},
+      EXT9 = #{ext9,jdbcType=VARCHAR},
+      EXT10 = #{ext10,jdbcType=VARCHAR},
+      EXT11 = #{ext11,jdbcType=VARCHAR},
+      EXT12 = #{ext12,jdbcType=VARCHAR},
+      BOOK_AMOUNT_TYPE = #{bookAmountType,jdbcType=CHAR},
+      OPERATE_TYPE = #{operateType,jdbcType=CHAR},
+      DR_IS_NEGATIVE = #{drIsNegative,jdbcType=CHAR},
+      CR_IS_NEGATIVE = #{crIsNegative,jdbcType=CHAR},
+      REF_ID = #{refId,jdbcType=VARCHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=CLOB},
+      ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActRuleAuditDto">
+    update TB_BIS_ACT_RULE_AUDIT
+    set BUSI_TYPE = #{busiType,jdbcType=CHAR},
+      DEAL_SN = #{dealSn,jdbcType=DECIMAL},
+      TRADE_TYPE = #{tradeType,jdbcType=CHAR},
+      RULE_TYPE = #{ruleType,jdbcType=CHAR},
+      DR_SUBJECT_NO = #{drSubjectNo,jdbcType=VARCHAR},
+      DR_SUBJECT_NAME = #{drSubjectName,jdbcType=VARCHAR},
+      DR_FLAG = #{drFlag,jdbcType=CHAR},
+      CR_SUBJECT_NO = #{crSubjectNo,jdbcType=VARCHAR},
+      CR_SUBJECT_NAME = #{crSubjectName,jdbcType=VARCHAR},
+      CR_FLAG = #{crFlag,jdbcType=CHAR},
+      BOOK_TYPE = #{bookType,jdbcType=CHAR},
+      EXT1 = #{ext1,jdbcType=VARCHAR},
+      EXT2 = #{ext2,jdbcType=VARCHAR},
+      EXT3 = #{ext3,jdbcType=VARCHAR},
+      EXT4 = #{ext4,jdbcType=VARCHAR},
+      EXT5 = #{ext5,jdbcType=VARCHAR},
+      EXT6 = #{ext6,jdbcType=VARCHAR},
+      EXT7 = #{ext7,jdbcType=VARCHAR},
+      EXT8 = #{ext8,jdbcType=VARCHAR},
+      EXT9 = #{ext9,jdbcType=VARCHAR},
+      EXT10 = #{ext10,jdbcType=VARCHAR},
+      EXT11 = #{ext11,jdbcType=VARCHAR},
+      EXT12 = #{ext12,jdbcType=VARCHAR},
+      BOOK_AMOUNT_TYPE = #{bookAmountType,jdbcType=CHAR},
+      OPERATE_TYPE = #{operateType,jdbcType=CHAR},
+      DR_IS_NEGATIVE = #{drIsNegative,jdbcType=CHAR},
+      CR_IS_NEGATIVE = #{crIsNegative,jdbcType=CHAR},
+      REF_ID = #{refId,jdbcType=VARCHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=CHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      ACCT_TYPE_NO = #{acctTypeNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="list" resultMap="ResultMapWithBLOBs" parameterType="com.ylink.inetpay.common.project.cbs.dto.bis.BisActRuleAuditDto">
+  	select * from TB_BIS_ACT_RULE_AUDIT 
+  	<where> AUDIT_STATUS != '03' 
+  		<if test="busiType != null">
+			and BUSI_TYPE = #{busiType,jdbcType=CHAR}
+		</if>
+		<if test="tradeType != null">
+			and TRADE_TYPE = #{tradeType,jdbcType=CHAR}
+		</if>
+		<if test="ruleType != null">
+			and RULE_TYPE = #{ruleType,jdbcType=CHAR}
+		</if>
+		<if test="drSubjectNo != null and drSubjectNo != ''">
+			and DR_SUBJECT_NO = #{drSubjectNo,jdbcType=VARCHAR}
+		</if>
+		<if test="drSubjectName != null and drSubjectName != ''">
+			and instr(DR_SUBJECT_NAME,#{drSubjectName,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="drFlag != null">
+			and DR_FLAG = #{drFlag,jdbcType=CHAR}
+		</if>
+		<if test="crSubjectNo != null and crSubjectNo != ''">
+			and CR_SUBJECT_NO = #{crSubjectNo,jdbcType=VARCHAR}
+		</if>
+		<if test="crSubjectName != null and crSubjectName != ''">
+			and instr(CR_SUBJECT_NAME,#{crSubjectName,jdbcType=VARCHAR}) > 0
+		</if>
+		<if test="crFlag != null">
+			and CR_FLAG = #{crFlag,jdbcType=CHAR}
+		</if>
+		<if test="operateType != null">
+			and OPERATE_TYPE = #{operateType,jdbcType=CHAR}
+		</if>
+		<if test="auditStatus != null">
+			and AUDIT_STATUS = #{auditStatus,jdbcType=CHAR}
+		</if>
+		<if test="bookType != null">
+			and BOOK_TYPE = #{bookType,jdbcType=CHAR}
+		</if>
+		order by CREATE_TIME desc 
+  	</where>
+  </select>
+  <select id="countWaitAuditByTradeTypeAndRuleType" resultType="long">
+  	select count(*) from TB_BIS_ACT_RULE_AUDIT where AUDIT_STATUS = '00' 
+  		and TRADE_TYPE = #{tradeType,jdbcType=CHAR} 
+  		and RULE_TYPE = #{ruleType,jdbcType=CHAR}
+  </select>
+  
+  <select id="getAuditNum" resultType="long">
+	 select count(*) from TB_BIS_ACT_RULE_AUDIT
+	 where AUDIT_STATUS = #{auditPass,jdbcType=CHAR}
+	 and ID in
+	 <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+     </foreach>
+  </select>
+</mapper>

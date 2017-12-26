@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+ 	<description>Spring公共配置</description>
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:component-scan
+		base-package="com.ylink.inetpay">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 为自定义的扫描器指定要扫描的包路径 -->
+	<bean class="org.ylinkpay.framework.core.model.PackageInfo">
+		<property name="basePackages">
+			<array>
+				<value>com.ylink.inetpay.**.dao</value>
+			</array>
+		</property>
+	</bean>
+	
+	
+	<bean  class="com.redrock.ips.support.cache.redis.single.RedisSingleConnectPool" />
+
+	<!-- sms thread pool -->
+	<bean id="smsTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="30" />
+		<property name="maxPoolSize" value="60" />
+		<property name="queueCapacity" value="200" />
+	</bean>
+	
+	<!-- email thread pool
+	<bean id="emailTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="30" />
+		<property name="maxPoolSize" value="60" />
+		<property name="queueCapacity" value="200" />
+	</bean>
+	 -->
+	<!-- log thread pool -->
+	<bean id="logTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="20" />
+		<property name="maxPoolSize" value="50" />
+		<property name="queueCapacity" value="100" />
+	</bean>
+	
+	<!-- log thread pool -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="20" />
+		<property name="maxPoolSize" value="50" />
+		<property name="queueCapacity" value="1000" />
+	</bean>
+
+	<!-- 定义异常拦截器 -->
+	<bean id="exceptionAopInterceptor" class="com.ylink.inetpay.cbs.interceptor.ExceptionAopInterceptor" />
+	<aop:config>
+		<!-- 声明一个切面,并注入切面Bean,相当于@Aspect -->
+		<aop:aspect id="exceptionAspect" ref="exceptionAopInterceptor">
+			<aop:pointcut expression="execution(* com.ylink.inetpay.common.project.cbs.app.*.*(..))" id="exceptionPointcut"/>
+			<aop:around method="around" pointcut-ref="exceptionPointcut"/>
+		</aop:aspect>
+	</aop:config>
+	<!-- <bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*AppService</value>
+			</list>
+		</property>
+		下面定义BeanNameAutoProxyCreator所需的事务拦截器
+		<property name="interceptorNames">
+			<list>
+				可以增加其他的拦截器
+				<value>exceptionInterceptor</value>
+			</list>
+		</property>
+	</bean> -->
+
+	<!-- 引入 -->
+	<import resource="spring-datasource-bonecp.xml"/>
+	<import resource="spring-scheduler.xml"/>
+	<!-- <import resource="classpath*:framework-hessian-client-base.xml"/> -->
+	<import resource="classpath*:dubbo/spring-dubbo.xml"/>
+	<import resource="classpath*:comm/config/ips-support-redis.xml"/>
+</beans>
